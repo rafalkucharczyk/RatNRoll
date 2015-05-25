@@ -215,11 +215,10 @@ void BasicRUBELayer::update(float dt)
 // Standard Cocos2d method
 void BasicRUBELayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t transformUpdated)
 {
+    cocos2d::Layer::draw(renderer, transform, transformUpdated);
+
     if (!m_world)
         return;
-
-    // debug draw display will be on top of anything else
-    Layer::draw(renderer, transform, transformUpdated);
 
     m_drawNode->clear();
     m_world->DrawDebugData();
