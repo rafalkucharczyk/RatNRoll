@@ -64,6 +64,8 @@
 		B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF411B1321F5004D647D /* b2dJson.cpp */; };
 		B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF431B1321F5004D647D /* b2dJsonImage.cpp */; };
 		B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF481B1321F5004D647D /* jsoncpp.cpp */; };
+		B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF4D1B1330ED004D647D /* BasicRUBELayer.cpp */; };
+		B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF4F1B1330ED004D647D /* Box2DDebugDraw.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -164,6 +166,11 @@
 		B535EF461B1321F5004D647D /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "json-forwards.h"; sourceTree = "<group>"; };
 		B535EF471B1321F5004D647D /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
 		B535EF481B1321F5004D647D /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsoncpp.cpp; sourceTree = "<group>"; };
+		B535EF4D1B1330ED004D647D /* BasicRUBELayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicRUBELayer.cpp; sourceTree = "<group>"; };
+		B535EF4E1B1330ED004D647D /* BasicRUBELayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicRUBELayer.h; sourceTree = "<group>"; };
+		B535EF4F1B1330ED004D647D /* Box2DDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box2DDebugDraw.cpp; sourceTree = "<group>"; };
+		B535EF501B1330ED004D647D /* Box2DDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DDebugDraw.h; sourceTree = "<group>"; };
+		B535EF561B133542004D647D /* QueryCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCallbacks.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -303,6 +310,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B535EF4C1B1330ED004D647D /* Base */,
 				B535EF401B1321F5004D647D /* Rube */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
@@ -380,6 +388,18 @@
 				B535EF471B1321F5004D647D /* json.h */,
 			);
 			path = json;
+			sourceTree = "<group>";
+		};
+		B535EF4C1B1330ED004D647D /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				B535EF561B133542004D647D /* QueryCallbacks.h */,
+				B535EF4D1B1330ED004D647D /* BasicRUBELayer.cpp */,
+				B535EF4E1B1330ED004D647D /* BasicRUBELayer.h */,
+				B535EF4F1B1330ED004D647D /* Box2DDebugDraw.cpp */,
+				B535EF501B1330ED004D647D /* Box2DDebugDraw.h */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -530,8 +550,10 @@
 			files = (
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
+				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
 				B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */,
+				B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */,
