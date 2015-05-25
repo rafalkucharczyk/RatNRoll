@@ -61,6 +61,9 @@
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		B535EF3F1B131C2F004D647D /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B535EF3E1B131C2F004D647D /* iAd.framework */; };
+		B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF411B1321F5004D647D /* b2dJson.cpp */; };
+		B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF431B1321F5004D647D /* b2dJsonImage.cpp */; };
+		B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF481B1321F5004D647D /* jsoncpp.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -154,6 +157,13 @@
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B535EF3E1B131C2F004D647D /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/iAd.framework; sourceTree = DEVELOPER_DIR; };
+		B535EF411B1321F5004D647D /* b2dJson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2dJson.cpp; sourceTree = "<group>"; };
+		B535EF421B1321F5004D647D /* b2dJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2dJson.h; sourceTree = "<group>"; };
+		B535EF431B1321F5004D647D /* b2dJsonImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2dJsonImage.cpp; sourceTree = "<group>"; };
+		B535EF441B1321F5004D647D /* b2dJsonImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2dJsonImage.h; sourceTree = "<group>"; };
+		B535EF461B1321F5004D647D /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "json-forwards.h"; sourceTree = "<group>"; };
+		B535EF471B1321F5004D647D /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		B535EF481B1321F5004D647D /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsoncpp.cpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -293,6 +303,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B535EF401B1321F5004D647D /* Rube */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				46880B8619C43A87006E1F66 /* HelloWorldScene.cpp */,
@@ -348,6 +359,28 @@
 			name = Icons;
 			path = ios;
 			sourceTree = SOURCE_ROOT;
+		};
+		B535EF401B1321F5004D647D /* Rube */ = {
+			isa = PBXGroup;
+			children = (
+				B535EF411B1321F5004D647D /* b2dJson.cpp */,
+				B535EF421B1321F5004D647D /* b2dJson.h */,
+				B535EF431B1321F5004D647D /* b2dJsonImage.cpp */,
+				B535EF441B1321F5004D647D /* b2dJsonImage.h */,
+				B535EF481B1321F5004D647D /* jsoncpp.cpp */,
+				B535EF451B1321F5004D647D /* json */,
+			);
+			path = Rube;
+			sourceTree = "<group>";
+		};
+		B535EF451B1321F5004D647D /* json */ = {
+			isa = PBXGroup;
+			children = (
+				B535EF461B1321F5004D647D /* json-forwards.h */,
+				B535EF471B1321F5004D647D /* json.h */,
+			);
+			path = json;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -496,9 +529,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
 				46880B8A19C43A87006E1F66 /* HelloWorldScene.cpp in Sources */,
+				B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +582,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios",

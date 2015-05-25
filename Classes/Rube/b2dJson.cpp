@@ -18,9 +18,9 @@
 
 #include <istream>
 #include <fstream>
-#include "rubestuff/b2dJson.h"
-#include "rubestuff/json/json.h"
-#include "rubestuff/b2dJsonImage.h"
+#include "b2dJson.h"
+#include "json/json.h"
+#include "b2dJsonImage.h"
 
 using namespace std;
 
