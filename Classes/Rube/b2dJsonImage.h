@@ -19,7 +19,6 @@
 #ifndef B2DJSONIMAGE_H
 #define B2DJSONIMAGE_H
 
-
 #include <string>
 #include <Box2D/Box2D.h>
 
@@ -30,11 +29,12 @@ enum _b2dJsonImagefilterType {
     FT_MAX
 };
 
-class b2dJsonImage {
-public:
+class b2dJsonImage
+{
+  public:
     std::string name;
     std::string file;
-    b2Body* body;
+    b2Body *body;
     b2Vec2 center;
     float angle;
     float scale;
@@ -48,14 +48,14 @@ public:
     b2Vec2 corners[4];
 
     int numPoints;
-    float* points;
-    float* uvCoords;
+    float *points;
+    float *uvCoords;
     int numIndices;
-    unsigned short* indices;
+    unsigned short *indices;
 
     b2dJsonImage();
     ~b2dJsonImage();
-    b2dJsonImage(const b2dJsonImage* other);
+    b2dJsonImage(const b2dJsonImage *other);
 
     void updateCorners(float aspect);
     void updateUVs(float aspect);
