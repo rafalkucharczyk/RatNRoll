@@ -102,7 +102,7 @@ void BasicRUBELayer::updateAfterOrientationChange()
 void BasicRUBELayer::onKeyReleased(EventKeyboard::KeyCode keyCode, cocos2d::Event *event) {}
 
 // Override this in subclasses to specify which .json file to load
-string BasicRUBELayer::getFilename() { return "jointTypes.json"; }
+string BasicRUBELayer::getFilename() { return "test.json"; }
 
 // Override this in subclasses to set the inital view position
 Point BasicRUBELayer::initialWorldOffset()

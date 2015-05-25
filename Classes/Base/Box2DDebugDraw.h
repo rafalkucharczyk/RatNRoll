@@ -24,7 +24,7 @@ class Box2DDebugDraw : public b2Draw
 
   private:
     static const int DEBUG_DRAW_MAX_VERTICES = 64;
-    static const int DEBUG_DRAW_CIRCLE_SEGMENTS = 16;
+    static const int DEBUG_DRAW_CIRCLE_SEGMENTS = 32;
     float mRatio;
     cocos2d::Point mVertices[DEBUG_DRAW_MAX_VERTICES];
     cocos2d::DrawNode *drawNode;

@@ -3,7 +3,9 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Layer
+#include "BasicRUBELayer.h"
+
+class HelloWorld : public BasicRUBELayer
 {
   public:
     // there's no 'id' in cpp, so we recommend returning the class instance
