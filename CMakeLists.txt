@@ -25,10 +25,17 @@ cmake_policy(SET CMP0017 NEW)
 
 cmake_minimum_required(VERSION 2.8)
 
-set(APP_NAME MyGame)
+SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+SET_PROPERTY(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
+
+set(APP_NAME RatNRoll)
 project (${APP_NAME})
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
+
+set(USE_CHIPMUNK false)
+set(USE_BOX2D true)
+add_definitions(-DCC_USE_PHYSICS=0)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
 include(CocosBuildHelpers)
@@ -110,18 +117,25 @@ include_directories(
   /usr/local/include/GLFW
   /usr/include/GLFW
   ${COCOS2D_ROOT}/cocos
-  Classes
+  ${COCOS2D_ROOT}/external
+  Classes/Base
+  Classes/Rube
 )
 
+#AUX_SOURCE_DIRECTORY(Classes/Base BASE_SRC)
+file (GLOB_RECURSE RATNROLL_SRC Classes/*.cpp)
+file (GLOB RATNROLL_HEADERS Classes/*.h)
+
+MESSAGE(STATUS "Dupa")
+MESSAGE(STATUS ${RATNROLL_SRC})
+
 set(GAME_SRC
-  Classes/AppDelegate.cpp
-  Classes/HelloWorldScene.cpp
+  ${RATNROLL_SRC}
   ${PLATFORM_SPECIFIC_SRC}
 )
 
 set(GAME_HEADERS
-  Classes/AppDelegate.h
-  Classes/HelloWorldScene.h
+  ${RATNROLL_HEADERS}
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 
@@ -131,7 +145,7 @@ else()
 add_executable(${APP_NAME} ${GAME_SRC})
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
+target_link_libraries(${APP_NAME} cocos2d box2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 

@@ -27,7 +27,6 @@ BasicRUBELayer::BasicRUBELayer()
 
 BasicRUBELayer::~BasicRUBELayer()
 {
-    m_drawNode->release();
     unscheduleUpdate();
     clear();
 }
