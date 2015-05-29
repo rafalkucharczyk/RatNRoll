@@ -3,9 +3,9 @@
 
 #include "cocos2d.h"
 
-#include "BasicRUBELayer.h"
+#include "RUBELayer.h"
 
-class HelloWorld : public BasicRUBELayer
+class HelloWorld : public RUBELayer
 {
   public:
     // there's no 'id' in cpp, so we recommend returning the class instance
@@ -21,6 +21,10 @@ class HelloWorld : public BasicRUBELayer
 
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
+
+    virtual std::string getFilename();
+    virtual cocos2d::Point initialWorldOffset();
+    virtual float initialWorldScale();
 };
 
 #endif // __HELLOWORLD_SCENE_H__

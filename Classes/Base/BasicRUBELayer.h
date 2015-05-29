@@ -50,29 +50,19 @@ class BasicRUBELayer : public cocos2d::Layer
     b2Body *m_mouseJointGroundBody;    // the other body for the mouse joint (static, no fixtures)
     cocos2d::Touch *m_mouseJointTouch; // keep track of which touch started the mouse joint
 
-    cocos2d::Menu *m_menuLayer; // only for this demo project, you can remove this in your own app
-
   public:
     BasicRUBELayer();
     virtual ~BasicRUBELayer();
 
-    static cocos2d::Scene *
-    scene();             // returns a Scene that contains the HelloWorld as the only child
     virtual bool init(); // virtual functions cannot be used in the constructor, but we want to
                          // allow some customization from subclasses
-    CREATE_FUNC(BasicRUBELayer);
 
-    virtual cocos2d::Layer *setupMenuLayer(); // only for this demo project
-    void updateAfterOrientationChange(); // only for this demo project (repositions the menu), you
-                                         // can remove this in your own app
-
-    void onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event *event);
-
-    virtual std::string
-    getFilename(); // override this in subclasses to specify which .json file to load
-    virtual cocos2d::Point
-    initialWorldOffset(); // override this in subclasses to set the inital view position
-    virtual float initialWorldScale(); // override this in subclasses to set the initial view scale
+    // override this in subclasses to specify which .json file to load
+    virtual std::string getFilename() = 0;
+    // override this in subclasses to set the inital view position
+    virtual cocos2d::Point initialWorldOffset() = 0;
+    // override this in subclasses to set the initial view scale
+    virtual float initialWorldScale() = 0;
 
     virtual void loadWorld(); // attempts to load the world from the .json file given by getFilename
     virtual void afterLoadProcessing(b2dJson *json); // override this in a subclass to do something

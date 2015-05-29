@@ -374,6 +374,26 @@
         "type" : "static"
       }
     ],
+    "metaimage" : 
+    [
+      
+      {
+        "aspectScale" : 1,
+        "body" : 1,
+        "center" : 
+        {
+          "x" : 0.1201747804880142,
+          "y" : 0.1918845176696777
+        },
+        "file" : "../../../Downloads/rat/rat.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 1,
+        "name" : "image0",
+        "opacity" : 0.5,
+        "scale" : 1
+      }
+    ],
     "metajoint" : 
     [
       

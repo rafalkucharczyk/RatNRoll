@@ -58,3 +58,33 @@ void HelloWorld::menuCloseCallback(Ref *pSender)
     exit(0);
 #endif
 }
+
+// Override this in subclasses to specify which .json file to load
+std::string HelloWorld::getFilename() { return "test.json"; }
+
+// Override this in subclasses to set the inital view position
+Point HelloWorld::initialWorldOffset()
+{
+    // This function should return the location in pixels to place
+    // the (0,0) point of the physics world. The screen position
+    // will be relative to the bottom left corner of the screen.
+
+    // place (0,0) of physics world at center of bottom edge of screen
+    Size s = Director::getInstance()->getWinSize();
+    return Vec2(s.width / 2, 0);
+}
+
+// Override this in subclasses to set the inital view scale
+float HelloWorld::initialWorldScale()
+{
+    // This method should return the number of pixels for one physics unit.
+    // When creating the scene in RUBE I can see that the jointTypes scene
+    // is about 8 units high, so I want the height of the view to be about
+    // 10 units, which for iPhone in landscape (480x320) we would return 32.
+    // But for an iPad in landscape (1024x768) we would return 76.8, so to
+    // handle the general case, we can make the return value depend on the
+    // current screen height.
+
+    Size s = Director::getInstance()->getWinSize();
+    return s.height / 10; // screen will be 10 physics units high
+}
