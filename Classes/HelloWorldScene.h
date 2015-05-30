@@ -25,6 +25,8 @@ class HelloWorld : public RUBELayer
     virtual std::string getFilename();
     virtual cocos2d::Point initialWorldOffset();
     virtual float initialWorldScale();
+
+    virtual bool drawDebugData() { return false; }
 };
 
 #endif // __HELLOWORLD_SCENE_H__

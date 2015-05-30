@@ -90,6 +90,8 @@ class BasicRUBELayer : public cocos2d::Layer
         cocos2d::Touch *touch); // returns the first fixture found under the touch location
 
     virtual bool allowPinchZoom(); // return false from this function to prevent pinch zoom and pan
+
+    virtual bool drawDebugData() { return true; }
 };
 
 #endif /* BASIC_RUBE_LAYER */

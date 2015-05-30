@@ -152,20 +152,24 @@ void BasicRUBELayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t tr
         return;
 
     m_drawNode->clear();
-    m_world->DrawDebugData();
 
-    // Draw mouse joint line
-    if (m_mouseJoint) {
-        b2Vec2 p1 = m_mouseJoint->GetAnchorB();
-        b2Vec2 p2 = m_mouseJoint->GetTarget();
+    if (drawDebugData()) {
 
-        b2Color c;
-        c.Set(0.0f, 1.0f, 0.0f);
-        m_debugDraw->DrawPoint(p1, 4.0f, c);
-        m_debugDraw->DrawPoint(p2, 4.0f, c);
+        m_world->DrawDebugData();
 
-        c.Set(0.8f, 0.8f, 0.8f);
-        m_debugDraw->DrawSegment(p1, p2, c);
+        // Draw mouse joint line
+        if (m_mouseJoint) {
+            b2Vec2 p1 = m_mouseJoint->GetAnchorB();
+            b2Vec2 p2 = m_mouseJoint->GetTarget();
+
+            b2Color c;
+            c.Set(0.0f, 1.0f, 0.0f);
+            m_debugDraw->DrawPoint(p1, 4.0f, c);
+            m_debugDraw->DrawPoint(p2, 4.0f, c);
+
+            c.Set(0.8f, 0.8f, 0.8f);
+            m_debugDraw->DrawSegment(p1, p2, c);
+        }
     }
 }
 
