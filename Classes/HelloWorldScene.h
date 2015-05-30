@@ -26,7 +26,7 @@ class HelloWorld : public RUBELayer
     virtual cocos2d::Point initialWorldOffset();
     virtual float initialWorldScale();
 
-    virtual bool drawDebugData() { return false; }
+    virtual bool drawDebugData() { return true; }
 };
 
 #endif // __HELLOWORLD_SCENE_H__
