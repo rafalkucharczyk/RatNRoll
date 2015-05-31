@@ -470,7 +470,7 @@
 				LastUpgradeCheck = 0630;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = MDDB52YB8L;
+						DevelopmentTeam = 5T2E5APS2H;
 					};
 				};
 			};
@@ -637,7 +637,7 @@
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
@@ -672,7 +672,7 @@
 					"$(SRCROOT)/../cocos2d/cocos/platform/ios/Simulation",
 				);
 				INFOPLIST_FILE = ios/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"$(_COCOS_LIB_IOS_BEGIN)",
