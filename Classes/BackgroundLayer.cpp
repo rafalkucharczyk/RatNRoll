@@ -22,12 +22,13 @@ void BackgroundLayer::addBackgroundItems(int count)
 
 void BackgroundLayer::insertBackgroundItem()
 {
-    Vec2 initialPosition = getRandomStartPoint();
-    Vec2 targetPosition = getTargetPoint(initialPosition);
+    auto sprite = Sprite::create(itemFileName);
+
+    Vec2 initialPosition = getRandomStartPoint(sprite->getContentSize());
+    Vec2 targetPosition = getTargetPoint(initialPosition, sprite->getContentSize());
 
     float lengthRatio = (targetPosition - initialPosition).length() / visibleSize.length();
 
-    auto sprite = Sprite::create(itemFileName);
     sprite->setPosition(initialPosition);
     sprite->setScale(1 + 0.5 * rand_0_1());
     sprite->runAction(RepeatForever::create(RotateBy::create(2 + 2 * rand_0_1(), 360)));
@@ -40,35 +41,50 @@ void BackgroundLayer::insertBackgroundItem()
     addChild(sprite);
 }
 
-Vec2 BackgroundLayer::getRandomStartPoint()
+Vec2 BackgroundLayer::getRandomStartPoint(const Size &spriteSize)
 {
     if (rand_minus1_1() > 0) {
-        return Vec2(0, rand_0_1() * visibleSize.y);
+        return Vec2(-spriteSize.width, rand_0_1() * visibleSize.y); // left edge
     }
 
-    return Vec2(rand_0_1() * visibleSize.x, visibleSize.y);
+    return Vec2(rand_0_1() * visibleSize.x, visibleSize.y - spriteSize.height); // top edge
 }
 
-Vec2 BackgroundLayer::getTargetPoint(const Vec2 &startPoint)
+Vec2 BackgroundLayer::getTargetPoint(const Vec2 &startPoint, const cocos2d::Size &spriteSize)
 {
+    const float X = spriteSize.width;
+    const float Y = spriteSize.height;
+
     vector<Vec2> vertices = {
-        Vec2(0, visibleSize.y),             // top-left
-        Vec2(visibleSize.x, visibleSize.y), // top-right
-        Vec2(visibleSize.x, 0),             // bottom-right
-        Vec2(0, 0),                         // bottom-left
-        Vec2(0, visibleSize.y)              // top-left
+        Vec2(visibleSize.x + X, visibleSize.y + Y), // top-right
+        Vec2(visibleSize.x + X, -Y),                // bottom-right
+        Vec2(-X, -Y),                               // bottom-left
+        Vec2(-X, visibleSize.y + Y),                // top-left
+        Vec2(visibleSize.x + X, visibleSize.y + Y)  // top-right
     };
 
     for (auto i = vertices.begin(); i != vertices.end() - 1; ++i) {
         Vec2 p = Vec2::getIntersectPoint(*i, *(i + 1), startPoint, startPoint + itemsDirection);
 
-        if (p != startPoint && p != Vec2::ZERO && p.x >= 0 && p.x <= visibleSize.x && p.y >= 0 &&
-            p.y <= visibleSize.y) {
+        if (p != startPoint && p != Vec2::ZERO && p.x >= -X && p.x <= visibleSize.x + X &&
+            p.y >= -Y && p.y <= visibleSize.y + Y) {
             return p;
         }
     }
 
     return Vec2::ZERO;
+}
+
+BackgroundLayer::BackgroundItem::BackgroundItem(cocos2d::Sprite *sprite, float startTime,
+                                                cocos2d::Vec2 point, float duration)
+    : sprite(sprite), startTime(startTime), targetPoint(point), duration(duration)
+{
+    initialPoint = sprite->getPosition();
+}
+
+cocos2d::Vec2 BackgroundLayer::BackgroundItem::getPositionForTime(float time)
+{
+    return initialPoint + (targetPoint - initialPoint) * ((time - startTime) * (1 / duration));
 }
 
 bool BackgroundLayer::init()
@@ -79,7 +95,8 @@ bool BackgroundLayer::init()
 
     auto sprite = Sprite::create(backgroundFileName);
     sprite->setPosition(visibleSize / 2);
-    sprite->setScale(1.2);
+    sprite->setScale(visibleSize.x / sprite->getContentSize().width,
+                     visibleSize.y / sprite->getContentSize().height);
     addChild(sprite);
 
     scheduleUpdate();

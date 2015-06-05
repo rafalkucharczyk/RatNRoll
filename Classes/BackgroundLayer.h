@@ -23,23 +23,15 @@ class BackgroundLayer : public cocos2d::Layer
   private:
     void addBackgroundItems(int count);
     void insertBackgroundItem();
-    cocos2d::Vec2 getRandomStartPoint();
-    cocos2d::Vec2 getTargetPoint(const cocos2d::Vec2 &startPoint);
+    cocos2d::Vec2 getRandomStartPoint(const cocos2d::Size &spriteSize);
+    cocos2d::Vec2 getTargetPoint(const cocos2d::Vec2 &startPoint, const cocos2d::Size &spriteSize);
 
   private:
     struct BackgroundItem {
         BackgroundItem(cocos2d::Sprite *sprite, float startTime, cocos2d::Vec2 point,
-                       float duration)
-            : sprite(sprite), startTime(startTime), targetPoint(point), duration(duration)
-        {
-            initialPoint = sprite->getPosition();
-        }
+                       float duration);
 
-        cocos2d::Vec2 getPositionForTime(float time)
-        {
-            return initialPoint +
-                   (targetPoint - initialPoint) * ((time - startTime) * (1 / duration));
-        }
+        cocos2d::Vec2 getPositionForTime(float time);
 
         cocos2d::Sprite *sprite;
         float startTime, duration;
