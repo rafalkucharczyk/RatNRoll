@@ -47,6 +47,7 @@ void RUBELayer::afterLoadProcessing(b2dJson *json)
         RUBEImageInfo *imgInfo = new RUBEImageInfo;
         imgInfo->sprite = sprite;
         imgInfo->name = img->name;
+        imgInfo->file = img->file;
         imgInfo->body = img->body;
         imgInfo->scale = img->scale;
         imgInfo->aspectScale = img->aspectScale;
@@ -94,16 +95,39 @@ void RUBELayer::setImagePositionsFromPhysicsBodies()
         RUBEImageInfo *imgInfo = *it;
         Point pos = imgInfo->center;
         float angle = -imgInfo->angle;
+
         if (imgInfo->body) {
-            // need to rotate image local center by body angle
-            b2Vec2 localPos(pos.x, pos.y);
-            b2Rot rot(imgInfo->body->GetAngle());
-            localPos = b2Mul(rot, localPos) + imgInfo->body->GetPosition();
-            pos.x = localPos.x;
-            pos.y = localPos.y;
-            angle += -imgInfo->body->GetAngle();
+            if (imgInfo->name == "rat") // special handling for rat image
+            {
+                // adapt position
+                b2Vec2 v = imgInfo->body->GetPosition();
+                b2Fixture *fixture = imgInfo->body->GetFixtureList();
+                assert(fixture); // rat model is just a ball
+                float radius = fixture->GetShape()->m_radius;
+                pos = Vec2(v.x, v.y + 2 * radius);
+
+                // rotate texture as it was attached to hook point
+                b2Vec2 hookPoint(0, 10);
+
+                angle += acos(b2Dot(hookPoint, hookPoint - v) / (hookPoint - v).Length() /
+                              hookPoint.Length());
+
+                if (v.x > 0) {
+                    angle = -angle;
+                }
+            } else {
+                // need to rotate image local center by body angle
+                b2Vec2 localPos(pos.x, pos.y);
+                b2Rot rot(imgInfo->body->GetAngle());
+                localPos = b2Mul(rot, localPos) + imgInfo->body->GetPosition();
+                pos.x = localPos.x;
+                pos.y = localPos.y;
+                angle += -imgInfo->body->GetAngle();
+            }
         }
+
         imgInfo->sprite->setRotation(CC_RADIANS_TO_DEGREES(angle));
+
         imgInfo->sprite->setPosition(pos);
     }
 }

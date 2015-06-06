@@ -13,14 +13,14 @@ Scene *LevelLayer::createScene()
 {
     auto scene = Scene::create();
 
-    auto layer = LevelLayer::create();
-    scene->addChild(layer);
-
-    // auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
-    // scene->addChild(backgroundLayer);
+    auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
+    scene->addChild(backgroundLayer);
 
     auto levelMenuLayer = LevelMenuLayer::create();
     scene->addChild(levelMenuLayer);
+
+    auto layer = LevelLayer::create();
+    scene->addChild(layer);
 
     return scene;
 }
@@ -53,7 +53,7 @@ void LevelLayer::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transfor
         ratCenter, ratCenter + ratBody->GetLinearVelocityFromLocalPoint(b2Vec2_zero), blueColor);
 }
 
-std::string LevelLayer::getFilename() { return "test1.json"; }
+std::string LevelLayer::getFilename() { return "test.json"; }
 
 Point LevelLayer::initialWorldOffset()
 {
@@ -82,6 +82,8 @@ float LevelLayer::initialWorldScale()
 
 void LevelLayer::afterLoadProcessing(b2dJson *json)
 {
+    RUBELayer::afterLoadProcessing(json);
+
     ratBody = json->getBodyByName("rat");
     earthBody = json->getBodyByName("earth");
 
@@ -106,7 +108,7 @@ void LevelLayer::update(float dt)
     float v = b2Dot(ratBody->GetLinearVelocity(), propellerForce);
 
     if (v < desiredSpeed) {
-        propellerForce *= (desiredSpeed - v) / 15;
+        propellerForce *= -(desiredSpeed - v) / 25;
 
         // CCLOG("%f %f", v, desiredSpeed - v);
 

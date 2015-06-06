@@ -38,6 +38,16 @@
       "bitplane32"
     ]
   },
+  "customPropertyDefs" : 
+  [
+    
+    {
+      "class" : "image",
+      "displayName" : "customRotation",
+      "name" : "customRotation",
+      "type" : "vec2"
+    }
+  ],
   "metaworld" : 
   {
     "allowSleep" : true,
@@ -48,10 +58,7 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
-      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
-      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
-      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -62,6 +69,49 @@
     },
     "metabody" : 
     [
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 1,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                0.9855017662048340,
+                -0.9855003356933594,
+                -0.9855003356933594,
+                0.9855017662048340
+              ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+            }
+          }
+        ],
+        "id" : 1,
+        "linearVelocity" : 0,
+        "name" : "body0",
+        "position" : 
+        {
+          "x" : -3.623486757278442,
+          "y" : 3.066068887710571
+        },
+        "type" : "static"
+      },
       
       {
         "angle" : 0,
@@ -96,6 +146,49 @@
         {
           "x" : -6.292052268981934,
           "y" : -2.709017276763916
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "friction" : 0.2,
+            "id" : 3,
+            "name" : "fixture0",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                0.9855017662048340,
+                -0.9855003356933594,
+                -0.9855003356933594,
+                0.9855017662048340
+              ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+            }
+          }
+        ],
+        "id" : 3,
+        "linearVelocity" : 0,
+        "name" : "body0",
+        "position" : 
+        {
+          "x" : 3.623486280441284,
+          "y" : 3.066068887710571
         },
         "type" : "static"
       },
@@ -238,145 +331,10 @@
         "name" : "rat",
         "position" : 
         {
-          "x" : 0.04923613369464874,
-          "y" : 5.605523586273193
+          "x" : 0,
+          "y" : 5.605519771575928
         },
         "type" : "dynamic"
-      },
-      
-      {
-        "angle" : 0,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "friction" : 0.2,
-            "id" : 17,
-            "name" : "fixture5",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "polygon"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : [ -0.5, 0.5, 0.5, -0.5 ],
-              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
-            }
-          }
-        ],
-        "id" : 16,
-        "linearVelocity" : 0,
-        "name" : "body3",
-        "position" : 
-        {
-          "x" : 0.2772099971771240,
-          "y" : 10
-        },
-        "type" : "static"
-      },
-      
-      {
-        "angle" : 0,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "id" : 25,
-        "linearVelocity" : 0,
-        "name" : "body4",
-        "position" : 
-        {
-          "x" : 0.2108106613159180,
-          "y" : 7.544224262237549
-        },
-        "type" : "static"
-      },
-      
-      {
-        "angle" : 0,
-        "angularVelocity" : 0,
-        "awake" : true,
-        "fixture" : 
-        [
-          
-          {
-            "density" : 1,
-            "friction" : 0.2,
-            "id" : 29,
-            "name" : "fixture0",
-            "shapes" : 
-            [
-              
-              {
-                "type" : "line"
-              }
-            ],
-            "vertices" : 
-            {
-              "x" : 
-              [
-                -2.497975587844849,
-                -2.535769701004028,
-                -2.473217964172363,
-                -2.246266126632690,
-                -1.959804058074951,
-                -1.663560390472412,
-                -1.295490264892578,
-                -0.8951306343078613,
-                -0.5006413459777832,
-                -0.1372575759887695,
-                0.1803201436996460,
-                0.6151967048645020,
-                0.9390121698379517,
-                1.201429128646851,
-                1.389761209487915,
-                1.628980398178101,
-                1.754481792449951,
-                2.021666765213013,
-                2.327041625976562,
-                2.425625085830688,
-                2.351163625717163
-              ],
-              "y" : 
-              [
-                -1.819236278533936,
-                -1.202460289001465,
-                -1.062883853912354,
-                -0.7592029571533203,
-                -0.4695172309875488,
-                -0.2805981636047363,
-                -0.06461000442504883,
-                0.05636358261108398,
-                0.1238479614257812,
-                0.1587023735046387,
-                0.1594548225402832,
-                0.1072464436292648,
-                0.008280470967292786,
-                -0.1030944883823395,
-                -0.2078868746757507,
-                -0.3501144051551819,
-                -0.4724476933479309,
-                -0.6906757950782776,
-                -1.036472082138062,
-                -1.177806735038757,
-                -1.706110715866089
-              ]
-            }
-          }
-        ],
-        "id" : 28,
-        "linearVelocity" : 0,
-        "name" : "body0",
-        "position" : 
-        {
-          "x" : 0.06516706943511963,
-          "y" : 5.824719905853271
-        },
-        "type" : "static"
       },
       
       {
@@ -409,6 +367,57 @@
           "y" : 3.958116054534912
         },
         "type" : "dynamic"
+      }
+    ],
+    "metaimage" : 
+    [
+      
+      {
+        "aspectScale" : 1,
+        "body" : 5,
+        "center" : 
+        {
+          "x" : 0,
+          "y" : 0.006713628768920898
+        },
+        "file" : "earth01.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 1,
+        "name" : "image0",
+        "opacity" : 0.5,
+        "renderOrder" : 1,
+        "scale" : 5.109861850738525
+      },
+      
+      {
+        "aspectScale" : 1,
+        "body" : 6,
+        "center" : 
+        {
+          "x" : 0.01345746219158173,
+          "y" : 0.3287949562072754
+        },
+        "customProperties" : 
+        [
+          
+          {
+            "name" : "customRotation",
+            "vec2" : 
+            {
+              "x" : 0,
+              "y" : 50.0
+            }
+          }
+        ],
+        "file" : "rat.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 2,
+        "name" : "rat",
+        "opacity" : 0.5,
+        "renderOrder" : 1,
+        "scale" : 1
       }
     ],
     "metajoint" : 

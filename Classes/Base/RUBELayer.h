@@ -25,7 +25,8 @@
 struct RUBEImageInfo {
 
     cocos2d::Sprite *sprite; // the image
-    std::string name;        // the file the image was loaded from
+    std::string name;        // the name of the image
+    std::string file;        // the file the image was loaded from
     class b2Body *body;      // the body this image is attached to (can be NULL)
     float scale;             // a scale of 1 means the image is 1 physics unit high
     float aspectScale;       // modify the natural aspect of the image
