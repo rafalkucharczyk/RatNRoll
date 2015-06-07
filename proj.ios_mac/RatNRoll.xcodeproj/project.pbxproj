@@ -73,6 +73,8 @@
 		B552BDFC1B1CE54E00D4851A /* LevelLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BDFA1B1CE54E00D4851A /* LevelLayer.cpp */; };
 		B552BE011B2236DC00D4851A /* BackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BDFF1B2236DC00D4851A /* BackgroundLayer.cpp */; };
 		B552BE041B223D3500D4851A /* LevelMenuLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE021B223D3500D4851A /* LevelMenuLayer.cpp */; };
+		B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE051B237A0800D4851A /* PostLevelLayer.cpp */; };
+		B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE081B24234A00D4851A /* GameFlow.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -189,6 +191,10 @@
 		B552BE001B2236DC00D4851A /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		B552BE021B223D3500D4851A /* LevelMenuLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelMenuLayer.cpp; sourceTree = "<group>"; };
 		B552BE031B223D3500D4851A /* LevelMenuLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelMenuLayer.h; sourceTree = "<group>"; };
+		B552BE051B237A0800D4851A /* PostLevelLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostLevelLayer.cpp; sourceTree = "<group>"; };
+		B552BE061B237A0800D4851A /* PostLevelLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostLevelLayer.h; sourceTree = "<group>"; };
+		B552BE081B24234A00D4851A /* GameFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameFlow.cpp; sourceTree = "<group>"; };
+		B552BE091B24234A00D4851A /* GameFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameFlow.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -339,10 +345,14 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				B552BDFF1B2236DC00D4851A /* BackgroundLayer.cpp */,
 				B552BE001B2236DC00D4851A /* BackgroundLayer.h */,
+				B552BE081B24234A00D4851A /* GameFlow.cpp */,
+				B552BE091B24234A00D4851A /* GameFlow.h */,
 				B552BE021B223D3500D4851A /* LevelMenuLayer.cpp */,
 				B552BE031B223D3500D4851A /* LevelMenuLayer.h */,
 				B552BDFA1B1CE54E00D4851A /* LevelLayer.cpp */,
 				B552BDFB1B1CE54E00D4851A /* LevelLayer.h */,
+				B552BE051B237A0800D4851A /* PostLevelLayer.cpp */,
+				B552BE061B237A0800D4851A /* PostLevelLayer.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -585,6 +595,7 @@
 				B552BDFC1B1CE54E00D4851A /* LevelLayer.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
+				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
 				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
 				B552BE011B2236DC00D4851A /* BackgroundLayer.cpp in Sources */,
 				B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */,
@@ -592,6 +603,7 @@
 				B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */,
 				B552BE041B223D3500D4851A /* LevelMenuLayer.cpp in Sources */,
 				B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,

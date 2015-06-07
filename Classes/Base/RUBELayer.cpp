@@ -107,7 +107,7 @@ void RUBELayer::setImagePositionsFromPhysicsBodies()
                 pos = Vec2(v.x, v.y + 2 * radius);
 
                 // rotate texture as it was attached to hook point
-                b2Vec2 hookPoint(0, 10);
+                b2Vec2 hookPoint(0, 15);
 
                 angle += acos(b2Dot(hookPoint, hookPoint - v) / (hookPoint - v).Length() /
                               hookPoint.Length());

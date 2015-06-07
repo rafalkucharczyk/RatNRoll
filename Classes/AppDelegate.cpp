@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
-#include "LevelLayer.h"
+
+#include "GameFlow.h"
 
 USING_NS_CC;
 
@@ -27,8 +28,9 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    // initialize director
     auto director = Director::getInstance();
+
+    // initialize director
     auto glview = director->getOpenGLView();
     if (!glview) {
         glview = GLViewImpl::create("RatNRoll");
@@ -43,10 +45,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     register_all_packages();
 
-    // create a scene. it's an autorelease object
-    auto scene = LevelLayer::createScene();
+    auto scene = GameFlow::createLevelScene();
 
-    // run
     director->runWithScene(scene);
 
     return true;

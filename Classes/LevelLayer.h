@@ -5,11 +5,12 @@
 
 #include "RUBELayer.h"
 
+class LevelContactListener;
+
 class LevelLayer : public RUBELayer
 {
   public:
     LevelLayer();
-    static cocos2d::Scene *createScene();
 
     virtual bool init();
 
@@ -26,14 +27,25 @@ class LevelLayer : public RUBELayer
 
     virtual void update(float dt);
 
-    virtual bool drawDebugData() { return true; }
+    virtual bool drawDebugData() { return false; }
+
+    void setGameFinishedCallback(std::function<void()> callback)
+    {
+        gameFinishedCallback = callback;
+    }
 
   private:
-    b2Body *ratBody, *earthBody;
+    b2Body *ratBody, *earthBody, *cageBody;
 
     b2Vec2 propellerForce;
 
     float totalTime;
+
+    std::shared_ptr<LevelContactListener> contactListener;
+
+    friend class LevelContactListener;
+
+    std::function<void()> gameFinishedCallback;
 };
 
 #endif // __LEVEL_SCENE_H__
