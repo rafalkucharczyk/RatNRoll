@@ -109,11 +109,15 @@ void RUBELayer::setImagePositionsFromPhysicsBodies()
                 // rotate texture as it was attached to hook point
                 b2Vec2 hookPoint(0, 15);
 
-                angle += acos(b2Dot(hookPoint, hookPoint - v) / (hookPoint - v).Length() /
-                              hookPoint.Length());
+                float d = acos(b2Dot(hookPoint, hookPoint - v) / (hookPoint - v).Length() /
+                               hookPoint.Length());
 
-                if (v.x > 0) {
-                    angle = -angle;
+                if (!isnan(d)) {
+                    angle += d;
+
+                    if (v.x > 0) {
+                        angle = -angle;
+                    }
                 }
             } else {
                 // need to rotate image local center by body angle
