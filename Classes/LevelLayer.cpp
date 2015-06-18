@@ -14,11 +14,7 @@ class LevelContactListener : public b2ContactListener
 
     void BeginContact(b2Contact *contact)
     {
-        b2Body *bodyA = contact->GetFixtureA()->GetBody();
-        b2Body *bodyB = contact->GetFixtureB()->GetBody();
-
-        if ((bodyA == levelLayer->ratBody && bodyB == levelLayer->cageBody) ||
-            (bodyB == levelLayer->ratBody && bodyA == levelLayer->cageBody)) {
+        if (isContact(contact, levelLayer->ratBody, levelLayer->cageBody)) {
             if (!gameFinishedNotified) {
                 if (levelLayer->gameFinishedCallback) {
                     levelLayer->gameFinishedCallback();
@@ -27,9 +23,29 @@ class LevelContactListener : public b2ContactListener
                 gameFinishedNotified = true;
             }
         }
+
+        for (LevelLayer::BodiesList::const_iterator i = levelLayer->itemsBodies.begin();
+             i != levelLayer->itemsBodies.end(); i++) {
+            if (isContact(contact, *i, levelLayer->cageBody) ||
+                isContact(contact, *i, levelLayer->ratBody)) {
+                levelLayer->itemsToRemove.push_back(*i);
+                i = levelLayer->itemsBodies.erase(i);
+            }
+        }
     }
 
     void EndContact(b2Contact *contact) {}
+
+  private:
+    // helper function to figure out if there is a contact between two bodies
+    bool isContact(b2Contact *contact, b2Body *firstBody, b2Body *secondBody)
+    {
+        b2Body *bodyA = contact->GetFixtureA()->GetBody();
+        b2Body *bodyB = contact->GetFixtureB()->GetBody();
+
+        return ((bodyA == firstBody && bodyB == secondBody) ||
+                (bodyB == firstBody && bodyA == secondBody));
+    }
 
   private:
     LevelLayer *levelLayer;
@@ -49,6 +65,8 @@ bool LevelLayer::init()
     }
 
     m_world->SetContactListener(contactListener.get());
+
+    schedule(schedule_selector(LevelLayer::dropItem), 3.0);
 
     return true;
 }
@@ -110,6 +128,10 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
     earthBody = json->getBodyByName("earth");
     cageBody = json->getBodyByName("cage");
 
+    b2Body *itemSpeedup = json->getBodyByName("item_speedup");
+    assert(itemSpeedup);
+    itemSpeedupJson = json->b2j(itemSpeedup);
+
     assert(ratBody);
     assert(earthBody);
     assert(cageBody);
@@ -118,6 +140,8 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
 void LevelLayer::update(float dt)
 {
     RUBELayer::update(dt);
+
+    removeOutstandingItems();
 
     totalTime += dt;
 
@@ -137,4 +161,24 @@ void LevelLayer::update(float dt)
 
         ratBody->ApplyLinearImpulse(propellerForce, ratBody->GetWorldCenter(), true);
     }
+}
+
+void LevelLayer::dropItem(float t)
+{
+    b2Body *body = jsonParser.j2b2Body(m_world, itemSpeedupJson);
+    duplicateImageForBody("item_speedup", body);
+    body->ApplyAngularImpulse(0.1 * body->GetMass(), true);
+
+    body->SetTransform(b2Vec2(rand_minus1_1() * 1.5, 10), rand_0_1() * 2 * M_PI);
+
+    itemsBodies.push_back(body);
+}
+
+void LevelLayer::removeOutstandingItems()
+{
+    for (BodiesList::const_iterator i = itemsToRemove.begin(); i != itemsToRemove.end(); i++) {
+        removeBodyFromWorld(*i);
+    }
+
+    itemsToRemove.clear();
 }

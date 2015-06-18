@@ -12,6 +12,8 @@
 
 #include "BasicRUBELayer.h"
 
+class b2dJsonImage;
+
 //
 //  RUBEImageInfo
 //
@@ -35,14 +37,21 @@ struct RUBEImageInfo {
     float opacity;           // 0 - 1
     bool flip;               // horizontal flip
     int colorTint[4];        // 0 - 255 RGBA values
+    float renderOrder;
 };
 
 class RUBELayer : public BasicRUBELayer
 {
+  private:
+    void fillRUBEImageInfoFromb2dJsonImage(const b2dJsonImage &jsonImage, RUBEImageInfo &imageInfo);
+
   protected:
     std::set<RUBEImageInfo *>
         m_imageInfos; // holds some information about images in the scene, most importantly the
                       //     body they are attached to and their position relative to that body
+
+    void addSpriteFromRubeImageInfo(RUBEImageInfo *imageInfo);
+    void duplicateImageForBody(const std::string &name, b2Body *body);
 
   public:
     virtual void afterLoadProcessing(b2dJson *json); // overrides base class

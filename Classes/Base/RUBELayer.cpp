@@ -25,45 +25,75 @@ void RUBELayer::afterLoadProcessing(b2dJson *json)
     for (int i = 0; i < b2dImages.size(); i++) {
         b2dJsonImage *img = b2dImages[i];
 
-        CCLOG("Loading image: %s", img->file.c_str());
-
-        // try to load the sprite image, and ignore if it fails
-        Sprite *sprite = Sprite::create(img->file.c_str());
-        if (!sprite)
-            continue;
-
-        // add the sprite to this layer and set the render order
-        addChild(sprite);
-        reorderChild(sprite, img->renderOrder); // watch out - RUBE render order is float but
-                                                // cocos2d uses integer (why not float?)
-
-        // these will not change during simulation so we can set them now
-        sprite->setFlippedX(img->flip);
-        sprite->setColor(Color3B(img->colorTint[0], img->colorTint[1], img->colorTint[2]));
-        sprite->setOpacity(img->colorTint[3]);
-        sprite->setScale(img->scale / sprite->getContentSize().height);
-
         // create an info structure to hold the info for this image (body and position etc)
         RUBEImageInfo *imgInfo = new RUBEImageInfo;
-        imgInfo->sprite = sprite;
-        imgInfo->name = img->name;
-        imgInfo->file = img->file;
-        imgInfo->body = img->body;
-        imgInfo->scale = img->scale;
-        imgInfo->aspectScale = img->aspectScale;
-        imgInfo->angle = img->angle;
-        imgInfo->center = Vec2(img->center.x, img->center.y);
-        imgInfo->opacity = img->opacity;
-        imgInfo->flip = img->flip;
-        for (int n = 0; n < 4; n++)
-            imgInfo->colorTint[n] = img->colorTint[n];
 
-        // add the info for this image to the list
-        m_imageInfos.insert(imgInfo);
+        fillRUBEImageInfoFromb2dJsonImage(*img, *imgInfo);
+
+        addSpriteFromRubeImageInfo(imgInfo);
     }
 
     // start the images at their current positions on the physics bodies
     setImagePositionsFromPhysicsBodies();
+}
+
+void RUBELayer::fillRUBEImageInfoFromb2dJsonImage(const b2dJsonImage &jsonImage,
+                                                  RUBEImageInfo &imageInfo)
+{
+    imageInfo.sprite = NULL;
+    imageInfo.name = jsonImage.name;
+    imageInfo.file = jsonImage.file;
+    imageInfo.body = jsonImage.body;
+    imageInfo.scale = jsonImage.scale;
+    imageInfo.aspectScale = jsonImage.aspectScale;
+    imageInfo.angle = jsonImage.angle;
+    imageInfo.center = Vec2(jsonImage.center.x, jsonImage.center.y);
+    imageInfo.opacity = jsonImage.opacity;
+    imageInfo.flip = jsonImage.flip;
+    imageInfo.renderOrder = jsonImage.renderOrder;
+    for (int n = 0; n < 4; n++) {
+        imageInfo.colorTint[n] = jsonImage.colorTint[n];
+    }
+}
+
+void RUBELayer::addSpriteFromRubeImageInfo(RUBEImageInfo *imageInfo)
+{
+    m_imageInfos.insert(imageInfo);
+
+    Sprite *sprite = Sprite::create(imageInfo->file.c_str());
+    imageInfo->sprite = sprite;
+
+    assert(sprite);
+
+    addChild(sprite);
+    reorderChild(sprite, imageInfo->renderOrder);
+
+    sprite->setFlippedX(imageInfo->flip);
+    sprite->setColor(
+        Color3B(imageInfo->colorTint[0], imageInfo->colorTint[1], imageInfo->colorTint[2]));
+    sprite->setOpacity(imageInfo->colorTint[3]);
+    sprite->setScale(imageInfo->scale / sprite->getContentSize().height);
+}
+
+void RUBELayer::duplicateImageForBody(const std::string &name, b2Body *body)
+{
+    RUBEImageInfo *imageInfo = NULL;
+
+    for (std::set<RUBEImageInfo *>::const_iterator i = m_imageInfos.begin();
+         i != m_imageInfos.end(); i++) {
+        if ((*i)->name == name) {
+            imageInfo = *i;
+            break;
+        }
+    }
+
+    assert(imageInfo);
+
+    RUBEImageInfo *newImageInfo = new RUBEImageInfo(*imageInfo);
+    newImageInfo->sprite = NULL;
+    newImageInfo->body = body;
+
+    addSpriteFromRubeImageInfo(newImageInfo);
 }
 
 // This method should undo anything that was done by afterLoadProcessing, and make sure

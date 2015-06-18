@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 
 #include "RUBELayer.h"
+#include "b2dJson.h"
 
 class LevelContactListener;
 
@@ -35,9 +36,21 @@ class LevelLayer : public RUBELayer
     }
 
   private:
+    void dropItem(float t);
+    void removeOutstandingItems();
+
+  private:
     b2Body *ratBody, *earthBody, *cageBody;
 
+    typedef std::list<b2Body *> BodiesList;
+    BodiesList itemsBodies;
+    BodiesList itemsToRemove; // items to be removed are gathered in ContactListener
+                              // bodies can not be simply removed there
+    Json::Value itemSpeedupJson;
+
     b2Vec2 propellerForce;
+
+    b2dJson jsonParser;
 
     float totalTime;
 
