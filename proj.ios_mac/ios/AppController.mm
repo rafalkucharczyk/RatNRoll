@@ -64,7 +64,6 @@ static AppDelegate s_sharedApplication;
 
     // Use RootViewController manage CCEAGLView 
     _viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-    _viewController.wantsFullScreenLayout = YES;
     _viewController.view = eaglView;
 
     // Set RootViewController to window
@@ -86,8 +85,8 @@ static AppDelegate s_sharedApplication;
     self.bannerIsVisible = NO;
 
     CGRect adFrame = adView.frame;
-    adFrame.origin.x = 0; // _viewController.view.frame.size.height / 2 - adView.frame.size.width / 2;
-    adFrame.origin.y = -adFrame.size.height; // _viewController.view.frame.size.width + adView.frame.size.height;
+    adFrame.origin.x = 0;
+    adFrame.origin.y = -adFrame.size.height;
     adView.frame = adFrame;
 
     [window makeKeyAndVisible];
@@ -180,8 +179,7 @@ static AppDelegate s_sharedApplication;
     if (self.bannerIsVisible)
     {
         [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
-        // Assumes the banner view is placed at the bottom of the screen.
-        banner.frame = CGRectOffset(banner.frame, 0, banner.frame.size.height);
+        banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
         [UIView commitAnimations];
         self.bannerIsVisible = NO;
     }
