@@ -28,8 +28,6 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    srand(time(NULL));
-
     auto director = Director::getInstance();
 
     // initialize director

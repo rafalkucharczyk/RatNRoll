@@ -4,28 +4,33 @@
 
 USING_NS_CC;
 
+class DropItemUserData
+{
+  public:
+    DropItemUserData(LevelLayer::ItemType type) : itemType(type) {}
+    LevelLayer::ItemType itemType;
+};
+
 class LevelContactListener : public b2ContactListener
 {
   public:
-    LevelContactListener(LevelLayer *levelLayer)
-        : levelLayer(levelLayer), gameFinishedNotified(false)
-    {
-    }
+    LevelContactListener(LevelLayer *levelLayer) : levelLayer(levelLayer) {}
 
     void BeginContact(b2Contact *contact)
     {
         if (isContact(contact, levelLayer->ratBody, levelLayer->cageBody)) {
-            if (!gameFinishedNotified) {
-                if (levelLayer->gameFinishedCallback) {
-                    levelLayer->gameFinishedCallback();
-                }
-
-                gameFinishedNotified = true;
+            if (levelLayer->gameFinishedCallback) {
+                levelLayer->gameFinishedCallback();
             }
         }
 
         for (LevelLayer::BodiesList::const_iterator i = levelLayer->itemsBodies.begin();
              i != levelLayer->itemsBodies.end(); i++) {
+            if (isContact(contact, *i, levelLayer->ratBody)) {
+                levelLayer->ratAteItem(
+                    static_cast<DropItemUserData *>((*i)->GetUserData())->itemType);
+            }
+
             if (isContact(contact, *i, levelLayer->cageBody) ||
                 isContact(contact, *i, levelLayer->ratBody)) {
                 levelLayer->itemsToRemove.push_back(*i);
@@ -49,11 +54,10 @@ class LevelContactListener : public b2ContactListener
 
   private:
     LevelLayer *levelLayer;
-    bool gameFinishedNotified;
 };
 
 LevelLayer::LevelLayer()
-    : ratBody(nullptr), earthBody(nullptr), totalTime(0.0),
+    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratTargetSpeed(3.0), totalTime(0.0),
       contactListener(new LevelContactListener(this))
 {
 }
@@ -125,28 +129,32 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
     RUBELayer::afterLoadProcessing(json);
 
     ratBody = json->getBodyByName("rat");
-    earthBody = json->getBodyByName("earth");
-    cageBody = json->getBodyByName("cage");
-
-    b2Body *itemSpeedup = json->getBodyByName("item_speedup");
-    assert(itemSpeedup);
-    itemSpeedupJson = json->b2j(itemSpeedup);
-
     assert(ratBody);
+    earthBody = json->getBodyByName("earth");
     assert(earthBody);
+    cageBody = json->getBodyByName("cage");
     assert(cageBody);
+
+    for (int i = SPEEDUP; i < ITEM_TYPE_MAX; i++) {
+        ItemType itemType = static_cast<ItemType>(i);
+        b2Body *body = json->getBodyByName(itemTypeToImageName(itemType));
+        assert(body);
+        itemJsons[itemType] = json->b2j(body);
+    }
 }
 
 void LevelLayer::update(float dt)
 {
     RUBELayer::update(dt);
+    totalTime += dt;
 
     removeOutstandingItems();
 
-    totalTime += dt;
+    doCalculationStep();
+}
 
-    float desiredSpeed = b2Min(3.0f, floorf(totalTime + 1.0));
-
+void LevelLayer::doCalculationStep()
+{
     b2Vec2 earthCenter = earthBody->GetPosition();
     b2Vec2 ratCenter = ratBody->GetPosition();
 
@@ -156,8 +164,8 @@ void LevelLayer::update(float dt)
     b2Vec2 v = ratBody->GetLinearVelocity();
     float vv = v.Length();
 
-    if (vv < desiredSpeed) {
-        propellerForce *= -0.1 * (desiredSpeed - vv);
+    if (vv < ratTargetSpeed) {
+        propellerForce *= -0.1 * (ratTargetSpeed - vv);
 
         ratBody->ApplyLinearImpulse(propellerForce, ratBody->GetWorldCenter(), true);
     }
@@ -165,8 +173,12 @@ void LevelLayer::update(float dt)
 
 void LevelLayer::dropItem(float t)
 {
-    b2Body *body = jsonParser.j2b2Body(m_world, itemSpeedupJson);
-    duplicateImageForBody("item_speedup", body);
+    ItemType itemType = static_cast<ItemType>(rand() % ITEM_TYPE_MAX);
+
+    b2Body *body = jsonParser.j2b2Body(m_world, itemJsons[itemType]);
+    body->SetUserData(new DropItemUserData(itemType));
+
+    duplicateImageForBody(itemTypeToImageName(itemType), body);
     body->ApplyAngularImpulse(0.1 * body->GetMass(), true);
 
     body->SetTransform(b2Vec2(rand_minus1_1() * 1.5, 10), rand_0_1() * 2 * M_PI);
@@ -176,9 +188,36 @@ void LevelLayer::dropItem(float t)
 
 void LevelLayer::removeOutstandingItems()
 {
-    for (BodiesList::const_iterator i = itemsToRemove.begin(); i != itemsToRemove.end(); i++) {
+    for (auto i = itemsToRemove.begin(); i != itemsToRemove.end(); i++) {
+        delete static_cast<DropItemUserData *>((*i)->GetUserData());
         removeBodyFromWorld(*i);
     }
 
     itemsToRemove.clear();
+}
+
+void LevelLayer::ratAteItem(ItemType itemType)
+{
+    if (itemType == SPEEDUP) {
+        ratTargetSpeed = b2Min(ratTargetSpeed + 0.5, 10.0);
+    }
+
+    if (itemType == SLOWDOWN) {
+        ratTargetSpeed = b2Max(ratTargetSpeed - 0.5, 1.0);
+    }
+}
+
+std::string LevelLayer::itemTypeToImageName(LevelLayer::ItemType itemType) const
+{
+    if (itemType == SPEEDUP) {
+        return "item_speedup";
+    }
+
+    if (itemType == SLOWDOWN) {
+        return "item_slowdown";
+    }
+
+    assert(false);
+
+    return "";
 }

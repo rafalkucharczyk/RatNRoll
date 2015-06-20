@@ -9,6 +9,8 @@ USING_NS_CC;
 
 Scene *GameFlow::createLevelScene()
 {
+    srand(1); // random, but always the same...
+
     auto scene = Scene::create();
 
     auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");

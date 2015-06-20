@@ -90,7 +90,7 @@ void RUBELayer::duplicateImageForBody(const std::string &name, b2Body *body)
     assert(imageInfo);
 
     RUBEImageInfo *newImageInfo = new RUBEImageInfo(*imageInfo);
-    newImageInfo->sprite = NULL;
+    newImageInfo->sprite = nullptr;
     newImageInfo->body = body;
 
     addSpriteFromRubeImageInfo(newImageInfo);

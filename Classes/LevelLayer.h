@@ -35,9 +35,16 @@ class LevelLayer : public RUBELayer
         gameFinishedCallback = callback;
     }
 
+  public:
+    enum ItemType { SPEEDUP = 0, SLOWDOWN, ITEM_TYPE_MAX };
+
   private:
+    void doCalculationStep();
     void dropItem(float t);
     void removeOutstandingItems();
+    void ratAteItem(ItemType itemType);
+
+    std::string itemTypeToImageName(ItemType itemType) const;
 
   private:
     b2Body *ratBody, *earthBody, *cageBody;
@@ -46,12 +53,15 @@ class LevelLayer : public RUBELayer
     BodiesList itemsBodies;
     BodiesList itemsToRemove; // items to be removed are gathered in ContactListener
                               // bodies can not be simply removed there
-    Json::Value itemSpeedupJson;
 
-    b2Vec2 propellerForce;
-
+    Json::Value itemJsons[ITEM_TYPE_MAX]; // keeps Json::Value for every item parsed from RUBE file
+                                          // needed for duplication
     b2dJson jsonParser;
 
+    float ratTargetSpeed;
+
+  private:
+    b2Vec2 propellerForce;
     float totalTime;
 
     std::shared_ptr<LevelContactListener> contactListener;
