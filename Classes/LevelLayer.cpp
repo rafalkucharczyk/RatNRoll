@@ -24,7 +24,7 @@ class LevelContactListener : public b2ContactListener
             }
         }
 
-        for (LevelLayer::BodiesList::const_iterator i = levelLayer->itemsBodies.begin();
+        for (LevelLayer::BodiesList::iterator i = levelLayer->itemsBodies.begin();
              i != levelLayer->itemsBodies.end(); i++) {
             if (isContact(contact, *i, levelLayer->ratBody)) {
                 levelLayer->ratAteItem(
