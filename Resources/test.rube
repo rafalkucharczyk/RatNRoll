@@ -369,7 +369,6 @@
             }
           }
         ],
-        "gravityScale" : 2,
         "id" : 6,
         "linearVelocity" : 0,
         "massData-I" : 0.01124999951571226,

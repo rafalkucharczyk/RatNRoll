@@ -39,12 +39,15 @@ class LevelLayer : public RUBELayer
     enum ItemType { SPEEDUP = 0, SLOWDOWN, ITEM_TYPE_MAX };
 
   private:
-    void doCalculationStep();
+    void doPhysicsCalculationStep();
+    void updateScore();
     void dropItem(float t);
     void removeOutstandingItems();
     void ratAteItem(ItemType itemType);
 
     std::string itemTypeToImageName(ItemType itemType) const;
+
+    void initScoreLabel();
 
   private:
     b2Body *ratBody, *earthBody, *cageBody;
@@ -59,6 +62,13 @@ class LevelLayer : public RUBELayer
     b2dJson jsonParser;
 
     float ratTargetSpeed;
+
+  private:
+    b2RevoluteJoint *earthRevoluteJoint;
+    int score;
+    float previousRevoluteJointAngle;
+
+    cocos2d::Label *scoreLabel;
 
   private:
     b2Vec2 propellerForce;

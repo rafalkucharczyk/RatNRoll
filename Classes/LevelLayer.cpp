@@ -4,6 +4,8 @@
 
 USING_NS_CC;
 
+#include <limits>
+
 class DropItemUserData
 {
   public:
@@ -57,8 +59,9 @@ class LevelContactListener : public b2ContactListener
 };
 
 LevelLayer::LevelLayer()
-    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratTargetSpeed(3.0), totalTime(0.0),
-      contactListener(new LevelContactListener(this))
+    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratTargetSpeed(3.0), score(0),
+      previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
+      totalTime(0.0), contactListener(new LevelContactListener(this))
 {
 }
 
@@ -71,6 +74,8 @@ bool LevelLayer::init()
     m_world->SetContactListener(contactListener.get());
 
     schedule(schedule_selector(LevelLayer::dropItem), 3.0);
+
+    initScoreLabel();
 
     return true;
 }
@@ -141,6 +146,18 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
         assert(body);
         itemJsons[itemType] = json->b2j(body);
     }
+
+    b2JointEdge *i = earthBody->GetJointList();
+
+    while (i != nullptr) {
+        if (i->joint->GetType() == e_revoluteJoint) {
+            break;
+        }
+
+        i = i->next;
+    }
+
+    earthRevoluteJoint = dynamic_cast<b2RevoluteJoint *>(i->joint);
 }
 
 void LevelLayer::update(float dt)
@@ -150,11 +167,14 @@ void LevelLayer::update(float dt)
 
     removeOutstandingItems();
 
-    doCalculationStep();
+    doPhysicsCalculationStep();
+
+    updateScore();
 }
 
-void LevelLayer::doCalculationStep()
+void LevelLayer::doPhysicsCalculationStep()
 {
+    // propeller force
     b2Vec2 earthCenter = earthBody->GetPosition();
     b2Vec2 ratCenter = ratBody->GetPosition();
 
@@ -168,6 +188,26 @@ void LevelLayer::doCalculationStep()
         propellerForce *= -0.1 * (ratTargetSpeed - vv);
 
         ratBody->ApplyLinearImpulse(propellerForce, ratBody->GetWorldCenter(), true);
+    }
+
+    // custom gravity
+    b2Vec2 g = earthCenter - ratCenter;
+    g.Normalize();
+    g *= 8;
+    ratBody->ApplyForce(ratBody->GetMass() * g, ratBody->GetWorldCenter(), true);
+}
+
+void LevelLayer::updateScore()
+{
+    float currentAngle = -earthRevoluteJoint->GetJointAngle();
+    if (currentAngle - previousRevoluteJointAngle > 0.2) {
+        score++;
+
+        scoreLabel->setString(std::to_string(score));
+
+        previousRevoluteJointAngle = currentAngle;
+    } else if (currentAngle < previousRevoluteJointAngle) {
+        previousRevoluteJointAngle = currentAngle;
     }
 }
 
@@ -220,4 +260,18 @@ std::string LevelLayer::itemTypeToImageName(LevelLayer::ItemType itemType) const
     assert(false);
 
     return "";
+}
+
+void LevelLayer::initScoreLabel()
+{
+    scoreLabel = Label::createWithSystemFont("", "Marker Felt", 60);
+    scoreLabel->setColor(Color3B::BLACK);
+
+    addChild(scoreLabel, 1);
+
+    scoreLabel->setScale(1 / getScale());
+
+    b2Vec2 pos = earthBody->GetWorldCenter();
+    scoreLabel->setPosition(pos.x, pos.y);
+    scoreLabel->setString(std::to_string(score));
 }
