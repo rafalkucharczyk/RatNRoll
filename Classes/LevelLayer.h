@@ -30,7 +30,7 @@ class LevelLayer : public RUBELayer
 
     virtual bool drawDebugData() { return false; }
 
-    void setGameFinishedCallback(std::function<void()> callback)
+    void setGameFinishedCallback(std::function<void(int)> callback)
     {
         gameFinishedCallback = callback;
     }
@@ -78,7 +78,7 @@ class LevelLayer : public RUBELayer
 
     friend class LevelContactListener;
 
-    std::function<void()> gameFinishedCallback;
+    std::function<void(int)> gameFinishedCallback;
 };
 
 #endif // __LEVEL_SCENE_H__

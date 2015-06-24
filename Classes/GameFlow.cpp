@@ -5,6 +5,8 @@
 #include "LevelLayer.h"
 #include "PostLevelLayer.h"
 
+#include "PermanentStorage.h"
+
 USING_NS_CC;
 
 Scene *GameFlow::createLevelScene()
@@ -33,7 +35,7 @@ void GameFlow::switchToLevelScene()
     Director::getInstance()->replaceScene(scene);
 }
 
-void GameFlow::switchToPostLevelScene()
+void GameFlow::switchToPostLevelScene(int score)
 {
     auto scene = Scene::create();
 
@@ -41,8 +43,24 @@ void GameFlow::switchToPostLevelScene()
     scene->addChild(backgroundLayer);
 
     auto postLevelLayer = PostLevelLayer::create();
+    postLevelLayer->displayBestScore(updateBestScore(score));
     postLevelLayer->setRestartLevelCallback(GameFlow::switchToLevelScene);
     scene->addChild(postLevelLayer);
 
     Director::getInstance()->replaceScene(scene);
+}
+
+int GameFlow::updateBestScore(int score)
+{
+    PermanentStorage gameStorage;
+
+    int currentBestScore = gameStorage.getBestScore();
+
+    if (score > currentBestScore) {
+        gameStorage.setBestScore(score);
+
+        return score;
+    }
+
+    return currentBestScore;
 }

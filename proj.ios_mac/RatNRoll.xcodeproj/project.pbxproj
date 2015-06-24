@@ -66,6 +66,7 @@
 		B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF4F1B1330ED004D647D /* Box2DDebugDraw.cpp */; };
 		B535EF581B1339D4004D647D /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = B535EF571B1339D4004D647D /* test.json */; };
 		B54C3D5A1B36042700B2741D /* poison01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54C3D591B36042700B2741D /* poison01.png */; };
+		B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B54E63221B3B62D50019C20F /* PermanentStorage.cpp */; };
 		B551AF661B18FCB50076A8E9 /* RUBELayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B551AF641B18FCB50076A8E9 /* RUBELayer.cpp */; };
 		B551AF681B1902980076A8E9 /* rat.png in Resources */ = {isa = PBXBuildFile; fileRef = B551AF671B1902980076A8E9 /* rat.png */; };
 		B551AF6A1B1A34C90076A8E9 /* background01.png in Resources */ = {isa = PBXBuildFile; fileRef = B551AF691B1A34C90076A8E9 /* background01.png */; };
@@ -182,6 +183,8 @@
 		B535EF561B133542004D647D /* QueryCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCallbacks.h; sourceTree = "<group>"; };
 		B535EF571B1339D4004D647D /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		B54C3D591B36042700B2741D /* poison01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = poison01.png; sourceTree = "<group>"; };
+		B54E63221B3B62D50019C20F /* PermanentStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PermanentStorage.cpp; sourceTree = "<group>"; };
+		B54E63231B3B62D50019C20F /* PermanentStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermanentStorage.h; sourceTree = "<group>"; };
 		B551AF641B18FCB50076A8E9 /* RUBELayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RUBELayer.cpp; sourceTree = "<group>"; };
 		B551AF651B18FCB50076A8E9 /* RUBELayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RUBELayer.h; sourceTree = "<group>"; };
 		B551AF671B1902980076A8E9 /* rat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rat.png; sourceTree = "<group>"; };
@@ -357,6 +360,8 @@
 				B552BE031B223D3500D4851A /* LevelMenuLayer.h */,
 				B552BDFA1B1CE54E00D4851A /* LevelLayer.cpp */,
 				B552BDFB1B1CE54E00D4851A /* LevelLayer.h */,
+				B54E63221B3B62D50019C20F /* PermanentStorage.cpp */,
+				B54E63231B3B62D50019C20F /* PermanentStorage.h */,
 				B552BE051B237A0800D4851A /* PostLevelLayer.cpp */,
 				B552BE061B237A0800D4851A /* PostLevelLayer.h */,
 			);
@@ -604,6 +609,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
 				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
+				B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */,
 				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
 				B552BE011B2236DC00D4851A /* BackgroundLayer.cpp in Sources */,
 				B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */,

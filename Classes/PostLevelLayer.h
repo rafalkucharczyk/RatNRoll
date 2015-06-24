@@ -17,10 +17,14 @@ class PostLevelLayer : public cocos2d::Layer
         restartLevelCallback = callback;
     }
 
+    void displayBestScore(int score);
+
   private:
     void restartCallback(cocos2d::Ref *sender);
 
     std::function<void()> restartLevelCallback;
+
+    cocos2d::Label *bestScoreLabel;
 };
 
 #endif // __POSTLEVEL_LAYER_H__

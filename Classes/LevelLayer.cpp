@@ -22,7 +22,7 @@ class LevelContactListener : public b2ContactListener
     {
         if (isContact(contact, levelLayer->ratBody, levelLayer->cageBody)) {
             if (levelLayer->gameFinishedCallback) {
-                levelLayer->gameFinishedCallback();
+                levelLayer->gameFinishedCallback(levelLayer->score);
             }
         }
 
