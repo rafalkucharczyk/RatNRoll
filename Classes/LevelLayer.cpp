@@ -29,13 +29,20 @@ class LevelContactListener : public b2ContactListener
         for (LevelLayer::BodiesList::iterator i = levelLayer->itemsBodies.begin();
              i != levelLayer->itemsBodies.end(); i++) {
             if (isContact(contact, *i, levelLayer->ratBody)) {
-                levelLayer->ratAteItem(
-                    static_cast<DropItemUserData *>((*i)->GetUserData())->itemType);
-            }
+                b2Body *body = *i;
 
-            if (isContact(contact, *i, levelLayer->cageBody) ||
-                isContact(contact, *i, levelLayer->ratBody)) {
-                levelLayer->itemsToRemove.push_back(*i);
+                levelLayer->ratAteItem(
+                    static_cast<DropItemUserData *>(body->GetUserData())->itemType);
+
+                auto scaleAction = ScaleTo::create(0.1, 0.0);
+                auto removeAction = CallFunc::create([body, this]() {
+                    levelLayer->itemsToRemove.push_back(body);
+
+                });
+
+                auto sequenceAction = Sequence::create(scaleAction, removeAction, nullptr);
+                levelLayer->getAnySpriteOnBody(body)->runAction(sequenceAction);
+
                 i = levelLayer->itemsBodies.erase(i);
             }
         }
@@ -59,7 +66,7 @@ class LevelContactListener : public b2ContactListener
 };
 
 LevelLayer::LevelLayer()
-    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratTargetSpeed(3.0), score(0),
+    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratTargetSpeed(2.0), score(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), contactListener(new LevelContactListener(this))
 {
@@ -224,6 +231,18 @@ void LevelLayer::dropItem(float t)
     body->SetTransform(b2Vec2(rand_minus1_1() * 1.5, 10), rand_0_1() * 2 * M_PI);
 
     itemsBodies.push_back(body);
+
+    auto delayAction = DelayTime::create(3);
+    auto fadeAction = FadeTo::create(0.5, 0);
+    auto removeAction = CallFunc::create([body, this]() {
+        auto i = std::find(itemsBodies.begin(), itemsBodies.end(), body);
+        itemsBodies.erase(i);
+
+        itemsToRemove.push_back(body);
+    });
+
+    auto sequenceAction = Sequence::create(delayAction, fadeAction, removeAction, nullptr);
+    getAnySpriteOnBody(body)->runAction(sequenceAction);
 }
 
 void LevelLayer::removeOutstandingItems()
@@ -243,7 +262,7 @@ void LevelLayer::ratAteItem(ItemType itemType)
     }
 
     if (itemType == SLOWDOWN) {
-        ratTargetSpeed = b2Max(ratTargetSpeed - 0.5, 1.0);
+        ratTargetSpeed = b2Max(ratTargetSpeed - 0.5, 2.0);
     }
 }
 
