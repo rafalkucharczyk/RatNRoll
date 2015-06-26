@@ -66,7 +66,8 @@ class LevelContactListener : public b2ContactListener
 };
 
 LevelLayer::LevelLayer()
-    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratTargetSpeed(2.0), score(0),
+    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratMinSpeed(1.0), ratMaxSpeed(10.0),
+      ratSpeedStep(1.0), ratTargetSpeed(ratMinSpeed), score(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), contactListener(new LevelContactListener(this))
 {
@@ -181,23 +182,13 @@ void LevelLayer::update(float dt)
 
 void LevelLayer::doPhysicsCalculationStep()
 {
-    // propeller force
+    // increase/decrease speed
+    ratBody->ApplyAngularImpulse(ratTargetSpeed / 10, true);
+
+    // custom gravity
     b2Vec2 earthCenter = earthBody->GetPosition();
     b2Vec2 ratCenter = ratBody->GetPosition();
 
-    propellerForce = (earthCenter - ratCenter).Skew();
-    propellerForce.Normalize();
-
-    b2Vec2 v = ratBody->GetLinearVelocity();
-    float vv = v.Length();
-
-    if (vv < ratTargetSpeed) {
-        propellerForce *= -0.1 * (ratTargetSpeed - vv);
-
-        ratBody->ApplyLinearImpulse(propellerForce, ratBody->GetWorldCenter(), true);
-    }
-
-    // custom gravity
     b2Vec2 g = earthCenter - ratCenter;
     g.Normalize();
     g *= 8;
@@ -258,11 +249,11 @@ void LevelLayer::removeOutstandingItems()
 void LevelLayer::ratAteItem(ItemType itemType)
 {
     if (itemType == SPEEDUP) {
-        ratTargetSpeed = b2Min(ratTargetSpeed + 0.5, 10.0);
+        ratTargetSpeed = b2Min(ratTargetSpeed + ratSpeedStep, ratMaxSpeed);
     }
 
     if (itemType == SLOWDOWN) {
-        ratTargetSpeed = b2Max(ratTargetSpeed - 0.5, 2.0);
+        ratTargetSpeed = b2Max(ratTargetSpeed - ratSpeedStep, ratMinSpeed);
     }
 }
 

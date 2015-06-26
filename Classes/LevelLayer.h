@@ -61,6 +61,9 @@ class LevelLayer : public RUBELayer
                                           // needed for duplication
     b2dJson jsonParser;
 
+    const float ratMinSpeed;
+    const float ratMaxSpeed;
+    const float ratSpeedStep;
     float ratTargetSpeed;
 
   private:
