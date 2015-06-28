@@ -15,21 +15,15 @@ class BackgroundLayer : public cocos2d::Layer
 
     virtual void update(float time);
 
-    void setSpeed(float newSpeed);
+    // e.g: +1 increase current speed by delta, -2 decrease current speed by two deltas
+    void setSpeed(int deltasCount);
 
     static BackgroundLayer *create(const std::string &itemFileName,
                                    const std::string &backgroundFileName);
 
   private:
-    void addBackgroundItems(int count);
-    void insertBackgroundItem();
-    cocos2d::Vec2 getRandomStartPoint(const cocos2d::Size &spriteSize);
-    cocos2d::Vec2 getTargetPoint(const cocos2d::Vec2 &startPoint, const cocos2d::Size &spriteSize);
-
-  private:
     struct BackgroundItem {
-        BackgroundItem(cocos2d::Sprite *sprite, float startTime, cocos2d::Vec2 point,
-                       float duration);
+        BackgroundItem(cocos2d::Sprite *sprite, cocos2d::Vec2 targetPoint);
 
         cocos2d::Vec2 getPositionForTime(float time);
 
@@ -39,6 +33,18 @@ class BackgroundLayer : public cocos2d::Layer
     };
 
   private:
+    void addBackgroundItems(int count);
+    void insertBackgroundItem();
+    void setBackgroundItemParams(cocos2d::Vec2 targetPosition, cocos2d::Vec2 initialPosition,
+                                 BackgroundItem &item);
+    cocos2d::Vec2 getRandomStartPoint(const cocos2d::Size &spriteSize);
+    cocos2d::Vec2 getTargetPoint(const cocos2d::Vec2 &startPoint, const cocos2d::Size &spriteSize);
+
+  private:
+    const float minItemsSpeed;
+    const float maxItemsSpeed;
+    const float deltaItemsSpeed;
+
     float totalTime;
 
     float itemsSpeed;

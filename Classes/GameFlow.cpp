@@ -25,6 +25,8 @@ Scene *GameFlow::createLevelScene()
     scene->addChild(levelLayer);
 
     levelLayer->setGameFinishedCallback(&GameFlow::switchToPostLevelScene);
+    levelLayer->setBackgroundSpeedFunction(
+        std::bind(&BackgroundLayer::setSpeed, backgroundLayer, std::placeholders::_1));
 
     return scene;
 }
@@ -40,6 +42,7 @@ void GameFlow::switchToPostLevelScene(int score)
     auto scene = Scene::create();
 
     auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
+    backgroundLayer->setSpeed(5);
     scene->addChild(backgroundLayer);
 
     auto postLevelLayer = PostLevelLayer::create();

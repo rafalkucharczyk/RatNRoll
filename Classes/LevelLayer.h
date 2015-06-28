@@ -38,6 +38,11 @@ class LevelLayer : public RUBELayer
         gameFinishedCallback = callback;
     }
 
+    void setBackgroundSpeedFunction(std::function<void(int)> function)
+    {
+        backgroundSpeedFunction = function;
+    }
+
   public:
     enum ItemType { SPEEDUP = 0, SLOWDOWN, ITEM_TYPE_MAX };
 
@@ -45,6 +50,7 @@ class LevelLayer : public RUBELayer
     void doPhysicsCalculationStep();
     void updateScore();
     void dropItem(float t);
+    ItemType randomizeItemType() const;
     void removeOutstandingItems();
     void ratAteItem(ItemType itemType);
 
@@ -68,6 +74,8 @@ class LevelLayer : public RUBELayer
     const float ratMaxSpeed;
     const float ratSpeedStep;
     float ratTargetSpeed;
+
+    std::function<void(int)> backgroundSpeedFunction;
 
   private:
     b2RevoluteJoint *earthRevoluteJoint;

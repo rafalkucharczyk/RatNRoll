@@ -66,8 +66,8 @@ class LevelContactListener : public b2ContactListener
 };
 
 LevelLayer::LevelLayer()
-    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratMinSpeed(1.0), ratMaxSpeed(10.0),
-      ratSpeedStep(1.0), ratTargetSpeed(ratMinSpeed), score(0),
+    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratMinSpeed(0.5), ratMaxSpeed(5.0),
+      ratSpeedStep(0.5), ratTargetSpeed(ratMinSpeed), score(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), contactListener(new LevelContactListener(this))
 {
@@ -244,7 +244,7 @@ void LevelLayer::updateScore()
 
 void LevelLayer::dropItem(float t)
 {
-    ItemType itemType = static_cast<ItemType>(rand() % ITEM_TYPE_MAX);
+    ItemType itemType = randomizeItemType();
 
     b2Body *body = jsonParser.j2b2Body(m_world, itemJsons[itemType]);
     body->SetUserData(new DropItemUserData(itemType));
@@ -269,6 +269,21 @@ void LevelLayer::dropItem(float t)
     getAnySpriteOnBody(body)->runAction(sequenceAction);
 }
 
+LevelLayer::ItemType LevelLayer::randomizeItemType() const
+{
+    ItemType itemType = static_cast<ItemType>(rand() % ITEM_TYPE_MAX);
+
+    if (ratTargetSpeed == ratMaxSpeed) {
+        itemType = SLOWDOWN;
+    }
+
+    if (ratTargetSpeed == ratMinSpeed) {
+        itemType = SPEEDUP;
+    }
+
+    return itemType;
+}
+
 void LevelLayer::removeOutstandingItems()
 {
     for (auto i = itemsToRemove.begin(); i != itemsToRemove.end(); i++) {
@@ -283,10 +298,12 @@ void LevelLayer::ratAteItem(ItemType itemType)
 {
     if (itemType == SPEEDUP) {
         ratTargetSpeed = b2Min(ratTargetSpeed + ratSpeedStep, ratMaxSpeed);
+        backgroundSpeedFunction(1);
     }
 
     if (itemType == SLOWDOWN) {
         ratTargetSpeed = b2Max(ratTargetSpeed - ratSpeedStep, ratMinSpeed);
+        backgroundSpeedFunction(-1);
     }
 }
 

@@ -7,7 +7,8 @@ using namespace std;
 
 BackgroundLayer::BackgroundLayer(const std::string &itemFileName,
                                  const std::string &backgroundFileName)
-    : totalTime(0), itemsSpeed(0.2), itemsDirection(1, -2),
+    : minItemsSpeed(0.05), maxItemsSpeed(0.5), deltaItemsSpeed(0.05), totalTime(0),
+      itemsSpeed(minItemsSpeed), itemsDirection(1, -2),
       visibleSize(Director::getInstance()->getVisibleSize()), desiredItemsCount(20),
       itemFileName(itemFileName), backgroundFileName(backgroundFileName)
 {
@@ -27,18 +28,30 @@ void BackgroundLayer::insertBackgroundItem()
     Vec2 initialPosition = getRandomStartPoint(sprite->getContentSize());
     Vec2 targetPosition = getTargetPoint(initialPosition, sprite->getContentSize());
 
-    float lengthRatio = (targetPosition - initialPosition).length() / visibleSize.length();
-
     sprite->setPosition(initialPosition);
     sprite->setScale(1 + 0.5 * rand_0_1());
     sprite->runAction(RepeatForever::create(RotateBy::create(2 + 2 * rand_0_1(), 360)));
 
+    addChild(sprite);
+
+    BackgroundItem item(sprite, targetPosition);
+    setBackgroundItemParams(targetPosition, initialPosition, item);
+
+    items.push_back(item);
+}
+
+void BackgroundLayer::setBackgroundItemParams(cocos2d::Vec2 targetPosition,
+                                              cocos2d::Vec2 initialPosition,
+                                              BackgroundLayer::BackgroundItem &item)
+{
+    float lengthRatio = (targetPosition - initialPosition).length() / visibleSize.length();
+
     float duration = lengthRatio * 1 / itemsSpeed;
     duration += rand_minus1_1() * duration * 0.1;
 
-    items.push_back(BackgroundItem(sprite, totalTime, targetPosition, duration));
-
-    addChild(sprite);
+    item.initialPoint = initialPosition;
+    item.duration = duration;
+    item.startTime = totalTime;
 }
 
 Vec2 BackgroundLayer::getRandomStartPoint(const Size &spriteSize)
@@ -75,9 +88,8 @@ Vec2 BackgroundLayer::getTargetPoint(const Vec2 &startPoint, const cocos2d::Size
     return Vec2::ZERO;
 }
 
-BackgroundLayer::BackgroundItem::BackgroundItem(cocos2d::Sprite *sprite, float startTime,
-                                                cocos2d::Vec2 point, float duration)
-    : sprite(sprite), startTime(startTime), targetPoint(point), duration(duration)
+BackgroundLayer::BackgroundItem::BackgroundItem(cocos2d::Sprite *sprite, cocos2d::Vec2 targetPoint)
+    : sprite(sprite), startTime(0.0), targetPoint(targetPoint), duration(0.0)
 {
     initialPoint = sprite->getPosition();
 }
@@ -132,8 +144,22 @@ void BackgroundLayer::update(float time)
     addBackgroundItems(toBeAddedCount);
 }
 
-// speed: 0.0-1.0, 1.0 -> 1 sec to go along diagonal of the screen.
-void BackgroundLayer::setSpeed(float newSpeed) { itemsSpeed = newSpeed; }
+void BackgroundLayer::setSpeed(int deltasCount)
+{
+    float v = itemsSpeed + deltasCount * deltaItemsSpeed;
+    v = std::max(minItemsSpeed, v);
+    v = std::min(maxItemsSpeed, v);
+
+    if (v != itemsSpeed) {
+        // set speed for new items
+        itemsSpeed = v;
+
+        // adapt speed of existing items
+        for (auto i = items.begin(); i != items.end(); i++) {
+            setBackgroundItemParams(i->targetPoint, i->sprite->getPosition(), *i);
+        }
+    }
+}
 
 BackgroundLayer *BackgroundLayer::create(const std::string &itemFileName,
                                          const std::string &backgroundFileName)
