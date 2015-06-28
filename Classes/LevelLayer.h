@@ -28,6 +28,9 @@ class LevelLayer : public RUBELayer
 
     virtual void update(float dt);
 
+    bool setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,
+                                                  cocos2d::Point &position, float &angle);
+
     virtual bool drawDebugData() { return false; }
 
     void setGameFinishedCallback(std::function<void(int)> callback)

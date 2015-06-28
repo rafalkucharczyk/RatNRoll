@@ -60,6 +60,9 @@ class RUBELayer : public BasicRUBELayer
     void setImagePositionsFromPhysicsBodies(); // called every frame to move the images to the
                                                // correct position when bodies move
 
+    virtual bool setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,
+                                                          cocos2d::Point &position, float &angle);
+
     virtual void update(float dt); // standard Cocos2d function
 
     void removeBodyFromWorld(b2Body *body); // removes a body and its images from the layer

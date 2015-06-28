@@ -32,9 +32,6 @@ void RUBELayer::afterLoadProcessing(b2dJson *json)
 
         addSpriteFromRubeImageInfo(imgInfo);
     }
-
-    // start the images at their current positions on the physics bodies
-    setImagePositionsFromPhysicsBodies();
 }
 
 void RUBELayer::fillRUBEImageInfoFromb2dJsonImage(const b2dJsonImage &jsonImage,
@@ -127,29 +124,7 @@ void RUBELayer::setImagePositionsFromPhysicsBodies()
         float angle = -imgInfo->angle;
 
         if (imgInfo->body) {
-            if (imgInfo->name == "rat") // special handling for rat image
-            {
-                // adapt position
-                b2Vec2 v = imgInfo->body->GetPosition();
-                b2Fixture *fixture = imgInfo->body->GetFixtureList();
-                assert(fixture); // rat model is just a ball
-                float radius = fixture->GetShape()->m_radius;
-                pos = Vec2(v.x, v.y + 2 * radius);
-
-                // rotate texture as it was attached to hook point
-                b2Vec2 hookPoint(0, 15);
-
-                float d = acos(b2Dot(hookPoint, hookPoint - v) / (hookPoint - v).Length() /
-                               hookPoint.Length());
-
-                if (!isnan(d)) {
-                    angle += d;
-
-                    if (v.x > 0) {
-                        angle = -angle;
-                    }
-                }
-            } else {
+            if (!setCustomImagePositionsFromPhysicsBodies(imgInfo, pos, angle)) {
                 // need to rotate image local center by body angle
                 b2Vec2 localPos(pos.x, pos.y);
                 b2Rot rot(imgInfo->body->GetAngle());
@@ -164,6 +139,12 @@ void RUBELayer::setImagePositionsFromPhysicsBodies()
 
         imgInfo->sprite->setPosition(pos);
     }
+}
+
+bool RUBELayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,
+                                                         cocos2d::Point &position, float &angle)
+{
+    return false;
 }
 
 // Remove one body and any images is had attached to it from the layer

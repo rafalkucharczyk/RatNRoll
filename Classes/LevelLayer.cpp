@@ -180,6 +180,39 @@ void LevelLayer::update(float dt)
     updateScore();
 }
 
+bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,
+                                                          cocos2d::Point &position, float &angle)
+{
+    if (imageInfo->name == "rat") // special handling for rat image
+    {
+        // adapt position
+        b2Vec2 p = imageInfo->body->GetPosition();
+        b2Fixture *fixture = imageInfo->body->GetFixtureList();
+        assert(fixture && fixture->GetType() == b2Shape::e_circle); // rat model is just a ball
+        float radius = fixture->GetShape()->m_radius;
+        position = Vec2(p.x, p.y + 2 * radius);
+
+        // orient texture along the radius from rat to earth's center
+        b2Vec2 r = p - earthBody->GetPosition();
+        r.Normalize();
+        b2Vec2 v = b2Vec2(0, 1);
+
+        float d = acos(b2Dot(r, v));
+
+        if (!isnan(d)) {
+            angle += d;
+
+            if (p.x < 0) {
+                angle = -angle;
+            }
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 void LevelLayer::doPhysicsCalculationStep()
 {
     // increase/decrease speed
