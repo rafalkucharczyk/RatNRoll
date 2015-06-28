@@ -260,9 +260,13 @@ void LevelLayer::dropItem(float t)
     auto fadeAction = FadeTo::create(0.5, 0);
     auto removeAction = CallFunc::create([body, this]() {
         auto i = std::find(itemsBodies.begin(), itemsBodies.end(), body);
-        itemsBodies.erase(i);
 
-        itemsToRemove.push_back(body);
+        if (i != itemsBodies.end()) // might have been already eaten by rat
+        {
+            itemsBodies.erase(i);
+
+            itemsToRemove.push_back(body);
+        }
     });
 
     auto sequenceAction = Sequence::create(delayAction, fadeAction, removeAction, nullptr);
