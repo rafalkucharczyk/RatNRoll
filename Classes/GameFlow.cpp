@@ -1,6 +1,7 @@
 #include "GameFlow.h"
 
 #include "BackgroundLayer.h"
+#include "InitialLayer.h"
 #include "LevelMenuLayer.h"
 #include "LevelLayer.h"
 #include "PostLevelLayer.h"
@@ -9,7 +10,22 @@
 
 USING_NS_CC;
 
-Scene *GameFlow::createLevelScene()
+Scene *GameFlow::createInitialScene()
+{
+    auto scene = Scene::create();
+
+    auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
+    scene->addChild(backgroundLayer);
+
+    auto initialLayer = InitialLayer::create();
+    initialLayer->setMenuItemClickedCallback(
+        std::bind(&GameFlow::switchToLevelScene, std::placeholders::_1));
+    scene->addChild(initialLayer);
+
+    return scene;
+}
+
+void GameFlow::switchToLevelScene(int levelNumber)
 {
     srand(1); // random, but always the same...
 
@@ -28,12 +44,6 @@ Scene *GameFlow::createLevelScene()
     levelLayer->setBackgroundSpeedFunction(
         std::bind(&BackgroundLayer::setSpeed, backgroundLayer, std::placeholders::_1));
 
-    return scene;
-}
-
-void GameFlow::switchToLevelScene()
-{
-    auto scene = createLevelScene();
     Director::getInstance()->replaceScene(scene);
 }
 
@@ -47,7 +57,7 @@ void GameFlow::switchToPostLevelScene(int score)
 
     auto postLevelLayer = PostLevelLayer::create();
     postLevelLayer->displayBestScore(updateBestScore(score));
-    postLevelLayer->setRestartLevelCallback(GameFlow::switchToLevelScene);
+    postLevelLayer->setRestartLevelCallback(std::bind(&GameFlow::switchToLevelScene, 1));
     scene->addChild(postLevelLayer);
 
     Director::getInstance()->replaceScene(scene);

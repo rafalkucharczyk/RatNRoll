@@ -1,18 +1,6 @@
 #include "PostLevelLayer.h"
 
-#include "BackgroundLayer.h"
-
 USING_NS_CC;
-
-Scene *PostLevelLayer::createScene()
-{
-    auto scene = Scene::create();
-
-    auto layer = PostLevelLayer::create();
-    scene->addChild(layer);
-
-    return scene;
-}
 
 bool PostLevelLayer::init()
 {

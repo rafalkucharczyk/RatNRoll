@@ -45,7 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     register_all_packages();
 
-    auto scene = GameFlow::createLevelScene();
+    auto scene = GameFlow::createInitialScene();
 
     director->runWithScene(scene);
 

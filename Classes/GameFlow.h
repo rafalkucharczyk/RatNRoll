@@ -6,9 +6,9 @@
 class GameFlow
 {
   public:
-    static cocos2d::Scene *createLevelScene();
+    static cocos2d::Scene *createInitialScene();
 
-    static void switchToLevelScene();
+    static void switchToLevelScene(int levelNumber);
 
     static void switchToPostLevelScene(int score);
 
