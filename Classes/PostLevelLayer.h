@@ -3,9 +3,12 @@
 
 #include "cocos2d.h"
 
+#include "MenuHelper.h"
+
 class PostLevelLayer : public cocos2d::Layer
 {
   public:
+    PostLevelLayer();
     virtual bool init();
 
     CREATE_FUNC(PostLevelLayer);
@@ -15,12 +18,20 @@ class PostLevelLayer : public cocos2d::Layer
         restartLevelCallback = callback;
     }
 
+    void setGotoMainMenuCallback(std::function<void()> callback)
+    {
+        gotoMainMenuCallback = callback;
+    }
+
     void displayBestScore(int score);
 
   private:
-    void restartCallback(cocos2d::Ref *sender);
+    void menuItemClicked(int itemIndex);
 
     std::function<void()> restartLevelCallback;
+    std::function<void()> gotoMainMenuCallback;
+
+    MenuHelper menuHelper;
 
     cocos2d::Label *bestScoreLabel;
 };

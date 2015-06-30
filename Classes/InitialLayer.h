@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 
+#include "MenuHelper.h"
+
 class InitialLayer : public cocos2d::Layer
 {
   public:
@@ -16,17 +18,15 @@ class InitialLayer : public cocos2d::Layer
         menuItemClickedCallback = callback;
     }
 
+    void itemClicked(int itemIndex)
+    {
+        if (menuItemClickedCallback) {
+            menuItemClickedCallback(itemIndex);
+        }
+    }
+
   private:
-    cocos2d::MenuItemLabel *createMenuItemLabel(const std::string &text);
-    void positionMenuItems();
-
-    void menuItemLabelCallback(cocos2d::Ref *sender);
-
-  private:
-    std::list<std::string> menuStrings;
-
-    cocos2d::Vector<cocos2d::MenuItem *> menuItems;
-
+    MenuHelper menuHelper;
     std::function<void(int)> menuItemClickedCallback;
 };
 

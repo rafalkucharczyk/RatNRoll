@@ -6,19 +6,21 @@
 #include "RUBELayer.h"
 #include "b2dJson.h"
 
+#include "LevelCustomization.h"
+
 class LevelContactListener;
 
 class LevelLayer : public RUBELayer
 {
   public:
-    LevelLayer();
+    LevelLayer(LevelCustomization *customization);
 
     virtual bool init();
 
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
                       uint32_t transformUpdated);
 
-    CREATE_FUNC(LevelLayer);
+    static LevelLayer *create(LevelCustomization *customization);
 
     virtual std::string getFilename();
     virtual cocos2d::Point initialWorldOffset();
@@ -59,6 +61,7 @@ class LevelLayer : public RUBELayer
     void initScoreLabel();
 
   private:
+    std::unique_ptr<LevelCustomization> levelCustomization;
     b2Body *ratBody, *earthBody, *cageBody;
 
     typedef std::list<b2Body *> BodiesList;
@@ -85,7 +88,6 @@ class LevelLayer : public RUBELayer
     cocos2d::Label *scoreLabel;
 
   private:
-    b2Vec2 propellerForce;
     float totalTime;
 
     std::shared_ptr<LevelContactListener> contactListener;

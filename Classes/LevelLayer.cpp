@@ -65,9 +65,9 @@ class LevelContactListener : public b2ContactListener
     LevelLayer *levelLayer;
 };
 
-LevelLayer::LevelLayer()
-    : ratBody(nullptr), earthBody(nullptr), cageBody(nullptr), ratMinSpeed(0.5), ratMaxSpeed(5.0),
-      ratSpeedStep(0.5), ratTargetSpeed(ratMinSpeed), score(0),
+LevelLayer::LevelLayer(LevelCustomization *customization)
+    : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
+      ratMinSpeed(0.5), ratMaxSpeed(5.0), ratSpeedStep(0.5), ratTargetSpeed(ratMinSpeed), score(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), contactListener(new LevelContactListener(this))
 {
@@ -81,7 +81,7 @@ bool LevelLayer::init()
 
     m_world->SetContactListener(contactListener.get());
 
-    schedule(schedule_selector(LevelLayer::dropItem), 3.0);
+    schedule(schedule_selector(LevelLayer::dropItem), levelCustomization->getItemDropInterval());
 
     initScoreLabel();
 
@@ -102,15 +102,26 @@ void LevelLayer::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transfor
 
         m_debugDraw->DrawSegment(ratCenter, earthCenter, redColor);
 
-        m_debugDraw->DrawSegment(ratCenter, ratCenter + propellerForce, redColor);
-
         m_debugDraw->DrawSegment(ratCenter,
                                  ratCenter + ratBody->GetLinearVelocityFromLocalPoint(b2Vec2_zero),
                                  blueColor);
     }
 }
 
-std::string LevelLayer::getFilename() { return "test.json"; }
+LevelLayer *LevelLayer::create(LevelCustomization *customization)
+{
+    LevelLayer *ret = new (std::nothrow) LevelLayer(customization);
+    if (ret && ret->init()) {
+        ret->autorelease();
+        return ret;
+    } else {
+        delete ret;
+        ret = nullptr;
+        return nullptr;
+    }
+}
+
+std::string LevelLayer::getFilename() { return levelCustomization->getRubeJsonFileName(); }
 
 Point LevelLayer::initialWorldOffset()
 {

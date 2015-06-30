@@ -3,17 +3,30 @@
 
 #include <cocos2d.h>
 
+class LevelCustomization;
+
 class GameFlow
 {
   public:
-    static cocos2d::Scene *createInitialScene();
+    static GameFlow &getInstance();
 
-    static void switchToLevelScene(int levelNumber);
+  public:
+    cocos2d::Scene *createInitialScene();
 
-    static void switchToPostLevelScene(int score);
+    void switchToInitialScene();
+
+    void switchToLevelScene(int levelNumber);
+
+    void switchToPostLevelScene(int score);
 
   private:
-    static int updateBestScore(int score);
+    LevelCustomization *getLevelCustomization(int levelNumber) const;
+    int updateBestScore(int score);
+
+    int currentLevelNumber;
+
+  private:
+    static GameFlow *instance;
 };
 
 #endif // __GAMEFLOW_H__
