@@ -77,7 +77,7 @@ void GameFlow::switchToPostLevelScene(int score)
     scene->addChild(backgroundLayer);
 
     auto postLevelLayer = PostLevelLayer::create();
-    postLevelLayer->displayBestScore(updateBestScore(score));
+    postLevelLayer->displayBestScore(updateBestScore(currentLevelNumber, score));
     postLevelLayer->setRestartLevelCallback(
         std::bind(&GameFlow::switchToLevelScene, this, currentLevelNumber));
     postLevelLayer->setGotoMainMenuCallback(std::bind(&GameFlow::switchToInitialScene, this));
@@ -104,14 +104,14 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
     }
 }
 
-int GameFlow::updateBestScore(int score)
+int GameFlow::updateBestScore(int levelNumber, int score)
 {
     PermanentStorage gameStorage;
 
-    int currentBestScore = gameStorage.getBestScore();
+    int currentBestScore = gameStorage.getBestScore(levelNumber);
 
     if (score > currentBestScore) {
-        gameStorage.setBestScore(score);
+        gameStorage.setBestScore(levelNumber, score);
 
         return score;
     }

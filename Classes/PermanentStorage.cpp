@@ -9,29 +9,41 @@ USING_NS_CC;
 PermanentStorage::PermanentStorage()
     : storageFilePath(FileUtils::getInstance()->getWritablePath() + "data.json")
 {
-    if (!FileUtils::getInstance()->isFileExist(storageFilePath)) {
-        initWithDefaults();
-        save();
-    } else {
+    if (FileUtils::getInstance()->isFileExist(storageFilePath)) {
         load();
+        if (hasValidFormat()) {
+            return;
+        }
     }
+
+    initWithDefaults();
+    save();
 }
 
-void PermanentStorage::setBestScore(int score)
+void PermanentStorage::setBestScore(int levelNumber, int score)
 {
-    storageJsonData["bestScore"] = score;
+    if (!storageJsonData.isValidIndex(levelNumber)) {
+        storageJsonData.resize(levelNumber + 1);
+        storageJsonData[levelNumber] = Json::Value(Json::objectValue);
+    }
+
+    storageJsonData[levelNumber]["bestScore"] = score;
 
     save();
 }
 
-int PermanentStorage::getBestScore() const { return storageJsonData["bestScore"].asInt(); }
-
-void PermanentStorage::initWithDefaults()
+int PermanentStorage::getBestScore(int levelNumber) const
 {
-    storageJsonData = Json::Value(Json::objectValue);
+    if (!storageJsonData.isValidIndex(levelNumber)) {
+        return 0;
+    }
 
-    storageJsonData["bestScore"] = 0;
+    return storageJsonData[levelNumber]["bestScore"].asInt();
 }
+
+bool PermanentStorage::hasValidFormat() const { return storageJsonData.isArray(); }
+
+void PermanentStorage::initWithDefaults() { storageJsonData = Json::Value(Json::arrayValue); }
 
 void PermanentStorage::load()
 {

@@ -58,7 +58,10 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
+      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
+      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
+      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -197,6 +200,50 @@
           
           {
             "density" : 1,
+            "filter-categoryBits" : 2,
+            "friction" : 0.2,
+            "id" : 5,
+            "name" : "fixture5",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -0.3824883699417114,
+                -0.2938680648803711,
+                0.2545194625854492,
+                0.3796904087066650
+              ],
+              "y" : [ 0.2546086311340332, 0.0, 0.0, 0.2602043151855469 ]
+            }
+          }
+        ],
+        "id" : 3,
+        "linearVelocity" : 0,
+        "name" : "body0",
+        "position" : 
+        {
+          "x" : 0,
+          "y" : 5.537983894348145
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
             "friction" : 0.2,
             "id" : 4,
             "name" : "fixture0",
@@ -296,6 +343,7 @@
           
           {
             "density" : 14.14710426330566,
+            "filter-maskBits" : 65533,
             "friction" : 1,
             "id" : 6,
             "name" : "fixture1",

@@ -9,8 +9,8 @@ USING_NS_CC;
 class DropItemUserData
 {
   public:
-    DropItemUserData(LevelLayer::ItemType type) : itemType(type) {}
-    LevelLayer::ItemType itemType;
+    DropItemUserData(LevelCustomization::ItemType type) : itemType(type) {}
+    LevelCustomization::ItemType itemType;
 };
 
 class LevelContactListener : public b2ContactListener
@@ -67,7 +67,7 @@ class LevelContactListener : public b2ContactListener
 
 LevelLayer::LevelLayer(LevelCustomization *customization)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
-      ratMinSpeed(0.5), ratMaxSpeed(5.0), ratSpeedStep(0.5), ratTargetSpeed(ratMinSpeed), score(0),
+      ratSpeed(levelCustomization->getRatSpeedMin()), score(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), contactListener(new LevelContactListener(this))
 {
@@ -159,8 +159,8 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
     cageBody = json->getBodyByName("cage");
     assert(cageBody);
 
-    for (int i = SPEEDUP; i < ITEM_TYPE_MAX; i++) {
-        ItemType itemType = static_cast<ItemType>(i);
+    for (int i = LevelCustomization::SPEEDUP; i < LevelCustomization::ITEM_TYPE_MAX; i++) {
+        LevelCustomization::ItemType itemType = static_cast<LevelCustomization::ItemType>(i);
         b2Body *body = json->getBodyByName(itemTypeToImageName(itemType));
         assert(body);
         itemJsons[itemType] = json->b2j(body);
@@ -227,7 +227,7 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
 void LevelLayer::doPhysicsCalculationStep()
 {
     // increase/decrease speed
-    ratBody->ApplyAngularImpulse(ratTargetSpeed / 10, true);
+    ratBody->ApplyAngularImpulse(ratSpeed / 10, true);
 
     // custom gravity
     b2Vec2 earthCenter = earthBody->GetPosition();
@@ -255,7 +255,11 @@ void LevelLayer::updateScore()
 
 void LevelLayer::dropItem(float t)
 {
-    ItemType itemType = randomizeItemType();
+    LevelCustomization::ItemType itemType = levelCustomization->getDropItemType(ratSpeed);
+
+    if (itemType == LevelCustomization::ITEM_TYPE_MAX) {
+        return;
+    }
 
     b2Body *body = jsonParser.j2b2Body(m_world, itemJsons[itemType]);
     body->SetUserData(new DropItemUserData(itemType));
@@ -263,7 +267,7 @@ void LevelLayer::dropItem(float t)
     duplicateImageForBody(itemTypeToImageName(itemType), body);
     body->ApplyAngularImpulse(0.1 * body->GetMass(), true);
 
-    body->SetTransform(b2Vec2(rand_minus1_1() * 1.5, 10), rand_0_1() * 2 * M_PI);
+    body->SetTransform(levelCustomization->getDropItemSpot(), rand_0_1() * 2 * M_PI);
 
     itemsBodies.push_back(body);
 
@@ -284,51 +288,41 @@ void LevelLayer::dropItem(float t)
     getAnySpriteOnBody(body)->runAction(sequenceAction);
 }
 
-LevelLayer::ItemType LevelLayer::randomizeItemType() const
-{
-    ItemType itemType = static_cast<ItemType>(rand() % ITEM_TYPE_MAX);
-
-    if (ratTargetSpeed == ratMaxSpeed) {
-        itemType = SLOWDOWN;
-    }
-
-    if (ratTargetSpeed == ratMinSpeed) {
-        itemType = SPEEDUP;
-    }
-
-    return itemType;
-}
-
 void LevelLayer::removeOutstandingItems()
 {
     for (auto i = itemsToRemove.begin(); i != itemsToRemove.end(); i++) {
-        delete static_cast<DropItemUserData *>((*i)->GetUserData());
+        DropItemUserData *itemData = static_cast<DropItemUserData *>((*i)->GetUserData());
+        levelCustomization->itemRemovedCallback(itemData->itemType);
+        delete itemData;
+
         removeBodyFromWorld(*i);
     }
 
     itemsToRemove.clear();
 }
 
-void LevelLayer::ratAteItem(ItemType itemType)
+void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
 {
-    if (itemType == SPEEDUP) {
-        ratTargetSpeed = b2Min(ratTargetSpeed + ratSpeedStep, ratMaxSpeed);
+    if (itemType == LevelCustomization::SPEEDUP) {
+        ratSpeed = b2Min(ratSpeed + levelCustomization->getRatSpeedStep(),
+                         levelCustomization->getRatSpeedMax());
         backgroundSpeedFunction(1);
     }
 
-    if (itemType == SLOWDOWN) {
-        ratTargetSpeed = b2Max(ratTargetSpeed - ratSpeedStep, ratMinSpeed);
+    if (itemType == LevelCustomization::SLOWDOWN) {
+        ratSpeed = b2Max(ratSpeed - levelCustomization->getRatSpeedStep(),
+                         levelCustomization->getRatSpeedMin());
         backgroundSpeedFunction(-1);
     }
 }
 
-std::string LevelLayer::itemTypeToImageName(LevelLayer::ItemType itemType) const
+std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemType) const
 {
-    if (itemType == SPEEDUP) {
+    if (itemType == LevelCustomization::SPEEDUP) {
         return "item_speedup";
     }
 
-    if (itemType == SLOWDOWN) {
+    if (itemType == LevelCustomization::SLOWDOWN) {
         return "item_slowdown";
     }
 

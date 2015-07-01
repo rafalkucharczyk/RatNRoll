@@ -8,10 +8,11 @@ class PermanentStorage
   public:
     PermanentStorage();
 
-    void setBestScore(int score);
-    int getBestScore() const;
+    void setBestScore(int levelNumber, int score);
+    int getBestScore(int levelNumber) const;
 
   private:
+    bool hasValidFormat() const;
     void initWithDefaults();
     void load();
     void save();

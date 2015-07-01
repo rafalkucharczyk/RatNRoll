@@ -45,18 +45,14 @@ class LevelLayer : public RUBELayer
         backgroundSpeedFunction = function;
     }
 
-  public:
-    enum ItemType { SPEEDUP = 0, SLOWDOWN, ITEM_TYPE_MAX };
-
   private:
     void doPhysicsCalculationStep();
     void updateScore();
     void dropItem(float t);
-    ItemType randomizeItemType() const;
     void removeOutstandingItems();
-    void ratAteItem(ItemType itemType);
+    void ratAteItem(LevelCustomization::ItemType itemType);
 
-    std::string itemTypeToImageName(ItemType itemType) const;
+    std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
     void initScoreLabel();
 
@@ -69,14 +65,12 @@ class LevelLayer : public RUBELayer
     BodiesList itemsToRemove; // items to be removed are gathered in ContactListener
                               // bodies can not be simply removed there
 
-    Json::Value itemJsons[ITEM_TYPE_MAX]; // keeps Json::Value for every item parsed from RUBE file
-                                          // needed for duplication
+    // keeps Json::Value for every item parsed from RUBE file, needed for duplication
+    Json::Value itemJsons[LevelCustomization::ITEM_TYPE_MAX];
+
     b2dJson jsonParser;
 
-    const float ratMinSpeed;
-    const float ratMaxSpeed;
-    const float ratSpeedStep;
-    float ratTargetSpeed;
+    float ratSpeed;
 
     std::function<void(int)> backgroundSpeedFunction;
 

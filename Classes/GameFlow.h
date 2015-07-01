@@ -21,7 +21,7 @@ class GameFlow
 
   private:
     LevelCustomization *getLevelCustomization(int levelNumber) const;
-    int updateBestScore(int score);
+    int updateBestScore(int levelNumber, int score);
 
     int currentLevelNumber;
 
