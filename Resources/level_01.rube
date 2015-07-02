@@ -58,7 +58,10 @@
       "compactCommonFloats" : true,
       "compactZeroVecs" : true,
       "saveFullPathForImages" : false,
+      "saveFullPathForSamplerOutput" : false,
       "saveImagePathsRelativeToRUBEFile" : false,
+      "saveSamplerOutputPathsRelativeToRUBEFile" : false,
+      "useGsonFormat" : false,
       "useHumanReadableFloats" : true,
       "usePrettyPrint" : true
     },
@@ -79,6 +82,8 @@
           
           {
             "density" : 0.5821164846420288,
+            "filter-categoryBits" : 2,
+            "filter-maskBits" : 65531,
             "friction" : 0.2,
             "id" : 1,
             "name" : "fixture3",
@@ -186,6 +191,89 @@
           "y" : -2.709017276763916
         },
         "type" : "static"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 0.5821164846420288,
+            "filter-categoryBits" : 2,
+            "filter-maskBits" : 65531,
+            "friction" : 0.2,
+            "id" : 5,
+            "name" : "fixture3",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                0.1680848598480225,
+                0.05517697334289551,
+                -0.09204581379890442,
+                -0.2103454470634460,
+                -0.2427877336740494,
+                -0.2871972918510437,
+                -0.2499531507492065,
+                -0.2119465470314026,
+                -0.08599274605512619,
+                0.009753778576850891,
+                0.1488849073648453,
+                0.2282146364450455,
+                0.2456980943679810,
+                0.2910756468772888,
+                0.2475179135799408,
+                0.2273398637771606
+              ],
+              "y" : 
+              [
+                0.1874940991401672,
+                0.1965417116880417,
+                0.1825304925441742,
+                0.1334779858589172,
+                0.0795607864856720,
+                -0.005845725536346436,
+                -0.04308959841728210,
+                -0.1570730507373810,
+                -0.1931030154228210,
+                -0.1943876743316650,
+                -0.1851138174533844,
+                -0.1017622947692871,
+                -0.03644019737839699,
+                -0.007299542427062988,
+                0.08417126536369324,
+                0.1269400715827942
+              ]
+            }
+          }
+        ],
+        "gravityScale" : 0.5,
+        "id" : 3,
+        "linearVelocity" : 0,
+        "massData-I" : 0.002880216343328357,
+        "massData-center" : 
+        {
+          "x" : 0.002312825759872794,
+          "y" : -5.754948506364599e-05
+        },
+        "massData-mass" : 0.1,
+        "name" : "item_hover",
+        "position" : 
+        {
+          "x" : -7.338276863098145,
+          "y" : -1.996408820152283
+        },
+        "type" : "dynamic"
       },
       
       {
@@ -336,6 +424,8 @@
           
           {
             "density" : 0.5821164846420288,
+            "filter-categoryBits" : 2,
+            "filter-maskBits" : 65531,
             "friction" : 0.2,
             "id" : 7,
             "name" : "fixture3",
@@ -406,6 +496,67 @@
           "y" : -1.980842232704163
         },
         "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "filter-categoryBits" : 4,
+            "filter-maskBits" : 65533,
+            "friction" : 0.2,
+            "id" : 8,
+            "name" : "fixture5",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "line"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : 
+              [
+                -3.5,
+                -2.5,
+                -1.669180870056152,
+                -0.7607221603393555,
+                0.1147032380104065,
+                0.9570931792259216,
+                1.782966613769531,
+                2.5,
+                3.5
+              ],
+              "y" : 
+              [
+                -2,
+                -1,
+                -0.4955234527587891,
+                -0.04955291748046875,
+                0.0,
+                -0.08258819580078125,
+                -0.5285577774047852,
+                -1,
+                -2
+              ]
+            }
+          }
+        ],
+        "id" : 8,
+        "linearVelocity" : 0,
+        "name" : "body0",
+        "position" : 
+        {
+          "x" : 0,
+          "y" : 8.319139480590820
+        },
+        "type" : "static"
       }
     ],
     "metaimage" : 
@@ -468,6 +619,19 @@
         "flip" : false,
         "id" : 3,
         "name" : "item_speedup",
+        "opacity" : 0.5,
+        "scale" : 0.4239454865455627
+      },
+      
+      {
+        "aspectScale" : 1,
+        "body" : 3,
+        "center" : 0,
+        "file" : "hover01.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 4,
+        "name" : "item_hover",
         "opacity" : 0.5,
         "scale" : 0.4239454865455627
       },

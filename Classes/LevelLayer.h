@@ -46,11 +46,15 @@ class LevelLayer : public RUBELayer
     }
 
   private:
+    void startDroppingItems();
+    void stopDroppingItems();
     void doPhysicsCalculationStep();
     void updateScore();
     void dropItem(float t);
     void removeOutstandingItems();
     void ratAteItem(LevelCustomization::ItemType itemType);
+
+    void hoverItemEaten();
 
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 

@@ -14,7 +14,7 @@ class LevelCustomization
     virtual ~LevelCustomization() {}
 
   public:
-    enum ItemType { SPEEDUP = 0, SLOWDOWN, ITEM_TYPE_MAX };
+    enum ItemType { SPEEDUP = 0, SLOWDOWN, HOVER, ITEM_TYPE_MAX };
 
   public:
     virtual std::string getRubeJsonFileName() const = 0;
@@ -33,6 +33,20 @@ class LevelCustomization
 
     // called by LevelLayer each time item is removed from world
     virtual void itemRemovedCallback(ItemType itemType){};
+
+  protected:
+    ItemType normalizeDropItemType(ItemType itemType, float currentRatSpeed)
+    {
+        if (currentRatSpeed == getRatSpeedMax() && itemType == SPEEDUP) {
+            return SLOWDOWN;
+        }
+
+        if (currentRatSpeed == getRatSpeedMin() && itemType == SLOWDOWN) {
+            return SPEEDUP;
+        }
+
+        return itemType;
+    }
 };
 
 class LevelTutorial : public LevelCustomization
@@ -55,18 +69,21 @@ class LevelTutorial : public LevelCustomization
         }
 
         canDropNewItem = false;
-        // repeatedly drop 3 items of each type
-        ItemType itemType = droppedItemsCount++ % 6 <= 2 ? SPEEDUP : SLOWDOWN;
 
-        if (currentRatSpeed == getRatSpeedMax()) {
-            itemType = SLOWDOWN;
-        }
+        // repeatedly drop 1 item of each type
+        ItemType itemType = ITEM_TYPE_MAX;
 
-        if (currentRatSpeed == getRatSpeedMin()) {
+        if (droppedItemsCount % 3 == 0) {
             itemType = SPEEDUP;
+        } else if (droppedItemsCount % 3 == 1) {
+            itemType = SLOWDOWN;
+        } else {
+            itemType = HOVER;
         }
 
-        return itemType;
+        droppedItemsCount++;
+
+        return normalizeDropItemType(itemType, currentRatSpeed);
     }
 
     b2Vec2 getDropItemSpot() { return b2Vec2(0, 10); }
@@ -93,18 +110,10 @@ class Level01 : public LevelCustomization
     {
         ItemType itemType = static_cast<ItemType>(rand() % ITEM_TYPE_MAX);
 
-        if (currentRatSpeed == getRatSpeedMax()) {
-            itemType = SLOWDOWN;
-        }
-
-        if (currentRatSpeed == getRatSpeedMin()) {
-            itemType = SPEEDUP;
-        }
-
-        return itemType;
+        return normalizeDropItemType(itemType, currentRatSpeed);
     }
 
-    b2Vec2 getDropItemSpot() { return b2Vec2(cocos2d::rand_minus1_1() * 1.5, 10); }
+    b2Vec2 getDropItemSpot() { return b2Vec2(cocos2d::rand_minus1_1(), 10); }
 };
 
 #endif // __LEVEL_LOGIC_H__

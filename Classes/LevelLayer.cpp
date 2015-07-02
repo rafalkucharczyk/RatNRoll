@@ -81,7 +81,7 @@ bool LevelLayer::init()
 
     m_world->SetContactListener(contactListener.get());
 
-    schedule(schedule_selector(LevelLayer::dropItem), levelCustomization->getItemDropInterval());
+    startDroppingItems();
 
     initScoreLabel();
 
@@ -224,6 +224,13 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
     return false;
 }
 
+void LevelLayer::startDroppingItems()
+{
+    schedule(schedule_selector(LevelLayer::dropItem), levelCustomization->getItemDropInterval());
+}
+
+void LevelLayer::stopDroppingItems() { unschedule(schedule_selector(LevelLayer::dropItem)); }
+
 void LevelLayer::doPhysicsCalculationStep()
 {
     // increase/decrease speed
@@ -314,6 +321,27 @@ void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
                          levelCustomization->getRatSpeedMin());
         backgroundSpeedFunction(-1);
     }
+
+    if (itemType == LevelCustomization::HOVER) {
+        hoverItemEaten();
+    }
+}
+
+void LevelLayer::hoverItemEaten()
+{
+    ratBody->SetGravityScale(-2);
+
+    float lastRatSpeed = ratSpeed;
+    ratSpeed = 0;
+    stopDroppingItems();
+
+    getAnySpriteOnBody(ratBody)->runAction(
+        Sequence::create(DelayTime::create(2.0), CallFunc::create([this, lastRatSpeed]() {
+                             startDroppingItems();
+                             ratBody->SetGravityScale(1.0);
+                             ratSpeed = lastRatSpeed;
+                         }),
+                         nullptr));
 }
 
 std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemType) const
@@ -324,6 +352,10 @@ std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemTyp
 
     if (itemType == LevelCustomization::SLOWDOWN) {
         return "item_slowdown";
+    }
+
+    if (itemType == LevelCustomization::HOVER) {
+        return "item_hover";
     }
 
     assert(false);
