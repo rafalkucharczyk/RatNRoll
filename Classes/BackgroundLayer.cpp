@@ -60,7 +60,7 @@ Vec2 BackgroundLayer::getRandomStartPoint(const Size &spriteSize)
         return Vec2(-spriteSize.width, rand_0_1() * visibleSize.y); // left edge
     }
 
-    return Vec2(rand_0_1() * visibleSize.x, visibleSize.y - spriteSize.height); // top edge
+    return Vec2(rand_0_1() * visibleSize.x, visibleSize.y + spriteSize.height); // top edge
 }
 
 Vec2 BackgroundLayer::getTargetPoint(const Vec2 &startPoint, const cocos2d::Size &spriteSize)
