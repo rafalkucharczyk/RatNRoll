@@ -194,7 +194,7 @@ void LevelLayer::update(float dt)
 bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,
                                                           cocos2d::Point &position, float &angle)
 {
-    if (imageInfo->name == "rat") // special handling for rat image
+    if (imageInfo->body == ratBody) // special handling for rat image
     {
         // adapt position
         b2Vec2 p = imageInfo->body->GetPosition();
@@ -270,11 +270,10 @@ void LevelLayer::dropItem(float t)
 
     b2Body *body = jsonParser.j2b2Body(m_world, itemJsons[itemType]);
     body->SetUserData(new DropItemUserData(itemType));
+    body->SetTransform(levelCustomization->getDropItemSpot(), rand_0_1() * 2 * M_PI);
 
     duplicateImageForBody(itemTypeToImageName(itemType), body);
     body->ApplyAngularImpulse(0.1 * body->GetMass(), true);
-
-    body->SetTransform(levelCustomization->getDropItemSpot(), rand_0_1() * 2 * M_PI);
 
     itemsBodies.push_back(body);
 

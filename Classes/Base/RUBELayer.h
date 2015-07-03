@@ -57,6 +57,8 @@ class RUBELayer : public BasicRUBELayer
     virtual void afterLoadProcessing(b2dJson *json); // overrides base class
     virtual void clear();                            // overrides base class
 
+    // sets position of individual sprite based on associated physics body
+    void setImagePositionFromPhysicsBody(RUBEImageInfo *imageInfo);
     void setImagePositionsFromPhysicsBodies(); // called every frame to move the images to the
                                                // correct position when bodies move
 

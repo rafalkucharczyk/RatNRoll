@@ -62,14 +62,17 @@ void RUBELayer::addSpriteFromRubeImageInfo(RUBEImageInfo *imageInfo)
 
     assert(sprite);
 
-    addChild(sprite);
-    reorderChild(sprite, imageInfo->renderOrder);
-
     sprite->setFlippedX(imageInfo->flip);
     sprite->setColor(
         Color3B(imageInfo->colorTint[0], imageInfo->colorTint[1], imageInfo->colorTint[2]));
     sprite->setOpacity(imageInfo->colorTint[3]);
     sprite->setScale(imageInfo->scale / sprite->getContentSize().height);
+
+    // align sprite position and rotation with physics body
+    setImagePositionFromPhysicsBody(imageInfo);
+
+    addChild(sprite);
+    reorderChild(sprite, imageInfo->renderOrder);
 }
 
 void RUBELayer::duplicateImageForBody(const std::string &name, b2Body *body)
@@ -115,29 +118,33 @@ void RUBELayer::update(float dt)
     setImagePositionsFromPhysicsBodies();
 }
 
+void RUBELayer::setImagePositionFromPhysicsBody(RUBEImageInfo *imageInfo)
+{
+    Point pos = imageInfo->center;
+    float angle = -imageInfo->angle;
+
+    if (imageInfo->body) {
+        if (!setCustomImagePositionsFromPhysicsBodies(imageInfo, pos, angle)) {
+            // need to rotate image local center by body angle
+            b2Vec2 localPos(pos.x, pos.y);
+            b2Rot rot(imageInfo->body->GetAngle());
+            localPos = b2Mul(rot, localPos) + imageInfo->body->GetPosition();
+            pos.x = localPos.x;
+            pos.y = localPos.y;
+            angle += -imageInfo->body->GetAngle();
+        }
+    }
+
+    imageInfo->sprite->setRotation(CC_RADIANS_TO_DEGREES(angle));
+
+    imageInfo->sprite->setPosition(pos);
+}
+
 // Move all the images to where the physics engine says they should be
 void RUBELayer::setImagePositionsFromPhysicsBodies()
 {
     for (set<RUBEImageInfo *>::iterator it = m_imageInfos.begin(); it != m_imageInfos.end(); ++it) {
-        RUBEImageInfo *imgInfo = *it;
-        Point pos = imgInfo->center;
-        float angle = -imgInfo->angle;
-
-        if (imgInfo->body) {
-            if (!setCustomImagePositionsFromPhysicsBodies(imgInfo, pos, angle)) {
-                // need to rotate image local center by body angle
-                b2Vec2 localPos(pos.x, pos.y);
-                b2Rot rot(imgInfo->body->GetAngle());
-                localPos = b2Mul(rot, localPos) + imgInfo->body->GetPosition();
-                pos.x = localPos.x;
-                pos.y = localPos.y;
-                angle += -imgInfo->body->GetAngle();
-            }
-        }
-
-        imgInfo->sprite->setRotation(CC_RADIANS_TO_DEGREES(angle));
-
-        imgInfo->sprite->setPosition(pos);
+        setImagePositionFromPhysicsBody(*it);
     }
 }
 
