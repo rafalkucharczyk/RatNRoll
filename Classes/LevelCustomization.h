@@ -14,7 +14,7 @@ class LevelCustomization
     virtual ~LevelCustomization() {}
 
   public:
-    enum ItemType { SPEEDUP = 0, SLOWDOWN, HOVER, ITEM_TYPE_MAX };
+    enum ItemType { SPEEDUP = 0, SLOWDOWN, HOVER, HALVE, ITEM_TYPE_MAX };
 
   public:
     virtual std::string getRubeJsonFileName() const = 0;
@@ -73,12 +73,14 @@ class LevelTutorial : public LevelCustomization
         // repeatedly drop 1 item of each type
         ItemType itemType = ITEM_TYPE_MAX;
 
-        if (droppedItemsCount % 3 == 0) {
+        if (droppedItemsCount % ITEM_TYPE_MAX == SPEEDUP) {
             itemType = SPEEDUP;
-        } else if (droppedItemsCount % 3 == 1) {
+        } else if (droppedItemsCount % ITEM_TYPE_MAX == SLOWDOWN) {
             itemType = SLOWDOWN;
-        } else {
+        } else if (droppedItemsCount % ITEM_TYPE_MAX == HOVER) {
             itemType = HOVER;
+        } else {
+            itemType = HALVE;
         }
 
         droppedItemsCount++;

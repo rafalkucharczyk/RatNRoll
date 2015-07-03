@@ -22,7 +22,7 @@ class LevelContactListener : public b2ContactListener
     {
         if (isContact(contact, levelLayer->ratBody, levelLayer->cageBody)) {
             if (levelLayer->gameFinishedCallback) {
-                levelLayer->gameFinishedCallback(levelLayer->score);
+                levelLayer->gameFinishedCallback(levelLayer->gameScore);
             }
         }
 
@@ -67,7 +67,7 @@ class LevelContactListener : public b2ContactListener
 
 LevelLayer::LevelLayer(LevelCustomization *customization)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
-      ratSpeed(levelCustomization->getRatSpeedMin()), score(0),
+      ratSpeed(levelCustomization->getRatSpeedMin()), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), contactListener(new LevelContactListener(this))
 {
@@ -83,7 +83,7 @@ bool LevelLayer::init()
 
     startDroppingItems();
 
-    initScoreLabel();
+    scoreLabel = initScoreLabel(gameScore);
 
     return true;
 }
@@ -250,9 +250,9 @@ void LevelLayer::updateScore()
 {
     float currentAngle = -earthRevoluteJoint->GetJointAngle();
     if (currentAngle - previousRevoluteJointAngle > 0.2) {
-        score++;
+        gameScore++;
 
-        scoreLabel->setString(std::to_string(score));
+        scoreLabel->setString(std::to_string(gameScore));
 
         previousRevoluteJointAngle = currentAngle;
     } else if (currentAngle < previousRevoluteJointAngle) {
@@ -325,6 +325,10 @@ void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
     if (itemType == LevelCustomization::HOVER) {
         hoverItemEaten();
     }
+
+    if (itemType == LevelCustomization::HALVE) {
+        halveItemEaten();
+    }
 }
 
 void LevelLayer::hoverItemEaten()
@@ -344,6 +348,25 @@ void LevelLayer::hoverItemEaten()
                          nullptr));
 }
 
+void LevelLayer::halveItemEaten()
+{
+    int halfScore = gameScore / 2;
+    gameScore -= halfScore;
+
+    scoreLabel->setString(std::to_string(gameScore));
+
+    // show animation with number of points taken
+    auto label = initScoreLabel(halfScore);
+    float animationDuration = 0.5;
+
+    label->runAction(Sequence::create(
+        Spawn::create(ScaleTo::create(animationDuration, 0),
+                      MoveBy::create(animationDuration,
+                                     Vec2(0, -label->getContentSize().height / getScale())),
+                      nullptr),
+        RemoveSelf::create(), nullptr));
+}
+
 std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemType) const
 {
     if (itemType == LevelCustomization::SPEEDUP) {
@@ -358,21 +381,27 @@ std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemTyp
         return "item_hover";
     }
 
+    if (itemType == LevelCustomization::HALVE) {
+        return "item_halve";
+    }
+
     assert(false);
 
     return "";
 }
 
-void LevelLayer::initScoreLabel()
+Label *LevelLayer::initScoreLabel(int score)
 {
-    scoreLabel = Label::createWithSystemFont("", "Marker Felt", 60);
-    scoreLabel->setColor(Color3B::BLACK);
+    auto label = Label::createWithSystemFont("", "Marker Felt", 60);
+    label->setColor(Color3B::BLACK);
 
-    addChild(scoreLabel, 1);
+    addChild(label, 1);
 
-    scoreLabel->setScale(1 / getScale());
+    label->setScale(1 / getScale());
 
     b2Vec2 pos = earthBody->GetWorldCenter();
-    scoreLabel->setPosition(pos.x, pos.y);
-    scoreLabel->setString(std::to_string(score));
+    label->setPosition(pos.x, pos.y);
+    label->setString(std::to_string(score));
+
+    return label;
 }

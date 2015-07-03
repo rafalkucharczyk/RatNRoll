@@ -55,10 +55,11 @@ class LevelLayer : public RUBELayer
     void ratAteItem(LevelCustomization::ItemType itemType);
 
     void hoverItemEaten();
+    void halveItemEaten();
 
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
-    void initScoreLabel();
+    cocos2d::Label *initScoreLabel(int score);
 
   private:
     std::unique_ptr<LevelCustomization> levelCustomization;
@@ -80,7 +81,7 @@ class LevelLayer : public RUBELayer
 
   private:
     b2RevoluteJoint *earthRevoluteJoint;
-    int score;
+    int gameScore;
     float previousRevoluteJointAngle;
 
     cocos2d::Label *scoreLabel;
