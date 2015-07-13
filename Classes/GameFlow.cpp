@@ -1,5 +1,7 @@
 #include "GameFlow.h"
 
+#include "SonarFrameworks.h"
+
 #include "BackgroundLayer.h"
 #include "InitialLayer.h"
 #include "LevelMenuLayer.h"
@@ -112,6 +114,9 @@ int GameFlow::updateBestScore(int levelNumber, int score)
 
     if (score > currentBestScore) {
         gameStorage.setBestScore(levelNumber, score);
+
+        SonarCocosHelper::GameCenter::submitScore(score, "ratnroll_leaderboard_" +
+                                                             std::to_string(levelNumber));
 
         return score;
     }

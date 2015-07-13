@@ -1,7 +1,8 @@
 #include "AppDelegate.h"
-#include "SonarFrameworks.h"
 
 #include "GameFlow.h"
+
+#include "SonarFrameworks.h"
 
 USING_NS_CC;
 
@@ -29,9 +30,6 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
-    SonarCocosHelper::IOS::Setup();
-    SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eTop);
-
     auto director = Director::getInstance();
 
     // initialize director
@@ -48,6 +46,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
 
     register_all_packages();
+
+    SonarCocosHelper::IOS::Setup();
+    SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eTop);
+    SonarCocosHelper::GameCenter::signIn();
 
     auto scene = GameFlow::getInstance().createInitialScene();
 
