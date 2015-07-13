@@ -30,9 +30,6 @@
 
 @implementation AppController
 
-@synthesize adView;
-@synthesize bannerIsVisible;
-
 #pragma mark -
 #pragma mark Application lifecycle
 
@@ -77,17 +74,6 @@ static AppDelegate s_sharedApplication;
         // use this method on ios6
         [window setRootViewController:_viewController];
     }
-
-    adView = [[ADBannerView alloc]initWithFrame:CGRectZero];
-    adView.delegate = self;
-    [_viewController.view addSubview:adView];
-
-    self.bannerIsVisible = NO;
-
-    CGRect adFrame = adView.frame;
-    adFrame.origin.x = 0;
-    adFrame.origin.y = -adFrame.size.height;
-    adView.frame = adFrame;
 
     [window makeKeyAndVisible];
 
@@ -157,33 +143,5 @@ static AppDelegate s_sharedApplication;
     [window release];
     [super dealloc];
 }
-
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    if (!self.bannerIsVisible)
-    {
-        [UIView beginAnimations:@"animateAdBannerOn" context:NULL];
-        // Assumes the banner view is just off the bottom of the screen.
-        CGRect adFrame = adView.frame;
-        adFrame.origin.y = 0; // _viewController.view.frame.size.width - adView.frame.size.height;
-        adFrame.origin.x = 0; // _viewController.view.frame.size.height / 2 - adView.frame.size.width / 2;
-        adView.frame = adFrame;
-        [UIView commitAnimations];
-        self.bannerIsVisible = YES;
-    }
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    NSLog(@"%@", error.description);
-    if (self.bannerIsVisible)
-    {
-        [UIView beginAnimations:@"animateAdBannerOff" context:NULL];
-        banner.frame = CGRectOffset(banner.frame, 0, -banner.frame.size.height);
-        [UIView commitAnimations];
-        self.bannerIsVisible = NO;
-    }
-}
-
 
 @end

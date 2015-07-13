@@ -83,6 +83,10 @@
 		B55858501B433D05005AD55B /* level_tutorial.json in Resources */ = {isa = PBXBuildFile; fileRef = B558584F1B433D05005AD55B /* level_tutorial.json */; };
 		B55858531B43403A005AD55B /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55858521B43403A005AD55B /* MenuHelper.cpp */; };
 		B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55887C81B41E0B900B13416 /* InitialLayer.cpp */; };
+		B5927EC71B5440DA00D59F09 /* IOSCPPHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B5927EBE1B5440DA00D59F09 /* IOSCPPHelper.mm */; };
+		B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5927EC01B5440DA00D59F09 /* IOSHelper.m */; };
+		B5927EC91B5440DA00D59F09 /* IOSResults.mm in Sources */ = {isa = PBXBuildFile; fileRef = B5927EC21B5440DA00D59F09 /* IOSResults.mm */; };
+		B5927ECA1B5440DA00D59F09 /* SonarFrameworks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5927EC51B5440DA00D59F09 /* SonarFrameworks.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -215,6 +219,16 @@
 		B55858521B43403A005AD55B /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
 		B55887C81B41E0B900B13416 /* InitialLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialLayer.cpp; sourceTree = "<group>"; };
 		B55887C91B41E0B900B13416 /* InitialLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialLayer.h; sourceTree = "<group>"; };
+		B5927EBD1B5440DA00D59F09 /* IOSCPPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSCPPHelper.h; sourceTree = "<group>"; };
+		B5927EBE1B5440DA00D59F09 /* IOSCPPHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IOSCPPHelper.mm; sourceTree = "<group>"; };
+		B5927EBF1B5440DA00D59F09 /* IOSHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSHelper.h; sourceTree = "<group>"; };
+		B5927EC01B5440DA00D59F09 /* IOSHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOSHelper.m; sourceTree = "<group>"; };
+		B5927EC11B5440DA00D59F09 /* IOSResults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSResults.h; sourceTree = "<group>"; };
+		B5927EC21B5440DA00D59F09 /* IOSResults.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IOSResults.mm; sourceTree = "<group>"; };
+		B5927EC31B5440DA00D59F09 /* SCHDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCHDefinitions.h; sourceTree = "<group>"; };
+		B5927EC41B5440DA00D59F09 /* SCHSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCHSettings.h; sourceTree = "<group>"; };
+		B5927EC51B5440DA00D59F09 /* SonarFrameworks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SonarFrameworks.cpp; sourceTree = "<group>"; };
+		B5927EC61B5440DA00D59F09 /* SonarFrameworks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonarFrameworks.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -366,6 +380,7 @@
 			children = (
 				B535EF4C1B1330ED004D647D /* Base */,
 				B535EF401B1321F5004D647D /* Rube */,
+				B5927EBC1B5440DA00D59F09 /* SonarCocosHelper */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				B552BDFF1B2236DC00D4851A /* BackgroundLayer.cpp */,
@@ -471,6 +486,23 @@
 				B535EF501B1330ED004D647D /* Box2DDebugDraw.h */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		B5927EBC1B5440DA00D59F09 /* SonarCocosHelper */ = {
+			isa = PBXGroup;
+			children = (
+				B5927EBD1B5440DA00D59F09 /* IOSCPPHelper.h */,
+				B5927EBE1B5440DA00D59F09 /* IOSCPPHelper.mm */,
+				B5927EBF1B5440DA00D59F09 /* IOSHelper.h */,
+				B5927EC01B5440DA00D59F09 /* IOSHelper.m */,
+				B5927EC11B5440DA00D59F09 /* IOSResults.h */,
+				B5927EC21B5440DA00D59F09 /* IOSResults.mm */,
+				B5927EC31B5440DA00D59F09 /* SCHDefinitions.h */,
+				B5927EC41B5440DA00D59F09 /* SCHSettings.h */,
+				B5927EC51B5440DA00D59F09 /* SonarFrameworks.cpp */,
+				B5927EC61B5440DA00D59F09 /* SonarFrameworks.h */,
+			);
+			path = SonarCocosHelper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -629,10 +661,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5927ECA1B5440DA00D59F09 /* SonarFrameworks.cpp in Sources */,
 				B552BDFC1B1CE54E00D4851A /* LevelLayer.cpp in Sources */,
+				B5927EC71B5440DA00D59F09 /* IOSCPPHelper.mm in Sources */,
+				B5927EC91B5440DA00D59F09 /* IOSResults.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
 				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
+				B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */,
 				B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */,
 				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
 				B55858531B43403A005AD55B /* MenuHelper.cpp in Sources */,

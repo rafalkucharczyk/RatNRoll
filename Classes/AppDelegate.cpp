@@ -1,4 +1,5 @@
 #include "AppDelegate.h"
+#include "SonarFrameworks.h"
 
 #include "GameFlow.h"
 
@@ -28,6 +29,9 @@ static int register_all_packages()
 
 bool AppDelegate::applicationDidFinishLaunching()
 {
+    SonarCocosHelper::IOS::Setup();
+    SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eTop);
+
     auto director = Director::getInstance();
 
     // initialize director
