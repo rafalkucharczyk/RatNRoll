@@ -13,7 +13,10 @@ class GameFlow
   public:
     cocos2d::Scene *createInitialScene();
 
+  private:
     void switchToInitialScene();
+
+    void handleInitialSceneMenu(int itemIndex);
 
     void switchToLevelScene(int levelNumber);
 

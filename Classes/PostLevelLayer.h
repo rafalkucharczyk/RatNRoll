@@ -23,6 +23,7 @@ class PostLevelLayer : public cocos2d::Layer
         gotoMainMenuCallback = callback;
     }
 
+    void displayCurrentScore(int score);
     void displayBestScore(int score);
 
   private:
@@ -33,6 +34,7 @@ class PostLevelLayer : public cocos2d::Layer
 
     MenuHelper menuHelper;
 
+    cocos2d::Label *currentScoreLabel;
     cocos2d::Label *bestScoreLabel;
 };
 

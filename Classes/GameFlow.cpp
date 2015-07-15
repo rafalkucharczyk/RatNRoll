@@ -35,7 +35,7 @@ Scene *GameFlow::createInitialScene()
 
     auto initialLayer = InitialLayer::create();
     initialLayer->setMenuItemClickedCallback(
-        std::bind(&GameFlow::switchToLevelScene, this, std::placeholders::_1));
+        std::bind(&GameFlow::handleInitialSceneMenu, this, std::placeholders::_1));
     scene->addChild(initialLayer);
 
     return scene;
@@ -44,6 +44,15 @@ Scene *GameFlow::createInitialScene()
 void GameFlow::switchToInitialScene()
 {
     Director::getInstance()->replaceScene(createInitialScene());
+}
+
+void GameFlow::handleInitialSceneMenu(int itemIndex)
+{
+    if (itemIndex <= 1) {
+        switchToLevelScene(itemIndex);
+    } else {
+        SonarCocosHelper::GameCenter::showLeaderboard();
+    }
 }
 
 void GameFlow::switchToLevelScene(int levelNumber)
@@ -79,6 +88,7 @@ void GameFlow::switchToPostLevelScene(int score)
     scene->addChild(backgroundLayer);
 
     auto postLevelLayer = PostLevelLayer::create();
+    postLevelLayer->displayCurrentScore(score);
     postLevelLayer->displayBestScore(updateBestScore(currentLevelNumber, score));
     postLevelLayer->setRestartLevelCallback(
         std::bind(&GameFlow::switchToLevelScene, this, currentLevelNumber));
@@ -123,3 +133,15 @@ int GameFlow::updateBestScore(int levelNumber, int score)
 
     return currentBestScore;
 }
+
+/*
+ --post game menu--
+
+    (YOUR SCORE)
+    (top score)
+
+  x                x
+ (main menu)   (restart)
+
+
+ */

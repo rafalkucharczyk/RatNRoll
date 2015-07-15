@@ -81,14 +81,16 @@
 		B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE051B237A0800D4851A /* PostLevelLayer.cpp */; };
 		B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE081B24234A00D4851A /* GameFlow.cpp */; };
 		B55858501B433D05005AD55B /* level_tutorial.json in Resources */ = {isa = PBXBuildFile; fileRef = B558584F1B433D05005AD55B /* level_tutorial.json */; };
-		B55858531B43403A005AD55B /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55858521B43403A005AD55B /* MenuHelper.cpp */; };
 		B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55887C81B41E0B900B13416 /* InitialLayer.cpp */; };
+		B57B5BE21B570BC400C98B37 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */; };
+		B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57B5BE41B570BED00C98B37 /* MenuItemButton.cpp */; };
 		B5927EC71B5440DA00D59F09 /* IOSCPPHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B5927EBE1B5440DA00D59F09 /* IOSCPPHelper.mm */; };
 		B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5927EC01B5440DA00D59F09 /* IOSHelper.m */; };
 		B5927EC91B5440DA00D59F09 /* IOSResults.mm in Sources */ = {isa = PBXBuildFile; fileRef = B5927EC21B5440DA00D59F09 /* IOSResults.mm */; };
 		B5927ECA1B5440DA00D59F09 /* SonarFrameworks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5927EC51B5440DA00D59F09 /* SonarFrameworks.cpp */; };
 		B5927ECE1B544A0700D59F09 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5927ECD1B544A0700D59F09 /* Social.framework */; };
 		B5927EDA1B54631500D59F09 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5927ED91B54631500D59F09 /* GameKit.framework */; };
+		B5927EDC1B55BD5700D59F09 /* menu in Resources */ = {isa = PBXBuildFile; fileRef = B5927EDB1B55BD5700D59F09 /* menu */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -217,10 +219,12 @@
 		B552BE091B24234A00D4851A /* GameFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameFlow.h; sourceTree = "<group>"; };
 		B558584E1B4337E9005AD55B /* LevelCustomization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelCustomization.h; sourceTree = "<group>"; };
 		B558584F1B433D05005AD55B /* level_tutorial.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level_tutorial.json; sourceTree = "<group>"; };
-		B55858511B434033005AD55B /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
-		B55858521B43403A005AD55B /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuHelper.cpp; sourceTree = "<group>"; };
 		B55887C81B41E0B900B13416 /* InitialLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialLayer.cpp; sourceTree = "<group>"; };
 		B55887C91B41E0B900B13416 /* InitialLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialLayer.h; sourceTree = "<group>"; };
+		B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuHelper.cpp; path = Menu/MenuHelper.cpp; sourceTree = "<group>"; };
+		B57B5BE11B570BC400C98B37 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuHelper.h; path = Menu/MenuHelper.h; sourceTree = "<group>"; };
+		B57B5BE31B570BE500C98B37 /* MenuItemButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuItemButton.h; path = Menu/MenuItemButton.h; sourceTree = "<group>"; };
+		B57B5BE41B570BED00C98B37 /* MenuItemButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuItemButton.cpp; path = Menu/MenuItemButton.cpp; sourceTree = "<group>"; };
 		B5927EBD1B5440DA00D59F09 /* IOSCPPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSCPPHelper.h; sourceTree = "<group>"; };
 		B5927EBE1B5440DA00D59F09 /* IOSCPPHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IOSCPPHelper.mm; sourceTree = "<group>"; };
 		B5927EBF1B5440DA00D59F09 /* IOSHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSHelper.h; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 		B5927EC61B5440DA00D59F09 /* SonarFrameworks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonarFrameworks.h; sourceTree = "<group>"; };
 		B5927ECD1B544A0700D59F09 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/System/Library/Frameworks/Social.framework; sourceTree = DEVELOPER_DIR; };
 		B5927ED91B54631500D59F09 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/System/Library/Frameworks/GameKit.framework; sourceTree = DEVELOPER_DIR; };
+		B5927EDB1B55BD5700D59F09 /* menu */ = {isa = PBXFileReference; lastKnownFileType = folder; path = menu; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -365,6 +370,7 @@
 			children = (
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
+				B5927EDB1B55BD5700D59F09 /* menu */,
 				46880B7619C43A67006E1F66 /* CloseNormal.png */,
 				46880B7719C43A67006E1F66 /* CloseSelected.png */,
 				46880B7A19C43A67006E1F66 /* HelloWorld.png */,
@@ -388,6 +394,7 @@
 			children = (
 				B535EF4C1B1330ED004D647D /* Base */,
 				B535EF401B1321F5004D647D /* Rube */,
+				B57B5BDF1B570BA900C98B37 /* Menu */,
 				B5927EBC1B5440DA00D59F09 /* SonarCocosHelper */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
@@ -402,8 +409,6 @@
 				B552BDFA1B1CE54E00D4851A /* LevelLayer.cpp */,
 				B552BDFB1B1CE54E00D4851A /* LevelLayer.h */,
 				B558584E1B4337E9005AD55B /* LevelCustomization.h */,
-				B55858521B43403A005AD55B /* MenuHelper.cpp */,
-				B55858511B434033005AD55B /* MenuHelper.h */,
 				B54E63221B3B62D50019C20F /* PermanentStorage.cpp */,
 				B54E63231B3B62D50019C20F /* PermanentStorage.h */,
 				B552BE051B237A0800D4851A /* PostLevelLayer.cpp */,
@@ -494,6 +499,17 @@
 				B535EF501B1330ED004D647D /* Box2DDebugDraw.h */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		B57B5BDF1B570BA900C98B37 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */,
+				B57B5BE11B570BC400C98B37 /* MenuHelper.h */,
+				B57B5BE41B570BED00C98B37 /* MenuItemButton.cpp */,
+				B57B5BE31B570BE500C98B37 /* MenuItemButton.h */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 		B5927EBC1B5440DA00D59F09 /* SonarCocosHelper */ = {
@@ -635,6 +651,7 @@
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
+				B5927EDC1B55BD5700D59F09 /* menu in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				B551AF6C1B1A39DC0076A8E9 /* earth01.png in Resources */,
 				B54CCC391B46F91A00393F40 /* speedup01.png in Resources */,
@@ -684,16 +701,17 @@
 				B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */,
 				B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */,
 				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
-				B55858531B43403A005AD55B /* MenuHelper.cpp in Sources */,
 				B552BE011B2236DC00D4851A /* BackgroundLayer.cpp in Sources */,
 				B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */,
 				B551AF661B18FCB50076A8E9 /* RUBELayer.cpp in Sources */,
 				B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				B57B5BE21B570BC400C98B37 /* MenuHelper.cpp in Sources */,
 				B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */,
 				B552BE041B223D3500D4851A /* LevelMenuLayer.cpp in Sources */,
 				B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */,
+				B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */,
 				B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);
