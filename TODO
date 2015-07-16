@@ -8,16 +8,27 @@ initial screen - selection of levels
 game logic - flying item
 game logic - killing item
 
-3
+3 done
 gamecenter - initial setup + leaderboards
+menu - no texts, only images
+
+4
+in game menu - pause game
+game logic - show item for a while before dropping
+game logic - allow touches only on earth body
 
 
 unordered:
 
-initial screen - settings and credits
+tutorial - pause game when new item drops, show animationn in balloon
+juice app a little, nicer transitions between screens, more animations
 gamecenter - challange friend, draw shadow player
 gamecenter - achivements
+background - fill screen with items at the beginning
+background - scale floating items for bigger resolutions (iPad)
+initial screen - settings and credits
 post game menu - stars (time, result) ?
 post game menu - sharing facebook
 post game menu - sharing twitter
+in-app purchase to remove ads
 music + sounds
