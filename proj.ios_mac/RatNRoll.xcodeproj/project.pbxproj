@@ -65,6 +65,7 @@
 		B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF4D1B1330ED004D647D /* BasicRUBELayer.cpp */; };
 		B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF4F1B1330ED004D647D /* Box2DDebugDraw.cpp */; };
 		B535EF581B1339D4004D647D /* level_01.json in Resources */ = {isa = PBXBuildFile; fileRef = B535EF571B1339D4004D647D /* level_01.json */; };
+		B54C0DEE1B5D9D48002B36B6 /* PauseLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */; };
 		B54CCC331B45E4CA00393F40 /* hover01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC321B45E4CA00393F40 /* hover01.png */; };
 		B54CCC371B46F91A00393F40 /* halve01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC341B46F91A00393F40 /* halve01.png */; };
 		B54CCC381B46F91A00393F40 /* slowdown01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC351B46F91A00393F40 /* slowdown01.png */; };
@@ -195,6 +196,8 @@
 		B535EF501B1330ED004D647D /* Box2DDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2DDebugDraw.h; sourceTree = "<group>"; };
 		B535EF561B133542004D647D /* QueryCallbacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCallbacks.h; sourceTree = "<group>"; };
 		B535EF571B1339D4004D647D /* level_01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level_01.json; sourceTree = "<group>"; };
+		B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PauseLayer.cpp; sourceTree = "<group>"; };
+		B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
 		B54CCC321B45E4CA00393F40 /* hover01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hover01.png; sourceTree = "<group>"; };
 		B54CCC341B46F91A00393F40 /* halve01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = halve01.png; sourceTree = "<group>"; };
 		B54CCC351B46F91A00393F40 /* slowdown01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slowdown01.png; sourceTree = "<group>"; };
@@ -409,6 +412,8 @@
 				B552BDFA1B1CE54E00D4851A /* LevelLayer.cpp */,
 				B552BDFB1B1CE54E00D4851A /* LevelLayer.h */,
 				B558584E1B4337E9005AD55B /* LevelCustomization.h */,
+				B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */,
+				B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */,
 				B54E63221B3B62D50019C20F /* PermanentStorage.cpp */,
 				B54E63231B3B62D50019C20F /* PermanentStorage.h */,
 				B552BE051B237A0800D4851A /* PostLevelLayer.cpp */,
@@ -709,6 +714,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				B57B5BE21B570BC400C98B37 /* MenuHelper.cpp in Sources */,
 				B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */,
+				B54C0DEE1B5D9D48002B36B6 /* PauseLayer.cpp in Sources */,
 				B552BE041B223D3500D4851A /* LevelMenuLayer.cpp in Sources */,
 				B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */,
 				B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */,

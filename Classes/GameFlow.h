@@ -8,10 +8,13 @@ class LevelCustomization;
 class GameFlow
 {
   public:
+    GameFlow();
     static GameFlow &getInstance();
 
   public:
     cocos2d::Scene *createInitialScene();
+
+    void pauseGame();
 
   private:
     void switchToInitialScene();
@@ -22,6 +25,8 @@ class GameFlow
 
     void switchToPostLevelScene(int score);
 
+    void resumeGame();
+
   private:
     LevelCustomization *getLevelCustomization(int levelNumber) const;
     int updateBestScore(int levelNumber, int score);
@@ -30,6 +35,8 @@ class GameFlow
 
   private:
     static GameFlow *instance;
+
+    const static int pauseLayerTag = 123;
 };
 
 #endif // __GAMEFLOW_H__

@@ -181,6 +181,10 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
 
 void LevelLayer::update(float dt)
 {
+    if (Director::getInstance()->isPaused()) {
+        return;
+    }
+
     RUBELayer::update(dt);
     totalTime += dt;
 

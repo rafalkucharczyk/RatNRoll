@@ -7,6 +7,7 @@
 #include "LevelMenuLayer.h"
 #include "LevelLayer.h"
 #include "PostLevelLayer.h"
+#include "PauseLayer.h"
 
 #include "PermanentStorage.h"
 
@@ -15,6 +16,8 @@
 USING_NS_CC;
 
 GameFlow *GameFlow::instance = nullptr;
+
+GameFlow::GameFlow() : currentLevelNumber(0) {}
 
 GameFlow &GameFlow::getInstance()
 {
@@ -41,8 +44,23 @@ Scene *GameFlow::createInitialScene()
     return scene;
 }
 
+void GameFlow::pauseGame()
+{
+    if (Director::getInstance()->isPaused()) {
+        return;
+    }
+
+    Director::getInstance()->pause();
+    auto pauseLayer = PauseLayer::create();
+    pauseLayer->setGameResumedCallback(std::bind(&GameFlow::resumeGame, this));
+    pauseLayer->setGameQuitCallback(std::bind(&GameFlow::switchToInitialScene, this));
+
+    Director::getInstance()->getRunningScene()->addChild(pauseLayer, 0, pauseLayerTag);
+}
+
 void GameFlow::switchToInitialScene()
 {
+    Director::getInstance()->resume();
     Director::getInstance()->replaceScene(createInitialScene());
 }
 
@@ -66,6 +84,7 @@ void GameFlow::switchToLevelScene(int levelNumber)
 
     auto levelMenuLayer = LevelMenuLayer::create();
     scene->addChild(levelMenuLayer);
+    levelMenuLayer->setGamePausedCallback(std::bind(&GameFlow::pauseGame, this));
 
     auto levelLayer = LevelLayer::create(getLevelCustomization(levelNumber));
     currentLevelNumber = levelNumber;
@@ -96,6 +115,13 @@ void GameFlow::switchToPostLevelScene(int score)
     scene->addChild(postLevelLayer);
 
     Director::getInstance()->replaceScene(scene);
+}
+
+void GameFlow::resumeGame()
+{
+    Director::getInstance()->resume();
+
+    Director::getInstance()->getRunningScene()->removeChildByTag(pauseLayerTag);
 }
 
 LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
