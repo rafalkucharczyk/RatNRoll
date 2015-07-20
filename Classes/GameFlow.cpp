@@ -50,7 +50,7 @@ void GameFlow::handleInitialSceneMenu(int itemIndex)
 {
     if (itemIndex <= 1) {
         switchToLevelScene(itemIndex);
-    } else {
+    } else if (itemIndex == 3) {
         SonarCocosHelper::GameCenter::showLeaderboard();
     }
 }
@@ -133,15 +133,3 @@ int GameFlow::updateBestScore(int levelNumber, int score)
 
     return currentBestScore;
 }
-
-/*
- --post game menu--
-
-    (YOUR SCORE)
-    (top score)
-
-  x                x
- (main menu)   (restart)
-
-
- */

@@ -3,7 +3,10 @@
 USING_NS_CC;
 
 PostLevelLayer::PostLevelLayer()
-    : menuHelper({{{0.35, 0.2}, 0.1, "menu/menu.png"}, {{0.65, 0.2}, 0.1, "menu/restart.png"}},
+    : menuHelper({{{0.2, 0.2}, 0.1, "back"},
+                  {{0.4, 0.2}, 0.1, "restart"},
+                  {{0.6, 0.2}, 0.1, "twitter"},
+                  {{0.8, 0.2}, 0.1, "facebook"}},
                  std::bind(&PostLevelLayer::menuItemClicked, this, std::placeholders::_1))
 {
 }
