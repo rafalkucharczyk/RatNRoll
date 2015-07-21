@@ -1,5 +1,7 @@
 #include "PostLevelLayer.h"
 
+#include <spine/spine-cocos2dx.h>
+
 USING_NS_CC;
 
 PostLevelLayer::PostLevelLayer()
@@ -22,9 +24,12 @@ bool PostLevelLayer::init()
     addChild(menu);
 
     // ---
-    auto ratSprite = Sprite::create("rat.png");
-    MenuHelper::positionNode(*ratSprite, {0.5, 0.72}, 0.05);
-    addChild(ratSprite);
+    auto ratNode = spine::SkeletonAnimation::createWithFile("animations/skeleton.json",
+                                                            "animations/skeleton.atlas");
+    ratNode->setAnimation(0, "jump01", true);
+    ratNode->updateWorldTransform();
+    MenuHelper::positionNode(*ratNode, {0.5, 0.7}, 0.05);
+    addChild(ratNode);
 
     currentScoreLabel = Label::createWithSystemFont("0", "Marker Felt", 120);
     currentScoreLabel->setColor(Color3B::BLACK);

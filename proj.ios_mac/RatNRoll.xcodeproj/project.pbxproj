@@ -66,6 +66,7 @@
 		B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF4F1B1330ED004D647D /* Box2DDebugDraw.cpp */; };
 		B535EF581B1339D4004D647D /* level_01.json in Resources */ = {isa = PBXBuildFile; fileRef = B535EF571B1339D4004D647D /* level_01.json */; };
 		B54C0DEE1B5D9D48002B36B6 /* PauseLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */; };
+		B54C0DF11B5EEE12002B36B6 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = B54C0DF01B5EEE12002B36B6 /* animations */; };
 		B54CCC331B45E4CA00393F40 /* hover01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC321B45E4CA00393F40 /* hover01.png */; };
 		B54CCC371B46F91A00393F40 /* halve01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC341B46F91A00393F40 /* halve01.png */; };
 		B54CCC381B46F91A00393F40 /* slowdown01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC351B46F91A00393F40 /* slowdown01.png */; };
@@ -198,6 +199,7 @@
 		B535EF571B1339D4004D647D /* level_01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level_01.json; sourceTree = "<group>"; };
 		B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PauseLayer.cpp; sourceTree = "<group>"; };
 		B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PauseLayer.h; sourceTree = "<group>"; };
+		B54C0DF01B5EEE12002B36B6 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; path = animations; sourceTree = "<group>"; };
 		B54CCC321B45E4CA00393F40 /* hover01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hover01.png; sourceTree = "<group>"; };
 		B54CCC341B46F91A00393F40 /* halve01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = halve01.png; sourceTree = "<group>"; };
 		B54CCC351B46F91A00393F40 /* slowdown01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slowdown01.png; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B54C0DF01B5EEE12002B36B6 /* animations */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				B5927EDB1B55BD5700D59F09 /* menu */,
@@ -646,6 +649,7 @@
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
+				B54C0DF11B5EEE12002B36B6 /* animations in Resources */,
 				B55858501B433D05005AD55B /* level_tutorial.json in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,

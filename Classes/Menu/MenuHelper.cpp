@@ -24,7 +24,7 @@ void MenuHelper::positionNode(cocos2d::Node &node, const cocos2d::Vec2 &position
     Vec2 visibleSize = Director::getInstance()->getVisibleSize();
 
     node.setPosition(position.x * visibleSize.x, position.y * visibleSize.y);
-    node.setScale(size / (node.getContentSize().height / visibleSize.y));
+    node.setScale(size / (node.getBoundingBox().size.height / visibleSize.y));
 }
 
 MenuItemButton *MenuHelper::createMenuItemButton(const ButtonConfig &config)
