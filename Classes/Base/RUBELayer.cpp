@@ -31,6 +31,8 @@ void RUBELayer::afterLoadProcessing(b2dJson *json)
         fillRUBEImageInfoFromb2dJsonImage(*img, *imgInfo);
 
         addSpriteFromRubeImageInfo(imgInfo);
+
+        imgInfo->sprite->setVisible(true);
     }
 }
 
@@ -70,6 +72,8 @@ void RUBELayer::addSpriteFromRubeImageInfo(RUBEImageInfo *imageInfo)
 
     // align sprite position and rotation with physics body
     setImagePositionFromPhysicsBody(imageInfo);
+
+    sprite->setVisible(false);
 
     addChild(sprite);
     reorderChild(sprite, imageInfo->renderOrder);

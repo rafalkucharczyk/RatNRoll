@@ -88,7 +88,7 @@ class LevelTutorial : public LevelCustomization
         return normalizeDropItemType(itemType, currentRatSpeed);
     }
 
-    b2Vec2 getDropItemSpot() { return b2Vec2(0, 10); }
+    b2Vec2 getDropItemSpot() { return b2Vec2(0, 9); }
 
     virtual void itemRemovedCallback(ItemType itemType) { canDropNewItem = true; }
 
@@ -115,7 +115,7 @@ class Level01 : public LevelCustomization
         return normalizeDropItemType(itemType, currentRatSpeed);
     }
 
-    b2Vec2 getDropItemSpot() { return b2Vec2(cocos2d::rand_minus1_1(), 10); }
+    b2Vec2 getDropItemSpot() { return b2Vec2(cocos2d::rand_minus1_1(), 9); }
 };
 
 #endif // __LEVEL_LOGIC_H__

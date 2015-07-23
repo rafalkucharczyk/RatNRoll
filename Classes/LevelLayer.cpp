@@ -277,11 +277,19 @@ void LevelLayer::dropItem(float t)
     body->SetTransform(levelCustomization->getDropItemSpot(), rand_0_1() * 2 * M_PI);
 
     duplicateImageForBody(itemTypeToImageName(itemType), body);
+    body->SetGravityScale(0.0);
     body->ApplyAngularImpulse(0.1 * body->GetMass(), true);
+
+    float targetScale = getAnySpriteOnBody(body)->getScale();
+    getAnySpriteOnBody(body)->setScale(0);
+    getAnySpriteOnBody(body)->setVisible(true);
+    getAnySpriteOnBody(body)->runAction(EaseBackOut::create(ScaleTo::create(0.2, targetScale)));
 
     itemsBodies.push_back(body);
 
-    auto delayAction = DelayTime::create(3);
+    auto dropDelayAction = DelayTime::create(0.5);
+    auto applyGravityAction = CallFunc::create([body]() { body->SetGravityScale(1.0); });
+    auto removeDelayAction = DelayTime::create(3);
     auto fadeAction = FadeTo::create(0.5, 0);
     auto removeAction = CallFunc::create([body, this]() {
         auto i = std::find(itemsBodies.begin(), itemsBodies.end(), body);
@@ -294,7 +302,8 @@ void LevelLayer::dropItem(float t)
         }
     });
 
-    auto sequenceAction = Sequence::create(delayAction, fadeAction, removeAction, nullptr);
+    auto sequenceAction = Sequence::create(dropDelayAction, applyGravityAction, removeDelayAction,
+                                           fadeAction, removeAction, nullptr);
     getAnySpriteOnBody(body)->runAction(sequenceAction);
 }
 
