@@ -12,22 +12,25 @@ game logic - killing item
 gamecenter - initial setup + leaderboards
 menu - no texts, only images
 
-4
+4 done
 in game menu - pause game
 game logic - show item for a while before dropping
 game logic - allow touches only on earth body
 
+5
+tutorial - pause game when new item drops, show animation in balloon
+background - fill screen with items at the beginning
+background - scale floating items for bigger resolutions (iPad)
+
 
 unordered:
 
-tutorial - pause game when new item drops, show animationn in balloon
+gameplay - animate rat (visualize differnt speed with different animations)
+gameplay - experiment more with game physics
 juice app a little, nicer transitions between screens, more animations
 gamecenter - challange friend, draw shadow player
 gamecenter - achivements
-background - fill screen with items at the beginning
-background - scale floating items for bigger resolutions (iPad)
 initial screen - settings and credits
-post game menu - stars (time, result) ?
 post game menu - sharing facebook
 post game menu - sharing twitter
 in-app purchase to remove ads
