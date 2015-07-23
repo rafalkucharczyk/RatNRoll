@@ -37,6 +37,7 @@ class GameFlow
     static GameFlow *instance;
 
     const static int pauseLayerTag = 123;
+    const static int noLevelNumber = -1;
 };
 
 #endif // __GAMEFLOW_H__

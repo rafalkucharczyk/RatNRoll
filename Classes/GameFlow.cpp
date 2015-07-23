@@ -17,7 +17,7 @@ USING_NS_CC;
 
 GameFlow *GameFlow::instance = nullptr;
 
-GameFlow::GameFlow() : currentLevelNumber(0) {}
+GameFlow::GameFlow() : currentLevelNumber(noLevelNumber) {}
 
 GameFlow &GameFlow::getInstance()
 {
@@ -46,7 +46,7 @@ Scene *GameFlow::createInitialScene()
 
 void GameFlow::pauseGame()
 {
-    if (Director::getInstance()->isPaused()) {
+    if (Director::getInstance()->isPaused() || currentLevelNumber == noLevelNumber) {
         return;
     }
 
@@ -56,11 +56,16 @@ void GameFlow::pauseGame()
     pauseLayer->setGameQuitCallback(std::bind(&GameFlow::switchToInitialScene, this));
 
     Director::getInstance()->getRunningScene()->addChild(pauseLayer, 0, pauseLayerTag);
+
+    return;
 }
 
 void GameFlow::switchToInitialScene()
 {
+    currentLevelNumber = noLevelNumber;
+
     Director::getInstance()->resume();
+
     Director::getInstance()->replaceScene(createInitialScene());
 }
 
@@ -113,6 +118,8 @@ void GameFlow::switchToPostLevelScene(int score)
         std::bind(&GameFlow::switchToLevelScene, this, currentLevelNumber));
     postLevelLayer->setGotoMainMenuCallback(std::bind(&GameFlow::switchToInitialScene, this));
     scene->addChild(postLevelLayer);
+
+    currentLevelNumber = noLevelNumber;
 
     Director::getInstance()->replaceScene(scene);
 }
