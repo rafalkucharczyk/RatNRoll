@@ -35,6 +35,8 @@ class LevelLayer : public RUBELayer
 
     virtual bool drawDebugData() { return false; }
 
+    bool isFixtureTouchable(b2Fixture *fixture) override;
+
     void setGameFinishedCallback(std::function<void(int)> callback)
     {
         gameFinishedCallback = callback;

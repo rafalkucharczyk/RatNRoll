@@ -221,7 +221,8 @@ void BasicRUBELayer::onTouchesBegan(const std::vector<cocos2d::Touch *> &touches
     m_world->QueryAABB(&callback, aabb);
 
     // Check if we found something, and it was a dynamic body (can't drag static bodies)
-    if (callback.m_fixture && callback.m_fixture->GetBody()->GetType() == b2_dynamicBody) {
+    if (callback.m_fixture && callback.m_fixture->GetBody()->GetType() == b2_dynamicBody &&
+        isFixtureTouchable(callback.m_fixture)) {
         // The touched point was over a dynamic body, so make a mouse joint
         b2Body *body = callback.m_fixture->GetBody();
         b2MouseJointDef md;

@@ -92,6 +92,9 @@ class BasicRUBELayer : public cocos2d::Layer
     virtual bool allowPinchZoom(); // return false from this function to prevent pinch zoom and pan
 
     virtual bool drawDebugData() { return true; }
+
+    // override to enable touches for specific fixtures only
+    virtual bool isFixtureTouchable(b2Fixture *fixture) { return true; }
 };
 
 #endif /* BASIC_RUBE_LAYER */

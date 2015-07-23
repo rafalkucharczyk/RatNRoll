@@ -228,6 +228,8 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
     return false;
 }
 
+bool LevelLayer::isFixtureTouchable(b2Fixture *fixture) { return fixture->GetBody() == earthBody; }
+
 void LevelLayer::startDroppingItems()
 {
     schedule(schedule_selector(LevelLayer::dropItem), levelCustomization->getItemDropInterval());
