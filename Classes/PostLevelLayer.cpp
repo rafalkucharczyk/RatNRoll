@@ -5,10 +5,10 @@
 USING_NS_CC;
 
 PostLevelLayer::PostLevelLayer()
-    : menuHelper({{{0.2, 0.2}, 0.1, "back"},
-                  {{0.4, 0.2}, 0.1, "restart"},
-                  {{0.6, 0.2}, 0.1, "twitter"},
-                  {{0.8, 0.2}, 0.1, "facebook"}},
+    : menuHelper({{{0.2, 0.275}, 0.1, "back"},
+                  {{0.4, 0.275}, 0.1, "restart"},
+                  {{0.6, 0.275}, 0.1, "twitter"},
+                  {{0.8, 0.275}, 0.1, "facebook"}},
                  std::bind(&PostLevelLayer::menuItemClicked, this, std::placeholders::_1))
 {
 }
@@ -28,23 +28,23 @@ bool PostLevelLayer::init()
                                                             "animations/skeleton.atlas");
     ratNode->setAnimation(0, "jump01", true);
     ratNode->updateWorldTransform();
-    MenuHelper::positionNode(*ratNode, {0.5, 0.7}, 0.05);
+    MenuHelper::positionNode(*ratNode, {0.5, 0.775}, 0.05);
     addChild(ratNode);
 
     currentScoreLabel = Label::createWithSystemFont("0", "Marker Felt", 120);
     currentScoreLabel->setColor(Color3B::BLACK);
-    MenuHelper::positionNode(*currentScoreLabel, {0.5, 0.65}, 0.1);
+    MenuHelper::positionNode(*currentScoreLabel, {0.5, 0.72}, 0.1);
 
     addChild(currentScoreLabel);
 
     // ---
     auto crownSprite = Sprite::create("menu/gamecenter.png");
-    MenuHelper::positionNode(*crownSprite, {0.5, 0.505}, 0.05);
+    MenuHelper::positionNode(*crownSprite, {0.5, 0.53}, 0.05);
     addChild(crownSprite);
 
     bestScoreLabel = Label::createWithSystemFont("0", "Marker Felt", 120);
     bestScoreLabel->setColor(Color3B::BLACK);
-    MenuHelper::positionNode(*bestScoreLabel, {0.5, 0.45}, 0.04);
+    MenuHelper::positionNode(*bestScoreLabel, {0.5, 0.47}, 0.04);
 
     addChild(bestScoreLabel);
 

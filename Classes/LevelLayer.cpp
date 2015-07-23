@@ -131,7 +131,7 @@ Point LevelLayer::initialWorldOffset()
 
     // place (0,0) of physics world at center of bottom edge of screen
     Size s = Director::getInstance()->getWinSize();
-    return Vec2(s.width / 2, 0);
+    return Vec2(s.width / 2, s.height / 20);
 }
 
 float LevelLayer::initialWorldScale()

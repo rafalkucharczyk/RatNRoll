@@ -48,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     register_all_packages();
 
     SonarCocosHelper::IOS::Setup();
-    SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eTop);
+    SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
     SonarCocosHelper::GameCenter::signIn();
 
     auto scene = GameFlow::getInstance().createInitialScene();

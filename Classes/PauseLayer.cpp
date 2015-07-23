@@ -3,7 +3,7 @@
 USING_NS_CC;
 
 PauseLayer::PauseLayer()
-    : menuHelper({{{0.5, 0.55}, 0.35, "play"}, {{0.5, 0.2}, 0.1, "back"}},
+    : menuHelper({{{0.5, 0.625}, 0.35, "play"}, {{0.5, 0.325}, 0.1, "back"}},
                  std::bind(&PauseLayer::itemClicked, this, std::placeholders::_1))
 {
 }
