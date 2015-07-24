@@ -137,9 +137,11 @@ SCHEmptyProtocol
     { adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape; }
     else
     { adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait; }
+
+    adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
     
     adView.delegate = self;
-    [view addSubview:adView];
+
 #endif
     
 #if SCH_IS_AD_MOB_ENABLED == true
@@ -189,6 +191,7 @@ SCHEmptyProtocol
     
     if ( !isBannerVisible && isBannerLoaded )
     {
+        [view addSubview:adView];
         // check where the ad is to be positioned
         if ( bannerPosition == ADBANNERPOSITION_TOP )
         { adView.frame = CGRectMake( 0, 0, adView.frame.size.width, adView.frame.size.height ); }
@@ -206,6 +209,8 @@ SCHEmptyProtocol
     {
         adView.frame = CGRectMake( 0, view.frame.size.height * 2, adView.frame.size.width, adView.frame.size.height );
         isBannerVisible = false;
+
+        [adView removeFromSuperview];
     }
 }
 

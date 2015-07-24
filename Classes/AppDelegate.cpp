@@ -62,6 +62,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 // call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
+    SonarCocosHelper::iAds::hideiAdBanner();
     GameFlow::getInstance().pauseGame();
 
     // if you use SimpleAudioEngine, it must be pause
@@ -71,6 +72,7 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
