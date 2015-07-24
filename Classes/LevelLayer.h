@@ -86,6 +86,8 @@ class LevelLayer : public RUBELayer
 
     std::function<void(int)> backgroundSpeedFunction;
 
+    bool applyCustomGravity;
+
   private:
     b2RevoluteJoint *earthRevoluteJoint;
     int gameScore;

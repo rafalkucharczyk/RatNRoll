@@ -66,7 +66,7 @@ class LevelContactListener : public b2ContactListener
 
 LevelLayer::LevelLayer(LevelCustomization *customization)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
-      ratSpeed(levelCustomization->getRatSpeedMin()), gameScore(0),
+      ratSpeed(levelCustomization->getRatSpeedMin()), applyCustomGravity(true), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), contactListener(new LevelContactListener(this))
 {
@@ -238,17 +238,28 @@ void LevelLayer::stopDroppingItems() { unschedule(schedule_selector(LevelLayer::
 
 void LevelLayer::doPhysicsCalculationStep()
 {
-    // increase/decrease speed
-    ratBody->ApplyAngularImpulse(ratSpeed / 10, true);
-
-    // custom gravity
     b2Vec2 earthCenter = earthBody->GetPosition();
     b2Vec2 ratCenter = ratBody->GetPosition();
 
-    b2Vec2 g = earthCenter - ratCenter;
-    g.Normalize();
-    g *= 8;
-    ratBody->ApplyForce(ratBody->GetMass() * g, ratBody->GetWorldCenter(), true);
+    b2Fixture *earthFixture = earthBody->GetFixtureList();
+    // earth fixture is a circle
+    assert(earthFixture && earthFixture->GetType() == b2Shape::e_circle);
+    float radius = earthFixture->GetShape()->m_radius;
+
+    // apply speed, more when running uphill (b), less when running downhill (a)
+    float x = (ratCenter.x - earthCenter.x) / (2 * radius);
+    Vec2 a(-0.5, 0.04), b(0.5, 0.2);
+
+    float speedRatio = ((b.y - a.y) / (b.x - a.x)) * x + (b.x * a.y - a.x * b.y) / (b.x - a.x);
+    ratBody->ApplyAngularImpulse(ratSpeed * speedRatio, true);
+
+    // custom gravity, stop applying at the bottom of earth
+    if (ratCenter.y > earthCenter.y - radius * 0.33 && applyCustomGravity) {
+        b2Vec2 g = earthCenter - ratCenter;
+        g.Normalize();
+        g *= 30;
+        ratBody->ApplyForce(ratBody->GetMass() * g, ratBody->GetWorldCenter(), true);
+    }
 }
 
 void LevelLayer::updateScore()
@@ -360,17 +371,20 @@ void LevelLayer::slowDownItemEaten()
 
 void LevelLayer::hoverItemEaten()
 {
+    applyCustomGravity = false;
     ratBody->SetGravityScale(-2);
 
     float lastRatSpeed = ratSpeed;
     ratSpeed = 0;
     stopDroppingItems();
+
     float lastTimeScale = getRatAnimation()->getTimeScale();
     getRatAnimation()->setTimeScale(0);
 
     getAnySpriteOnBody(ratBody)->runAction(Sequence::create(
         DelayTime::create(2.0), CallFunc::create([this, lastRatSpeed, lastTimeScale]() {
             startDroppingItems();
+            applyCustomGravity = true;
             ratBody->SetGravityScale(1.0);
             ratSpeed = lastRatSpeed;
             this->getRatAnimation()->setTimeScale(lastTimeScale);

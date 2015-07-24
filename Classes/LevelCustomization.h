@@ -105,8 +105,8 @@ class Level01 : public LevelCustomization
     float getItemDropInterval() { return 3.0; }
 
     float getRatSpeedMin() { return 0.5; }
-    float getRatSpeedMax() { return 5.0; }
-    float getRatSpeedStep() { return 0.5; }
+    float getRatSpeedMax() { return 3.2; }
+    float getRatSpeedStep() { return 0.3; }
 
     ItemType getDropItemType(float currentRatSpeed)
     {
