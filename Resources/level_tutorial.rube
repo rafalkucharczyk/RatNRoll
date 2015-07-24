@@ -43,9 +43,9 @@
     
     {
       "class" : "image",
-      "displayName" : "customRotation",
-      "name" : "customRotation",
-      "type" : "vec2"
+      "displayName" : "animationName",
+      "name" : "animationName",
+      "type" : "string"
     }
   ],
   "metaworld" : 
@@ -566,11 +566,11 @@
         "gravityScale" : 0.5,
         "id" : 12,
         "linearVelocity" : 0,
-        "massData-I" : 0.005760435480624437,
+        "massData-I" : 0.005760434549301863,
         "massData-center" : 
         {
-          "x" : 0.002312888856977224,
-          "y" : -5.760382191510871e-05
+          "x" : 0.002312888624146581,
+          "y" : -5.760553540312685e-05
         },
         "massData-mass" : 0.2,
         "name" : "item_speedup",
@@ -836,12 +836,8 @@
         [
           
           {
-            "name" : "customRotation",
-            "vec2" : 
-            {
-              "x" : 0,
-              "y" : 50.0
-            }
+            "name" : "animationName",
+            "string" : "run_test01"
           }
         ],
         "file" : "rat.png",

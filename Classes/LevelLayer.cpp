@@ -1,10 +1,9 @@
 #include "LevelLayer.h"
 
+#include <limits>
 #include <b2dJson.h>
 
 USING_NS_CC;
-
-#include <limits>
 
 class DropItemUserData
 {
@@ -205,7 +204,7 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
         b2Fixture *fixture = imageInfo->body->GetFixtureList();
         assert(fixture && fixture->GetType() == b2Shape::e_circle); // rat model is just a ball
         float radius = fixture->GetShape()->m_radius;
-        position = Vec2(p.x, p.y + 2 * radius);
+        position = Vec2(p.x, p.y - radius * 0.5); // TODO remove 0.5
 
         // orient texture along the radius from rat to earth's center
         b2Vec2 r = p - earthBody->GetPosition();
@@ -325,15 +324,11 @@ void LevelLayer::removeOutstandingItems()
 void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
 {
     if (itemType == LevelCustomization::SPEEDUP) {
-        ratSpeed = b2Min(ratSpeed + levelCustomization->getRatSpeedStep(),
-                         levelCustomization->getRatSpeedMax());
-        backgroundSpeedFunction(1);
+        speedUpItemEaten();
     }
 
     if (itemType == LevelCustomization::SLOWDOWN) {
-        ratSpeed = b2Max(ratSpeed - levelCustomization->getRatSpeedStep(),
-                         levelCustomization->getRatSpeedMin());
-        backgroundSpeedFunction(-1);
+        slowDownItemEaten();
     }
 
     if (itemType == LevelCustomization::HOVER) {
@@ -345,6 +340,24 @@ void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
     }
 }
 
+void LevelLayer::speedUpItemEaten()
+{
+    ratSpeed = b2Min(ratSpeed + levelCustomization->getRatSpeedStep(),
+                     levelCustomization->getRatSpeedMax());
+    backgroundSpeedFunction(1);
+
+    getRatAnimation()->setTimeScale(getRatAnimation()->getTimeScale() * 1.2);
+}
+
+void LevelLayer::slowDownItemEaten()
+{
+    ratSpeed = b2Max(ratSpeed - levelCustomization->getRatSpeedStep(),
+                     levelCustomization->getRatSpeedMin());
+    backgroundSpeedFunction(-1);
+
+    getRatAnimation()->setTimeScale(getRatAnimation()->getTimeScale() / 1.2);
+}
+
 void LevelLayer::hoverItemEaten()
 {
     ratBody->SetGravityScale(-2);
@@ -352,14 +365,17 @@ void LevelLayer::hoverItemEaten()
     float lastRatSpeed = ratSpeed;
     ratSpeed = 0;
     stopDroppingItems();
+    float lastTimeScale = getRatAnimation()->getTimeScale();
+    getRatAnimation()->setTimeScale(0);
 
-    getAnySpriteOnBody(ratBody)->runAction(
-        Sequence::create(DelayTime::create(2.0), CallFunc::create([this, lastRatSpeed]() {
-                             startDroppingItems();
-                             ratBody->SetGravityScale(1.0);
-                             ratSpeed = lastRatSpeed;
-                         }),
-                         nullptr));
+    getAnySpriteOnBody(ratBody)->runAction(Sequence::create(
+        DelayTime::create(2.0), CallFunc::create([this, lastRatSpeed, lastTimeScale]() {
+            startDroppingItems();
+            ratBody->SetGravityScale(1.0);
+            ratSpeed = lastRatSpeed;
+            this->getRatAnimation()->setTimeScale(lastTimeScale);
+        }),
+        nullptr));
 }
 
 void LevelLayer::halveItemEaten()
@@ -418,4 +434,13 @@ Label *LevelLayer::initScoreLabel(int score)
     label->setString(std::to_string(score));
 
     return label;
+}
+
+spine::SkeletonAnimation *LevelLayer::getRatAnimation()
+{
+    spine::SkeletonAnimation *skeletonAnimation =
+        dynamic_cast<spine::SkeletonAnimation *>(getAnySpriteOnBody(ratBody));
+    assert(skeletonAnimation);
+
+    return skeletonAnimation;
 }

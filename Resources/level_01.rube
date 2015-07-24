@@ -43,9 +43,9 @@
     
     {
       "class" : "image",
-      "displayName" : "customRotation",
-      "name" : "customRotation",
-      "type" : "vec2"
+      "displayName" : "animationName",
+      "name" : "animationName",
+      "type" : "string"
     }
   ],
   "metaworld" : 
@@ -791,12 +791,8 @@
         [
           
           {
-            "name" : "customRotation",
-            "vec2" : 
-            {
-              "x" : 0,
-              "y" : 50.0
-            }
+            "name" : "animationName",
+            "string" : "run_test01"
           }
         ],
         "file" : "rat.png",

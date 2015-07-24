@@ -24,8 +24,8 @@ bool PostLevelLayer::init()
     addChild(menu);
 
     // ---
-    auto ratNode = spine::SkeletonAnimation::createWithFile("animations/skeleton.json",
-                                                            "animations/skeleton.atlas");
+    auto ratNode = spine::SkeletonAnimation::createWithFile("animations/animations.json",
+                                                            "animations/rat.atlas");
     ratNode->setAnimation(0, "jump01", true);
     ratNode->updateWorldTransform();
     MenuHelper::positionNode(*ratNode, {0.5, 0.775}, 0.05);

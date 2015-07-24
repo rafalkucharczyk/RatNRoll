@@ -5,6 +5,7 @@
 
 #include "RUBELayer.h"
 #include "b2dJson.h"
+#include <spine/spine-cocos2dx.h>
 
 #include "LevelCustomization.h"
 
@@ -56,12 +57,16 @@ class LevelLayer : public RUBELayer
     void removeOutstandingItems();
     void ratAteItem(LevelCustomization::ItemType itemType);
 
+    void speedUpItemEaten();
+    void slowDownItemEaten();
     void hoverItemEaten();
     void halveItemEaten();
 
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
     cocos2d::Label *initScoreLabel(int score);
+
+    spine::SkeletonAnimation *getRatAnimation();
 
   private:
     std::unique_ptr<LevelCustomization> levelCustomization;

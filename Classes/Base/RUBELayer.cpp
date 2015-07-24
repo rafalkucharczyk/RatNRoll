@@ -10,6 +10,8 @@
 #include "b2dJson.h"
 #include "b2dJsonImage.h"
 
+#include <spine/spine-cocos2dx.h>
+
 using namespace std;
 using namespace cocos2d;
 
@@ -25,12 +27,22 @@ void RUBELayer::afterLoadProcessing(b2dJson *json)
     for (int i = 0; i < b2dImages.size(); i++) {
         b2dJsonImage *img = b2dImages[i];
 
+        b2dJsonCustomProperties *properties = json->getCustomPropertiesForItem(img, false);
+
+        if (properties) {
+            auto j = properties->m_customPropertyMap_string.find("animationName");
+
+            if (j != properties->m_customPropertyMap_string.end() && !j->second.empty()) {
+                img->file = j->second;
+            }
+        }
+
         // create an info structure to hold the info for this image (body and position etc)
         RUBEImageInfo *imgInfo = new RUBEImageInfo;
 
         fillRUBEImageInfoFromb2dJsonImage(*img, *imgInfo);
 
-        addSpriteFromRubeImageInfo(imgInfo);
+        addNodeFromRubeImageInfo(imgInfo);
 
         imgInfo->sprite->setVisible(true);
     }
@@ -55,28 +67,48 @@ void RUBELayer::fillRUBEImageInfoFromb2dJsonImage(const b2dJsonImage &jsonImage,
     }
 }
 
-void RUBELayer::addSpriteFromRubeImageInfo(RUBEImageInfo *imageInfo)
+Node *RUBELayer::createNodeFromRubeImageInfo(RUBEImageInfo *imageInfo)
+{
+    Node *node = nullptr;
+
+    if (imageInfo->file.substr(imageInfo->file.find_last_of(".") + 1) == "png") {
+        auto sprite = Sprite::create(imageInfo->file.c_str());
+        sprite->setFlippedX(imageInfo->flip);
+
+        node = sprite;
+    } else {
+        auto skeletonAnimation = spine::SkeletonAnimation::createWithFile(
+            "animations/animations.json", "animations/rat.atlas");
+        skeletonAnimation->setAnimation(0, imageInfo->file, true);
+        skeletonAnimation->updateWorldTransform();
+
+        node = skeletonAnimation;
+    }
+
+    return node;
+}
+
+void RUBELayer::addNodeFromRubeImageInfo(RUBEImageInfo *imageInfo)
 {
     m_imageInfos.insert(imageInfo);
 
-    Sprite *sprite = Sprite::create(imageInfo->file.c_str());
-    imageInfo->sprite = sprite;
+    Node *node = createNodeFromRubeImageInfo(imageInfo);
+    assert(node);
 
-    assert(sprite);
+    imageInfo->sprite = node;
 
-    sprite->setFlippedX(imageInfo->flip);
-    sprite->setColor(
+    node->setColor(
         Color3B(imageInfo->colorTint[0], imageInfo->colorTint[1], imageInfo->colorTint[2]));
-    sprite->setOpacity(imageInfo->colorTint[3]);
-    sprite->setScale(imageInfo->scale / sprite->getContentSize().height);
+    node->setOpacity(imageInfo->colorTint[3]);
+    node->setScale(imageInfo->scale / node->getBoundingBox().size.height);
 
     // align sprite position and rotation with physics body
     setImagePositionFromPhysicsBody(imageInfo);
 
-    sprite->setVisible(false);
+    node->setVisible(false);
 
-    addChild(sprite);
-    reorderChild(sprite, imageInfo->renderOrder);
+    addChild(node);
+    reorderChild(node, imageInfo->renderOrder);
 }
 
 void RUBELayer::duplicateImageForBody(const std::string &name, b2Body *body)
@@ -97,7 +129,7 @@ void RUBELayer::duplicateImageForBody(const std::string &name, b2Body *body)
     newImageInfo->sprite = nullptr;
     newImageInfo->body = body;
 
-    addSpriteFromRubeImageInfo(newImageInfo);
+    addNodeFromRubeImageInfo(newImageInfo);
 }
 
 // This method should undo anything that was done by afterLoadProcessing, and make sure
@@ -187,7 +219,7 @@ void RUBELayer::removeImageFromWorld(RUBEImageInfo *imgInfo)
     m_imageInfos.erase(imgInfo);
 }
 
-Sprite *RUBELayer::getAnySpriteOnBody(b2Body *body)
+Node *RUBELayer::getAnySpriteOnBody(b2Body *body)
 {
     for (set<RUBEImageInfo *>::iterator it = m_imageInfos.begin(); it != m_imageInfos.end(); ++it) {
         RUBEImageInfo *imgInfo = *it;
@@ -197,7 +229,7 @@ Sprite *RUBELayer::getAnySpriteOnBody(b2Body *body)
     return NULL;
 }
 
-Sprite *RUBELayer::getSpriteWithImageName(std::string name)
+Node *RUBELayer::getSpriteWithImageName(std::string name)
 {
     for (set<RUBEImageInfo *>::iterator it = m_imageInfos.begin(); it != m_imageInfos.end(); ++it) {
         RUBEImageInfo *imgInfo = *it;
