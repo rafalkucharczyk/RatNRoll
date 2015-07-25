@@ -10,6 +10,8 @@
 #include "b2dJson.h"
 #include "b2dJsonImage.h"
 
+#include "MipmapSprite.h"
+
 #include <spine/spine-cocos2dx.h>
 
 using namespace std;
@@ -72,7 +74,7 @@ Node *RUBELayer::createNodeFromRubeImageInfo(RUBEImageInfo *imageInfo)
     Node *node = nullptr;
 
     if (imageInfo->file.substr(imageInfo->file.find_last_of(".") + 1) == "png") {
-        auto sprite = Sprite::create(imageInfo->file.c_str());
+        auto sprite = /*Mipmap*/ Sprite::create(imageInfo->file.c_str());
         sprite->setFlippedX(imageInfo->flip);
 
         node = sprite;

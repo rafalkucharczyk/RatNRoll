@@ -1,12 +1,14 @@
 #include "MenuItemButton.h"
 
+#include "MipmapSprite.h"
+
 USING_NS_CC;
 
 MenuItemButton *MenuItemButton::create(const std::string &imagePath, const ccMenuCallback &callback)
 {
     MenuItemButton *ret = new (std::nothrow) MenuItemButton();
 
-    auto sprite = Sprite::create("menu/" + imagePath + ".png");
+    auto sprite = MipmapSprite::create("menu/" + imagePath + ".png");
     auto bgSprite = Sprite::create("menu/" + imagePath + "_bg.png");
 
     bgSprite->setOpacity(192);

@@ -36,6 +36,12 @@ USING_NS_CC;
 void _spAtlasPage_createTexture (spAtlasPage* self, const char* path) {
 	Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(path);
 	texture->retain();
+
+	texture->generateMipmap();
+	Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR,
+		GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+	texture->setTexParameters(texParams);
+
 	self->rendererObject = texture;
 	self->width = texture->getPixelsWide();
 	self->height = texture->getPixelsHigh();
