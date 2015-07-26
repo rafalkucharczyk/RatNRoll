@@ -50,6 +50,8 @@ void GameFlow::pauseGame()
         return;
     }
 
+    getCurrentLevelLayer().pauseLevel();
+
     Director::getInstance()->pause();
     auto pauseLayer = PauseLayer::create();
     pauseLayer->setGameResumedCallback(std::bind(&GameFlow::resumeGame, this));
@@ -129,6 +131,8 @@ void GameFlow::resumeGame()
     Director::getInstance()->resume();
 
     Director::getInstance()->getRunningScene()->removeChildByTag(pauseLayerTag);
+
+    getCurrentLevelLayer().resumeLevel();
 }
 
 LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
@@ -165,4 +169,13 @@ int GameFlow::updateBestScore(int levelNumber, int score)
     }
 
     return currentBestScore;
+}
+
+LevelLayer &GameFlow::getCurrentLevelLayer()
+{
+    LevelLayer *levelLayer =
+        Director::getInstance()->getRunningScene()->getChildByName<LevelLayer *>(LevelLayer::name);
+    assert(levelLayer);
+
+    return *levelLayer;
 }

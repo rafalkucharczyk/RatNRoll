@@ -4,6 +4,7 @@
 #include <cocos2d.h>
 
 class LevelCustomization;
+class LevelLayer;
 
 class GameFlow
 {
@@ -30,6 +31,8 @@ class GameFlow
   private:
     LevelCustomization *getLevelCustomization(int levelNumber) const;
     int updateBestScore(int levelNumber, int score);
+
+    LevelLayer &getCurrentLevelLayer();
 
     int currentLevelNumber;
 

@@ -9,9 +9,16 @@
 #include <string>
 
 struct ButtonConfig {
+    ButtonConfig(const cocos2d::Vec2 &position, float size, const std::string &imagePath,
+                 bool transparent = true)
+        : position(position), size(size), imagePath(imagePath), transparent(transparent)
+    {
+    }
+
     cocos2d::Vec2 position; // x, y, 0.0 - 1.0 of screen width, height
     float size;             // 0.0 - 1.0 of screen height
     std::string imagePath;
+    bool transparent;
 };
 
 class MenuHelper

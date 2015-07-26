@@ -30,6 +30,8 @@ class LevelLayer : public RUBELayer
     virtual void afterLoadProcessing(b2dJson *json);
 
     virtual void update(float dt);
+    void pauseLevel() { paused = true; }
+    void resumeLevel() { paused = false; }
 
     bool setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,
                                                   cocos2d::Point &position, float &angle);
@@ -49,11 +51,18 @@ class LevelLayer : public RUBELayer
     }
 
   private:
+    void runCustomActionOnStart();
     void startDroppingItems();
     void stopDroppingItems();
     void doPhysicsCalculationStep();
     void updateScore();
+
     void dropItem(float t);
+    b2Body *duplicateItem(LevelCustomization::ItemType itemType);
+    void runShowItemAction(b2Body *body);
+    friend class LevelLayerProxyImpl;
+    void runDropItemAction(b2Body *body);
+
     void removeOutstandingItems();
     void ratAteItem(LevelCustomization::ItemType itemType);
 
@@ -97,12 +106,16 @@ class LevelLayer : public RUBELayer
 
   private:
     float totalTime;
+    bool paused;
 
     std::shared_ptr<LevelContactListener> contactListener;
 
     friend class LevelContactListener;
 
     std::function<void(int)> gameFinishedCallback;
+
+  public:
+    static const std::string name;
 };
 
 #endif // __LEVEL_SCENE_H__

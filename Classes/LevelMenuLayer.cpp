@@ -3,7 +3,7 @@
 USING_NS_CC;
 
 LevelMenuLayer::LevelMenuLayer()
-    : menuHelper({{{0.92, 0.96}, 0.05, "pause"}},
+    : menuHelper({{{0.91, 0.95}, 0.06, "pause"}},
                  std::bind(&LevelMenuLayer::itemClicked, this, std::placeholders::_1))
 {
 }

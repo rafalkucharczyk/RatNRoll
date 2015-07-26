@@ -6,7 +6,18 @@
 
 #include <Box2D/Common/b2Math.h>
 
-#include <base/ccRandom.h>
+#include <cocos2d.h>
+#include "TutorialBalloonLayer.h"
+
+// Functions available for LevelCustomization to interact with LevelLayer
+class LevelLayerProxy
+{
+  public:
+    virtual void pause() = 0;
+    virtual void resume() = 0;
+
+    virtual void addOverlayingLayer(cocos2d::Layer *layer) = 0;
+};
 
 class LevelCustomization
 {
@@ -31,8 +42,22 @@ class LevelCustomization
     // initial position of dropped item (in Box2D's world coordinates)
     virtual b2Vec2 getDropItemSpot() = 0;
 
-    // called by LevelLayer each time item is removed from world
+    // called by LevelLayer once, when level was loaded and started
+    virtual cocos2d::FiniteTimeAction *
+    levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy)
+    {
+        return nullptr;
+    };
+
+    // called by LevelLayer each time item is removed from the world
     virtual void itemRemovedCallback(ItemType itemType){};
+
+    // called by LevelLayer each time item is added to the world
+    virtual cocos2d::FiniteTimeAction *
+    itemAddedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy, ItemType itemType)
+    {
+        return nullptr;
+    };
 
   protected:
     ItemType normalizeDropItemType(ItemType itemType, float currentRatSpeed)
@@ -90,11 +115,63 @@ class LevelTutorial : public LevelCustomization
 
     b2Vec2 getDropItemSpot() { return b2Vec2(0, 9); }
 
-    virtual void itemRemovedCallback(ItemType itemType) { canDropNewItem = true; }
+    cocos2d::FiniteTimeAction *
+    levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy) override
+    {
+        return spawnTutorialBalloon(TutorialBalloonLayer::BalloonType::CONTROLS, levelLayerProxy);
+    }
+
+    void itemRemovedCallback(ItemType itemType) override { canDropNewItem = true; }
+
+    cocos2d::FiniteTimeAction *itemAddedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy,
+                                                 ItemType itemType) override
+    {
+        return spawnTutorialBalloon(itemTypeToBalloonType(itemType), levelLayerProxy);
+    }
+
+  private:
+    cocos2d::FiniteTimeAction *
+    spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonType,
+                         std::shared_ptr<LevelLayerProxy> levelLayerProxy)
+    {
+        USING_NS_CC;
+
+        if (shownBalloons.find(balloonType) != shownBalloons.end()) {
+            return nullptr;
+        }
+
+        shownBalloons.insert(balloonType);
+
+        return Sequence::create(CallFunc::create([levelLayerProxy]() { levelLayerProxy->pause(); }),
+                                CallFunc::create([=]() {
+                                    levelLayerProxy->addOverlayingLayer(
+                                        TutorialBalloonLayer::create(
+                                            balloonType, [=]() { levelLayerProxy->resume(); }));
+                                }),
+                                nullptr);
+    }
+
+    TutorialBalloonLayer::BalloonType itemTypeToBalloonType(ItemType itemType)
+    {
+        if (itemType == SPEEDUP) {
+            return TutorialBalloonLayer::BalloonType::SPEEDUP;
+        } else if (itemType == SLOWDOWN) {
+            return TutorialBalloonLayer::BalloonType::SLOWDOWN;
+        } else if (itemType == HOVER) {
+            return TutorialBalloonLayer::BalloonType::HOVER;
+        } else if (itemType == HALVE) {
+            return TutorialBalloonLayer::BalloonType::HALVE;
+        }
+
+        assert(false);
+        return TutorialBalloonLayer::BalloonType::SPEEDUP;
+    }
 
   private:
     int droppedItemsCount;
     bool canDropNewItem;
+
+    std::set<TutorialBalloonLayer::BalloonType> shownBalloons;
 };
 
 class Level01 : public LevelCustomization

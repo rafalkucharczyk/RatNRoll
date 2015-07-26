@@ -64,11 +64,40 @@ class LevelContactListener : public b2ContactListener
     LevelLayer *levelLayer;
 };
 
+class LevelLayerProxyImpl : public LevelLayerProxy
+{
+  public:
+    LevelLayerProxyImpl(LevelLayer &levelLayer, b2Body *body) : levelLayer(levelLayer), body(body)
+    {
+    }
+    void pause() override { levelLayer.pauseLevel(); }
+    void resume() override
+    {
+        levelLayer.resumeLevel();
+
+        if (body) {
+            levelLayer.runDropItemAction(body);
+        } else {
+            levelLayer.startDroppingItems();
+        }
+    }
+    void addOverlayingLayer(Layer *layer)
+    {
+        Director::getInstance()->getRunningScene()->addChild(layer);
+    }
+
+  private:
+    LevelLayer &levelLayer;
+    b2Body *body;
+};
+
+const std::string LevelLayer::name = "LevelLayer";
+
 LevelLayer::LevelLayer(LevelCustomization *customization)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
       ratSpeed(levelCustomization->getRatSpeedMin()), applyCustomGravity(true), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
-      totalTime(0.0), contactListener(new LevelContactListener(this))
+      totalTime(0.0), paused(false), contactListener(new LevelContactListener(this))
 {
 }
 
@@ -78,11 +107,13 @@ bool LevelLayer::init()
         return false;
     }
 
+    setName(name);
+
     m_world->SetContactListener(contactListener.get());
 
-    startDroppingItems();
-
     scoreLabel = initScoreLabel(gameScore);
+
+    runCustomActionOnStart();
 
     return true;
 }
@@ -180,7 +211,7 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
 
 void LevelLayer::update(float dt)
 {
-    if (Director::getInstance()->isPaused()) {
+    if (paused) {
         return;
     }
 
@@ -228,6 +259,21 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
 }
 
 bool LevelLayer::isFixtureTouchable(b2Fixture *fixture) { return fixture->GetBody() == earthBody; }
+
+void LevelLayer::runCustomActionOnStart()
+{
+    scheduleOnce([this](float t) {
+        std::shared_ptr<LevelLayerProxyImpl> levelLayerProxy(
+            new LevelLayerProxyImpl(*this, nullptr));
+        FiniteTimeAction *customAction = levelCustomization->levelStartedCallback(levelLayerProxy);
+
+        if (customAction) {
+            runAction(customAction);
+        } else {
+            startDroppingItems();
+        }
+    }, 0.5, "dummy");
+}
 
 void LevelLayer::startDroppingItems()
 {
@@ -284,6 +330,25 @@ void LevelLayer::dropItem(float t)
         return;
     }
 
+    b2Body *body = duplicateItem(itemType);
+
+    runShowItemAction(body);
+
+    itemsBodies.push_back(body);
+
+    std::shared_ptr<LevelLayerProxyImpl> levelLayerProxy(new LevelLayerProxyImpl(*this, body));
+    FiniteTimeAction *customAction =
+        levelCustomization->itemAddedCallback(levelLayerProxy, itemType);
+
+    if (customAction) {
+        runAction(customAction);
+    } else {
+        runDropItemAction(body);
+    }
+}
+
+b2Body *LevelLayer::duplicateItem(LevelCustomization::ItemType itemType)
+{
     b2Body *body = jsonParser.j2b2Body(m_world, itemJsons[itemType]);
     body->SetUserData(new DropItemUserData(itemType));
     body->SetTransform(levelCustomization->getDropItemSpot(), rand_0_1() * 2 * M_PI);
@@ -292,13 +357,19 @@ void LevelLayer::dropItem(float t)
     body->SetGravityScale(0.0);
     body->ApplyAngularImpulse(0.1 * body->GetMass(), true);
 
+    return body;
+}
+
+void LevelLayer::runShowItemAction(b2Body *body)
+{
     float targetScale = getAnySpriteOnBody(body)->getScale();
     getAnySpriteOnBody(body)->setScale(0);
     getAnySpriteOnBody(body)->setVisible(true);
     getAnySpriteOnBody(body)->runAction(EaseBackOut::create(ScaleTo::create(0.2, targetScale)));
+}
 
-    itemsBodies.push_back(body);
-
+void LevelLayer::runDropItemAction(b2Body *body)
+{
     auto dropDelayAction = DelayTime::create(0.5);
     auto applyGravityAction = CallFunc::create([body]() { body->SetGravityScale(1.0); });
     auto removeDelayAction = DelayTime::create(3);

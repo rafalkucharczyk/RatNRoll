@@ -30,7 +30,8 @@ void MenuHelper::positionNode(cocos2d::Node &node, const cocos2d::Vec2 &position
 MenuItemButton *MenuHelper::createMenuItemButton(const ButtonConfig &config)
 {
     auto item = MenuItemButton::create(config.imagePath,
-                                       CC_CALLBACK_1(MenuHelper::menuItemLabelCallback, this));
+                                       CC_CALLBACK_1(MenuHelper::menuItemLabelCallback, this),
+                                       config.transparent);
 
     positionNode(*item, config.position, config.size);
 

@@ -67,6 +67,8 @@
 		B54CCC391B46F91A00393F40 /* speedup01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC361B46F91A00393F40 /* speedup01.png */; };
 		B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B54E63221B3B62D50019C20F /* PermanentStorage.cpp */; };
 		B55091C21B645358005A4E8B /* MipmapSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55091C01B645358005A4E8B /* MipmapSprite.cpp */; };
+		B55091C41B652517005A4E8B /* tutorial_balloon.png in Resources */ = {isa = PBXBuildFile; fileRef = B55091C31B652517005A4E8B /* tutorial_balloon.png */; };
+		B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55091C51B652572005A4E8B /* TutorialBalloonLayer.cpp */; };
 		B551AF661B18FCB50076A8E9 /* RUBELayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B551AF641B18FCB50076A8E9 /* RUBELayer.cpp */; };
 		B551AF681B1902980076A8E9 /* rat.png in Resources */ = {isa = PBXBuildFile; fileRef = B551AF671B1902980076A8E9 /* rat.png */; };
 		B551AF6A1B1A34C90076A8E9 /* background01.png in Resources */ = {isa = PBXBuildFile; fileRef = B551AF691B1A34C90076A8E9 /* background01.png */; };
@@ -200,6 +202,9 @@
 		B54E63231B3B62D50019C20F /* PermanentStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermanentStorage.h; sourceTree = "<group>"; };
 		B55091C01B645358005A4E8B /* MipmapSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MipmapSprite.cpp; sourceTree = "<group>"; };
 		B55091C11B645358005A4E8B /* MipmapSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MipmapSprite.h; sourceTree = "<group>"; };
+		B55091C31B652517005A4E8B /* tutorial_balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorial_balloon.png; sourceTree = "<group>"; };
+		B55091C51B652572005A4E8B /* TutorialBalloonLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialBalloonLayer.cpp; sourceTree = "<group>"; };
+		B55091C61B652572005A4E8B /* TutorialBalloonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBalloonLayer.h; sourceTree = "<group>"; };
 		B551AF641B18FCB50076A8E9 /* RUBELayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RUBELayer.cpp; sourceTree = "<group>"; };
 		B551AF651B18FCB50076A8E9 /* RUBELayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RUBELayer.h; sourceTree = "<group>"; };
 		B551AF671B1902980076A8E9 /* rat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rat.png; sourceTree = "<group>"; };
@@ -381,6 +386,7 @@
 				B551AF691B1A34C90076A8E9 /* background01.png */,
 				B551AF6B1B1A39DC0076A8E9 /* earth01.png */,
 				B551AF6D1B1A41260076A8E9 /* cheese01.png */,
+				B55091C31B652517005A4E8B /* tutorial_balloon.png */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -412,6 +418,8 @@
 				B54E63231B3B62D50019C20F /* PermanentStorage.h */,
 				B552BE051B237A0800D4851A /* PostLevelLayer.cpp */,
 				B552BE061B237A0800D4851A /* PostLevelLayer.h */,
+				B55091C51B652572005A4E8B /* TutorialBalloonLayer.cpp */,
+				B55091C61B652572005A4E8B /* TutorialBalloonLayer.h */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -655,6 +663,7 @@
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				B551AF6C1B1A39DC0076A8E9 /* earth01.png in Resources */,
 				B54CCC391B46F91A00393F40 /* speedup01.png in Resources */,
+				B55091C41B652517005A4E8B /* tutorial_balloon.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
@@ -702,6 +711,7 @@
 				B551AF661B18FCB50076A8E9 /* RUBELayer.cpp in Sources */,
 				B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */,
 				B55091C21B645358005A4E8B /* MipmapSprite.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				B57B5BE21B570BC400C98B37 /* MenuHelper.cpp in Sources */,

@@ -9,7 +9,7 @@ class MenuItemButton : public cocos2d::MenuItemImage
 {
   public:
     static MenuItemButton *create(const std::string &imagePath,
-                                  const cocos2d::ccMenuCallback &callback);
+                                  const cocos2d::ccMenuCallback &callback, bool transparent);
 
     void activate() override;
     void selected() override;
