@@ -1,5 +1,8 @@
 #include "BackgroundLayer.h"
 
+#include "MipmapSprite.h"
+#include "MenuHelper.h"
+
 #include <vector>
 
 USING_NS_CC;
@@ -14,22 +17,23 @@ BackgroundLayer::BackgroundLayer(const std::string &itemFileName,
 {
 }
 
-void BackgroundLayer::addBackgroundItems(int count)
+void BackgroundLayer::addBackgroundItems(int count, RandomPositionFunction randomPositionFunction)
 {
     for (int i = 0; i < count; i++) {
-        insertBackgroundItem();
+        insertBackgroundItem(randomPositionFunction);
     }
 }
 
-void BackgroundLayer::insertBackgroundItem()
+void BackgroundLayer::insertBackgroundItem(RandomPositionFunction randomPositionFunction)
 {
-    auto sprite = Sprite::create(itemFileName);
+    auto sprite = MipmapSprite::create(itemFileName);
 
-    Vec2 initialPosition = getRandomStartPoint(sprite->getContentSize());
+    Vec2 initialPosition = randomPositionFunction(sprite->getContentSize());
     Vec2 targetPosition = getTargetPoint(initialPosition, sprite->getContentSize());
 
+    MenuHelper::positionNode(*sprite, {0, 0}, 0.05);
     sprite->setPosition(initialPosition);
-    sprite->setScale(1 + 0.5 * rand_0_1());
+    sprite->setScale(sprite->getScale() * (1 + 0.4 * rand_0_1()));
     sprite->runAction(RepeatForever::create(RotateBy::create(2 + 2 * rand_0_1(), 360)));
 
     addChild(sprite);
@@ -54,13 +58,18 @@ void BackgroundLayer::setBackgroundItemParams(cocos2d::Vec2 targetPosition,
     item.startTime = totalTime;
 }
 
-Vec2 BackgroundLayer::getRandomStartPoint(const Size &spriteSize)
+Vec2 BackgroundLayer::getRandomStartPointOnEdge(const Size &spriteSize)
 {
     if (rand_minus1_1() > 0) {
         return Vec2(-spriteSize.width, rand_0_1() * visibleSize.y); // left edge
     }
 
     return Vec2(rand_0_1() * visibleSize.x, visibleSize.y + spriteSize.height); // top edge
+}
+
+Vec2 BackgroundLayer::getRandomStartPointEntireScreen(const Size &spriteSize)
+{
+    return Vec2(rand_0_1() * visibleSize.x, rand_0_1() * visibleSize.y);
 }
 
 Vec2 BackgroundLayer::getTargetPoint(const Vec2 &startPoint, const cocos2d::Size &spriteSize)
@@ -113,13 +122,22 @@ bool BackgroundLayer::init()
 
     scheduleUpdate();
 
-    const int steps = 5;
-    runAction(Repeat::create(Sequence::create(CallFunc::create([this]() {
-                                                  this->addBackgroundItems(desiredItemsCount /
-                                                                           steps);
-                                              }),
-                                              DelayTime::create(1), nullptr),
-                             steps));
+    const int stepsToFill = 5;
+    const int immediateFillSteps = 2;
+
+    this->addBackgroundItems(
+        immediateFillSteps * desiredItemsCount / stepsToFill,
+        std::bind(&BackgroundLayer::getRandomStartPointEntireScreen, this, std::placeholders::_1));
+
+    runAction(Repeat::create(
+        Sequence::create(CallFunc::create([this]() {
+                             this->addBackgroundItems(
+                                 desiredItemsCount / stepsToFill,
+                                 std::bind(&BackgroundLayer::getRandomStartPointOnEdge, this,
+                                           std::placeholders::_1));
+                         }),
+                         DelayTime::create(1), nullptr),
+        stepsToFill - immediateFillSteps));
 
     return true;
 };
@@ -141,7 +159,8 @@ void BackgroundLayer::update(float time)
         }
     }
 
-    addBackgroundItems(toBeAddedCount);
+    addBackgroundItems(toBeAddedCount, std::bind(&BackgroundLayer::getRandomStartPointOnEdge, this,
+                                                 std::placeholders::_1));
 }
 
 void BackgroundLayer::setSpeed(int deltasCount)

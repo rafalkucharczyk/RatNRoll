@@ -33,11 +33,13 @@ class BackgroundLayer : public cocos2d::Layer
     };
 
   private:
-    void addBackgroundItems(int count);
-    void insertBackgroundItem();
+    typedef std::function<cocos2d::Vec2(const cocos2d::Size &)> RandomPositionFunction;
+    void addBackgroundItems(int count, RandomPositionFunction randomPositionFunction);
+    void insertBackgroundItem(RandomPositionFunction randomPositionFunction);
     void setBackgroundItemParams(cocos2d::Vec2 targetPosition, cocos2d::Vec2 initialPosition,
                                  BackgroundItem &item);
-    cocos2d::Vec2 getRandomStartPoint(const cocos2d::Size &spriteSize);
+    cocos2d::Vec2 getRandomStartPointOnEdge(const cocos2d::Size &spriteSize);
+    cocos2d::Vec2 getRandomStartPointEntireScreen(const cocos2d::Size &spriteSize);
     cocos2d::Vec2 getTargetPoint(const cocos2d::Vec2 &startPoint, const cocos2d::Size &spriteSize);
 
   private:
