@@ -50,6 +50,8 @@ class LevelLayer : public RUBELayer
         backgroundSpeedFunction = function;
     }
 
+    static const int proxyOverlayLayer = 1111;
+
   private:
     void runCustomActionOnStart();
     void startDroppingItems();

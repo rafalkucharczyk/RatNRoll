@@ -57,9 +57,13 @@ void GameFlow::pauseGame()
     pauseLayer->setGameResumedCallback(std::bind(&GameFlow::resumeGame, this));
     pauseLayer->setGameQuitCallback(std::bind(&GameFlow::switchToInitialScene, this));
 
-    Director::getInstance()->getRunningScene()->addChild(pauseLayer, 0, pauseLayerTag);
+    Scene *runningScene = Director::getInstance()->getRunningScene();
 
-    return;
+    if (runningScene->getChildByTag(LevelLayer::proxyOverlayLayer)) {
+        runningScene->removeChildByTag(LevelLayer::proxyOverlayLayer);
+    }
+
+    runningScene->addChild(pauseLayer, 0, pauseLayerTag);
 }
 
 void GameFlow::switchToInitialScene()

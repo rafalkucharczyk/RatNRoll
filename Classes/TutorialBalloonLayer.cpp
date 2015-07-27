@@ -49,6 +49,13 @@ bool TutorialBalloonLayer::init()
     return true;
 }
 
+void TutorialBalloonLayer::onExit()
+{
+    Layer::onExit();
+
+    closeCallback();
+}
+
 void TutorialBalloonLayer::addBalloonSprite()
 {
     auto balloonSprite = MipmapSprite::create("tutorial_balloon.png");
@@ -86,8 +93,4 @@ std::string TutorialBalloonLayer::getAnimationName()
 
 void TutorialBalloonLayer::itemClicked(int itemIndex) { selfCleanUp(); }
 
-void TutorialBalloonLayer::selfCleanUp()
-{
-    closeCallback();
-    removeFromParentAndCleanup(true);
-}
+void TutorialBalloonLayer::selfCleanUp() { removeFromParentAndCleanup(true); }

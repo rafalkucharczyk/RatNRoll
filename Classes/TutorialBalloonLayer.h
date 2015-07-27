@@ -14,7 +14,9 @@ class TutorialBalloonLayer : public cocos2d::Layer
     static TutorialBalloonLayer *create(BalloonType balloonType,
                                         std::function<void()> closeCallback);
 
-    bool init();
+    bool init() override;
+
+    void onExit() override;
 
   private:
     void addBalloonSprite();
