@@ -21,10 +21,13 @@ game logic - allow touches only on earth body
 gameplay - experiment more with game physics
 gameplay - animate rat (visualize different speed with different animations), initial version
 
-6
+6 done
 tutorial - pause game when new item drops, show animation in balloon
 background - fill screen with items at the beginning
 background - scale floating items for bigger resolutions (iPad)
+
+7
+in-app purchase to remove ads
 
 unordered:
 
@@ -35,5 +38,4 @@ gamecenter - achivements
 initial screen - settings and credits
 post game menu - sharing facebook
 post game menu - sharing twitter
-in-app purchase to remove ads
 music + sounds
