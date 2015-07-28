@@ -8,12 +8,16 @@
 #include "LevelLayer.h"
 #include "PostLevelLayer.h"
 #include "PauseLayer.h"
+#include "SettingsLayer.h"
 
 #include "PermanentStorage.h"
 
 #include "LevelCustomization.h"
+#include "InAppPurchaseHelper.h"
 
 USING_NS_CC;
+
+const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
 
 GameFlow *GameFlow::instance = nullptr;
 
@@ -65,6 +69,11 @@ void GameFlow::pauseGame()
     runningScene->addChild(pauseLayer, 0, pauseLayerTag);
 }
 
+bool GameFlow::adsVisible() const
+{
+    return !InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
+}
+
 void GameFlow::switchToInitialScene()
 {
     currentLevelNumber = noLevelNumber;
@@ -78,6 +87,8 @@ void GameFlow::handleInitialSceneMenu(int itemIndex)
 {
     if (itemIndex <= 1) {
         switchToLevelScene(itemIndex);
+    } else if (itemIndex == 2) {
+        switchToSettingsScene();
     } else if (itemIndex == 3) {
         SonarCocosHelper::GameCenter::showLeaderboard();
     }
@@ -124,6 +135,27 @@ void GameFlow::switchToPostLevelScene(int score)
     scene->addChild(postLevelLayer);
 
     currentLevelNumber = noLevelNumber;
+
+    Director::getInstance()->replaceScene(scene);
+}
+
+void GameFlow::switchToSettingsScene()
+{
+    auto scene = Scene::create();
+
+    auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
+    scene->addChild(backgroundLayer);
+
+    auto settingsLayer = SettingsLayer::createNoInit();
+    iapHelper.reset(new InAppPurchaseHelper(iapProductId, *settingsLayer));
+    settingsLayer->init([this]() { iapHelper->init(); });
+
+    settingsLayer->setGotoMainMenuCallback([this]() {
+        iapHelper.reset();
+        switchToInitialScene();
+    });
+    settingsLayer->setPurchaseRequestedCallback([this]() { iapHelper->purchaseProduct(); });
+    scene->addChild(settingsLayer);
 
     Director::getInstance()->replaceScene(scene);
 }

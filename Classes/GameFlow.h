@@ -5,6 +5,7 @@
 
 class LevelCustomization;
 class LevelLayer;
+class InAppPurchaseHelper;
 
 class GameFlow
 {
@@ -17,6 +18,8 @@ class GameFlow
 
     void pauseGame();
 
+    bool adsVisible() const;
+
   private:
     void switchToInitialScene();
 
@@ -25,6 +28,8 @@ class GameFlow
     void switchToLevelScene(int levelNumber);
 
     void switchToPostLevelScene(int score);
+
+    void switchToSettingsScene();
 
     void resumeGame();
 
@@ -35,6 +40,11 @@ class GameFlow
     LevelLayer &getCurrentLevelLayer();
 
     int currentLevelNumber;
+
+  private:
+    std::shared_ptr<InAppPurchaseHelper> iapHelper;
+
+    static const std::string iapProductId;
 
   private:
     static GameFlow *instance;

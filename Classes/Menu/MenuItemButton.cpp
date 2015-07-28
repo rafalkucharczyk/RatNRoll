@@ -8,12 +8,7 @@ MenuItemButton *MenuItemButton::create(const std::string &imagePath, const ccMen
 {
     MenuItemButton *ret = new (std::nothrow) MenuItemButton();
 
-    auto sprite = MipmapSprite::create("menu/" + imagePath + ".png");
-    auto bgSprite = Sprite::create("menu/" + imagePath + "_bg.png");
-
-    sprite->addChild(bgSprite, -1);
-    bgSprite->setOpacity(192);
-    bgSprite->setAnchorPoint(Vec2(0, 0));
+    auto sprite = createSpriteForPath(imagePath);
 
     if (ret && ret->initWithNormalSprite(sprite, sprite, sprite, callback)) {
         ret->autorelease();
@@ -66,4 +61,16 @@ void MenuItemButton::unselected()
     Action *zoomAction = ScaleTo::create(0.1f, originalScale);
     zoomAction->setTag(zoomActionTag);
     runAction(zoomAction);
+}
+
+cocos2d::Sprite *MenuItemButton::createSpriteForPath(const std::string &imagePath)
+{
+    auto sprite = MipmapSprite::create("menu/" + imagePath + ".png");
+    auto bgSprite = Sprite::create("menu/" + imagePath + "_bg.png");
+
+    sprite->addChild(bgSprite, -1);
+    bgSprite->setOpacity(192);
+    bgSprite->setAnchorPoint(Vec2(0, 0));
+
+    return sprite;
 }

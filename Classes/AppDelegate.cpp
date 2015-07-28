@@ -48,7 +48,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     register_all_packages();
 
     SonarCocosHelper::IOS::Setup();
-    SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
+    if (GameFlow::getInstance().adsVisible()) {
+        SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
+    }
     SonarCocosHelper::GameCenter::signIn();
 
     auto scene = GameFlow::getInstance().createInitialScene();
@@ -62,7 +64,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 // call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
-    SonarCocosHelper::iAds::hideiAdBanner();
+    if (GameFlow::getInstance().adsVisible()) {
+        SonarCocosHelper::iAds::hideiAdBanner();
+    }
     GameFlow::getInstance().pauseGame();
 
     // if you use SimpleAudioEngine, it must be pause
@@ -72,7 +76,9 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
-    SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
+    if (GameFlow::getInstance().adsVisible()) {
+        SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
+    }
     // if you use SimpleAudioEngine, it must resume here
     // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }

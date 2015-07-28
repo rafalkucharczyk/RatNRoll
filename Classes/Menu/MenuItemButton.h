@@ -15,6 +15,8 @@ class MenuItemButton : public cocos2d::MenuItemImage
     void selected() override;
     void unselected() override;
 
+    static cocos2d::Sprite *createSpriteForPath(const std::string &imagePath);
+
   private:
     float originalScale;
     static const int zoomActionTag = 112233;

@@ -66,6 +66,10 @@
 		B54CCC381B46F91A00393F40 /* slowdown01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC351B46F91A00393F40 /* slowdown01.png */; };
 		B54CCC391B46F91A00393F40 /* speedup01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC361B46F91A00393F40 /* speedup01.png */; };
 		B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B54E63221B3B62D50019C20F /* PermanentStorage.cpp */; };
+		B54F1F271B6C18360093BD0A /* KeychainItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = B54F1F261B6C18360093BD0A /* KeychainItem.mm */; };
+		B550479C1B6B8FEE0020ECE4 /* InAppPurchase.mm in Sources */ = {isa = PBXBuildFile; fileRef = B550479B1B6B8FEE0020ECE4 /* InAppPurchase.mm */; };
+		B55047A01B6B921C0020ECE4 /* InAppPurchaseHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B550479E1B6B921C0020ECE4 /* InAppPurchaseHelper.cpp */; };
+		B55047A31B6B960A0020ECE4 /* SettingsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55047A11B6B960A0020ECE4 /* SettingsLayer.cpp */; };
 		B55091C21B645358005A4E8B /* MipmapSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55091C01B645358005A4E8B /* MipmapSprite.cpp */; };
 		B55091C41B652517005A4E8B /* tutorial_balloon.png in Resources */ = {isa = PBXBuildFile; fileRef = B55091C31B652517005A4E8B /* tutorial_balloon.png */; };
 		B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55091C51B652572005A4E8B /* TutorialBalloonLayer.cpp */; };
@@ -79,6 +83,7 @@
 		B552BE041B223D3500D4851A /* LevelMenuLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE021B223D3500D4851A /* LevelMenuLayer.cpp */; };
 		B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE051B237A0800D4851A /* PostLevelLayer.cpp */; };
 		B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE081B24234A00D4851A /* GameFlow.cpp */; };
+		B5558FEE1B67F84E00DD8974 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5558FED1B67F84E00DD8974 /* StoreKit.framework */; };
 		B55858501B433D05005AD55B /* level_tutorial.json in Resources */ = {isa = PBXBuildFile; fileRef = B558584F1B433D05005AD55B /* level_tutorial.json */; };
 		B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55887C81B41E0B900B13416 /* InitialLayer.cpp */; };
 		B57B5BE21B570BC400C98B37 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */; };
@@ -200,6 +205,15 @@
 		B54CCC361B46F91A00393F40 /* speedup01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speedup01.png; sourceTree = "<group>"; };
 		B54E63221B3B62D50019C20F /* PermanentStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PermanentStorage.cpp; sourceTree = "<group>"; };
 		B54E63231B3B62D50019C20F /* PermanentStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermanentStorage.h; sourceTree = "<group>"; };
+		B54F1F251B6C18360093BD0A /* KeychainItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainItem.h; path = IAP/ios/KeychainItem.h; sourceTree = "<group>"; };
+		B54F1F261B6C18360093BD0A /* KeychainItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = KeychainItem.mm; path = IAP/ios/KeychainItem.mm; sourceTree = "<group>"; };
+		B550479A1B6B8FEE0020ECE4 /* InAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InAppPurchase.h; path = IAP/ios/InAppPurchase.h; sourceTree = "<group>"; };
+		B550479B1B6B8FEE0020ECE4 /* InAppPurchase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = InAppPurchase.mm; path = IAP/ios/InAppPurchase.mm; sourceTree = "<group>"; };
+		B550479D1B6B90B50020ECE4 /* IAPPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAPPresenter.h; sourceTree = "<group>"; };
+		B550479E1B6B921C0020ECE4 /* InAppPurchaseHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InAppPurchaseHelper.cpp; path = IAP/InAppPurchaseHelper.cpp; sourceTree = "<group>"; };
+		B550479F1B6B921C0020ECE4 /* InAppPurchaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InAppPurchaseHelper.h; path = IAP/InAppPurchaseHelper.h; sourceTree = "<group>"; };
+		B55047A11B6B960A0020ECE4 /* SettingsLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsLayer.cpp; sourceTree = "<group>"; };
+		B55047A21B6B960A0020ECE4 /* SettingsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsLayer.h; sourceTree = "<group>"; };
 		B55091C01B645358005A4E8B /* MipmapSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MipmapSprite.cpp; sourceTree = "<group>"; };
 		B55091C11B645358005A4E8B /* MipmapSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MipmapSprite.h; sourceTree = "<group>"; };
 		B55091C31B652517005A4E8B /* tutorial_balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorial_balloon.png; sourceTree = "<group>"; };
@@ -221,6 +235,7 @@
 		B552BE061B237A0800D4851A /* PostLevelLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostLevelLayer.h; sourceTree = "<group>"; };
 		B552BE081B24234A00D4851A /* GameFlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameFlow.cpp; sourceTree = "<group>"; };
 		B552BE091B24234A00D4851A /* GameFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameFlow.h; sourceTree = "<group>"; };
+		B5558FED1B67F84E00DD8974 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		B558584E1B4337E9005AD55B /* LevelCustomization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelCustomization.h; sourceTree = "<group>"; };
 		B558584F1B433D05005AD55B /* level_tutorial.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level_tutorial.json; sourceTree = "<group>"; };
 		B55887C81B41E0B900B13416 /* InitialLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialLayer.cpp; sourceTree = "<group>"; };
@@ -259,6 +274,7 @@
 				B5927ECE1B544A0700D59F09 /* Social.framework in Frameworks */,
 				B535EF3F1B131C2F004D647D /* iAd.framework in Frameworks */,
 				52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */,
+				B5558FEE1B67F84E00DD8974 /* StoreKit.framework in Frameworks */,
 				1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */,
 				D6B0611B1803AB670077942B /* CoreMotion.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -345,6 +361,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5558FED1B67F84E00DD8974 /* StoreKit.framework */,
 				B5927ED91B54631500D59F09 /* GameKit.framework */,
 				B5927ECD1B544A0700D59F09 /* Social.framework */,
 				B535EF3E1B131C2F004D647D /* iAd.framework */,
@@ -399,6 +416,7 @@
 				B535EF401B1321F5004D647D /* Rube */,
 				B57B5BDF1B570BA900C98B37 /* Menu */,
 				B5927EBC1B5440DA00D59F09 /* SonarCocosHelper */,
+				B55047981B6B8FC30020ECE4 /* IAP */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				B552BDFF1B2236DC00D4851A /* BackgroundLayer.cpp */,
@@ -418,6 +436,8 @@
 				B54E63231B3B62D50019C20F /* PermanentStorage.h */,
 				B552BE051B237A0800D4851A /* PostLevelLayer.cpp */,
 				B552BE061B237A0800D4851A /* PostLevelLayer.h */,
+				B55047A11B6B960A0020ECE4 /* SettingsLayer.cpp */,
+				B55047A21B6B960A0020ECE4 /* SettingsLayer.h */,
 				B55091C51B652572005A4E8B /* TutorialBalloonLayer.cpp */,
 				B55091C61B652572005A4E8B /* TutorialBalloonLayer.h */,
 			);
@@ -510,6 +530,28 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		B55047981B6B8FC30020ECE4 /* IAP */ = {
+			isa = PBXGroup;
+			children = (
+				B55047991B6B8FD30020ECE4 /* ios */,
+				B550479D1B6B90B50020ECE4 /* IAPPresenter.h */,
+				B550479E1B6B921C0020ECE4 /* InAppPurchaseHelper.cpp */,
+				B550479F1B6B921C0020ECE4 /* InAppPurchaseHelper.h */,
+			);
+			name = IAP;
+			sourceTree = "<group>";
+		};
+		B55047991B6B8FD30020ECE4 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				B54F1F251B6C18360093BD0A /* KeychainItem.h */,
+				B54F1F261B6C18360093BD0A /* KeychainItem.mm */,
+				B550479A1B6B8FEE0020ECE4 /* InAppPurchase.h */,
+				B550479B1B6B8FEE0020ECE4 /* InAppPurchase.mm */,
+			);
+			name = ios;
+			sourceTree = "<group>";
+		};
 		B57B5BDF1B570BA900C98B37 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -589,6 +631,9 @@
 						DevelopmentTeam = 5T2E5APS2H;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 						};
@@ -704,6 +749,7 @@
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
 				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
 				B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */,
+				B54F1F271B6C18360093BD0A /* KeychainItem.mm in Sources */,
 				B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */,
 				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
 				B552BE011B2236DC00D4851A /* BackgroundLayer.cpp in Sources */,
@@ -712,8 +758,11 @@
 				B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */,
+				B55047A31B6B960A0020ECE4 /* SettingsLayer.cpp in Sources */,
 				B55091C21B645358005A4E8B /* MipmapSprite.cpp in Sources */,
+				B550479C1B6B8FEE0020ECE4 /* InAppPurchase.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
+				B55047A01B6B921C0020ECE4 /* InAppPurchaseHelper.cpp in Sources */,
 				B57B5BE21B570BC400C98B37 /* MenuHelper.cpp in Sources */,
 				B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */,
 				B54C0DEE1B5D9D48002B36B6 /* PauseLayer.cpp in Sources */,
@@ -781,7 +830,7 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
-				PROVISIONING_PROFILE = "cbccb7ef-7cef-4a36-b128-60879bdcdbce";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
@@ -817,7 +866,7 @@
 					"$(_COCOS_LIB_IOS_BEGIN)",
 					"$(_COCOS_LIB_IOS_END)",
 				);
-				PROVISIONING_PROFILE = "cbccb7ef-7cef-4a36-b128-60879bdcdbce";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(_COCOS_HEADER_IOS_BEGIN) $(_COCOS_HEADER_IOS_END)";
