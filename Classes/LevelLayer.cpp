@@ -236,7 +236,7 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
         b2Fixture *fixture = imageInfo->body->GetFixtureList();
         assert(fixture && fixture->GetType() == b2Shape::e_circle); // rat model is just a ball
         float radius = fixture->GetShape()->m_radius;
-        position = Vec2(p.x, p.y - radius * 0.5); // TODO remove 0.5
+        position = Vec2(p.x, p.y - radius);
 
         // orient texture along the radius from rat to earth's center
         b2Vec2 r = p - earthBody->GetPosition();
