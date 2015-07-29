@@ -74,7 +74,7 @@ Node *RUBELayer::createNodeFromRubeImageInfo(RUBEImageInfo *imageInfo)
     Node *node = nullptr;
 
     if (imageInfo->file.substr(imageInfo->file.find_last_of(".") + 1) == "png") {
-        auto sprite = /*Mipmap*/ Sprite::create(imageInfo->file.c_str());
+        auto sprite = MipmapSprite::create(imageInfo->file.c_str());
         sprite->setFlippedX(imageInfo->flip);
 
         node = sprite;
