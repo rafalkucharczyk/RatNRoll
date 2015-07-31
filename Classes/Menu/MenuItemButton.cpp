@@ -4,18 +4,15 @@
 
 USING_NS_CC;
 
-MenuItemButton *MenuItemButton::create(const std::string &imagePath, const ccMenuCallback &callback,
-                                       bool transparent)
+MenuItemButton *MenuItemButton::create(const std::string &imagePath, const ccMenuCallback &callback)
 {
     MenuItemButton *ret = new (std::nothrow) MenuItemButton();
 
     auto sprite = MipmapSprite::create("menu/" + imagePath + ".png");
     auto bgSprite = Sprite::create("menu/" + imagePath + "_bg.png");
 
-    if (transparent) {
-        bgSprite->setOpacity(192);
-    }
     sprite->addChild(bgSprite, -1);
+    bgSprite->setOpacity(192);
     bgSprite->setAnchorPoint(Vec2(0, 0));
 
     if (ret && ret->initWithNormalSprite(sprite, sprite, sprite, callback)) {

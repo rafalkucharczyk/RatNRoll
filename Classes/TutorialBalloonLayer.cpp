@@ -9,7 +9,7 @@ USING_NS_CC;
 TutorialBalloonLayer::TutorialBalloonLayer(BalloonType balloonType,
                                            std::function<void()> closeCallback)
     : balloonType(balloonType), closeCallback(closeCallback),
-      menuHelper({{{0.91, 0.95}, 0.06, "cancel", false}},
+      menuHelper({{{0.91, 0.95}, 0.06, "cancel", {MenuHelper::removeTransparency()}}},
                  std::bind(&TutorialBalloonLayer::itemClicked, this, std::placeholders::_1))
 {
 }
