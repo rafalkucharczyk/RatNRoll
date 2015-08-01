@@ -231,12 +231,7 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
 {
     if (imageInfo->body == ratBody) // special handling for rat image
     {
-        // adapt position
         b2Vec2 p = imageInfo->body->GetPosition();
-        b2Fixture *fixture = imageInfo->body->GetFixtureList();
-        assert(fixture && fixture->GetType() == b2Shape::e_circle); // rat model is just a ball
-        float radius = fixture->GetShape()->m_radius;
-        position = Vec2(p.x, p.y - radius);
 
         // orient texture along the radius from rat to earth's center
         b2Vec2 r = p - earthBody->GetPosition();
@@ -252,6 +247,13 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
                 angle = -angle;
             }
         }
+
+        // adapt position
+        b2Fixture *fixture = imageInfo->body->GetFixtureList();
+        assert(fixture && fixture->GetType() == b2Shape::e_circle); // rat model is just a ball
+        float radius = fixture->GetShape()->m_radius;
+
+        position = Vec2(p.x, p.y) - Vec2(sin(angle) * radius, cos(angle) * radius);
 
         return true;
     }
