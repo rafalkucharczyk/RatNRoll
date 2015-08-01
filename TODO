@@ -26,16 +26,20 @@ tutorial - pause game when new item drops, show animation in balloon
 background - fill screen with items at the beginning
 background - scale floating items for bigger resolutions (iPad)
 
-7
+7 done
 in-app purchase to remove ads
+
+8
+gamecenter - challange friend, draw shadow player
+gameplay - improve randomizing of power ups
 
 unordered:
 
 gameplay - animate rat, plug multiple animations
 juice app a little, nicer transitions between screens, more animations
-gamecenter - challange friend, draw shadow player
 gamecenter - achivements
 initial screen - settings and credits
+initial screen - add facebook 'like us', randomize less skulls after liking
 post game menu - sharing facebook
 post game menu - sharing twitter
 music + sounds
