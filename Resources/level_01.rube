@@ -145,7 +145,7 @@
           "y" : -0.04791289940476418
         },
         "massData-mass" : 0.1066340655088425,
-        "name" : "item_slowdown",
+        "name" : "item_speedup",
         "position" : 
         {
           "x" : -6.361790180206299,
@@ -539,14 +539,14 @@
         "gravityScale" : 0.5,
         "id" : 7,
         "linearVelocity" : 0,
-        "massData-I" : 0.005760434549301863,
+        "massData-I" : 0.005760435480624437,
         "massData-center" : 
         {
-          "x" : 0.002312888624146581,
-          "y" : -5.760553540312685e-05
+          "x" : 0.002312888856977224,
+          "y" : -5.760382191510871e-05
         },
         "massData-mass" : 0.2,
-        "name" : "item_speedup",
+        "name" : "item_slowdown",
         "position" : 
         {
           "x" : -5.452760219573975,
@@ -752,11 +752,11 @@
           "x" : -0.002884387969970703,
           "y" : -0.02307605743408203
         },
-        "file" : "speedup01.png",
+        "file" : "slowdown01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 3,
-        "name" : "item_speedup",
+        "name" : "item_slowdown",
         "opacity" : 0.5,
         "scale" : 0.5899059772491455
       },
@@ -778,11 +778,11 @@
         "aspectScale" : 1,
         "body" : 1,
         "center" : 0,
-        "file" : "slowdown01.png",
+        "file" : "speedup01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 5,
-        "name" : "item_slowdown",
+        "name" : "item_speedup",
         "opacity" : 0.5,
         "scale" : 0.5944514870643616
       },
