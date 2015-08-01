@@ -34,6 +34,7 @@ class GameFlow
     void resumeGame();
 
   private:
+    cocos2d::Scene *createSceneObject();
     LevelCustomization *getLevelCustomization(int levelNumber) const;
     int updateBestScore(int levelNumber, int score);
 
@@ -50,6 +51,7 @@ class GameFlow
     static GameFlow *instance;
 
     const static int pauseLayerTag = 123;
+    const static int backgroundLayerTag = 124;
     const static int noLevelNumber = -1;
 };
 

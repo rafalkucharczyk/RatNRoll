@@ -34,10 +34,7 @@ GameFlow &GameFlow::getInstance()
 
 Scene *GameFlow::createInitialScene()
 {
-    auto scene = Scene::create();
-
-    auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
-    scene->addChild(backgroundLayer);
+    auto scene = createSceneObject();
 
     auto initialLayer = InitialLayer::create();
     initialLayer->setMenuItemClickedCallback(
@@ -98,10 +95,9 @@ void GameFlow::switchToLevelScene(int levelNumber)
 {
     srand(1); // random, but always the same...
 
-    auto scene = Scene::create();
-
-    auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
-    scene->addChild(backgroundLayer);
+    auto scene = createSceneObject();
+    BackgroundLayer *backgroundLayer =
+        dynamic_cast<BackgroundLayer *>(scene->getChildByTag(backgroundLayerTag));
 
     auto levelMenuLayer = LevelMenuLayer::create();
     scene->addChild(levelMenuLayer);
@@ -121,10 +117,7 @@ void GameFlow::switchToLevelScene(int levelNumber)
 
 void GameFlow::switchToPostLevelScene(int score)
 {
-    auto scene = Scene::create();
-
-    auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
-    scene->addChild(backgroundLayer);
+    auto scene = createSceneObject();
 
     auto postLevelLayer = PostLevelLayer::create();
     postLevelLayer->displayCurrentScore(score);
@@ -141,10 +134,7 @@ void GameFlow::switchToPostLevelScene(int score)
 
 void GameFlow::switchToSettingsScene()
 {
-    auto scene = Scene::create();
-
-    auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
-    scene->addChild(backgroundLayer);
+    auto scene = createSceneObject();
 
     auto settingsLayer = SettingsLayer::createNoInit();
     iapHelper.reset(new InAppPurchaseHelper(iapProductId, *settingsLayer));
@@ -167,6 +157,16 @@ void GameFlow::resumeGame()
     Director::getInstance()->getRunningScene()->removeChildByTag(pauseLayerTag);
 
     getCurrentLevelLayer().resumeLevel();
+}
+
+Scene *GameFlow::createSceneObject()
+{
+    Scene *scene = Scene::create();
+
+    auto backgroundLayer = BackgroundLayer::create("cheese01.png", "background01.png");
+    scene->addChild(backgroundLayer, 0, backgroundLayerTag);
+
+    return scene;
 }
 
 LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
