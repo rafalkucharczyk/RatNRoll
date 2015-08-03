@@ -92,6 +92,110 @@ class LevelLayerProxyImpl : public LevelLayerProxy
     b2Body *body;
 };
 
+class ShadowRatHelper
+{
+  public:
+    ShadowRatHelper(LevelLayer &levelLayer, Json::Value shadowRatJson)
+        : levelLayer(levelLayer), shadowRatJson(shadowRatJson)
+    {
+    }
+
+  private:
+    struct ShadowRatEntry {
+        ShadowRatEntry() : scoreFrom(0), scoreTo(0), body(nullptr) {}
+        ShadowRatEntry(int scoreFrom, int scoreTo)
+            : scoreFrom(scoreFrom), scoreTo(scoreTo), body(nullptr)
+        {
+        }
+
+        int scoreFrom;
+        int scoreTo;
+        b2Body *body;
+    };
+
+  public:
+    void addShadow(const std::string &playerName, int scoreFrom, int scoreTo)
+    {
+        if (shadowEntries.find(playerName) == shadowEntries.end()) {
+            shadowEntries[playerName] = ShadowRatEntry(scoreFrom, scoreTo);
+        }
+    }
+
+    void doPhysicsCalculationStep()
+    {
+        for (auto i = shadowEntries.begin(); i != shadowEntries.end(); i++) {
+            if (i->second.body == nullptr) {
+                continue;
+            }
+
+            b2Vec2 vv = levelLayer.earthBody->GetPosition() +
+                        b2Vec2(0, levelLayer.getEarthRadius()) - i->second.body->GetPosition();
+            vv.Normalize();
+            i->second.body->ApplyForceToCenter((30 + 30 * rand_0_1()) * vv, true);
+        }
+    }
+
+    void scoreUpdated(int newScore)
+    {
+        auto inRange = [newScore](ShadowRatEntry &entry) -> bool {
+            return (newScore >= entry.scoreFrom) && (newScore <= entry.scoreTo);
+        };
+
+        for (auto i = shadowEntries.begin(); i != shadowEntries.end(); i++) {
+            if (inRange(i->second) && i->second.body == nullptr) {
+                i->second.body = insertShadowRat(i->first);
+                assert(i->second.body);
+            } else if (!inRange(i->second) && i->second.body != nullptr) {
+                removeShadowRat(i->second.body);
+                i->second.body = nullptr;
+            }
+        }
+    }
+
+  private:
+    b2Body *insertShadowRat(const std::string &playerName)
+    {
+        b2Body *body = levelLayer.jsonParser.j2b2Body(levelLayer.m_world, shadowRatJson);
+        body->SetTransform(b2Vec2(0, 10), 0);
+
+        levelLayer.duplicateImageForBody("rat_shadow", body);
+
+        levelLayer.getAnySpriteOnBody(body)->setVisible(true);
+        Node *node = levelLayer.getAnySpriteOnBody(body);
+
+        addPlayerNameLabelToNode(node, playerName);
+
+        return body;
+    }
+
+    void removeShadowRat(b2Body *body)
+    {
+        levelLayer.getAnySpriteOnBody(body)->runAction(Sequence::create(
+            CallFunc::create([=]() { body->SetGravityScale(-10); }), DelayTime::create(0.5),
+            CallFunc::create([=]() { levelLayer.removeBodyFromWorld(body); }), nullptr));
+    }
+
+    void addPlayerNameLabelToNode(Node *node, const std::string &playerName)
+    {
+        auto label = Label::createWithSystemFont("", "Marker Felt", 80);
+        label->setColor(Color3B::BLACK);
+        label->setOpacity(node->getOpacity());
+
+        Size cs = node->getContentSize();
+        label->setPosition(Vec2(cs.width / 2, cs.height));
+
+        label->setString(playerName);
+
+        node->addChild(label);
+    }
+
+  private:
+    LevelLayer &levelLayer;
+    Json::Value shadowRatJson; // keeps representation of parsed shadow rat, needed for duplication
+
+    std::map<std::string, ShadowRatEntry> shadowEntries;
+};
+
 const std::string LevelLayer::name = "LevelLayer";
 
 LevelLayer::LevelLayer(LevelCustomization *customization)
@@ -208,6 +312,10 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
     }
 
     earthRevoluteJoint = dynamic_cast<b2RevoluteJoint *>(i->joint);
+
+    b2Body *ratShadowBody = json->getBodyByName("rat_shadow");
+    assert(ratShadowBody);
+    shadowRatHelper.reset(new ShadowRatHelper(*this, json->b2j(ratShadowBody)));
 }
 
 void LevelLayer::update(float dt)
@@ -223,14 +331,17 @@ void LevelLayer::update(float dt)
 
     doPhysicsCalculationStep();
 
-    updateScore();
+    calculateScore();
 }
 
 bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,
                                                           cocos2d::Point &position, float &angle)
 {
-    if (imageInfo->body == ratBody) // special handling for rat image
-    {
+    if (ratBody == nullptr) {
+        return false;
+    }
+
+    if (imageInfo->name == "rat" || imageInfo->name == "rat_shadow") {
         b2Vec2 p = imageInfo->body->GetPosition();
 
         // orient texture along the radius from rat to earth's center
@@ -253,7 +364,14 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
         assert(fixture && fixture->GetType() == b2Shape::e_circle); // rat model is just a ball
         float radius = fixture->GetShape()->m_radius;
 
-        position = Vec2(p.x, p.y) - Vec2(sin(angle) * radius, cos(angle) * radius);
+        if (imageInfo->name == "rat") {
+            position = Vec2(p.x, p.y) - Vec2(sin(angle) * radius, cos(angle) * radius);
+        } else {
+            b2Vec2 localPos(position.x, position.y);
+            b2Rot rot(-angle);
+            localPos = b2Mul(rot, localPos) + imageInfo->body->GetPosition();
+            position = Vec2(localPos.x, localPos.y);
+        }
 
         return true;
     }
@@ -262,6 +380,15 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
 }
 
 bool LevelLayer::isFixtureTouchable(b2Fixture *fixture) { return fixture->GetBody() == earthBody; }
+
+void LevelLayer::addShadowRat(const std::string &name, int score)
+{
+    if (!name.empty()) {
+        shadowRatHelper->addShadow(name, 0, score);
+    }
+
+    updateScore();
+}
 
 void LevelLayer::runCustomActionOnStart()
 {
@@ -290,10 +417,7 @@ void LevelLayer::doPhysicsCalculationStep()
     b2Vec2 earthCenter = earthBody->GetPosition();
     b2Vec2 ratCenter = ratBody->GetPosition();
 
-    b2Fixture *earthFixture = earthBody->GetFixtureList();
-    // earth fixture is a circle
-    assert(earthFixture && earthFixture->GetType() == b2Shape::e_circle);
-    float radius = earthFixture->GetShape()->m_radius;
+    float radius = getEarthRadius();
 
     // apply speed, more when running uphill (b), less when running downhill (a)
     float x = (ratCenter.x - earthCenter.x) / (2 * radius);
@@ -309,20 +433,15 @@ void LevelLayer::doPhysicsCalculationStep()
         g *= 30;
         ratBody->ApplyForce(ratBody->GetMass() * g, ratBody->GetWorldCenter(), true);
     }
+
+    shadowRatHelper->doPhysicsCalculationStep();
 }
 
-void LevelLayer::updateScore()
+float LevelLayer::getEarthRadius() const
 {
-    float currentAngle = -earthRevoluteJoint->GetJointAngle();
-    if (currentAngle - previousRevoluteJointAngle > 0.2) {
-        gameScore++;
-
-        scoreLabel->setString(std::to_string(gameScore));
-
-        previousRevoluteJointAngle = currentAngle;
-    } else if (currentAngle < previousRevoluteJointAngle) {
-        previousRevoluteJointAngle = currentAngle;
-    }
+    b2Fixture *earthFixture = earthBody->GetFixtureList();
+    assert(earthFixture && earthFixture->GetType() == b2Shape::e_circle);
+    return earthFixture->GetShape()->m_radius;
 }
 
 void LevelLayer::dropItem(float t)
@@ -471,7 +590,7 @@ void LevelLayer::halveItemEaten()
     int halfScore = gameScore / 2;
     gameScore -= halfScore;
 
-    scoreLabel->setString(std::to_string(gameScore));
+    updateScore();
 
     // show animation with number of points taken
     auto label = initScoreLabel(halfScore);
@@ -522,6 +641,38 @@ Label *LevelLayer::initScoreLabel(int score)
     label->setString(std::to_string(score));
 
     return label;
+}
+
+void LevelLayer::updateScoreDisplay(float t)
+{
+    scoreLabel->setString(std::to_string(gameScore));
+    shadowRatHelper->scoreUpdated(gameScore);
+}
+
+void LevelLayer::calculateScore()
+{
+    float currentAngle = -earthRevoluteJoint->GetJointAngle();
+    if (currentAngle - previousRevoluteJointAngle > 0.2) {
+        gameScore++;
+
+        updateScore();
+
+        previousRevoluteJointAngle = currentAngle;
+    } else if (currentAngle < previousRevoluteJointAngle) {
+        previousRevoluteJointAngle = currentAngle;
+    }
+}
+
+void LevelLayer::updateScore()
+{
+    if (!isScheduled(schedule_selector(LevelLayer::updateScoreDisplay))) {
+        // do update of score label and shadow rats in next event loop
+        // (to prevent re-entering box2d engine, since it may happen we try
+        //  to add shadow rat's b2Body when world is still locked when handling
+        //  collisions. and score gets updated as a result of collision
+        //  with skull item.)
+        scheduleOnce(schedule_selector(LevelLayer::updateScoreDisplay), 0);
+    }
 }
 
 spine::SkeletonAnimation *LevelLayer::getRatAnimation()

@@ -414,6 +414,7 @@ SCHEmptyProtocol
             if ( [GKLocalPlayer localPlayer].authenticated )
             {
                 _gameCenterEnabled = YES;
+                [[GKLocalPlayer localPlayer] registerListener:self];
                 
                 // Get the default leaderboard identifier.
                 [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler:^( NSString *leaderboardIdentifier, NSError *error ) {
@@ -450,6 +451,29 @@ SCHEmptyProtocol
         { NSLog( @"%@", [error localizedDescription] ); }
  
     }];
+}
+
+- (void)gameCenterSubmitScore:(int)scoreNumber forChallenge:(GKScoreChallenge *)challenge
+        withCompletionHandler:(void(^)())completionHandler
+{
+    if ( !self.gameCenterEnabled || self.leaderboardIdentifier == nil )
+    { return; }
+
+    GKScore *s = [[[GKScore alloc]
+                   initWithLeaderboardIdentifier:[[challenge score] leaderboardIdentifier]]
+                  autorelease];
+    s.value = scoreNumber;
+
+    [GKScore reportScores:@[s]
+             withEligibleChallenges:@[challenge]
+             withCompletionHandler:^(NSError *error)
+     {
+         if ( error != nil)
+         { NSLog( @"%@", [error localizedDescription] ); }
+
+         completionHandler();
+
+     }];
 }
 
 -( void )gameCenterShowLeaderboard
@@ -509,6 +533,21 @@ SCHEmptyProtocol
 
 -( void )gameCenterResetPlayerAchievements
 { [GKAchievement resetAchievementsWithCompletionHandler: NULL]; }
+
+- (void)gameCenterRegisterChallengeCallback:(GameCenterChallengeCallback)callback
+{
+    self.challengeCallback = callback;
+}
+
+- (void)player:(GKPlayer *)player wantsToPlayChallenge:(GKChallenge *)challenge
+{
+    GKScoreChallenge *scoreChallenge = (GKScoreChallenge*)challenge;
+
+    if (scoreChallenge != nil)
+    {
+        self.challengeCallback(scoreChallenge);
+    }
+}
 #endif
 
 #pragma mark - ADMOB

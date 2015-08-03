@@ -84,7 +84,6 @@
 		B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE051B237A0800D4851A /* PostLevelLayer.cpp */; };
 		B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B552BE081B24234A00D4851A /* GameFlow.cpp */; };
 		B5558FEE1B67F84E00DD8974 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5558FED1B67F84E00DD8974 /* StoreKit.framework */; };
-		B55858501B433D05005AD55B /* level_tutorial.json in Resources */ = {isa = PBXBuildFile; fileRef = B558584F1B433D05005AD55B /* level_tutorial.json */; };
 		B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55887C81B41E0B900B13416 /* InitialLayer.cpp */; };
 		B57B5BE21B570BC400C98B37 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */; };
 		B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57B5BE41B570BED00C98B37 /* MenuItemButton.cpp */; };
@@ -237,7 +236,6 @@
 		B552BE091B24234A00D4851A /* GameFlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameFlow.h; sourceTree = "<group>"; };
 		B5558FED1B67F84E00DD8974 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		B558584E1B4337E9005AD55B /* LevelCustomization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelCustomization.h; sourceTree = "<group>"; };
-		B558584F1B433D05005AD55B /* level_tutorial.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level_tutorial.json; sourceTree = "<group>"; };
 		B55887C81B41E0B900B13416 /* InitialLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitialLayer.cpp; sourceTree = "<group>"; };
 		B55887C91B41E0B900B13416 /* InitialLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialLayer.h; sourceTree = "<group>"; };
 		B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuHelper.cpp; path = Menu/MenuHelper.cpp; sourceTree = "<group>"; };
@@ -394,7 +392,6 @@
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				B5927EDB1B55BD5700D59F09 /* menu */,
 				B535EF571B1339D4004D647D /* level_01.json */,
-				B558584F1B433D05005AD55B /* level_tutorial.json */,
 				B551AF671B1902980076A8E9 /* rat.png */,
 				B54CCC321B45E4CA00393F40 /* hover01.png */,
 				B54CCC341B46F91A00393F40 /* halve01.png */,
@@ -696,7 +693,6 @@
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				B54C0DF11B5EEE12002B36B6 /* animations in Resources */,
-				B55858501B433D05005AD55B /* level_tutorial.json in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				B551AF6E1B1A41260076A8E9 /* cheese01.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,

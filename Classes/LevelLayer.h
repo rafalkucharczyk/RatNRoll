@@ -10,6 +10,7 @@
 #include "LevelCustomization.h"
 
 class LevelContactListener;
+class ShadowRatHelper;
 
 class LevelLayer : public RUBELayer
 {
@@ -50,6 +51,8 @@ class LevelLayer : public RUBELayer
         backgroundSpeedFunction = function;
     }
 
+    void addShadowRat(const std::string &name, int score);
+
     static const int proxyOverlayLayer = 1111;
 
   private:
@@ -57,7 +60,7 @@ class LevelLayer : public RUBELayer
     void startDroppingItems();
     void stopDroppingItems();
     void doPhysicsCalculationStep();
-    void updateScore();
+    float getEarthRadius() const;
 
     void dropItem(float t);
     b2Body *duplicateItem(LevelCustomization::ItemType itemType);
@@ -76,6 +79,9 @@ class LevelLayer : public RUBELayer
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
     cocos2d::Label *initScoreLabel(int score);
+    void updateScoreDisplay(float t);
+    void calculateScore();
+    void updateScore();
 
     spine::SkeletonAnimation *getRatAnimation();
 
@@ -113,8 +119,12 @@ class LevelLayer : public RUBELayer
     std::shared_ptr<LevelContactListener> contactListener;
 
     friend class LevelContactListener;
+    friend class ShadowRatHelper;
 
     std::function<void(int)> gameFinishedCallback;
+
+  private:
+    std::shared_ptr<ShadowRatHelper> shadowRatHelper;
 
   public:
     static const std::string name;

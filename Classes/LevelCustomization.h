@@ -79,7 +79,7 @@ class LevelTutorial : public LevelCustomization
   public:
     LevelTutorial() : canDropNewItem(true) {}
 
-    std::string getRubeJsonFileName() const { return "level_tutorial.json"; }
+    std::string getRubeJsonFileName() const { return "level_01.json"; }
 
     float getItemDropInterval() { return 2.5; }
 

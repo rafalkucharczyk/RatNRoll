@@ -68,8 +68,18 @@
 #import <VungleSDK/VungleSDK.h>
 #endif
 
+#if SCH_IS_GAME_CENTER_ENABLED == true
+#import <GameKit/GKLocalPlayer.h>
+#import <GameKit/GKChallenge.h>
+#endif
+
 @protocol SCHEmptyProtocol
 @end
+
+#if SCH_IS_GAME_CENTER_ENABLED == true
+typedef void (*GameCenterChallengeCallback)(GKScoreChallenge *);
+
+#endif
 
 @interface IOSHelper : NSObject <SCHEmptyProtocol
 #if SCH_IS_iADS_ENABLED == true
@@ -111,6 +121,12 @@
                                  ,
                                  VungleSDKDelegate
 #endif
+
+#if SCH_IS_GAME_CENTER_ENABLED == true
+                                 ,
+                                 GKLocalPlayerListener
+#endif
+
                                  > {
     AppController *appController;
     UIView *view;
@@ -188,13 +204,21 @@
 #if SCH_IS_GAME_CENTER_ENABLED == true
 @property(nonatomic) BOOL gameCenterEnabled;
 @property(nonatomic, copy) NSString *leaderboardIdentifier;
+@property(nonatomic) GameCenterChallengeCallback challengeCallback;
 
 - (void)gameCenterLogin;
 - (void)gameCenterShowLeaderboard;
 - (void)gameCenterShowAchievements;
 - (void)gameCenterSubmitScore:(int)scoreNumber andLeaderboard:(NSString *)leaderboardID;
+- (void)gameCenterSubmitScore:(int)scoreNumber
+                 forChallenge:(GKScoreChallenge *)challenge
+        withCompletionHandler:(void (^)())completionHandler;
 - (void)gameCenterUnlockAchievement:(NSString *)achievementID andPercentage:(float)percent;
 - (void)gameCenterResetPlayerAchievements;
+
+- (void)gameCenterRegisterChallengeCallback:(GameCenterChallengeCallback)callback;
+
+- (void)player:(GKPlayer *)player wantsToPlayChallenge:(GKChallenge *)challenge;
 #endif
 
 #if SCH_IS_AD_MOB_ENABLED == true

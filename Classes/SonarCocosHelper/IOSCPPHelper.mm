@@ -92,6 +92,32 @@ void IOSCPPHelper::shareWithString( __String message, __String thumbnailPath )
 #endif
 
 #if SCH_IS_GAME_CENTER_ENABLED == true
+namespace {
+    GKScoreChallenge *currentChallenge = nil;
+
+    std::function<void(std::string, int64_t, std::string)> gameCenterChallengeCallback;
+
+    std::string NSString2string(NSString *str)
+    {
+        return std::string([str UTF8String]);
+    }
+
+    void helperCallback(GKScoreChallenge *challenge)
+    {
+        assert(gameCenterChallengeCallback);
+
+        NSString *playerName = [[challenge issuingPlayer] alias];
+        int score = [[challenge score] value];
+        NSString *leaderboardId = [[challenge score] leaderboardIdentifier];
+
+        [challenge retain];
+
+        currentChallenge = challenge;
+
+        gameCenterChallengeCallback(NSString2string(playerName), score, NSString2string(leaderboardId));
+    }
+}
+
 void IOSCPPHelper::gameCenterLogin( )
 {
     [[IOSHelper instance] gameCenterLogin];
@@ -113,6 +139,18 @@ void IOSCPPHelper::gameCenterSubmitScore( int scoreNumber, __String leaderboardI
                                  andLeaderboard:[NSString stringWithCString:leaderboardID.getCString( ) encoding:NSUTF8StringEncoding]];
 }
 
+void IOSCPPHelper::gameCenterSubmitScoreForChallenge( int scoreNumber )
+{
+    if (currentChallenge)
+    {
+        [[IOSHelper instance] gameCenterSubmitScore:scoreNumber forChallenge:currentChallenge
+                              withCompletionHandler:^{
+                                  [currentChallenge release];
+                                  currentChallenge = nil;
+                              }];
+    }
+}
+
 void IOSCPPHelper::gameCenterUnlockAchievement( __String achievementID, float percent )
 {
     [[IOSHelper instance] gameCenterUnlockAchievement:[NSString stringWithCString:achievementID.getCString( ) encoding:NSUTF8StringEncoding] andPercentage:percent];
@@ -121,6 +159,12 @@ void IOSCPPHelper::gameCenterUnlockAchievement( __String achievementID, float pe
 void IOSCPPHelper::gameCenterResetPlayerAchievements( )
 {
     [[IOSHelper instance] gameCenterResetPlayerAchievements];
+}
+
+void IOSCPPHelper::gameCenterRegisterChallengeCallback(std::function<void(std::string, int64_t, std::string)> callback)
+{
+    gameCenterChallengeCallback = callback;
+    [[IOSHelper instance] gameCenterRegisterChallengeCallback:helperCallback];
 }
 #endif
 

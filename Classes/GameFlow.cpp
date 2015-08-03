@@ -21,7 +21,12 @@ const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
 
 GameFlow *GameFlow::instance = nullptr;
 
-GameFlow::GameFlow() : currentLevelNumber(noLevelNumber) {}
+GameFlow::GameFlow() : currentLevelNumber(noLevelNumber)
+{
+    SonarCocosHelper::GameCenter::registerChallengeCallback(
+        std::bind(&GameFlow::startChallenge, this, std::placeholders::_1, std::placeholders::_2,
+                  std::placeholders::_3));
+}
 
 GameFlow &GameFlow::getInstance()
 {
@@ -93,6 +98,11 @@ void GameFlow::handleInitialSceneMenu(int itemIndex)
 
 void GameFlow::switchToLevelScene(int levelNumber)
 {
+    switchToLevelSceneWithChallenge(levelNumber, {});
+}
+
+void GameFlow::switchToLevelSceneWithChallenge(int levelNumber, Challenge challenge)
+{
     srand(1); // random, but always the same...
 
     auto scene = createSceneObject();
@@ -104,6 +114,7 @@ void GameFlow::switchToLevelScene(int levelNumber)
     levelMenuLayer->setGamePausedCallback(std::bind(&GameFlow::pauseGame, this));
 
     auto levelLayer = LevelLayer::create(getLevelCustomization(levelNumber));
+    levelLayer->addShadowRat(challenge.playerName, challenge.score);
     currentLevelNumber = levelNumber;
     scene->addChild(levelLayer);
 
@@ -159,6 +170,15 @@ void GameFlow::resumeGame()
     getCurrentLevelLayer().resumeLevel();
 }
 
+void GameFlow::startChallenge(std::string playerName, int score, std::string leaderboardId)
+{
+    int levelNumber = std::stoi(leaderboardId.substr(leaderboardId.size() - 1, 1));
+
+    Director::getInstance()->resume();
+
+    switchToLevelSceneWithChallenge(levelNumber, Challenge(playerName, score));
+}
+
 Scene *GameFlow::createSceneObject()
 {
     Scene *scene = Scene::create();
@@ -189,15 +209,15 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
 
 int GameFlow::updateBestScore(int levelNumber, int score)
 {
+    SonarCocosHelper::GameCenter::submitScore(score, "ratnroll_leaderboard_" +
+                                                         std::to_string(levelNumber));
+
     PermanentStorage gameStorage;
 
     int currentBestScore = gameStorage.getBestScore(levelNumber);
 
     if (score > currentBestScore) {
         gameStorage.setBestScore(levelNumber, score);
-
-        SonarCocosHelper::GameCenter::submitScore(score, "ratnroll_leaderboard_" +
-                                                             std::to_string(levelNumber));
 
         return score;
     }

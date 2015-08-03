@@ -278,6 +278,9 @@ class GameCenter
      * Reset all player achievements (cannot be undone)
      */
     static void resetPlayerAchievements();
+
+    static void
+    registerChallengeCallback(std::function<void(std::string, int64_t, std::string)> callback);
 };
 
 class GoogleAnalytics

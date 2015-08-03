@@ -130,6 +130,7 @@ void GameCenter::submitScore(int scoreNumber, cocos2d::__String leaderboardID)
 {
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     IOSCPPHelper::gameCenterSubmitScore(scoreNumber, leaderboardID);
+    IOSCPPHelper::gameCenterSubmitScoreForChallenge(scoreNumber);
 #endif
 }
 
@@ -151,6 +152,14 @@ void GameCenter::resetPlayerAchievements()
 {
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     IOSCPPHelper::gameCenterResetPlayerAchievements();
+#endif
+}
+
+void GameCenter::registerChallengeCallback(
+    std::function<void(std::string, int64_t, std::string)> callback)
+{
+#if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    IOSCPPHelper::gameCenterRegisterChallengeCallback(callback);
 #endif
 }
 

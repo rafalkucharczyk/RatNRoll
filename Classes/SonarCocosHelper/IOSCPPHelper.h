@@ -39,8 +39,11 @@ class IOSCPPHelper
     static void gameCenterShowLeaderboard();
     static void gameCenterShowAchievements();
     static void gameCenterSubmitScore(int scoreNumber, __String leaderboardID);
+    static void gameCenterSubmitScoreForChallenge(int scoreNumber);
     static void gameCenterUnlockAchievement(__String achievementID, float percent);
     static void gameCenterResetPlayerAchievements();
+    static void gameCenterRegisterChallengeCallback(
+        std::function<void(std::string, int64_t, std::string)> callback);
 #endif
 
 #if SCH_IS_REVMOB_ENABLED == true

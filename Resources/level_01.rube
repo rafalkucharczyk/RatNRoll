@@ -337,6 +337,7 @@
           
           {
             "density" : 55.26212692260742,
+            "filter-categoryBits" : 32,
             "friction" : 1,
             "id" : 3,
             "name" : "fixture4",
@@ -695,6 +696,127 @@
           "y" : -1.831979990005493
         },
         "type" : "dynamic"
+      },
+      
+      {
+        "angle" : 0,
+        "angularDamping" : 50.0,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 14.14710426330566,
+            "filter-categoryBits" : 16,
+            "filter-maskBits" : 65512,
+            "friction" : 1,
+            "id" : 10,
+            "name" : "fixture1",
+            "shapes" : 
+            [
+              
+              {
+                "radius" : 0.15,
+                "type" : "circle"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ 0.0 ],
+              "y" : [ 0.0 ]
+            }
+          }
+        ],
+        "id" : 10,
+        "linearVelocity" : 0,
+        "massData-I" : 0.01124999951571226,
+        "massData-mass" : 1,
+        "name" : "rat_shadow",
+        "position" : 
+        {
+          "x" : -8.252305030822754,
+          "y" : -2.046879053115845
+        },
+        "type" : "dynamic"
+      },
+      
+      {
+        "angle" : -0.5831027030944824,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "filter-categoryBits" : 32,
+            "filter-maskBits" : 16,
+            "friction" : 0.2,
+            "id" : 12,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.5, 0.5, 0.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+            }
+          }
+        ],
+        "id" : 11,
+        "linearVelocity" : 0,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : -2.845003843307495,
+          "y" : 3.357504606246948
+        },
+        "type" : "static"
+      },
+      
+      {
+        "angle" : 0.6536438465118408,
+        "angularVelocity" : 0,
+        "awake" : true,
+        "fixture" : 
+        [
+          
+          {
+            "density" : 1,
+            "filter-categoryBits" : 32,
+            "filter-maskBits" : 2064,
+            "friction" : 0.2,
+            "id" : 13,
+            "name" : "fixture6",
+            "shapes" : 
+            [
+              
+              {
+                "type" : "polygon"
+              }
+            ],
+            "vertices" : 
+            {
+              "x" : [ -0.5, 0.5, 0.5, -0.5 ],
+              "y" : [ -0.5, -0.5, 0.5, 0.5 ]
+            }
+          }
+        ],
+        "id" : 12,
+        "linearVelocity" : 0,
+        "name" : "body1",
+        "position" : 
+        {
+          "x" : 2.823287963867188,
+          "y" : 3.297832489013672
+        },
+        "type" : "static"
       }
     ],
     "metaimage" : 
@@ -802,6 +924,25 @@
         "name" : "item_halve",
         "opacity" : 0.5,
         "scale" : 0.6163854002952576
+      },
+      
+      {
+        "aspectScale" : 1,
+        "body" : 10,
+        "center" : 
+        {
+          "x" : 0.01345750037580729,
+          "y" : 0.3287949860095978
+        },
+        "colorTint" : [ 255, 255, 255, 25 ],
+        "file" : "rat.png",
+        "filter" : 1,
+        "flip" : false,
+        "id" : 7,
+        "name" : "rat_shadow",
+        "opacity" : 0.5,
+        "renderOrder" : 1,
+        "scale" : 1
       }
     ],
     "metajoint" : 
