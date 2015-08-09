@@ -20,6 +20,8 @@
 #include "SCHSettings.h"
 #include "cocos2d.h"
 
+#include "GameCenterPlayerScore.h"
+
 using namespace cocos2d;
 
 class IOSCPPHelper
@@ -35,7 +37,7 @@ class IOSCPPHelper
 #endif
 
 #if SCH_IS_GAME_CENTER_ENABLED == true
-    static void gameCenterLogin();
+    static void gameCenterLogin(std::function<void()> signedInCallback);
     static void gameCenterShowLeaderboard();
     static void gameCenterShowAchievements();
     static void gameCenterSubmitScore(int scoreNumber, __String leaderboardID);
@@ -43,7 +45,9 @@ class IOSCPPHelper
     static void gameCenterUnlockAchievement(__String achievementID, float percent);
     static void gameCenterResetPlayerAchievements();
     static void gameCenterRegisterChallengeCallback(
-        std::function<void(std::string, int64_t, std::string)> callback);
+        std::function<void(SonarCocosHelper::GameCenterPlayerScore)> callback);
+    static SonarCocosHelper::GameCenterPlayersScores
+    gameCenterGetFriendsBestScores(__String leaderboardID);
 #endif
 
 #if SCH_IS_REVMOB_ENABLED == true

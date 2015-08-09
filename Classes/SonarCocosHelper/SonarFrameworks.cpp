@@ -105,10 +105,10 @@ void GooglePlayServices::showLeaderboard(const char *leaderboardID)
 #endif
 }
 
-void GameCenter::signIn()
+void GameCenter::signIn(std::function<void()> signedInCallback)
 {
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    IOSCPPHelper::gameCenterLogin();
+    IOSCPPHelper::gameCenterLogin(signedInCallback);
 #endif
 }
 
@@ -155,11 +155,19 @@ void GameCenter::resetPlayerAchievements()
 #endif
 }
 
-void GameCenter::registerChallengeCallback(
-    std::function<void(std::string, int64_t, std::string)> callback)
+void GameCenter::registerChallengeCallback(std::function<void(GameCenterPlayerScore)> callback)
 {
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     IOSCPPHelper::gameCenterRegisterChallengeCallback(callback);
+#endif
+}
+
+GameCenterPlayersScores GameCenter::getFriendsBestScores(const std::string &leaderboardID)
+{
+#if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    return IOSCPPHelper::gameCenterGetFriendsBestScores(leaderboardID);
+#else
+    return {}
 #endif
 }
 

@@ -17,6 +17,10 @@
 #include "IOSCPPHelper.h"
 #import "IOSHelper.h"
 
+static NSString *string2NSString(const __String &str)
+{
+    return [NSString stringWithCString:str.getCString() encoding:NSUTF8StringEncoding];
+}
 
 void IOSCPPHelper::Setup( )
 {
@@ -95,7 +99,9 @@ void IOSCPPHelper::shareWithString( __String message, __String thumbnailPath )
 namespace {
     GKScoreChallenge *currentChallenge = nil;
 
-    std::function<void(std::string, int64_t, std::string)> gameCenterChallengeCallback;
+    std::function<void(SonarCocosHelper::GameCenterPlayerScore)> gameCenterChallengeCallback;
+
+    std::map<std::string, SonarCocosHelper::GameCenterPlayersScores> friendsBestScores;
 
     std::string NSString2string(NSString *str)
     {
@@ -114,13 +120,19 @@ namespace {
 
         currentChallenge = challenge;
 
-        gameCenterChallengeCallback(NSString2string(playerName), score, NSString2string(leaderboardId));
+        gameCenterChallengeCallback(
+            SonarCocosHelper::GameCenterPlayerScore(
+                NSString2string(playerName), NSString2string(leaderboardId), score, true));
     }
+
+    std::map<std::string, SonarCocosHelper::GameCenterPlayersScores> bestScores;
 }
 
-void IOSCPPHelper::gameCenterLogin( )
+void IOSCPPHelper::gameCenterLogin(std::function<void()> signedInCallback)
 {
-    [[IOSHelper instance] gameCenterLogin];
+    [[IOSHelper instance] gameCenterLoginWithCompletionHandler:^{
+        signedInCallback();
+    }];
 }
 
 void IOSCPPHelper::gameCenterShowLeaderboard( )
@@ -161,10 +173,31 @@ void IOSCPPHelper::gameCenterResetPlayerAchievements( )
     [[IOSHelper instance] gameCenterResetPlayerAchievements];
 }
 
-void IOSCPPHelper::gameCenterRegisterChallengeCallback(std::function<void(std::string, int64_t, std::string)> callback)
+void IOSCPPHelper::gameCenterRegisterChallengeCallback(std::function<void(SonarCocosHelper::GameCenterPlayerScore)> callback)
 {
     gameCenterChallengeCallback = callback;
     [[IOSHelper instance] gameCenterRegisterChallengeCallback:helperCallback];
+}
+
+SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBestScores(__String leaderboardID)
+{
+    [[IOSHelper instance] gameCenterGetFriendsBestScoresForLeaderboard:string2NSString(leaderboardID)
+                                                 withCompletionHandler:^(NSArray *results)
+    {
+        SonarCocosHelper::GameCenterPlayersScores scores;
+
+        for (GKScore* score in results) {
+            scores.push_back(
+                SonarCocosHelper::GameCenterPlayerScore(NSString2string([[score player] alias]),
+                                                        leaderboardID.getCString(),
+                                                        [score value],
+                                                        false));
+        }
+
+        friendsBestScores[leaderboardID.getCString()] = scores;
+x    }];
+
+    return friendsBestScores[leaderboardID.getCString()];
 }
 #endif
 

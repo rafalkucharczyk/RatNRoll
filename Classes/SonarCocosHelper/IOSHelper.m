@@ -399,7 +399,7 @@ SCHEmptyProtocol
 #pragma mark - GAME_CENTER
 
 #if SCH_IS_GAME_CENTER_ENABLED == true
--( void )gameCenterLogin
+-( void )gameCenterLoginWithCompletionHandler:(void (^)())completionHandler
 {
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     
@@ -415,6 +415,8 @@ SCHEmptyProtocol
             {
                 _gameCenterEnabled = YES;
                 [[GKLocalPlayer localPlayer] registerListener:self];
+
+                completionHandler();
                 
                 // Get the default leaderboard identifier.
                 [[GKLocalPlayer localPlayer] loadDefaultLeaderboardIdentifierWithCompletionHandler:^( NSString *leaderboardIdentifier, NSError *error ) {
@@ -492,7 +494,7 @@ SCHEmptyProtocol
     }
     else
     {
-        [self gameCenterLogin];
+        [self gameCenterLoginWithCompletionHandler:^{}];
     }
 }
 
@@ -547,6 +549,21 @@ SCHEmptyProtocol
     {
         self.challengeCallback(scoreChallenge);
     }
+}
+
+- (void)gameCenterGetFriendsBestScoresForLeaderboard:(NSString *)leaderboardID
+                 withCompletionHandler:(void (^)(NSArray*))completionHandler
+{
+    GKLeaderboard *leaderboard = [[GKLeaderboard alloc] init];
+    leaderboard.playerScope =  GKLeaderboardPlayerScopeFriendsOnly;
+    leaderboard.identifier = leaderboardID;
+
+    [leaderboard loadScoresWithCompletionHandler:^(NSArray *scores, NSError *error) {
+        if (error == nil)
+        {
+            completionHandler(scores);
+        }
+    }];
 }
 #endif
 

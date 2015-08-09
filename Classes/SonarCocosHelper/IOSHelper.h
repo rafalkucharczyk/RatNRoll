@@ -206,7 +206,7 @@ typedef void (*GameCenterChallengeCallback)(GKScoreChallenge *);
 @property(nonatomic, copy) NSString *leaderboardIdentifier;
 @property(nonatomic) GameCenterChallengeCallback challengeCallback;
 
-- (void)gameCenterLogin;
+- (void)gameCenterLoginWithCompletionHandler:(void (^)())completionHandler;
 - (void)gameCenterShowLeaderboard;
 - (void)gameCenterShowAchievements;
 - (void)gameCenterSubmitScore:(int)scoreNumber andLeaderboard:(NSString *)leaderboardID;
@@ -219,6 +219,9 @@ typedef void (*GameCenterChallengeCallback)(GKScoreChallenge *);
 - (void)gameCenterRegisterChallengeCallback:(GameCenterChallengeCallback)callback;
 
 - (void)player:(GKPlayer *)player wantsToPlayChallenge:(GKChallenge *)challenge;
+
+- (void)gameCenterGetFriendsBestScoresForLeaderboard:(NSString *)leaderboardID
+                               withCompletionHandler:(void (^)(NSArray *))completionHandler;
 #endif
 
 #if SCH_IS_AD_MOB_ENABLED == true

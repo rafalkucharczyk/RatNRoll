@@ -25,6 +25,8 @@
 #include "SCHDefinitions.h"
 #endif
 
+#include "GameCenterPlayerScore.h"
+
 namespace SonarCocosHelper
 {
 enum AdBannerPosition { eBottom, eTop, eBoth };
@@ -248,7 +250,7 @@ class GameCenter
     /**
      * Sign the user in
      */
-    static void signIn();
+    static void signIn(std::function<void()> signedInCallback);
     /**
      * Show leaderboard
      */
@@ -279,8 +281,9 @@ class GameCenter
      */
     static void resetPlayerAchievements();
 
-    static void
-    registerChallengeCallback(std::function<void(std::string, int64_t, std::string)> callback);
+    static void registerChallengeCallback(std::function<void(GameCenterPlayerScore)> callback);
+
+    static GameCenterPlayersScores getFriendsBestScores(const std::string &leaderboardID);
 };
 
 class GoogleAnalytics

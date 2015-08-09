@@ -21,12 +21,7 @@ const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
 
 GameFlow *GameFlow::instance = nullptr;
 
-GameFlow::GameFlow() : currentLevelNumber(noLevelNumber)
-{
-    SonarCocosHelper::GameCenter::registerChallengeCallback(
-        std::bind(&GameFlow::startChallenge, this, std::placeholders::_1, std::placeholders::_2,
-                  std::placeholders::_3));
-}
+GameFlow::GameFlow() : currentLevelNumber(noLevelNumber) { loginToGameCenter(); }
 
 GameFlow &GameFlow::getInstance()
 {
@@ -98,10 +93,12 @@ void GameFlow::handleInitialSceneMenu(int itemIndex)
 
 void GameFlow::switchToLevelScene(int levelNumber)
 {
-    switchToLevelSceneWithChallenge(levelNumber, {});
+    switchToLevelSceneWithScores(levelNumber, SonarCocosHelper::GameCenter::getFriendsBestScores(
+                                                  getLeaderboardName(levelNumber)));
 }
 
-void GameFlow::switchToLevelSceneWithChallenge(int levelNumber, Challenge challenge)
+void GameFlow::switchToLevelSceneWithScores(int levelNumber,
+                                            SonarCocosHelper::GameCenterPlayersScores scores)
 {
     srand(1); // random, but always the same...
 
@@ -114,7 +111,11 @@ void GameFlow::switchToLevelSceneWithChallenge(int levelNumber, Challenge challe
     levelMenuLayer->setGamePausedCallback(std::bind(&GameFlow::pauseGame, this));
 
     auto levelLayer = LevelLayer::create(getLevelCustomization(levelNumber));
-    levelLayer->addShadowRat(challenge.playerName, challenge.score);
+
+    for (const SonarCocosHelper::GameCenterPlayerScore &score : scores) {
+        levelLayer->addShadowRat(score.playerName, score.getLowerScoreBound(), score.score);
+    }
+
     currentLevelNumber = levelNumber;
     scene->addChild(levelLayer);
 
@@ -170,13 +171,29 @@ void GameFlow::resumeGame()
     getCurrentLevelLayer().resumeLevel();
 }
 
-void GameFlow::startChallenge(std::string playerName, int score, std::string leaderboardId)
+void GameFlow::loginToGameCenter()
 {
-    int levelNumber = std::stoi(leaderboardId.substr(leaderboardId.size() - 1, 1));
+    SonarCocosHelper::GameCenter::registerChallengeCallback(
+        std::bind(&GameFlow::startChallenge, this, std::placeholders::_1));
+
+    SonarCocosHelper::GameCenter::signIn([this]() {
+        SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(0));
+        SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(1));
+    });
+}
+
+void GameFlow::startChallenge(SonarCocosHelper::GameCenterPlayerScore score)
+{
+    int levelNumber = std::stoi(score.leaderboardId.substr(score.leaderboardId.size() - 1, 1));
 
     Director::getInstance()->resume();
 
-    switchToLevelSceneWithChallenge(levelNumber, Challenge(playerName, score));
+    switchToLevelSceneWithScores(levelNumber, {score});
+}
+
+std::string GameFlow::getLeaderboardName(int levelNumber)
+{
+    return "ratnroll_leaderboard_" + std::to_string(levelNumber);
 }
 
 Scene *GameFlow::createSceneObject()
@@ -209,8 +226,7 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
 
 int GameFlow::updateBestScore(int levelNumber, int score)
 {
-    SonarCocosHelper::GameCenter::submitScore(score, "ratnroll_leaderboard_" +
-                                                         std::to_string(levelNumber));
+    SonarCocosHelper::GameCenter::submitScore(score, getLeaderboardName(levelNumber));
 
     PermanentStorage gameStorage;
 

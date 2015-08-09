@@ -51,7 +51,7 @@ class LevelLayer : public RUBELayer
         backgroundSpeedFunction = function;
     }
 
-    void addShadowRat(const std::string &name, int score);
+    void addShadowRat(const std::string &name, int fromScore, int toScore);
 
     static const int proxyOverlayLayer = 1111;
 

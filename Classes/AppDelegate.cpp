@@ -51,7 +51,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (GameFlow::getInstance().adsVisible()) {
         SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
     }
-    SonarCocosHelper::GameCenter::signIn();
 
     auto scene = GameFlow::getInstance().createInitialScene();
 

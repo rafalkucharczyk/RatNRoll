@@ -381,10 +381,10 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
 
 bool LevelLayer::isFixtureTouchable(b2Fixture *fixture) { return fixture->GetBody() == earthBody; }
 
-void LevelLayer::addShadowRat(const std::string &name, int score)
+void LevelLayer::addShadowRat(const std::string &name, int fromScore, int toScore)
 {
     if (!name.empty()) {
-        shadowRatHelper->addShadow(name, 0, score);
+        shadowRatHelper->addShadow(name, fromScore, toScore);
     }
 
     updateScore();
