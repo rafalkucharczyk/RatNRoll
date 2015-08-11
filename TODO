@@ -29,17 +29,31 @@ background - scale floating items for bigger resolutions (iPad)
 7 done
 in-app purchase to remove ads
 
-8
-gamecenter - challange friend, draw shadow player
+8 done
+gamecenter - challenge friend, draw shadow player
+gamecenter - get friends from leaderboard and show shadow player with their score
 gameplay - improve randomizing of power ups
+
+9
+gameplay - animate rat, plug multiple animations
+post game menu - sharing facebook
+post game menu - sharing twitter
+initial screen - add facebook 'like us', unlock new item (temporal anti-skull shield)
 
 unordered:
 
-gameplay - animate rat, plug multiple animations
 juice app a little, nicer transitions between screens, more animations
-gamecenter - achivements
+gamecenter - achievements
+gameplay - 1 new items for regular gameplay, triple cheeseburger
+iap - unlock new item, dollar frenzy (particles)
 initial screen - settings and credits
-initial screen - add facebook 'like us', randomize less skulls after liking
-post game menu - sharing facebook
-post game menu - sharing twitter
-music + sounds
+post game menu - redesign, figure out how to handle visualization of current/high scores (local,
+                 leaderboards)  and also replaying of challenges
+post game menu(?) - rate us
+post game menu - get best score from game center (local if no connectivity), upload local to game
+                 center
+play music + sounds
+fix crash in EAGLView::swap (sometimes happens when app is minimized)
+ios - add verification of iap
+gameplay - make sure item is eaten when rat touches it (currently item is eaten only when touches
+        rat's belly)
