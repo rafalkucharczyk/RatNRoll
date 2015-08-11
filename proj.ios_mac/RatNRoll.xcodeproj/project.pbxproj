@@ -141,6 +141,7 @@
 		1D6058910D05DD3D006BFB54 /* RatNRoll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RatNRoll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		255340CA1B772F9900C31F87 /* GameCenterPlayerScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterPlayerScore.h; sourceTree = "<group>"; };
+		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -428,6 +429,7 @@
 				B552BDFA1B1CE54E00D4851A /* LevelLayer.cpp */,
 				B552BDFB1B1CE54E00D4851A /* LevelLayer.h */,
 				B558584E1B4337E9005AD55B /* LevelCustomization.h */,
+				257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */,
 				B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */,
 				B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */,
 				B54E63221B3B62D50019C20F /* PermanentStorage.cpp */,

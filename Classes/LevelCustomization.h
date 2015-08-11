@@ -40,7 +40,7 @@ class LevelCustomization
     virtual ItemType getDropItemType(float currentRatSpeed) = 0;
 
     // initial position of dropped item (in Box2D's world coordinates)
-    virtual b2Vec2 getDropItemSpot() = 0;
+    virtual b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) = 0;
 
     // called by LevelLayer once, when level was loaded and started
     virtual cocos2d::FiniteTimeAction *
@@ -113,7 +113,7 @@ class LevelTutorial : public LevelCustomization
         return normalizeDropItemType(itemType, currentRatSpeed);
     }
 
-    b2Vec2 getDropItemSpot() { return b2Vec2(0, 9); }
+    b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) { return b2Vec2(0, 9); }
 
     cocos2d::FiniteTimeAction *
     levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy) override
@@ -177,6 +177,8 @@ class LevelTutorial : public LevelCustomization
 class Level01 : public LevelCustomization
 {
   public:
+    Level01() : currentItemIndex(0) {}
+
     std::string getRubeJsonFileName() const { return "level_01.json"; }
 
     float getItemDropInterval() { return 3.0; }
@@ -187,12 +189,26 @@ class Level01 : public LevelCustomization
 
     ItemType getDropItemType(float currentRatSpeed)
     {
-        ItemType itemType = static_cast<ItemType>(rand() % ITEM_TYPE_MAX);
+        if (currentItemIndex == itemsSequence.size()) {
+            currentItemIndex = 0;
+        }
+
+        ItemType itemType = static_cast<ItemType>(itemsSequence[currentItemIndex++]);
 
         return normalizeDropItemType(itemType, currentRatSpeed);
     }
 
-    b2Vec2 getDropItemSpot() { return b2Vec2(cocos2d::rand_minus1_1(), 9); }
+    b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition)
+    {
+        float x = std::min(std::max(ratPosition.x + 0.3 * cocos2d::rand_minus1_1(), -1.2), 1.2);
+
+        return b2Vec2(x, 9);
+    }
+
+  private:
+#include "LevelCustomization_itemsSequence.hxx"
+
+    int currentItemIndex;
 };
 
 #endif // __LEVEL_LOGIC_H__

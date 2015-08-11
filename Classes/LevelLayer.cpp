@@ -473,7 +473,8 @@ b2Body *LevelLayer::duplicateItem(LevelCustomization::ItemType itemType)
 {
     b2Body *body = jsonParser.j2b2Body(m_world, itemJsons[itemType]);
     body->SetUserData(new DropItemUserData(itemType));
-    body->SetTransform(levelCustomization->getDropItemSpot(), rand_0_1() * 2 * M_PI);
+    body->SetTransform(levelCustomization->getDropItemSpot(ratBody->GetPosition()),
+                       rand_0_1() * 2 * M_PI);
 
     duplicateImageForBody(itemTypeToImageName(itemType), body);
     body->SetGravityScale(0.0);

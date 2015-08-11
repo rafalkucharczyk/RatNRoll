@@ -195,7 +195,7 @@ SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBest
         }
 
         friendsBestScores[leaderboardID.getCString()] = scores;
-x    }];
+    }];
 
     return friendsBestScores[leaderboardID.getCString()];
 }
