@@ -76,15 +76,15 @@ std::string TutorialBalloonLayer::getAnimationName()
     // TODO use correct animations
 
     if (balloonType == BalloonType::CONTROLS) {
-        return "run_test01";
+        return "run01.x";
     } else if (balloonType == BalloonType::SPEEDUP) {
-        return "jump01";
+        return "run02.x";
     } else if (balloonType == BalloonType::SLOWDOWN) {
-        return "run_test01";
+        return "run03.x";
     } else if (balloonType == BalloonType::HOVER) {
-        return "jump01";
+        return "run04.x";
     } else if (balloonType == BalloonType::HALVE) {
-        return "run_test01";
+        return "run05.x";
     }
 
     assert(false);

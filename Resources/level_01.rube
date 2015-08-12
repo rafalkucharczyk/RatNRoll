@@ -853,7 +853,7 @@
           
           {
             "name" : "animationName",
-            "string" : "run_test01"
+            "string" : "run01.x"
           }
         ],
         "file" : "rat.png",

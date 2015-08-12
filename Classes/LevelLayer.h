@@ -11,6 +11,7 @@
 
 class LevelContactListener;
 class ShadowRatHelper;
+class AnimationHelper;
 
 class LevelLayer : public RUBELayer
 {
@@ -59,6 +60,7 @@ class LevelLayer : public RUBELayer
     void runCustomActionOnStart();
     void startDroppingItems();
     void stopDroppingItems();
+    void scheduleRatEyesAnimations();
     void doPhysicsCalculationStep();
     float getEarthRadius() const;
 
@@ -125,6 +127,7 @@ class LevelLayer : public RUBELayer
 
   private:
     std::shared_ptr<ShadowRatHelper> shadowRatHelper;
+    std::shared_ptr<AnimationHelper> animationHelper;
 
   public:
     static const std::string name;

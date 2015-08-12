@@ -32,9 +32,9 @@ class LevelCustomization
 
     virtual float getItemDropInterval() = 0; // in seconds
 
-    virtual float getRatSpeedMin() = 0;
-    virtual float getRatSpeedMax() = 0;
-    virtual float getRatSpeedStep() = 0;
+    virtual float getRatSpeedMin() const = 0;
+    virtual float getRatSpeedMax() const = 0;
+    virtual float getRatSpeedStep() const = 0;
 
     // return ITEM_TYPE_MAX to skip dropping item
     virtual ItemType getDropItemType(float currentRatSpeed) = 0;
@@ -83,9 +83,9 @@ class LevelTutorial : public LevelCustomization
 
     float getItemDropInterval() { return 2.5; }
 
-    float getRatSpeedMin() { return 0.5; }
-    float getRatSpeedMax() { return 2.0; }
-    float getRatSpeedStep() { return 0.2; }
+    float getRatSpeedMin() const override { return 0.5; }
+    float getRatSpeedMax() const override { return 2.0; }
+    float getRatSpeedStep() const override { return 0.2; }
 
     ItemType getDropItemType(float currentRatSpeed)
     {
@@ -183,9 +183,9 @@ class Level01 : public LevelCustomization
 
     float getItemDropInterval() { return 3.0; }
 
-    float getRatSpeedMin() { return 0.5; }
-    float getRatSpeedMax() { return 3.2; }
-    float getRatSpeedStep() { return 0.3; }
+    float getRatSpeedMin() const override { return 0.2; }
+    float getRatSpeedMax() const override { return 3.2; }
+    float getRatSpeedStep() const override { return 0.3; }
 
     ItemType getDropItemType(float currentRatSpeed)
     {

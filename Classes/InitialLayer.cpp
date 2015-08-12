@@ -8,6 +8,7 @@ InitialLayer::InitialLayer()
                   {{0.4, 0.275}, 0.1, "settings"},
                   {{0.6, 0.275}, 0.1, "gamecenter"},
                   {{0.8, 0.275}, 0.1, "about"}},
+
                  std::bind(&InitialLayer::itemClicked, this, std::placeholders::_1))
 {
 }

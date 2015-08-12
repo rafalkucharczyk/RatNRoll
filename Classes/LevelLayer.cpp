@@ -1,5 +1,7 @@
 #include "LevelLayer.h"
 
+#include <iomanip>
+
 #include <limits>
 #include <b2dJson.h>
 
@@ -196,13 +198,176 @@ class ShadowRatHelper
     std::map<std::string, ShadowRatEntry> shadowEntries;
 };
 
+class AnimationHelper
+{
+  public:
+    AnimationHelper(const LevelCustomization &levelCustomization)
+        : levelCustomization(levelCustomization), eyesAnimationInProgress(false)
+    {
+
+        float speedRange =
+            levelCustomization.getRatSpeedMax() - levelCustomization.getRatSpeedMin();
+        float speedStep = levelCustomization.getRatSpeedStep();
+
+        int numOfSpeedSteps = 1 + speedRange / speedStep;
+
+        std::vector<std::string> availableAnimations = {"run01.x", "run02.x", "run03.x",
+                                                        "run04.x", "run05.x", "run06.x"};
+
+        // always start with the slowest animation
+        scheduledAnimations.push_back(std::make_pair(availableAnimations.front(), 1.0));
+
+        // skip run01.x and run06.x, added manually
+        for (int i = 1; i < availableAnimations.size() - 1; i++) {
+            // distribute rest of animations evenly
+            int n = ((i % 2) + numOfSpeedSteps - 2) / (availableAnimations.size() - 2);
+
+            for (int j = 0; j < n; j++) {
+                scheduledAnimations.push_back(std::make_pair(availableAnimations[i], 1 + 0.5 * j));
+            }
+        }
+
+        // always end with the fastest animation
+        for (int n = 0; n < numOfSpeedSteps - (scheduledAnimations.size() - 1); n++) {
+            scheduledAnimations.push_back(
+                std::make_pair(availableAnimations.back(), 1.0 + n * 0.5));
+        }
+
+        assert(numOfSpeedSteps == scheduledAnimations.size());
+        assert(scheduledAnimations.back().first == availableAnimations.back());
+    }
+
+    void setSkeleton(spine::SkeletonAnimation *s) { skeleton = s; }
+
+    void playRunningAnimation(float ratSpeed)
+    {
+        std::string animationName;
+        float animationSpeed;
+
+        std::tie(animationName, animationSpeed) = getRunningAnimationParams(ratSpeed);
+
+        changeRunningAnimation(animationName, animationSpeed);
+    }
+
+    void playHoveringAnimation() { changeRunningAnimation("run06.x", 1.0); }
+
+    /*
+     eyes01.x : pojedyncze mrugnięcie (losowe urozmaicenie ?)
+     eyes02.x : smutne oczy (po zjedzeniu czachy?)
+     eyes03.x : oczy latające w kólko (po zjedzeniiu fiolki?)
+     eyes04.x : oczy rozglądające się lewo/prawo (losowe urozmaicenie?)
+     eyes05.x : mrużenie oczu (po zjedzeniu fiolki?)
+     eyes06.x : zez (losowe urozmaicenie?)
+     eyes07.x : zasypianie (zjedzenie hamburgera, losowe urozmaicenie przy wolnej prędkości?)
+     eyes08.x : puszcza oczko (fiolka, losowe urozmaicenie?)
+     eyes09.x : wielkie zrenice i mruganie, zdziwienie (fiolka, czacha?)
+     eyes10.x : podniesinie dolnych powiek, skupienie, lekki wkurw (czacha, fiolka, losowe
+     urozmaicenie)
+     eyes11.x : opuszczenie gornych powiek, irytacja, konsternacja (czacha, hamburger, losowe
+     urozmaicenie)
+     */
+    enum Eyes {
+        EYES_FIRST = 1,
+        SINGLE_BLINK = EYES_FIRST,
+        SAD,
+        DAZED,
+        SHIFTY,
+        SQUINTED,
+        CROSSEYED,
+        SLEEPY,
+        WINKING,
+        SURPRISED,
+        FOCUSED,
+        IRRITATED,
+        EYES_MAX = IRRITATED
+    };
+
+    void playEyesAnimation(Eyes eyesMode)
+    {
+        assert(skeleton);
+
+        if (eyesAnimationInProgress) {
+            return;
+        }
+
+        std::ostringstream os;
+        os << "eyes" << std::setfill('0') << std::setw(2) << eyesMode << ".x";
+
+        skeleton->setStartListener([this](int trackIndex) {
+            if (trackIndex == eyesMovingTrackIndex)
+                this->eyesAnimationInProgress = true;
+        });
+        skeleton->setEndListener([this](int trackIndex) {
+            if (trackIndex == eyesMovingTrackIndex)
+                this->eyesAnimationInProgress = false;
+        });
+
+        skeleton->setAnimation(eyesMovingTrackIndex, os.str(), false);
+    }
+
+  private:
+    void changeRunningAnimation(const std::string &newAnimationName, float newAnimationSpeed)
+    {
+        assert(skeleton);
+
+        setMix(newAnimationName);
+
+        skeleton->runAction(CallFunc::create([=]() {
+            skeleton->setCompleteListener([=](int trackIndex, int) {
+                if (trackIndex == runningTrackIndex) {
+                    skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
+                    skeleton->setTimeScale(newAnimationSpeed);
+                };
+            });
+        }));
+    }
+
+    std::pair<std::string, float> getRunningAnimationParams(float ratSpeed) const
+    {
+        int animationIndex =
+            std::min(scheduledAnimations.size() - 1,
+                     static_cast<size_t>((ratSpeed - levelCustomization.getRatSpeedMin()) /
+                                         levelCustomization.getRatSpeedStep()));
+
+        return scheduledAnimations[animationIndex];
+    }
+
+    void setMix(const std::string &nextAnimation)
+    {
+        assert(skeleton);
+
+        std::pair<std::string, std::string> mix(
+            skeleton->getCurrent(runningTrackIndex)->animation->name, nextAnimation);
+
+        if (mix.first != mix.second && mixesSet.find(mix) == mixesSet.end()) {
+            skeleton->setMix(mix.first, mix.second, 0.25);
+            mixesSet.insert(mix);
+        }
+    }
+
+  private:
+    const LevelCustomization &levelCustomization;
+
+    spine::SkeletonAnimation *skeleton;
+
+    std::vector<std::pair<std::string, float>> scheduledAnimations;
+
+    std::set<std::pair<std::string, std::string>> mixesSet;
+
+    bool eyesAnimationInProgress;
+
+    static const int runningTrackIndex = 0;
+    static const int eyesMovingTrackIndex = 1;
+};
+
 const std::string LevelLayer::name = "LevelLayer";
 
 LevelLayer::LevelLayer(LevelCustomization *customization)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
       ratSpeed(levelCustomization->getRatSpeedMin()), applyCustomGravity(true), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
-      totalTime(0.0), paused(false), contactListener(new LevelContactListener(this))
+      totalTime(0.0), paused(false), contactListener(new LevelContactListener(this)),
+      animationHelper(new AnimationHelper(*customization))
 {
 }
 
@@ -219,6 +384,8 @@ bool LevelLayer::init()
     scoreLabel = initScoreLabel(gameScore);
 
     runCustomActionOnStart();
+
+    scheduleRatEyesAnimations();
 
     return true;
 }
@@ -316,6 +483,8 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
     b2Body *ratShadowBody = json->getBodyByName("rat_shadow");
     assert(ratShadowBody);
     shadowRatHelper.reset(new ShadowRatHelper(*this, json->b2j(ratShadowBody)));
+
+    animationHelper->setSkeleton(getRatAnimation());
 }
 
 void LevelLayer::update(float dt)
@@ -402,7 +571,7 @@ void LevelLayer::runCustomActionOnStart()
         } else {
             startDroppingItems();
         }
-    }, 0.5, "dummy");
+    }, 0.5, "customStartAction");
 }
 
 void LevelLayer::startDroppingItems()
@@ -411,6 +580,14 @@ void LevelLayer::startDroppingItems()
 }
 
 void LevelLayer::stopDroppingItems() { unschedule(schedule_selector(LevelLayer::dropItem)); }
+
+void LevelLayer::scheduleRatEyesAnimations()
+{
+    schedule([this](float t) {
+        animationHelper->playEyesAnimation(
+            random(AnimationHelper::EYES_FIRST, AnimationHelper::EYES_MAX));
+    }, 5.0, "ratEyes");
+}
 
 void LevelLayer::doPhysicsCalculationStep()
 {
@@ -551,7 +728,9 @@ void LevelLayer::speedUpItemEaten()
                      levelCustomization->getRatSpeedMax());
     backgroundSpeedFunction(1);
 
-    getRatAnimation()->setTimeScale(getRatAnimation()->getTimeScale() * 1.2);
+    animationHelper->playEyesAnimation(AnimationHelper::Eyes::DAZED);
+
+    animationHelper->playRunningAnimation(ratSpeed);
 }
 
 void LevelLayer::slowDownItemEaten()
@@ -560,30 +739,32 @@ void LevelLayer::slowDownItemEaten()
                      levelCustomization->getRatSpeedMin());
     backgroundSpeedFunction(-1);
 
-    getRatAnimation()->setTimeScale(getRatAnimation()->getTimeScale() / 1.2);
+    animationHelper->playEyesAnimation(AnimationHelper::Eyes::SLEEPY);
+
+    animationHelper->playRunningAnimation(ratSpeed);
 }
 
 void LevelLayer::hoverItemEaten()
 {
     applyCustomGravity = false;
+
+    animationHelper->playHoveringAnimation();
     ratBody->SetGravityScale(-2);
 
     float lastRatSpeed = ratSpeed;
     ratSpeed = 0;
     stopDroppingItems();
 
-    float lastTimeScale = getRatAnimation()->getTimeScale();
-    getRatAnimation()->setTimeScale(0);
+    getAnySpriteOnBody(ratBody)->runAction(
+        Sequence::create(DelayTime::create(2.0), CallFunc::create([this, lastRatSpeed]() {
+                             startDroppingItems();
+                             applyCustomGravity = true;
+                             ratBody->SetGravityScale(1.0);
 
-    getAnySpriteOnBody(ratBody)->runAction(Sequence::create(
-        DelayTime::create(2.0), CallFunc::create([this, lastRatSpeed, lastTimeScale]() {
-            startDroppingItems();
-            applyCustomGravity = true;
-            ratBody->SetGravityScale(1.0);
-            ratSpeed = lastRatSpeed;
-            this->getRatAnimation()->setTimeScale(lastTimeScale);
-        }),
-        nullptr));
+                             ratSpeed = lastRatSpeed;
+                             animationHelper->playRunningAnimation(ratSpeed);
+                         }),
+                         nullptr));
 }
 
 void LevelLayer::halveItemEaten()
@@ -592,6 +773,8 @@ void LevelLayer::halveItemEaten()
     gameScore -= halfScore;
 
     updateScore();
+
+    animationHelper->playEyesAnimation(AnimationHelper::Eyes::SAD);
 
     // show animation with number of points taken
     auto label = initScoreLabel(halfScore);

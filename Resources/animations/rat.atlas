@@ -6,190 +6,204 @@ filter: Linear,Linear
 repeat: none
 arm_left
   rotate: false
-  xy: 839, 229
+  xy: 555, 101
   size: 58, 18
   orig: 58, 18
   offset: 0, 0
   index: -1
 arm_right
   rotate: false
-  xy: 217, 55
+  xy: 217, 57
   size: 58, 21
   orig: 58, 21
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 157, 78
+  xy: 157, 80
   size: 131, 169
   orig: 131, 169
   offset: 0, 0
   index: -1
 ear_left
   rotate: false
-  xy: 290, 119
+  xy: 290, 121
   size: 136, 128
   orig: 136, 128
   offset: 0, 0
   index: -1
 ear_right
   rotate: false
-  xy: 428, 126
+  xy: 688, 128
   size: 130, 121
   orig: 130, 121
   offset: 0, 0
   index: -1
 eyelid_left_bot
   rotate: false
-  xy: 157, 45
+  xy: 157, 47
   size: 58, 31
   orig: 58, 31
   offset: 0, 0
   index: -1
 eyelid_left_top
   rotate: false
-  xy: 560, 126
+  xy: 820, 128
   size: 58, 28
   orig: 58, 28
   offset: 0, 0
   index: -1
 eyelid_right_bot
   rotate: false
-  xy: 376, 82
+  xy: 930, 173
   size: 45, 35
   orig: 45, 35
   offset: 0, 0
   index: -1
 eyelid_right_top
   rotate: false
-  xy: 668, 119
+  xy: 977, 174
   size: 42, 34
   orig: 42, 34
   offset: 0, 0
   index: -1
 eyes
   rotate: false
-  xy: 670, 155
+  xy: 399, 73
   size: 94, 46
   orig: 94, 46
   offset: 0, 0
   index: -1
 feet_left
-  rotate: true
-  xy: 128, 2
+  rotate: false
+  xy: 495, 64
   size: 40, 23
   orig: 40, 23
   offset: 0, 0
   index: -1
 feet_right
   rotate: false
-  xy: 277, 57
+  xy: 615, 100
   size: 42, 19
   orig: 42, 19
   offset: 0, 0
   index: -1
+hamburger
+  rotate: false
+  xy: 428, 121
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 hand_left
   rotate: false
-  xy: 620, 125
+  xy: 880, 127
   size: 46, 29
   orig: 46, 29
   offset: 0, 0
   index: -1
 hand_right
-  rotate: false
-  xy: 712, 121
+  rotate: true
+  xy: 128, 2
   size: 42, 32
   orig: 42, 32
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 2, 44
+  xy: 2, 46
   size: 153, 203
   orig: 153, 203
   offset: 0, 0
   index: -1
 lips
-  rotate: false
-  xy: 965, 226
+  rotate: true
+  xy: 255, 24
   size: 31, 21
   orig: 31, 21
   offset: 0, 0
   index: -1
 nose_begin
   rotate: false
-  xy: 560, 156
+  xy: 820, 158
   size: 108, 91
   orig: 108, 91
   offset: 0, 0
   index: -1
 nose_end
   rotate: true
-  xy: 670, 203
+  xy: 290, 75
   size: 44, 107
   orig: 44, 107
   offset: 0, 0
   index: -1
 pupil_left
-  rotate: false
-  xy: 779, 207
+  rotate: true
+  xy: 277, 57
   size: 10, 8
   orig: 10, 8
   offset: 0, 0
   index: -1
 pupil_right
   rotate: false
-  xy: 766, 192
+  xy: 277, 69
   size: 11, 9
   orig: 11, 9
   offset: 0, 0
   index: -1
 shin_left
-  rotate: true
-  xy: 899, 221
+  rotate: false
+  xy: 195, 13
   size: 26, 32
   orig: 26, 32
   offset: 0, 0
   index: -1
 shin_right
-  rotate: false
-  xy: 357, 51
+  rotate: true
+  xy: 659, 100
   size: 19, 25
   orig: 19, 25
   offset: 0, 0
   index: -1
 tail_begin
   rotate: false
-  xy: 290, 78
+  xy: 930, 210
   size: 84, 39
   orig: 84, 39
   offset: 0, 0
   index: -1
 tail_end
   rotate: false
-  xy: 779, 217
+  xy: 495, 89
   size: 58, 30
   orig: 58, 30
   offset: 0, 0
   index: -1
 tail_mid
   rotate: true
-  xy: 2, 2
+  xy: 2, 4
   size: 40, 124
   orig: 40, 124
   offset: 0, 0
   index: -1
 thigh_left
-  rotate: true
-  xy: 321, 45
+  rotate: false
+  xy: 162, 11
   size: 31, 34
   orig: 31, 34
   offset: 0, 0
   index: -1
 thigh_right
   rotate: false
-  xy: 933, 217
+  xy: 223, 25
   size: 30, 30
   orig: 30, 30
+  offset: 0, 0
+  index: -1
+vial
+  rotate: false
+  xy: 558, 121
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1

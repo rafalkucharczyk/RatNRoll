@@ -9,6 +9,7 @@
 #include "PostLevelLayer.h"
 #include "PauseLayer.h"
 #include "SettingsLayer.h"
+#include "TestLayer.h"
 
 #include "PermanentStorage.h"
 
@@ -88,6 +89,8 @@ void GameFlow::handleInitialSceneMenu(int itemIndex)
         switchToSettingsScene();
     } else if (itemIndex == 3) {
         SonarCocosHelper::GameCenter::showLeaderboard();
+    } else if (itemIndex == 4) {
+        // about
     }
 }
 
@@ -166,6 +169,19 @@ void GameFlow::switchToSettingsScene()
 
     Director::getInstance()->replaceScene(scene);
 }
+
+#ifdef COCOS2D_DEBUG
+void GameFlow::switchToTestScene()
+{
+    auto scene = Scene::create();
+
+    auto layer = TestLayer::create();
+
+    scene->addChild(layer);
+
+    Director::getInstance()->replaceScene(scene);
+}
+#endif
 
 void GameFlow::resumeGame()
 {

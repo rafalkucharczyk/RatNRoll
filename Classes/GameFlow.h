@@ -35,6 +35,10 @@ class GameFlow
 
     void switchToSettingsScene();
 
+#ifdef COCOS2D_DEBUG
+    void switchToTestScene();
+#endif // COCOS2D_DEBUG
+
     void resumeGame();
 
   private:
