@@ -23,6 +23,11 @@ class PostLevelLayer : public cocos2d::Layer
         gotoMainMenuCallback = callback;
     }
 
+    void setShareOnFacebookCallback(std::function<void()> callback)
+    {
+        shareOnFacebookCallback = callback;
+    }
+
     void displayCurrentScore(int score);
     void displayBestScore(int score);
 
@@ -31,6 +36,7 @@ class PostLevelLayer : public cocos2d::Layer
 
     std::function<void()> restartLevelCallback;
     std::function<void()> gotoMainMenuCallback;
+    std::function<void()> shareOnFacebookCallback;
 
     MenuHelper menuHelper;
 

@@ -137,6 +137,11 @@ void GameFlow::switchToPostLevelScene(int score)
     postLevelLayer->setRestartLevelCallback(
         std::bind(&GameFlow::switchToLevelScene, this, currentLevelNumber));
     postLevelLayer->setGotoMainMenuCallback(std::bind(&GameFlow::switchToInitialScene, this));
+    postLevelLayer->setShareOnFacebookCallback([score]() {
+        std::ostringstream os;
+        os << "Playing RatNRoll for iOS and just scored " << score << " points!";
+        SonarCocosHelper::Facebook::Share(nullptr, nullptr, os.str().c_str(), nullptr, "");
+    });
     scene->addChild(postLevelLayer);
 
     currentLevelNumber = noLevelNumber;

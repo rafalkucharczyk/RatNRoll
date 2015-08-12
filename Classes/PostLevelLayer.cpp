@@ -70,4 +70,8 @@ void PostLevelLayer::menuItemClicked(int itemIndex)
     if (itemIndex == 1 && restartLevelCallback) {
         restartLevelCallback();
     }
+
+    if (itemIndex == 3 && shareOnFacebookCallback) {
+        shareOnFacebookCallback();
+    }
 }

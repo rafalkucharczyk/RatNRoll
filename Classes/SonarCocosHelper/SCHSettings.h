@@ -28,7 +28,7 @@
 #define SCH_IS_REVMOB_ENABLED                                                                      \
     false // SystemConfiguration.framework, StoreKit.framework, MediaPlayer.framework,
           // AdSupport.framework
-#define SCH_IS_SOCIAL_ENABLED false     // Social.framework
+#define SCH_IS_SOCIAL_ENABLED true      // Social.framework
 #define SCH_IS_GAME_CENTER_ENABLED true // Social.framework, GameKit.framework
 //#define SCH_IS_EVERYPLAY_ENABLED false // AdSupport (iOS 6+, set to Optional link for pre-iOS 6
 // compatibility).framework, AssetsLibrary.framework, AudioToolbox.framework,
