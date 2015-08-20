@@ -3,9 +3,11 @@
 
 #include <cocos2d.h>
 
+#include <spine/spine-cocos2dx.h>
+
 #include "MenuHelper.h"
 
-class TutorialBalloonLayer : public cocos2d::Layer
+class TutorialBalloonLayer : public cocos2d::LayerColor
 {
   public:
     enum class BalloonType { CONTROLS, SPEEDUP, SLOWDOWN, HOVER, HALVE };
@@ -22,6 +24,8 @@ class TutorialBalloonLayer : public cocos2d::Layer
     void addBalloonSprite();
     std::string getAnimationName();
 
+    float getAnimationDuration(const std::string &animationName);
+
     void itemClicked(int itemIndex);
 
     void selfCleanUp();
@@ -30,6 +34,8 @@ class TutorialBalloonLayer : public cocos2d::Layer
     std::function<void()> closeCallback;
 
     MenuHelper menuHelper;
+
+    spine::SkeletonAnimation *animationNode;
 };
 
 #endif /* __TUTORIALBALLOON_LAYER_H__ */

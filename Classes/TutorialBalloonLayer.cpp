@@ -1,7 +1,5 @@
 #include "TutorialBalloonLayer.h"
 
-#include <spine/spine-cocos2dx.h>
-
 #include "MipmapSprite.h"
 
 USING_NS_CC;
@@ -29,7 +27,7 @@ TutorialBalloonLayer *TutorialBalloonLayer::create(BalloonType balloonType,
 
 bool TutorialBalloonLayer::init()
 {
-    if (!Layer::init()) {
+    if (!LayerColor::initWithColor(Color4B(255, 255, 255, 216))) {
         return false;
     }
 
@@ -41,9 +39,13 @@ bool TutorialBalloonLayer::init()
     listener->onTouchBegan = [&](Touch *touch, Event *event) { return true; };
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener,
                                                                                           this);
+
+    animationNode = spine::SkeletonAnimation::createWithFile("animations/animations.json",
+                                                             "animations/rat.atlas");
+
     addBalloonSprite();
 
-    runAction(Sequence::create(DelayTime::create(5),
+    runAction(Sequence::create(DelayTime::create(getAnimationDuration(getAnimationName())),
                                CallFunc::create([this]() { this->selfCleanUp(); }), nullptr));
 
     return true;
@@ -58,16 +60,9 @@ void TutorialBalloonLayer::onExit()
 
 void TutorialBalloonLayer::addBalloonSprite()
 {
-    auto balloonSprite = MipmapSprite::create("tutorial_balloon.png");
-    MenuHelper::positionNode(*balloonSprite, {0.7, 0.8}, 0.3);
-
-    addChild(balloonSprite);
-
-    auto animationNode = spine::SkeletonAnimation::createWithFile("animations/animations.json",
-                                                                  "animations/rat.atlas");
-    animationNode->setAnimation(0, getAnimationName(), true);
+    animationNode->setAnimation(0, getAnimationName(), false);
     animationNode->updateWorldTransform();
-    MenuHelper::positionNode(*animationNode, {0.7, 0.775}, 0.1);
+    MenuHelper::positionNode(*animationNode, {0.7, 0.6}, 0.15);
     addChild(animationNode);
 }
 
@@ -76,19 +71,32 @@ std::string TutorialBalloonLayer::getAnimationName()
     // TODO use correct animations
 
     if (balloonType == BalloonType::CONTROLS) {
-        return "run01.x";
+        return "run06.x";
     } else if (balloonType == BalloonType::SPEEDUP) {
-        return "run02.x";
+        return "tutorial01.x";
     } else if (balloonType == BalloonType::SLOWDOWN) {
-        return "run03.x";
+        return "tutorial02.x";
     } else if (balloonType == BalloonType::HOVER) {
-        return "run04.x";
+        return "tutorial03.x";
     } else if (balloonType == BalloonType::HALVE) {
         return "run05.x";
     }
 
     assert(false);
     return "";
+}
+
+float TutorialBalloonLayer::getAnimationDuration(const std::string &animationName)
+{
+    spSkeletonData *const skeletonData = animationNode->getState()->data->skeletonData;
+
+    for (int i = 0; i < skeletonData->animationsCount; i++) {
+        if (skeletonData->animations[i]->name == animationName) {
+            return skeletonData->animations[i]->duration;
+        }
+    }
+
+    return 0.0;
 }
 
 void TutorialBalloonLayer::itemClicked(int itemIndex) { selfCleanUp(); }

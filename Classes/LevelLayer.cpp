@@ -69,13 +69,20 @@ class LevelContactListener : public b2ContactListener
 class LevelLayerProxyImpl : public LevelLayerProxy
 {
   public:
-    LevelLayerProxyImpl(LevelLayer &levelLayer, b2Body *body) : levelLayer(levelLayer), body(body)
+    LevelLayerProxyImpl(LevelLayer &levelLayer, b2Body *body)
+        : levelLayer(levelLayer), body(body), ratAnimationTimeScale(1.0)
     {
     }
-    void pause() override { levelLayer.pauseLevel(); }
+    void pause() override
+    {
+        levelLayer.pauseLevel();
+        ratAnimationTimeScale = levelLayer.getRatAnimation()->getTimeScale();
+        levelLayer.getRatAnimation()->setTimeScale(0);
+    }
     void resume() override
     {
         levelLayer.resumeLevel();
+        levelLayer.getRatAnimation()->setTimeScale(ratAnimationTimeScale);
 
         if (body) {
             levelLayer.runDropItemAction(body);
@@ -92,6 +99,7 @@ class LevelLayerProxyImpl : public LevelLayerProxy
   private:
     LevelLayer &levelLayer;
     b2Body *body;
+    float ratAnimationTimeScale;
 };
 
 class ShadowRatHelper
@@ -202,7 +210,7 @@ class AnimationHelper
 {
   public:
     AnimationHelper(const LevelCustomization &levelCustomization)
-        : levelCustomization(levelCustomization), eyesAnimationInProgress(false)
+        : levelCustomization(levelCustomization), eyesAnimationInProgress(false), skeleton(nullptr)
     {
 
         float speedRange =
@@ -310,16 +318,22 @@ class AnimationHelper
     {
         assert(skeleton);
 
-        setMix(newAnimationName);
+        if (skeleton->getCurrent(runningTrackIndex) == nullptr) {
+            skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
+            skeleton->setTimeScale(newAnimationSpeed);
+        } else {
 
-        skeleton->runAction(CallFunc::create([=]() {
-            skeleton->setCompleteListener([=](int trackIndex, int) {
-                if (trackIndex == runningTrackIndex) {
-                    skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
-                    skeleton->setTimeScale(newAnimationSpeed);
-                };
-            });
-        }));
+            setMix(newAnimationName);
+
+            skeleton->runAction(CallFunc::create([=]() {
+                skeleton->setCompleteListener([=](int trackIndex, int) {
+                    if (trackIndex == runningTrackIndex) {
+                        skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
+                        skeleton->setTimeScale(newAnimationSpeed);
+                    };
+                });
+            }));
+        }
     }
 
     std::pair<std::string, float> getRunningAnimationParams(float ratSpeed) const
@@ -364,7 +378,7 @@ const std::string LevelLayer::name = "LevelLayer";
 
 LevelLayer::LevelLayer(LevelCustomization *customization)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
-      ratSpeed(levelCustomization->getRatSpeedMin()), applyCustomGravity(true), gameScore(0),
+      ratSpeed(levelCustomization->getRatSpeedInitial()), applyCustomGravity(true), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), paused(false), contactListener(new LevelContactListener(this)),
       animationHelper(new AnimationHelper(*customization))
@@ -381,11 +395,12 @@ bool LevelLayer::init()
 
     m_world->SetContactListener(contactListener.get());
 
+    scheduleRatEyesAnimations();
+    animationHelper->playRunningAnimation(ratSpeed);
+
     scoreLabel = initScoreLabel(gameScore);
 
     runCustomActionOnStart();
-
-    scheduleRatEyesAnimations();
 
     return true;
 }

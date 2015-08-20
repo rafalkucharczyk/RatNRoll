@@ -81,7 +81,6 @@ Node *RUBELayer::createNodeFromRubeImageInfo(RUBEImageInfo *imageInfo)
     } else {
         auto skeletonAnimation = spine::SkeletonAnimation::createWithFile(
             "animations/animations.json", "animations/rat.atlas");
-        skeletonAnimation->setAnimation(0, imageInfo->file, true);
         skeletonAnimation->updateWorldTransform();
 
         node = skeletonAnimation;
