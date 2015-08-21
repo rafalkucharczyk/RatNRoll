@@ -51,6 +51,26 @@ bool PostLevelLayer::init()
     return true;
 }
 
+void PostLevelLayer::setRestartLevelCallback(std::function<void()> callback)
+{
+    restartLevelCallback = callback;
+}
+
+void PostLevelLayer::setGotoMainMenuCallback(std::function<void()> callback)
+{
+    gotoMainMenuCallback = callback;
+}
+
+void PostLevelLayer::setShareOnFacebookCallback(std::function<void()> callback)
+{
+    shareOnFacebookCallback = callback;
+}
+
+void PostLevelLayer::setShareOnTwitterCallback(std::function<void()> callback)
+{
+    shareOnTwitterCallback = callback;
+}
+
 void PostLevelLayer::displayCurrentScore(int score)
 {
     currentScoreLabel->setString(std::to_string(score));
@@ -69,6 +89,10 @@ void PostLevelLayer::menuItemClicked(int itemIndex)
 
     if (itemIndex == 1 && restartLevelCallback) {
         restartLevelCallback();
+    }
+
+    if (itemIndex == 2 && shareOnFacebookCallback) {
+        shareOnTwitterCallback();
     }
 
     if (itemIndex == 3 && shareOnFacebookCallback) {

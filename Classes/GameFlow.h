@@ -58,6 +58,9 @@ class GameFlow
     int currentLevelNumber;
 
   private:
+    std::string getSocialShareMessage(int score);
+
+  private:
     std::shared_ptr<InAppPurchaseHelper> iapHelper;
 
     static const std::string iapProductId;

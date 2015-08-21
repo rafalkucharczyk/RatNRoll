@@ -13,20 +13,10 @@ class PostLevelLayer : public cocos2d::Layer
 
     CREATE_FUNC(PostLevelLayer);
 
-    void setRestartLevelCallback(std::function<void()> callback)
-    {
-        restartLevelCallback = callback;
-    }
-
-    void setGotoMainMenuCallback(std::function<void()> callback)
-    {
-        gotoMainMenuCallback = callback;
-    }
-
-    void setShareOnFacebookCallback(std::function<void()> callback)
-    {
-        shareOnFacebookCallback = callback;
-    }
+    void setRestartLevelCallback(std::function<void()> callback);
+    void setGotoMainMenuCallback(std::function<void()> callback);
+    void setShareOnFacebookCallback(std::function<void()> callback);
+    void setShareOnTwitterCallback(std::function<void()> callback);
 
     void displayCurrentScore(int score);
     void displayBestScore(int score);
@@ -37,6 +27,7 @@ class PostLevelLayer : public cocos2d::Layer
     std::function<void()> restartLevelCallback;
     std::function<void()> gotoMainMenuCallback;
     std::function<void()> shareOnFacebookCallback;
+    std::function<void()> shareOnTwitterCallback;
 
     MenuHelper menuHelper;
 
