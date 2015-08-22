@@ -616,7 +616,10 @@ void LevelLayer::doPhysicsCalculationStep()
     Vec2 a(-0.5, 0.04), b(0.5, 0.2);
 
     float speedRatio = ((b.y - a.y) / (b.x - a.x)) * x + (b.x * a.y - a.x * b.y) / (b.x - a.x);
-    ratBody->ApplyAngularImpulse(ratSpeed * speedRatio, true);
+
+    if (ratBody->GetGravityScale() > 0) { // don't apply angular impulse when hovering
+        ratBody->ApplyAngularImpulse(ratSpeed * speedRatio, true);
+    }
 
     // custom gravity, stop applying at the bottom of earth
     if (ratCenter.y > earthCenter.y - radius * 0.33 && applyCustomGravity) {
@@ -767,7 +770,6 @@ void LevelLayer::hoverItemEaten()
     ratBody->SetGravityScale(-2);
 
     float lastRatSpeed = ratSpeed;
-    ratSpeed = 0;
     stopDroppingItems();
 
     getAnySpriteOnBody(ratBody)->runAction(
@@ -776,7 +778,6 @@ void LevelLayer::hoverItemEaten()
                              applyCustomGravity = true;
                              ratBody->SetGravityScale(1.0);
 
-                             ratSpeed = lastRatSpeed;
                              animationHelper->playRunningAnimation(ratSpeed);
                          }),
                          nullptr));
@@ -852,7 +853,15 @@ void LevelLayer::calculateScore()
 {
     float currentAngle = -earthRevoluteJoint->GetJointAngle();
     if (currentAngle - previousRevoluteJointAngle > 0.2) {
-        gameScore++;
+        float speedRatio =
+            (ratSpeed - levelCustomization->getRatSpeedMin()) /
+            (levelCustomization->getRatSpeedMax() - levelCustomization->getRatSpeedMin());
+
+        int gameScoreDelta =
+            1 + std::lround(speedRatio * 2 +
+                            (ratSpeed == levelCustomization->getRatSpeedMax() ? 1 : 0));
+
+        gameScore += gameScoreDelta;
 
         updateScore();
 
