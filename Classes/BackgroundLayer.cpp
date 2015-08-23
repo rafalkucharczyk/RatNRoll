@@ -34,6 +34,7 @@ void BackgroundLayer::insertBackgroundItem(RandomPositionFunction randomPosition
     MenuHelper::positionNode(*sprite, {0, 0}, 0.05);
     sprite->setPosition(initialPosition);
     sprite->setScale(sprite->getScale() * (1 + 0.4 * rand_0_1()));
+    sprite->setRotation(rand_0_1() * 360);
     sprite->runAction(RepeatForever::create(RotateBy::create(2 + 2 * rand_0_1(), 360)));
 
     addChild(sprite);
