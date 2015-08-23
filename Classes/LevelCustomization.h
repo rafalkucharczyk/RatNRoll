@@ -61,6 +61,8 @@ class LevelCustomization
     };
 
   protected:
+    bool isItemPositive(ItemType itemType) { return itemType == HOVER || itemType == SPEEDUP; }
+
     ItemType normalizeDropItemType(ItemType itemType, float currentRatSpeed)
     {
         if (currentRatSpeed == getRatSpeedMax() && itemType == SPEEDUP) {
@@ -179,7 +181,7 @@ class LevelTutorial : public LevelCustomization
 class Level01 : public LevelCustomization
 {
   public:
-    Level01() : currentItemIndex(0) {}
+    Level01() : currentItemIndex(0), itemToDrop(ITEM_TYPE_MAX) {}
 
     std::string getRubeJsonFileName() const { return "level_01.json"; }
 
@@ -197,12 +199,25 @@ class Level01 : public LevelCustomization
 
         ItemType itemType = static_cast<ItemType>(itemsSequence[currentItemIndex++]);
 
-        return normalizeDropItemType(itemType, currentRatSpeed);
+        itemToDrop = normalizeDropItemType(itemType, currentRatSpeed);
+
+        return itemToDrop;
     }
 
     b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition)
     {
-        float x = std::min(std::max(ratPosition.x + 0.3 * cocos2d::rand_minus1_1(), -1.2), 1.2);
+        const float maxX = 1.2;
+        const float maxXOffset = 0.3;
+        float x =
+            std::min(std::max(ratPosition.x + maxXOffset * cocos2d::rand_minus1_1(), -maxX), maxX);
+
+        if (isItemPositive(itemToDrop)) {
+            if (fabs(x) > maxXOffset) {
+                x = -x;
+            } else {
+                x = ratPosition.x > 0 ? -maxX : maxX;
+            }
+        }
 
         return b2Vec2(x, 9);
     }
@@ -211,6 +226,7 @@ class Level01 : public LevelCustomization
 #include "LevelCustomization_itemsSequence.hxx"
 
     int currentItemIndex;
+    ItemType itemToDrop;
 };
 
 #endif // __LEVEL_LOGIC_H__
