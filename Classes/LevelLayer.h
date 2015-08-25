@@ -64,7 +64,8 @@ class LevelLayer : public RUBELayer
     void doPhysicsCalculationStep();
     float getEarthRadius() const;
 
-    void dropItem(float t);
+    void dropItem(float t); // scheduled
+    void doItemDrop();
     b2Body *duplicateItem(LevelCustomization::ItemType itemType);
     void runShowItemAction(b2Body *body);
     friend class LevelLayerProxyImpl;
@@ -118,6 +119,7 @@ class LevelLayer : public RUBELayer
   private:
     float totalTime;
     bool paused;
+    float nextItemDropTime;
 
     std::shared_ptr<LevelContactListener> contactListener;
 

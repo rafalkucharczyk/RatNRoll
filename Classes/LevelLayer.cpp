@@ -380,7 +380,8 @@ LevelLayer::LevelLayer(LevelCustomization *customization)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
       ratSpeed(levelCustomization->getRatSpeedInitial()), applyCustomGravity(true), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
-      totalTime(0.0), paused(false), contactListener(new LevelContactListener(this)),
+      totalTime(0.0), paused(false), nextItemDropTime(0.0),
+      contactListener(new LevelContactListener(this)),
       animationHelper(new AnimationHelper(*customization))
 {
 }
@@ -591,7 +592,8 @@ void LevelLayer::runCustomActionOnStart()
 
 void LevelLayer::startDroppingItems()
 {
-    schedule(schedule_selector(LevelLayer::dropItem), levelCustomization->getItemDropInterval());
+    nextItemDropTime = totalTime + levelCustomization->getItemDropInterval(gameScore);
+    schedule(schedule_selector(LevelLayer::dropItem), 0.1);
 }
 
 void LevelLayer::stopDroppingItems() { unschedule(schedule_selector(LevelLayer::dropItem)); }
@@ -640,6 +642,14 @@ float LevelLayer::getEarthRadius() const
 }
 
 void LevelLayer::dropItem(float t)
+{
+    if (totalTime > nextItemDropTime) {
+        nextItemDropTime += levelCustomization->getItemDropInterval(gameScore);
+        doItemDrop();
+    }
+}
+
+void LevelLayer::doItemDrop()
 {
     LevelCustomization::ItemType itemType = levelCustomization->getDropItemType(ratSpeed);
 
@@ -775,15 +785,15 @@ void LevelLayer::hoverItemEaten()
 
     stopDroppingItems();
 
-    getAnySpriteOnBody(ratBody)->runAction(
-        Sequence::create(DelayTime::create(2.0), CallFunc::create([this]() {
-                             startDroppingItems();
-                             applyCustomGravity = true;
-                             ratBody->SetGravityScale(1.0);
+    getAnySpriteOnBody(ratBody)
+        ->runAction(Sequence::create(DelayTime::create(2.0), CallFunc::create([this]() {
+                                         startDroppingItems();
+                                         applyCustomGravity = true;
+                                         ratBody->SetGravityScale(1.0);
 
-                             animationHelper->playRunningAnimation(ratSpeed);
-                         }),
-                         nullptr));
+                                         animationHelper->playRunningAnimation(ratSpeed);
+                                     }),
+                                     nullptr));
 }
 
 void LevelLayer::halveItemEaten()

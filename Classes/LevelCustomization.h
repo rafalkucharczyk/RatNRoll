@@ -30,7 +30,7 @@ class LevelCustomization
   public:
     virtual std::string getRubeJsonFileName() const = 0;
 
-    virtual float getItemDropInterval() = 0; // in seconds
+    virtual float getItemDropInterval(int gameScore) = 0; // in seconds
 
     virtual float getRatSpeedMin() const = 0;
     virtual float getRatSpeedMax() const = 0;
@@ -84,7 +84,7 @@ class LevelTutorial : public LevelCustomization
 
     std::string getRubeJsonFileName() const { return "level_01.json"; }
 
-    float getItemDropInterval() { return 2.5; }
+    float getItemDropInterval(int gameScore) { return 2.5; }
 
     float getRatSpeedMin() const override { return 0.2; }
     float getRatSpeedMax() const override { return 3.2; }
@@ -185,11 +185,21 @@ class Level01 : public LevelCustomization
 
     std::string getRubeJsonFileName() const { return "level_01.json"; }
 
-    float getItemDropInterval() { return 3.0; }
+    float getItemDropInterval(int gameScore)
+    {
+        int minScore = 1000;
+        int maxScore = 5000;
+
+        float delta = float(gameScore - minScore) / (maxScore - minScore);
+
+        delta = std::min(std::max(0.0f, delta), 1.0f);
+
+        return 3.0 - 1.5 * delta * cocos2d::rand_0_1();
+    }
 
     float getRatSpeedMin() const override { return 0.2; }
-    float getRatSpeedMax() const override { return 3.2; }
-    float getRatSpeedStep() const override { return 0.3; }
+    float getRatSpeedMax() const override { return 4.2; }
+    float getRatSpeedStep() const override { return 0.4; }
 
     ItemType getDropItemType(float currentRatSpeed)
     {
