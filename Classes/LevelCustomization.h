@@ -25,7 +25,7 @@ class LevelCustomization
     virtual ~LevelCustomization() {}
 
   public:
-    enum ItemType { SPEEDUP = 0, SLOWDOWN, HOVER, HALVE, ITEM_TYPE_MAX };
+    enum ItemType { SPEEDUP = 0, SLOWDOWN, HOVER, HALVE, BREAK, ITEM_TYPE_MAX };
 
   public:
     virtual std::string getRubeJsonFileName() const = 0;

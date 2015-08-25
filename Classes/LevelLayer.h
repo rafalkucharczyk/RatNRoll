@@ -77,6 +77,7 @@ class LevelLayer : public RUBELayer
     void slowDownItemEaten();
     void hoverItemEaten();
     void halveItemEaten();
+    void breakItemEaten();
 
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 

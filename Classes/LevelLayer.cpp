@@ -738,6 +738,10 @@ void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
     if (itemType == LevelCustomization::HALVE) {
         halveItemEaten();
     }
+
+    if (itemType == LevelCustomization::BREAK) {
+        breakItemEaten();
+    }
 }
 
 void LevelLayer::speedUpItemEaten()
@@ -769,11 +773,10 @@ void LevelLayer::hoverItemEaten()
     animationHelper->playHoveringAnimation();
     ratBody->SetGravityScale(-2);
 
-    float lastRatSpeed = ratSpeed;
     stopDroppingItems();
 
     getAnySpriteOnBody(ratBody)->runAction(
-        Sequence::create(DelayTime::create(2.0), CallFunc::create([this, lastRatSpeed]() {
+        Sequence::create(DelayTime::create(2.0), CallFunc::create([this]() {
                              startDroppingItems();
                              applyCustomGravity = true;
                              ratBody->SetGravityScale(1.0);
@@ -804,6 +807,17 @@ void LevelLayer::halveItemEaten()
         RemoveSelf::create(), nullptr));
 }
 
+void LevelLayer::breakItemEaten()
+{
+    ratSpeed = levelCustomization->getRatSpeedMin();
+
+    backgroundSpeedFunction(-10);
+
+    animationHelper->playEyesAnimation(AnimationHelper::Eyes::IRRITATED);
+
+    animationHelper->playRunningAnimation(ratSpeed);
+}
+
 std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemType) const
 {
     if (itemType == LevelCustomization::SPEEDUP) {
@@ -820,6 +834,10 @@ std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemTyp
 
     if (itemType == LevelCustomization::HALVE) {
         return "item_halve";
+    }
+
+    if (itemType == LevelCustomization::BREAK) {
+        return "item_break";
     }
 
     assert(false);
