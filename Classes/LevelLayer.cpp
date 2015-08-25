@@ -319,8 +319,8 @@ class AnimationHelper
         assert(skeleton);
 
         if (skeleton->getCurrent(runningTrackIndex) == nullptr) {
-            skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
-            skeleton->setTimeScale(newAnimationSpeed);
+            spTrackEntry *entry = skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
+            entry->timeScale = newAnimationSpeed;
         } else {
 
             setMix(newAnimationName);
@@ -328,8 +328,9 @@ class AnimationHelper
             skeleton->runAction(CallFunc::create([=]() {
                 skeleton->setCompleteListener([=](int trackIndex, int) {
                     if (trackIndex == runningTrackIndex) {
-                        skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
-                        skeleton->setTimeScale(newAnimationSpeed);
+                        spTrackEntry *entry =
+                            skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
+                        entry->timeScale = newAnimationSpeed;
                     };
                 });
             }));
