@@ -38,46 +38,29 @@ gameplay - improve randomizing of power ups
 gameplay - animate rat, plug multiple animations
 post game menu - sharing facebook
 post game menu - sharing twitter
-initial screen - add facebook 'like us', unlock new item (temporal anti-skull shield)
 tutorial - get time of animation from animation itself
 tutorial - start with +1 speed (so if vial is not caught, hamburger will still be thrown)
+gameplay - more points for higer scores, show positive powerups (vial, hover) further away from rat
+gameplay - 1 new items for regular gameplay, triple cheeseburger
+gameplay - randomize interval between items drop depending on current score
 
 unordered:
-
 juice app a little, nicer transitions between screens, more animations
 - name of challenging player should be slightly bigger at the beginning
 - transitions between scenes
-gamecenter - achievements
-- Super Size Me - 100 burgers (fat rat)
-- As Fat As Can be - 100 triple burgers (even fatter rat)
-- Cardiac - 1000 burgers or triple burgers (extremely fat, almost dead, crossed eyes)
-- Junkie - 100 vials (rat with spiral eyes)
-- Alchemist - 1000 vial (rat with alchemist hat)
-- Frequent Flyer - 100 geese (airplane with rat)
-- Angel - 1000 geese (rat with angel wings)
-- Time Waster - 15sec in credits (clock)
-- Diligent Student - tutorial completed (tutorial icon)
-- Retard - 5x enter tutorial (rat with crossed eyes)
-- Jack The Reaper - 100 skulls (chopper, knife)
-- Devil - 1000 skull (rat with devil horn)
-- Jackpot - three items of the same kind caught one after another (jackpot machine)
-- Kleptomaniac - all kind of items caught (four items aligned in square)
-- Cheeseionaire - points frenzy x 100 (cheese symbol)
-- Suicide - 10x game over (dead rat, vertical position)
-- Road Runner - speed up to max speed (one frame from rat06.x)
-- Get A Life - after sharing via twitter or facebook (rat sitting next to computer)
-- Pro Runner - reach fall out point with the highest speed and recover (rat with GoPro camera)
-- We Don't Know How To Name This Achievement - pause/resume game 5x withing 3seconds (question marks)
-- I Believe I Can Fly - after first goose is caught
-gameplay - more points for higer scores, show positive powerups (vial, hover) further away from rat
-gameplay - 1 new items for regular gameplay, triple cheeseburger
-iap - unlock new item, points frenzy (particles - cheeses)
+gameplay - new item, temporal anti-skull shield (particles - shields?)
+gameplay - new item, cheese frenzy (particles - cheeses)
+gamecenter - logic for achievements
+gamelogic - refactor persistent storage (use keychain for ios), add api for querying iap, 'like us',
+            current high score
+post game menu - get best score from game center (local if no connectivity), upload local to game
+                 center
+iap - unlock new item, points frenzy
 initial screen - settings and credits
+social - add facebook 'like us'
 post game menu - redesign, figure out how to handle visualization of current/high scores (local,
                  leaderboards)  and also replaying of challenges
 post game menu(?) - rate us
-post game menu - get best score from game center (local if no connectivity), upload local to game
-                 center
 play music + sounds
 bug - crash in EAGLView::swap (sometimes happens when app is minimized)
 bug - background items are not distributed nicely after app is minimized (?)
@@ -85,58 +68,9 @@ ios - add verification of iap
 settings - show iap icon immediately (initially disabled, enabled after getting product)
 gameplay - make sure item is eaten when rat touches it (currently item is eaten only when touches
         rat's belly)
+
+
+FUTURE
 gameplay - new item, thunderstorm, speed up to max speed for a while
-
------
-facebook story
-
-1. My first draft (28.09)
-(hand drafts of rat graphics)
-
-2. Here I come (05.10)
-(first in-game graphics)
-
-3. Life sucks, no money, no cheese (12.10)
-(sad, sitting rat)
-
-4. Looking for a job (19.10)
-(rat sitting in toilet and reading newspaper)
-
-5. Got temporary job for 1.11 (26.10)
-(Halloween, rat with pumpkin)
-
-6. Still looking for job (2.11)
-(rat browsing internet)
-
-7. Got my dole (9.11)
-(rat drinking beer)
-
-8. Got stupid offer from employment agency (16.11)
-(pissed off rat reading letter)
-
-9. Thanksgiving day - turkey this year is very slim (hover item) (23.11)
-
-10. Just received vials for a new job - need to start to work out (30.11)
-
-11. Last burger this year - they forced me to go on diet (07.12)
-
-12. Got CDs with music from a new job, more than rock'n'roll I hate Christmast songs (14.12)
-(rat with earplugs)
-
-13.  Can't afford Christmas Tree this year (21.12)
-(rat acting as a Christmas tree)
-
-14. Can the New Year be even worse? (28.12)
-(rat holding fireworks or rat attached to fireworks)
-
-15.  Total hangover - skull (04.01)
-
-16. First day in new job (11.01)
-(basic showcase of gameplay, rat running on the earth)
-
-17. I hate Mondays (18.01)
-(rat with suitcase going to work)
-
-18.  I'm tired, guys you really need to stop downloading this game (25.01)
-(gif with rat06.x)
+gameplay - new item, mirror
 
