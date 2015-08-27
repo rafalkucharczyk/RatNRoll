@@ -25,7 +25,7 @@ class LevelCustomization
     virtual ~LevelCustomization() {}
 
   public:
-    enum ItemType { SPEEDUP = 0, SLOWDOWN, HOVER, HALVE, BREAK, ITEM_TYPE_MAX };
+    enum ItemType { SPEEDUP = 0, SLOWDOWN, HOVER, HALVE, BREAK, FRENZY, SHIELD, ITEM_TYPE_MAX };
 
   public:
     virtual std::string getRubeJsonFileName() const = 0;
@@ -61,7 +61,10 @@ class LevelCustomization
     };
 
   protected:
-    bool isItemPositive(ItemType itemType) { return itemType == HOVER || itemType == SPEEDUP; }
+    bool isItemPositive(ItemType itemType)
+    {
+        return itemType == HOVER || itemType == SPEEDUP || itemType == FRENZY || itemType == SHIELD;
+    }
 
     ItemType normalizeDropItemType(ItemType itemType, float currentRatSpeed)
     {
@@ -181,7 +184,7 @@ class LevelTutorial : public LevelCustomization
 class Level01 : public LevelCustomization
 {
   public:
-    Level01() : currentItemIndex(0), itemToDrop(ITEM_TYPE_MAX) {}
+    Level01() : currentItemIndex(0), bonusItemInjected(false), itemToDrop(ITEM_TYPE_MAX) {}
 
     std::string getRubeJsonFileName() const { return "level_01.json"; }
 
@@ -207,7 +210,15 @@ class Level01 : public LevelCustomization
             currentItemIndex = 0;
         }
 
+        if (currentItemIndex != 0 && currentItemIndex % 10 == 0 && bonusItemInjected == false) {
+            bonusItemInjected = true;
+
+            // TODO check if frenzy and/or shield is allowed
+            return cocos2d::rand_minus1_1() > 0 ? FRENZY : SHIELD;
+        }
+
         ItemType itemType = static_cast<ItemType>(itemsSequence[currentItemIndex++]);
+        bonusItemInjected = false;
 
         itemToDrop = normalizeDropItemType(itemType, currentRatSpeed);
 
@@ -236,6 +247,7 @@ class Level01 : public LevelCustomization
 #include "LevelCustomization_itemsSequence.hxx"
 
     int currentItemIndex;
+    bool bonusItemInjected;
     ItemType itemToDrop;
 };
 

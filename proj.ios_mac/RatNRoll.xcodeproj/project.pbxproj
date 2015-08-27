@@ -11,7 +11,11 @@
 		1AC6FB30180E99EB004C840B /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC6FB07180E9839004C840B /* libcocos2d iOS.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
 		25A22A701B8C362A00EBEA48 /* break01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25A22A6F1B8C362A00EBEA48 /* break01.png */; };
+		25ABD95D1B8ED5D9004D007F /* skull_shield.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD95C1B8ED5D9004D007F /* skull_shield.plist */; };
+		25ABD9601B8F9794004D007F /* frenzy01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD95F1B8F9794004D007F /* frenzy01.png */; };
+		25ABD9621B8F979B004D007F /* shield01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD9611B8F979B004D007F /* shield01.png */; };
 		25C5F8A01B7E3033002DB80B /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C5F89E1B7E3033002DB80B /* TestLayer.cpp */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -142,9 +146,13 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* RatNRoll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RatNRoll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cheese_frenzy.plist; sourceTree = "<group>"; };
 		255340CA1B772F9900C31F87 /* GameCenterPlayerScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterPlayerScore.h; sourceTree = "<group>"; };
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
 		25A22A6F1B8C362A00EBEA48 /* break01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = break01.png; sourceTree = "<group>"; };
+		25ABD95C1B8ED5D9004D007F /* skull_shield.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skull_shield.plist; sourceTree = "<group>"; };
+		25ABD95F1B8F9794004D007F /* frenzy01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frenzy01.png; sourceTree = "<group>"; };
+		25ABD9611B8F979B004D007F /* shield01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield01.png; sourceTree = "<group>"; };
 		25C5F89E1B7E3033002DB80B /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		25C5F89F1B7E3033002DB80B /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -405,10 +413,14 @@
 				B54CCC351B46F91A00393F40 /* slowdown01.png */,
 				B54CCC361B46F91A00393F40 /* speedup01.png */,
 				25A22A6F1B8C362A00EBEA48 /* break01.png */,
+				25ABD9611B8F979B004D007F /* shield01.png */,
+				25ABD95F1B8F9794004D007F /* frenzy01.png */,
 				B551AF691B1A34C90076A8E9 /* background01.png */,
 				B551AF6B1B1A39DC0076A8E9 /* earth01.png */,
 				B551AF6D1B1A41260076A8E9 /* cheese01.png */,
 				B55091C31B652517005A4E8B /* tutorial_balloon.png */,
+				2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */,
+				25ABD95C1B8ED5D9004D007F /* skull_shield.plist */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -703,6 +715,7 @@
 				B54CCC331B45E4CA00393F40 /* hover01.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
+				25ABD95D1B8ED5D9004D007F /* skull_shield.plist in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				B54C0DF11B5EEE12002B36B6 /* animations in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
@@ -720,6 +733,8 @@
 				B55091C41B652517005A4E8B /* tutorial_balloon.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
+				2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */,
+				25ABD9621B8F979B004D007F /* shield01.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
@@ -729,6 +744,7 @@
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
+				25ABD9601B8F9794004D007F /* frenzy01.png in Resources */,
 				B54CCC381B46F91A00393F40 /* slowdown01.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

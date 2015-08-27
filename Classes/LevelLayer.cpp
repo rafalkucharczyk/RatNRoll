@@ -382,7 +382,8 @@ LevelLayer::LevelLayer(LevelCustomization *customization)
       ratSpeed(levelCustomization->getRatSpeedInitial()), applyCustomGravity(true), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), paused(false), nextItemDropTime(0.0),
-      contactListener(new LevelContactListener(this)),
+      contactListener(new LevelContactListener(this)), cheeseFrenzyParticleNode(nullptr),
+      skullShieldParticleNode(nullptr), frenzyGameScoreMultiplier(1), skullShieldCount(0),
       animationHelper(new AnimationHelper(*customization))
 {
 }
@@ -502,6 +503,8 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
     shadowRatHelper.reset(new ShadowRatHelper(*this, json->b2j(ratShadowBody)));
 
     animationHelper->setSkeleton(getRatAnimation());
+
+    attachParticleNodesToRatBody();
 }
 
 void LevelLayer::update(float dt)
@@ -574,6 +577,31 @@ void LevelLayer::addShadowRat(const std::string &name, int fromScore, int toScor
     }
 
     updateScore();
+}
+
+void LevelLayer::attachParticleNodesToRatBody()
+{
+    auto ratSprite = getAnySpriteOnBody(ratBody);
+    Rect ratBoundingBox = ratSprite->getBoundingBox();
+    float scale = 1 / ratSprite->getScale();
+
+    // ---
+
+    cheeseFrenzyParticleNode = ParticleSystemQuad::create("cheese_frenzy.plist");
+    cheeseFrenzyParticleNode->stopSystem();
+
+    ratSprite->addChild(cheeseFrenzyParticleNode, -1);
+    cheeseFrenzyParticleNode->setPosition(Vec2(0, 0.25 * ratBoundingBox.size.height * scale));
+    cheeseFrenzyParticleNode->setScale(5);
+
+    // ---
+
+    skullShieldParticleNode = ParticleSystemQuad::create("skull_shield.plist");
+    skullShieldParticleNode->stopSystem();
+
+    ratSprite->addChild(skullShieldParticleNode, -1);
+    skullShieldParticleNode->setPosition(Vec2(0, 0.7 * ratBoundingBox.size.height * scale));
+    skullShieldParticleNode->setScale(5);
 }
 
 void LevelLayer::runCustomActionOnStart()
@@ -753,6 +781,14 @@ void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
     if (itemType == LevelCustomization::BREAK) {
         breakItemEaten();
     }
+
+    if (itemType == LevelCustomization::FRENZY) {
+        frenzyItemEaten();
+    }
+
+    if (itemType == LevelCustomization::SHIELD) {
+        shieldItemEaten();
+    }
 }
 
 void LevelLayer::speedUpItemEaten()
@@ -799,6 +835,16 @@ void LevelLayer::hoverItemEaten()
 
 void LevelLayer::halveItemEaten()
 {
+    if (skullShieldCount > 0) {
+        animationHelper->playEyesAnimation(AnimationHelper::Eyes::WINKING);
+
+        if (--skullShieldCount == 0) {
+            skullShieldParticleNode->stopSystem();
+        }
+
+        return;
+    }
+
     int halfScore = gameScore / 2;
     gameScore -= halfScore;
 
@@ -829,6 +875,26 @@ void LevelLayer::breakItemEaten()
     animationHelper->playRunningAnimation(ratSpeed);
 }
 
+void LevelLayer::frenzyItemEaten()
+{
+    cheeseFrenzyParticleNode->resetSystem();
+    frenzyGameScoreMultiplier = 5;
+
+    getAnySpriteOnBody(ratBody)
+        ->runAction(Sequence::create(DelayTime::create(5.0), CallFunc::create([this]() {
+                                         frenzyGameScoreMultiplier = 1;
+                                         cheeseFrenzyParticleNode->stopSystem();
+                                     }),
+                                     nullptr));
+}
+
+void LevelLayer::shieldItemEaten()
+{
+    if (++skullShieldCount == 1) {
+        skullShieldParticleNode->resetSystem();
+    }
+}
+
 std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemType) const
 {
     if (itemType == LevelCustomization::SPEEDUP) {
@@ -849,6 +915,14 @@ std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemTyp
 
     if (itemType == LevelCustomization::BREAK) {
         return "item_break";
+    }
+
+    if (itemType == LevelCustomization::FRENZY) {
+        return "item_frenzy";
+    }
+
+    if (itemType == LevelCustomization::SHIELD) {
+        return "item_shield";
     }
 
     assert(false);
@@ -889,6 +963,8 @@ void LevelLayer::calculateScore()
         int gameScoreDelta =
             1 + std::lround(speedRatio * 2 +
                             (ratSpeed == levelCustomization->getRatSpeedMax() ? 1 : 0));
+
+        gameScoreDelta *= frenzyGameScoreMultiplier;
 
         gameScore += gameScoreDelta;
 

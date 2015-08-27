@@ -57,6 +57,8 @@ class LevelLayer : public RUBELayer
     static const int proxyOverlayLayer = 1111;
 
   private:
+    void attachParticleNodesToRatBody();
+
     void runCustomActionOnStart();
     void startDroppingItems();
     void stopDroppingItems();
@@ -79,6 +81,8 @@ class LevelLayer : public RUBELayer
     void hoverItemEaten();
     void halveItemEaten();
     void breakItemEaten();
+    void frenzyItemEaten();
+    void shieldItemEaten();
 
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
@@ -127,6 +131,12 @@ class LevelLayer : public RUBELayer
     friend class ShadowRatHelper;
 
     std::function<void(int)> gameFinishedCallback;
+
+    cocos2d::ParticleSystemQuad *cheeseFrenzyParticleNode;
+    cocos2d::ParticleSystemQuad *skullShieldParticleNode;
+
+    int frenzyGameScoreMultiplier;
+    int skullShieldCount;
 
   private:
     std::shared_ptr<ShadowRatHelper> shadowRatHelper;
