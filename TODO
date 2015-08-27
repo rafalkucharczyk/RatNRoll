@@ -34,7 +34,7 @@ gamecenter - challenge friend, draw shadow player
 gamecenter - get friends from leaderboard and show shadow player with their score
 gameplay - improve randomizing of power ups
 
-9
+9 done
 gameplay - animate rat, plug multiple animations
 post game menu - sharing facebook
 post game menu - sharing twitter
@@ -43,23 +43,26 @@ tutorial - start with +1 speed (so if vial is not caught, hamburger will still b
 gameplay - more points for higer scores, show positive powerups (vial, hover) further away from rat
 gameplay - 1 new items for regular gameplay, triple cheeseburger
 gameplay - randomize interval between items drop depending on current score
+gameplay - new item, temporal anti-skull shield (particles - shields?)
+gameplay - new item, cheese frenzy (particles - cheeses)
+
+10
+initial screen - credits
+gamecenter - logic for achievements
 
 unordered:
 juice app a little, nicer transitions between screens, more animations
 - name of challenging player should be slightly bigger at the beginning
 - transitions between scenes
-gameplay - new item, temporal anti-skull shield (particles - shields?)
-gameplay - new item, cheese frenzy (particles - cheeses)
-gamecenter - logic for achievements
 gamelogic - refactor persistent storage (use keychain for ios), add api for querying iap, 'like us',
             current high score
 post game menu - get best score from game center (local if no connectivity), upload local to game
                  center
-iap - unlock new item, points frenzy
-initial screen - settings and credits
-social - add facebook 'like us'
+iap - unlock new item, (cheese frenzy)
+social - add facebook 'like us' (unlock new item, skull protection)
 post game menu - redesign, figure out how to handle visualization of current/high scores (local,
-                 leaderboards)  and also replaying of challenges
+                 leaderboards) and also replaying of challenges
+initial screen - settings
 post game menu(?) - rate us
 play music + sounds
 bug - crash in EAGLView::swap (sometimes happens when app is minimized)
