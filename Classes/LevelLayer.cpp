@@ -383,7 +383,8 @@ LevelLayer::LevelLayer(LevelCustomization *customization)
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), paused(false), nextItemDropTime(0.0),
       contactListener(new LevelContactListener(this)), cheeseFrenzyParticleNode(nullptr),
-      skullShieldParticleNode(nullptr), frenzyGameScoreMultiplier(1), skullShieldCount(0),
+      skullShieldParticleNode(nullptr), halvePointsParticleNode(nullptr),
+      frenzyGameScoreMultiplier(1), skullShieldCount(0),
       animationHelper(new AnimationHelper(*customization))
 {
 }
@@ -852,16 +853,9 @@ void LevelLayer::halveItemEaten()
 
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::SAD);
 
-    // show animation with number of points taken
-    auto label = initScoreLabel(halfScore);
-    float animationDuration = 0.5;
-
-    label->runAction(Sequence::create(
-        Spawn::create(ScaleTo::create(animationDuration, 0),
-                      MoveBy::create(animationDuration,
-                                     Vec2(0, -label->getContentSize().height / getScale())),
-                      nullptr),
-        RemoveSelf::create(), nullptr));
+    scoreLabel->runAction(Sequence::create(
+        CallFunc::create([=]() { halvePointsParticleNode->resetSystem(); }), DelayTime::create(1),
+        CallFunc::create([=]() { halvePointsParticleNode->stopSystem(); }), nullptr));
 }
 
 void LevelLayer::breakItemEaten()
@@ -930,25 +924,29 @@ std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemTyp
     return "";
 }
 
-Label *LevelLayer::initScoreLabel(int score)
+DigitsPanel *LevelLayer::initScoreLabel(int score)
 {
-    auto label = Label::createWithSystemFont("", "Marker Felt", 60);
-    label->setColor(Color3B::BLACK);
+    auto label = DigitsPanel::createWithNumberOfDigits(6);
 
     addChild(label, 1);
 
-    label->setScale(1 / getScale());
+    label->setScale(0.2 * (1 / getScale()));
 
     b2Vec2 pos = earthBody->GetWorldCenter();
     label->setPosition(pos.x, pos.y);
-    label->setString(std::to_string(score));
+    label->setNumber(score);
+
+    halvePointsParticleNode = ParticleSystemQuad::create("halve_points.plist");
+    halvePointsParticleNode->setScale(5);
+    halvePointsParticleNode->stopSystem();
+    label->addChild(halvePointsParticleNode, -1);
 
     return label;
 }
 
 void LevelLayer::updateScoreDisplay(float t)
 {
-    scoreLabel->setString(std::to_string(gameScore));
+    scoreLabel->setNumber(gameScore);
     shadowRatHelper->scoreUpdated(gameScore);
 }
 

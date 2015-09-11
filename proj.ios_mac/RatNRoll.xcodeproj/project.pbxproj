@@ -16,6 +16,8 @@
 		25ABD95D1B8ED5D9004D007F /* skull_shield.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD95C1B8ED5D9004D007F /* skull_shield.plist */; };
 		25ABD9601B8F9794004D007F /* frenzy01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD95F1B8F9794004D007F /* frenzy01.png */; };
 		25ABD9621B8F979B004D007F /* shield01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD9611B8F979B004D007F /* shield01.png */; };
+		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
+		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
 		25C5F8A01B7E3033002DB80B /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C5F89E1B7E3033002DB80B /* TestLayer.cpp */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -153,6 +155,9 @@
 		25ABD95C1B8ED5D9004D007F /* skull_shield.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skull_shield.plist; sourceTree = "<group>"; };
 		25ABD95F1B8F9794004D007F /* frenzy01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frenzy01.png; sourceTree = "<group>"; };
 		25ABD9611B8F979B004D007F /* shield01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield01.png; sourceTree = "<group>"; };
+		25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DigitsPanel.cpp; path = Menu/DigitsPanel.cpp; sourceTree = "<group>"; };
+		25ACD8F71BA3519D00899F09 /* DigitsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DigitsPanel.h; path = Menu/DigitsPanel.h; sourceTree = "<group>"; };
+		25ACD8F91BA57B5900899F09 /* halve_points.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = halve_points.plist; sourceTree = "<group>"; };
 		25C5F89E1B7E3033002DB80B /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		25C5F89F1B7E3033002DB80B /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -421,6 +426,7 @@
 				B55091C31B652517005A4E8B /* tutorial_balloon.png */,
 				2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */,
 				25ABD95C1B8ED5D9004D007F /* skull_shield.plist */,
+				25ACD8F91BA57B5900899F09 /* halve_points.plist */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -575,6 +581,8 @@
 		B57B5BDF1B570BA900C98B37 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */,
+				25ACD8F71BA3519D00899F09 /* DigitsPanel.h */,
 				B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */,
 				B57B5BE11B570BC400C98B37 /* MenuHelper.h */,
 				B57B5BE41B570BED00C98B37 /* MenuItemButton.cpp */,
@@ -719,6 +727,7 @@
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				B54C0DF11B5EEE12002B36B6 /* animations in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
+				25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */,
 				B551AF6E1B1A41260076A8E9 /* cheese01.png in Resources */,
 				25A22A701B8C362A00EBEA48 /* break01.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
@@ -786,6 +795,7 @@
 				B55047A31B6B960A0020ECE4 /* SettingsLayer.cpp in Sources */,
 				B55091C21B645358005A4E8B /* MipmapSprite.cpp in Sources */,
 				B550479C1B6B8FEE0020ECE4 /* InAppPurchase.mm in Sources */,
+				25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				25C5F8A01B7E3033002DB80B /* TestLayer.cpp in Sources */,
 				B55047A01B6B921C0020ECE4 /* InAppPurchaseHelper.cpp in Sources */,

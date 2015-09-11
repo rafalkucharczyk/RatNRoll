@@ -7,6 +7,8 @@
 #include "b2dJson.h"
 #include <spine/spine-cocos2dx.h>
 
+#include "Menu/DigitsPanel.h"
+
 #include "LevelCustomization.h"
 
 class LevelContactListener;
@@ -86,7 +88,7 @@ class LevelLayer : public RUBELayer
 
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
-    cocos2d::Label *initScoreLabel(int score);
+    DigitsPanel *initScoreLabel(int score);
     void updateScoreDisplay(float t);
     void calculateScore();
     void updateScore();
@@ -118,7 +120,7 @@ class LevelLayer : public RUBELayer
     int gameScore;
     float previousRevoluteJointAngle;
 
-    cocos2d::Label *scoreLabel;
+    DigitsPanel *scoreLabel;
 
   private:
     float totalTime;
@@ -134,6 +136,7 @@ class LevelLayer : public RUBELayer
 
     cocos2d::ParticleSystemQuad *cheeseFrenzyParticleNode;
     cocos2d::ParticleSystemQuad *skullShieldParticleNode;
+    cocos2d::ParticleSystemQuad *halvePointsParticleNode;
 
     int frenzyGameScoreMultiplier;
     int skullShieldCount;

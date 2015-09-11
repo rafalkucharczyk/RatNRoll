@@ -12,9 +12,6 @@ class TestLayer : public cocos2d::LayerColor
     virtual bool init();
 
     CREATE_FUNC(TestLayer);
-
-  private:
-    std::string getEyeAnimation();
 };
 
 #endif // COCOS2D_DEBUG
