@@ -1,209 +1,237 @@
 
 rat.png
-size: 1024,256
+size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arm_left
   rotate: false
-  xy: 555, 101
+  xy: 890, 911
   size: 58, 18
   orig: 58, 18
   offset: 0, 0
   index: -1
 arm_right
-  rotate: false
-  xy: 217, 57
+  rotate: true
+  xy: 609, 629
   size: 58, 21
   orig: 58, 21
   offset: 0, 0
   index: -1
 body
   rotate: false
-  xy: 157, 80
+  xy: 2, 42
   size: 131, 169
   orig: 131, 169
   offset: 0, 0
   index: -1
+duck
+  rotate: false
+  xy: 499, 568
+  size: 108, 119
+  orig: 128, 128
+  offset: 9, 5
+  index: -1
 ear_left
   rotate: false
-  xy: 290, 121
+  xy: 499, 689
   size: 136, 128
   orig: 136, 128
   offset: 0, 0
   index: -1
 ear_right
   rotate: false
-  xy: 688, 128
+  xy: 654, 901
   size: 130, 121
   orig: 130, 121
   offset: 0, 0
   index: -1
+earth01
+  rotate: false
+  xy: 2, 527
+  size: 495, 495
+  orig: 512, 512
+  offset: 10, 12
+  index: -1
 eyelid_left_bot
   rotate: false
-  xy: 157, 47
+  xy: 493, 494
   size: 58, 31
   orig: 58, 31
   offset: 0, 0
   index: -1
 eyelid_left_top
   rotate: false
-  xy: 820, 128
+  xy: 248, 99
   size: 58, 28
   orig: 58, 28
   offset: 0, 0
   index: -1
 eyelid_right_bot
   rotate: false
-  xy: 930, 173
+  xy: 654, 822
   size: 45, 35
   orig: 45, 35
   offset: 0, 0
   index: -1
 eyelid_right_top
   rotate: false
-  xy: 977, 174
+  xy: 370, 129
   size: 42, 34
   orig: 42, 34
   offset: 0, 0
   index: -1
 eyes
   rotate: false
-  xy: 399, 73
+  xy: 370, 165
   size: 94, 46
   orig: 94, 46
   offset: 0, 0
   index: -1
 feet_left
-  rotate: false
-  xy: 495, 64
+  rotate: true
+  xy: 466, 171
   size: 40, 23
   orig: 40, 23
   offset: 0, 0
   index: -1
 feet_right
-  rotate: false
-  xy: 615, 100
+  rotate: true
+  xy: 1000, 980
   size: 42, 19
   orig: 42, 19
   offset: 0, 0
   index: -1
 hamburger
   rotate: false
-  xy: 428, 121
-  size: 128, 128
+  xy: 248, 129
+  size: 120, 82
   orig: 128, 128
-  offset: 0, 0
+  offset: 4, 28
+  index: -1
+hand01
+  rotate: false
+  xy: 2, 213
+  size: 489, 312
+  orig: 512, 512
+  offset: 10, 93
   index: -1
 hand_left
   rotate: false
-  xy: 880, 127
+  xy: 493, 463
   size: 46, 29
   orig: 46, 29
   offset: 0, 0
   index: -1
 hand_right
-  rotate: true
-  xy: 128, 2
+  rotate: false
+  xy: 701, 825
   size: 42, 32
   orig: 42, 32
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 2, 46
+  xy: 499, 819
   size: 153, 203
   orig: 153, 203
   offset: 0, 0
   index: -1
 lips
   rotate: true
-  xy: 255, 24
+  xy: 585, 535
   size: 31, 21
   orig: 31, 21
   offset: 0, 0
   index: -1
 nose_begin
   rotate: false
-  xy: 820, 158
+  xy: 890, 931
   size: 108, 91
   orig: 108, 91
   offset: 0, 0
   index: -1
 nose_end
   rotate: true
-  xy: 290, 75
+  xy: 135, 47
   size: 44, 107
   orig: 44, 107
   offset: 0, 0
   index: -1
 pupil_left
   rotate: true
-  xy: 277, 57
+  xy: 62, 2
   size: 10, 8
   orig: 10, 8
   offset: 0, 0
   index: -1
 pupil_right
   rotate: false
-  xy: 277, 69
+  xy: 637, 808
   size: 11, 9
   orig: 11, 9
   offset: 0, 0
   index: -1
 shin_left
-  rotate: false
-  xy: 195, 13
+  rotate: true
+  xy: 62, 14
   size: 26, 32
   orig: 26, 32
   offset: 0, 0
   index: -1
 shin_right
-  rotate: true
-  xy: 659, 100
+  rotate: false
+  xy: 308, 102
   size: 19, 25
   orig: 19, 25
   offset: 0, 0
   index: -1
+skull
+  rotate: false
+  xy: 135, 93
+  size: 111, 118
+  orig: 128, 128
+  offset: 11, 4
+  index: -1
 tail_begin
   rotate: false
-  xy: 930, 210
+  xy: 499, 527
   size: 84, 39
   orig: 84, 39
   offset: 0, 0
   index: -1
 tail_end
   rotate: false
-  xy: 495, 89
+  xy: 2, 10
   size: 58, 30
   orig: 58, 30
   offset: 0, 0
   index: -1
 tail_mid
   rotate: true
-  xy: 2, 4
+  xy: 654, 859
   size: 40, 124
   orig: 40, 124
   offset: 0, 0
   index: -1
 thigh_left
   rotate: false
-  xy: 162, 11
+  xy: 414, 129
   size: 31, 34
   orig: 31, 34
   offset: 0, 0
   index: -1
 thigh_right
   rotate: false
-  xy: 223, 25
+  xy: 553, 495
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 vial
   rotate: false
-  xy: 558, 121
-  size: 128, 128
+  xy: 786, 907
+  size: 102, 115
   orig: 128, 128
-  offset: 0, 0
+  offset: 14, 5
   index: -1
