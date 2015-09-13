@@ -22,7 +22,8 @@ class TutorialBalloonLayer : public cocos2d::LayerColor
 
   private:
     void addBalloonSprite();
-    std::string getAnimationName();
+    std::string getAnimationName() const;
+    cocos2d::Vec2 getAnimationInitPos() const;
 
     float getAnimationDuration(const std::string &animationName);
 

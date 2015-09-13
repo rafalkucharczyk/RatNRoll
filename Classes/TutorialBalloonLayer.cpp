@@ -62,28 +62,58 @@ void TutorialBalloonLayer::addBalloonSprite()
 {
     animationNode->setAnimation(0, getAnimationName(), false);
     animationNode->updateWorldTransform();
-    MenuHelper::positionNode(*animationNode, {0.7, 0.6}, 0.15);
+    animationNode->setEventListener([](int trackIndex, spEvent* event) {
+        if (std::string(event->data->name) == "score") {
+            std::string mode((event->stringValue != nullptr) ? event->stringValue : "");
+            int score = event->intValue;
+            CCLOG("TUTORIAL, got anim event, score: %d, mode: %s", score, mode.c_str());
+            if (mode == "instant") {
+                //set score instantly, without digits animation
+            } else {
+                //set score with digits animations
+            }
+        }
+    });
+    MenuHelper::positionNode(*animationNode, getAnimationInitPos(), 0.15);
     addChild(animationNode);
 }
 
-std::string TutorialBalloonLayer::getAnimationName()
+std::string TutorialBalloonLayer::getAnimationName() const
 {
-    // TODO use correct animations
-
-    if (balloonType == BalloonType::CONTROLS) {
-        return "run06.x";
-    } else if (balloonType == BalloonType::SPEEDUP) {
-        return "tutorial01.x";
-    } else if (balloonType == BalloonType::SLOWDOWN) {
-        return "tutorial02.x";
-    } else if (balloonType == BalloonType::HOVER) {
-        return "tutorial03.x";
-    } else if (balloonType == BalloonType::HALVE) {
-        return "run05.x";
+    switch (balloonType) {
+        case BalloonType::CONTROLS:
+            return "tutorial00.x";
+        case BalloonType::SPEEDUP:
+            return "tutorial01.x";
+        case BalloonType::SLOWDOWN:
+            return "tutorial02.x";
+        case BalloonType::HOVER:
+            return "tutorial03.x";
+        case BalloonType::HALVE:
+            return "tutorial04.x";
+        default:
+            assert(false);
+            return "";
     }
+}
 
-    assert(false);
-    return "";
+cocos2d::Vec2 TutorialBalloonLayer::getAnimationInitPos() const
+{
+    const float yPos = 0.6;
+    switch (balloonType) {
+        case BalloonType::CONTROLS:
+            return cocos2d::Vec2(0.4, yPos);
+        case BalloonType::SPEEDUP:
+            return cocos2d::Vec2(0.65, yPos);
+        case BalloonType::SLOWDOWN:
+            return cocos2d::Vec2(0.25, yPos);
+        case BalloonType::HOVER:
+            return cocos2d::Vec2(0.25, yPos);
+        case BalloonType::HALVE:
+            return cocos2d::Vec2(0.3, yPos);
+        default:
+            return cocos2d::Vec2(0.0, yPos);
+    }
 }
 
 float TutorialBalloonLayer::getAnimationDuration(const std::string &animationName)
