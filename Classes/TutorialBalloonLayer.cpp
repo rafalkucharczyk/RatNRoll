@@ -40,8 +40,8 @@ bool TutorialBalloonLayer::init()
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener,
                                                                                           this);
 
-    animationNode = spine::SkeletonAnimation::createWithFile("animations/animations.json",
-                                                             "animations/rat.atlas");
+    animationNode = spine::SkeletonAnimation::createWithFile("animations/rat/skeleton.json",
+                                                             "animations/rat/skeleton.atlas");
 
     addBalloonSprite();
 
