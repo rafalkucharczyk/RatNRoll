@@ -88,7 +88,7 @@ class LevelLayer : public RUBELayer
 
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
-    DigitsPanel *initScoreLabel(int score);
+    void initScoreLabel(int score);
     void updateScoreDisplay(float t);
     void calculateScore();
     void updateScore();

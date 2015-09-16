@@ -402,7 +402,7 @@ bool LevelLayer::init()
     scheduleRatEyesAnimations();
     animationHelper->playRunningAnimation(ratSpeed);
 
-    scoreLabel = initScoreLabel(gameScore);
+    initScoreLabel(gameScore);
 
     runCustomActionOnStart();
 
@@ -924,29 +924,27 @@ std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemTyp
     return "";
 }
 
-DigitsPanel *LevelLayer::initScoreLabel(int score)
+void LevelLayer::initScoreLabel(int score)
 {
-    auto label = DigitsPanel::createWithNumberOfDigits(6);
+    scoreLabel = DigitsPanel::createWithNumberOfDigits(6);
 
-    addChild(label, 1);
+    addChild(scoreLabel, 1);
 
-    label->setScale(0.2 * (1 / getScale()));
+    scoreLabel->setScale(0.2 * (1 / getScale()));
 
     b2Vec2 pos = earthBody->GetWorldCenter();
-    label->setPosition(pos.x, pos.y);
-    label->setNumber(score);
+    scoreLabel->setPosition(pos.x, pos.y);
+    scoreLabel->animateToNumber(score);
 
     halvePointsParticleNode = ParticleSystemQuad::create("halve_points.plist");
     halvePointsParticleNode->setScale(5);
     halvePointsParticleNode->stopSystem();
-    label->addChild(halvePointsParticleNode, -1);
-
-    return label;
+    scoreLabel->addChild(halvePointsParticleNode, -1);
 }
 
 void LevelLayer::updateScoreDisplay(float t)
 {
-    scoreLabel->setNumber(gameScore);
+    scoreLabel->animateToNumber(gameScore);
     shadowRatHelper->scoreUpdated(gameScore);
 }
 

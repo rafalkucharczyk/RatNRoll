@@ -6,6 +6,7 @@
 #include <spine/spine-cocos2dx.h>
 
 #include "MenuHelper.h"
+#include "Menu/DigitsPanel.h"
 
 class TutorialBalloonLayer : public cocos2d::LayerColor
 {
@@ -25,7 +26,7 @@ class TutorialBalloonLayer : public cocos2d::LayerColor
     std::string getAnimationName() const;
     cocos2d::Vec2 getAnimationInitPos() const;
 
-    float getAnimationDuration(const std::string &animationName);
+    float getAnimationDuration(const std::string &animationName) const;
 
     void itemClicked(int itemIndex);
 
@@ -37,6 +38,7 @@ class TutorialBalloonLayer : public cocos2d::LayerColor
     MenuHelper menuHelper;
 
     spine::SkeletonAnimation *animationNode;
+    DigitsPanel *digitsPanel;
 };
 
 #endif /* __TUTORIALBALLOON_LAYER_H__ */

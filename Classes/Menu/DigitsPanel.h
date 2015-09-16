@@ -17,6 +17,9 @@ class DigitsPanel : public cocos2d::Node
     static DigitsPanel *createWithNumber(int number);
 
     // sets (and animates to) given number
+    void animateToNumber(int number);
+
+    // sets given number without animations
     void setNumber(int number);
 
   private:
@@ -30,6 +33,7 @@ class DigitsPanel : public cocos2d::Node
     void setDigitOnNode(spine::SkeletonAnimation &digitNode, int digit) const;
     static std::vector<int> intToDigits(int number);
     static std::vector<std::string> getAnimationsFromToDigit(int fromDigit, int toDigit);
+    std::vector<int> sanitizeNumber(int number);
 
   private:
     std::vector<std::pair<int, spine::SkeletonAnimation *>> digitNodes;

@@ -83,7 +83,7 @@ class LevelCustomization
 class LevelTutorial : public LevelCustomization
 {
   public:
-    LevelTutorial() : canDropNewItem(true) {}
+    LevelTutorial() : canDropNewItem(true), currentItemIndex(0) {}
 
     std::string getRubeJsonFileName() const { return "level_01.json"; }
 
@@ -102,20 +102,11 @@ class LevelTutorial : public LevelCustomization
 
         canDropNewItem = false;
 
-        // repeatedly drop 1 item of each type
-        ItemType itemType = ITEM_TYPE_MAX;
-
-        if (droppedItemsCount % ITEM_TYPE_MAX == SPEEDUP) {
-            itemType = SPEEDUP;
-        } else if (droppedItemsCount % ITEM_TYPE_MAX == SLOWDOWN) {
-            itemType = SLOWDOWN;
-        } else if (droppedItemsCount % ITEM_TYPE_MAX == HOVER) {
-            itemType = HOVER;
-        } else {
-            itemType = HALVE;
+        if (currentItemIndex == itemsSequence.size()) {
+            currentItemIndex = 0;
         }
 
-        droppedItemsCount++;
+        ItemType itemType = static_cast<ItemType>(itemsSequence[currentItemIndex++]);
 
         return normalizeDropItemType(itemType, currentRatSpeed);
     }
@@ -175,10 +166,12 @@ class LevelTutorial : public LevelCustomization
     }
 
   private:
-    int droppedItemsCount;
     bool canDropNewItem;
 
     std::set<TutorialBalloonLayer::BalloonType> shownBalloons;
+
+    int currentItemIndex;
+    std::vector<int> itemsSequence = {0, 0, 0, 1, 1, 1, 2, 3};
 };
 
 class Level01 : public LevelCustomization

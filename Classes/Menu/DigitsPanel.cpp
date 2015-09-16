@@ -31,17 +31,9 @@ DigitsPanel *DigitsPanel::createWithNumber(int number)
     return nullptr;
 }
 
-void DigitsPanel::setNumber(int number)
+void DigitsPanel::animateToNumber(int number)
 {
-    std::vector<int> digits = intToDigits(number);
-
-    std::vector<int> newDigits(digitNodes.size());
-
-    if (digits.size() > newDigits.size()) {
-        CCLOG("Number %d has more digits than panel and will be truncated!", number);
-    }
-
-    std::copy_backward(digits.begin(), digits.end(), newDigits.end());
+    std::vector<int> newDigits = sanitizeNumber(number);
 
     for (int i = 0; i < digitNodes.size(); i++) {
         std::vector<std::string> animations =
@@ -64,6 +56,15 @@ void DigitsPanel::setNumber(int number)
             });
             digitNodes[i].second->setAnimation(0, animations[0], false);
         }));
+    }
+}
+
+void DigitsPanel::setNumber(int number)
+{
+    std::vector<int> newDigits = sanitizeNumber(number);
+
+    for (int i = 0; i < digitNodes.size(); i++) {
+        setDigitOnNode(*digitNodes[i].second, newDigits[i]);
     }
 }
 
@@ -174,4 +175,19 @@ std::vector<std::string> DigitsPanel::getAnimationsFromToDigit(int fromDigit, in
     }
 
     return result;
+}
+
+std::vector<int> DigitsPanel::sanitizeNumber(int number)
+{
+    std::vector<int> digits = intToDigits(number);
+
+    std::vector<int> newDigits(digitNodes.size());
+
+    if (digits.size() > newDigits.size()) {
+        CCLOG("Number %d has more digits than panel and will be truncated!", number);
+    }
+
+    std::copy_backward(digits.begin(), digits.end(), newDigits.end());
+
+    return newDigits;
 }

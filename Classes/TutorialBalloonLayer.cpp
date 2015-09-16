@@ -43,6 +43,11 @@ bool TutorialBalloonLayer::init()
     animationNode = spine::SkeletonAnimation::createWithFile("animations/rat/skeleton.json",
                                                              "animations/rat/skeleton.atlas");
 
+    digitsPanel = DigitsPanel::createWithNumberOfDigits(4);
+    digitsPanel->setVisible(false);
+    addChild(digitsPanel);
+    MenuHelper::positionNode(*digitsPanel, {0.7, 0.5}, 0.04);
+
     addBalloonSprite();
 
     runAction(Sequence::create(DelayTime::create(getAnimationDuration(getAnimationName())),
@@ -62,15 +67,17 @@ void TutorialBalloonLayer::addBalloonSprite()
 {
     animationNode->setAnimation(0, getAnimationName(), false);
     animationNode->updateWorldTransform();
-    animationNode->setEventListener([](int trackIndex, spEvent* event) {
+    animationNode->setEventListener([this](int trackIndex, spEvent *event) {
         if (std::string(event->data->name) == "score") {
+            digitsPanel->setVisible(true);
+
             std::string mode((event->stringValue != nullptr) ? event->stringValue : "");
             int score = event->intValue;
-            CCLOG("TUTORIAL, got anim event, score: %d, mode: %s", score, mode.c_str());
+
             if (mode == "instant") {
-                //set score instantly, without digits animation
+                digitsPanel->setNumber(score);
             } else {
-                //set score with digits animations
+                digitsPanel->animateToNumber(score);
             }
         }
     });
@@ -81,19 +88,19 @@ void TutorialBalloonLayer::addBalloonSprite()
 std::string TutorialBalloonLayer::getAnimationName() const
 {
     switch (balloonType) {
-        case BalloonType::CONTROLS:
-            return "tutorial00.x";
-        case BalloonType::SPEEDUP:
-            return "tutorial01.x";
-        case BalloonType::SLOWDOWN:
-            return "tutorial02.x";
-        case BalloonType::HOVER:
-            return "tutorial03.x";
-        case BalloonType::HALVE:
-            return "tutorial04.x";
-        default:
-            assert(false);
-            return "";
+    case BalloonType::CONTROLS:
+        return "tutorial00.x";
+    case BalloonType::SPEEDUP:
+        return "tutorial01.x";
+    case BalloonType::SLOWDOWN:
+        return "tutorial02.x";
+    case BalloonType::HOVER:
+        return "tutorial03.x";
+    case BalloonType::HALVE:
+        return "tutorial04.x";
+    default:
+        assert(false);
+        return "";
     }
 }
 
@@ -101,22 +108,22 @@ cocos2d::Vec2 TutorialBalloonLayer::getAnimationInitPos() const
 {
     const float yPos = 0.6;
     switch (balloonType) {
-        case BalloonType::CONTROLS:
-            return cocos2d::Vec2(0.4, yPos);
-        case BalloonType::SPEEDUP:
-            return cocos2d::Vec2(0.65, yPos);
-        case BalloonType::SLOWDOWN:
-            return cocos2d::Vec2(0.25, yPos);
-        case BalloonType::HOVER:
-            return cocos2d::Vec2(0.25, yPos);
-        case BalloonType::HALVE:
-            return cocos2d::Vec2(0.3, yPos);
-        default:
-            return cocos2d::Vec2(0.0, yPos);
+    case BalloonType::CONTROLS:
+        return cocos2d::Vec2(0.4, yPos);
+    case BalloonType::SPEEDUP:
+        return cocos2d::Vec2(0.65, yPos);
+    case BalloonType::SLOWDOWN:
+        return cocos2d::Vec2(0.25, yPos);
+    case BalloonType::HOVER:
+        return cocos2d::Vec2(0.25, yPos);
+    case BalloonType::HALVE:
+        return cocos2d::Vec2(0.3, yPos);
+    default:
+        return cocos2d::Vec2(0.0, yPos);
     }
 }
 
-float TutorialBalloonLayer::getAnimationDuration(const std::string &animationName)
+float TutorialBalloonLayer::getAnimationDuration(const std::string &animationName) const
 {
     spSkeletonData *const skeletonData = animationNode->getState()->data->skeletonData;
 
