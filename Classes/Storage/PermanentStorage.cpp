@@ -9,11 +9,9 @@ namespace
 {
 std::string getBestScoreKey(int levelNumber) { return "bestScore." + std::to_string(levelNumber); }
 
-typedef std::map<std::string, int> KeychainMapType;
-
-KeychainMapType readJsonData(const std::string &jsonString)
+PermanentStorage::CustomDataMap readJsonData(const std::string &jsonString)
 {
-    KeychainMapType ret;
+    PermanentStorage::CustomDataMap ret;
 
     Json::Value jsonValue;
     Json::Reader reader;
@@ -29,14 +27,14 @@ KeychainMapType readJsonData(const std::string &jsonString)
     return ret;
 }
 
-std::string saveJsonData(const KeychainMapType &keychainMap)
+std::string saveJsonData(const PermanentStorage::CustomDataMap &customDataMap)
 {
     Json::FastWriter writer;
 
     Json::Value jsonValue;
     jsonValue = Json::Value(Json::objectValue);
 
-    for (auto &item : keychainMap) {
+    for (auto &item : customDataMap) {
         jsonValue[item.first] = item.second;
     }
 
@@ -45,6 +43,8 @@ std::string saveJsonData(const KeychainMapType &keychainMap)
 
 const std::string effectsEnabledKey = "effects_enabled";
 const std::string musicEnabledKey = "music_enabled";
+const std::string unlockedAchievementsKey = "unlocked_achievements";
+const std::string achievementsStateKey = "achievements_state";
 }
 
 PermanentStorage *PermanentStorage::instance = nullptr;
@@ -74,7 +74,7 @@ void PermanentStorage::setPurchaseState(const std::string &productId, bool bough
 {
     KeychainItem keychainItem;
 
-    KeychainMapType keychainMap = readJsonData(keychainItem.getData());
+    CustomDataMap keychainMap = readJsonData(keychainItem.getData());
 
     keychainMap[productId] = static_cast<int>(bought);
 
@@ -85,7 +85,7 @@ bool PermanentStorage::getPurchaseState(const std::string &productId) const
 {
     KeychainItem keychainItem;
 
-    KeychainMapType keychainMap = readJsonData(keychainItem.getData());
+    CustomDataMap keychainMap = readJsonData(keychainItem.getData());
 
     return (keychainMap.find(productId) != keychainMap.end()) && keychainMap[productId];
 }
@@ -107,4 +107,65 @@ SoundSettings PermanentStorage::getSoundSettings() const
         UserDefault::getInstance()->getBoolForKey(musicEnabledKey.c_str(), true);
 
     return soundSettings;
+}
+
+void PermanentStorage::setUnlockedAchievements(const CustomDataMap &achievements)
+{
+    UserDefault::getInstance()->setStringForKey(unlockedAchievementsKey.c_str(),
+                                                saveJsonData(achievements));
+}
+
+PermanentStorage::CustomDataMap PermanentStorage::getUnlockedAchievements() const
+{
+    return readJsonData(
+        UserDefault::getInstance()->getStringForKey(unlockedAchievementsKey.c_str()));
+}
+
+void PermanentStorage::setAchievementTrackerState(const AchievementTracker::State &state)
+{
+    int i = 0;
+    CustomDataMap data;
+
+    auto make_key = [](int i) { return std::string(1, 'a' + i); };
+
+    for (i = 0; i < LevelCustomization::ITEM_TYPE_MAX; i++) {
+        data[make_key(i)] = state.itemsCount[i];
+    }
+
+    data[make_key(++i)] = state.tutorialEnteredCount;
+
+    data[make_key(++i)] = state.sequence.first;
+    data[make_key(++i)] = state.sequence.second;
+
+    data[make_key(++i)] = state.gameOverCount;
+
+    UserDefault::getInstance()->setStringForKey(achievementsStateKey.c_str(), saveJsonData(data));
+}
+
+AchievementTracker::State PermanentStorage::getAchievementTrackerState() const
+{
+    AchievementTracker::State state;
+    CustomDataMap data =
+        readJsonData(UserDefault::getInstance()->getStringForKey(achievementsStateKey.c_str()));
+
+    if (data.size() == 0) {
+        return state;
+    }
+
+    auto i = data.begin();
+
+    for (int j = 0; j < LevelCustomization::ITEM_TYPE_MAX; j++, i++) {
+        state.itemsCount[j] = i->second;
+    }
+
+    state.tutorialEnteredCount = i++->second;
+
+    state.sequence.first = static_cast<LevelCustomization::ItemType>(i++->second);
+    state.sequence.second = i++->second;
+
+    state.gameOverCount = i++->second;
+
+    assert(i == data.end());
+
+    return state;
 }

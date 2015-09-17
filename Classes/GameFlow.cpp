@@ -9,12 +9,15 @@
 #include "PostLevelLayer.h"
 #include "PauseLayer.h"
 #include "SettingsLayer.h"
+#include "AboutLayer.h"
 #include "TestLayer.h"
 
 #include "PermanentStorage.h"
 
 #include "LevelCustomization.h"
 #include "InAppPurchaseHelper.h"
+
+#include "AchievementTracker.h"
 
 USING_NS_CC;
 
@@ -50,6 +53,8 @@ void GameFlow::pauseGame()
     if (Director::getInstance()->isPaused() || currentLevelNumber == noLevelNumber) {
         return;
     }
+
+    getAchievementTracker().gamePaused();
 
     getCurrentLevelLayer().pauseLevel();
 
@@ -100,7 +105,7 @@ void GameFlow::handleInitialSceneMenu(int itemIndex)
     } else if (itemIndex == 3) {
         SonarCocosHelper::GameCenter::showLeaderboard();
     } else if (itemIndex == 4) {
-        // about
+        switchToAboutScene();
     }
 }
 
@@ -123,7 +128,8 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     scene->addChild(levelMenuLayer);
     levelMenuLayer->setGamePausedCallback(std::bind(&GameFlow::pauseGame, this));
 
-    auto levelLayer = LevelLayer::create(getLevelCustomization(levelNumber));
+    auto levelLayer =
+        LevelLayer::create(getLevelCustomization(levelNumber), addAchievementTracker(*scene));
 
     for (const SonarCocosHelper::GameCenterPlayerScore &score : scores) {
         levelLayer->addShadowRat(score.playerName, score.getLowerScoreBound(), score.score);
@@ -143,6 +149,7 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
 void GameFlow::switchToPostLevelScene(int score)
 {
     auto scene = createSceneObject();
+    addAchievementTracker(*scene);
 
     auto postLevelLayer = PostLevelLayer::create();
     postLevelLayer->displayCurrentScore(score);
@@ -153,9 +160,11 @@ void GameFlow::switchToPostLevelScene(int score)
     postLevelLayer->setShareOnFacebookCallback([this, score]() {
         SonarCocosHelper::Facebook::Share(nullptr, nullptr, getSocialShareMessage(score).c_str(),
                                           nullptr, "");
+        getAchievementTracker().scoreShared();
     });
     postLevelLayer->setShareOnTwitterCallback([this, score]() {
         SonarCocosHelper::Twitter::Tweet(getSocialShareMessage(score).c_str(), nullptr, "");
+        getAchievementTracker().scoreShared();
     });
     scene->addChild(postLevelLayer);
 
@@ -187,6 +196,32 @@ void GameFlow::switchToSettingsScene()
     Director::getInstance()->replaceScene(scene);
 }
 
+void GameFlow::switchToAboutScene()
+{
+    auto scene = createSceneObject();
+    auto &achivementTracker = addAchievementTracker(*scene);
+
+    auto aboutLayer = AboutLayer::create();
+
+    aboutLayer->setGotoMainMenuCallback([this]() {
+        getAchievementTracker().creditsExited();
+        switchToInitialScene();
+    });
+
+    aboutLayer->setResetGameStateCallback([]() {
+        SonarCocosHelper::GameCenter::resetPlayerAchievements();
+        PermanentStorage::getInstance().setAchievementTrackerState(AchievementTracker::State());
+        PermanentStorage::getInstance().setUnlockedAchievements(PermanentStorage::CustomDataMap());
+
+        PermanentStorage::getInstance().setPurchaseState(GameFlow::iapProductId, false);
+    });
+
+    scene->addChild(aboutLayer);
+
+    achivementTracker.creditsEntered();
+    Director::getInstance()->replaceScene(scene);
+}
+
 #ifdef COCOS2D_DEBUG
 void GameFlow::switchToTestScene()
 {
@@ -202,6 +237,8 @@ void GameFlow::switchToTestScene()
 
 void GameFlow::resumeGame()
 {
+    getAchievementTracker().gameResumed();
+
     Director::getInstance()->resume();
 
     Director::getInstance()->getRunningScene()->removeChildByTag(pauseLayerTag);
@@ -294,6 +331,31 @@ LevelLayer &GameFlow::getCurrentLevelLayer()
     assert(levelLayer);
 
     return *levelLayer;
+}
+
+AchievementTracker &GameFlow::addAchievementTracker(cocos2d::Node &parent) const
+{
+    Node *node = parent.getChildByTag(achievementTrackerTag);
+
+    if (node == nullptr) {
+        node = AchievementTracker::create();
+        parent.addChild(node, 0, achievementTrackerTag);
+    }
+
+    return static_cast<AchievementTracker &>(*node);
+}
+
+AchievementTracker &GameFlow::getAchievementTracker() const
+{
+    Node *parent = Director::getInstance()->getRunningScene();
+
+    assert(parent);
+
+    Node *node = parent->getChildByTag(achievementTrackerTag);
+
+    assert(node);
+
+    return static_cast<AchievementTracker &>(*node);
 }
 
 std::string GameFlow::getSocialShareMessage(int score)

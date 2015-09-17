@@ -14,18 +14,20 @@
 class LevelContactListener;
 class ShadowRatHelper;
 class AnimationHelper;
+class AchievementTracker;
 
 class LevelLayer : public RUBELayer
 {
   public:
-    LevelLayer(LevelCustomization *customization);
+    LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker);
 
     virtual bool init();
 
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
                       uint32_t transformUpdated);
 
-    static LevelLayer *create(LevelCustomization *customization);
+    static LevelLayer *create(LevelCustomization *customization,
+                              AchievementTracker &AchievementTracker);
 
     virtual std::string getFilename();
     virtual cocos2d::Point initialWorldOffset();
@@ -85,6 +87,8 @@ class LevelLayer : public RUBELayer
     void breakItemEaten();
     void frenzyItemEaten();
     void shieldItemEaten();
+
+    void handleGameOver();
 
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
@@ -146,8 +150,12 @@ class LevelLayer : public RUBELayer
     std::shared_ptr<ShadowRatHelper> shadowRatHelper;
     std::shared_ptr<AnimationHelper> animationHelper;
 
+  private:
+    AchievementTracker &achievementTracker;
+
   public:
     static const std::string name;
+    static constexpr float hoverDuration = 2.0;
 };
 
 #endif // __LEVEL_SCENE_H__

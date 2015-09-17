@@ -9,6 +9,7 @@
 class LevelCustomization;
 class LevelLayer;
 class InAppPurchaseHelper;
+class AchievementTracker;
 
 class GameFlow
 {
@@ -41,6 +42,8 @@ class GameFlow
 
     void switchToSettingsScene();
 
+    void switchToAboutScene();
+
 #ifdef COCOS2D_DEBUG
     void switchToTestScene();
 #endif // COCOS2D_DEBUG
@@ -64,6 +67,10 @@ class GameFlow
     int currentLevelNumber;
 
   private:
+    AchievementTracker &addAchievementTracker(cocos2d::Node &parent) const;
+    AchievementTracker &getAchievementTracker() const;
+
+  private:
     std::string getSocialShareMessage(int score);
 
   private:
@@ -76,6 +83,7 @@ class GameFlow
 
     const static int pauseLayerTag = 123;
     const static int backgroundLayerTag = 124;
+    const static int achievementTrackerTag = 125;
     const static int noLevelNumber = -1;
 };
 

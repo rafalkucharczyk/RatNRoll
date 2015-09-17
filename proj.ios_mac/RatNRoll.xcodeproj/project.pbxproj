@@ -22,7 +22,10 @@
 		25ABD9621B8F979B004D007F /* shield01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD9611B8F979B004D007F /* shield01.png */; };
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
 		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
+		25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */; };
 		25C5F8A01B7E3033002DB80B /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C5F89E1B7E3033002DB80B /* TestLayer.cpp */; };
+		25F8B1521BD0357C00B84B96 /* LevelCustomization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F8B1511BD0357C00B84B96 /* LevelCustomization.cpp */; settings = {ASSET_TAGS = (); }; };
+		25F8B1551BD0409F00B84B96 /* AboutLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25F8B1531BD0409F00B84B96 /* AboutLayer.cpp */; settings = {ASSET_TAGS = (); }; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
@@ -173,8 +176,13 @@
 		25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DigitsPanel.cpp; path = Menu/DigitsPanel.cpp; sourceTree = "<group>"; };
 		25ACD8F71BA3519D00899F09 /* DigitsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DigitsPanel.h; path = Menu/DigitsPanel.h; sourceTree = "<group>"; };
 		25ACD8F91BA57B5900899F09 /* halve_points.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = halve_points.plist; sourceTree = "<group>"; };
+		25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementTracker.cpp; sourceTree = "<group>"; };
+		25ACD8FD1BA9D62A00899F09 /* AchievementTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementTracker.h; sourceTree = "<group>"; };
 		25C5F89E1B7E3033002DB80B /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		25C5F89F1B7E3033002DB80B /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
+		25F8B1511BD0357C00B84B96 /* LevelCustomization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelCustomization.cpp; sourceTree = "<group>"; };
+		25F8B1531BD0409F00B84B96 /* AboutLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AboutLayer.cpp; sourceTree = "<group>"; };
+		25F8B1541BD0409F00B84B96 /* AboutLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutLayer.h; sourceTree = "<group>"; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
@@ -483,6 +491,10 @@
 				B5927EBC1B5440DA00D59F09 /* SonarCocosHelper */,
 				2542C44F1BC4564100727984 /* Storage */,
 				B55047981B6B8FC30020ECE4 /* IAP */,
+				25F8B1531BD0409F00B84B96 /* AboutLayer.cpp */,
+				25F8B1541BD0409F00B84B96 /* AboutLayer.h */,
+				25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */,
+				25ACD8FD1BA9D62A00899F09 /* AchievementTracker.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				B552BDFF1B2236DC00D4851A /* BackgroundLayer.cpp */,
@@ -496,6 +508,7 @@
 				B552BDFA1B1CE54E00D4851A /* LevelLayer.cpp */,
 				B552BDFB1B1CE54E00D4851A /* LevelLayer.h */,
 				B558584E1B4337E9005AD55B /* LevelCustomization.h */,
+				25F8B1511BD0357C00B84B96 /* LevelCustomization.cpp */,
 				257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */,
 				B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */,
 				B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */,
@@ -831,12 +844,15 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				2542C4431BB9685700727984 /* SoundHelper.cpp in Sources */,
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
+				25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */,
 				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
 				B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */,
+				25F8B1521BD0357C00B84B96 /* LevelCustomization.cpp in Sources */,
 				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
 				B552BE011B2236DC00D4851A /* BackgroundLayer.cpp in Sources */,
 				B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */,
 				B551AF661B18FCB50076A8E9 /* RUBELayer.cpp in Sources */,
+				25F8B1551BD0409F00B84B96 /* AboutLayer.cpp in Sources */,
 				B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */,
@@ -1060,6 +1076,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				WARNING_CFLAGS = "-Wno-inconsistent-missing-override";
 			};
 			name = Debug;
 		};
@@ -1091,6 +1108,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "-Wno-inconsistent-missing-override";
 			};
 			name = Release;
 		};

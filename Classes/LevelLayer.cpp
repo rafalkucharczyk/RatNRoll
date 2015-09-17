@@ -6,6 +6,7 @@
 #include <b2dJson.h>
 
 #include "SoundHelper.h"
+#include "AchievementTracker.h"
 
 USING_NS_CC;
 
@@ -24,9 +25,7 @@ class LevelContactListener : public b2ContactListener
     void BeginContact(b2Contact *contact)
     {
         if (isContact(contact, levelLayer->ratBody, levelLayer->cageBody)) {
-            if (levelLayer->gameFinishedCallback) {
-                levelLayer->gameFinishedCallback(levelLayer->gameScore);
-            }
+            levelLayer->handleGameOver();
         }
 
         for (LevelLayer::BodiesList::iterator i = levelLayer->itemsBodies.begin();
@@ -390,7 +389,7 @@ class AnimationHelper
 
 const std::string LevelLayer::name = "LevelLayer";
 
-LevelLayer::LevelLayer(LevelCustomization *customization)
+LevelLayer::LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
       cogWheelBody1(nullptr), cogWheelBody2(nullptr),
       ratSpeed(levelCustomization->getRatSpeedInitial()), applyCustomGravity(true), gameScore(0),
@@ -398,7 +397,7 @@ LevelLayer::LevelLayer(LevelCustomization *customization)
       totalTime(0.0), paused(false), nextItemDropTime(0.0),
       contactListener(new LevelContactListener(this)), cheeseFrenzyParticleNode(nullptr),
       halvePointsParticleNode(nullptr), frenzyGameScoreMultiplier(1), skullShieldCount(0),
-      animationHelper(new AnimationHelper(*customization))
+      animationHelper(new AnimationHelper(*customization)), achievementTracker(achievementTracker)
 {
 }
 
@@ -442,9 +441,10 @@ void LevelLayer::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transfor
     }
 }
 
-LevelLayer *LevelLayer::create(LevelCustomization *customization)
+LevelLayer *LevelLayer::create(LevelCustomization *customization,
+                               AchievementTracker &achievementTracker)
 {
-    LevelLayer *ret = new (std::nothrow) LevelLayer(customization);
+    LevelLayer *ret = new (std::nothrow) LevelLayer(customization, achievementTracker);
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -616,7 +616,8 @@ void LevelLayer::runCustomActionOnStart()
     scheduleOnce([this](float t) {
         std::shared_ptr<LevelLayerProxyImpl> levelLayerProxy(
             new LevelLayerProxyImpl(*this, nullptr));
-        FiniteTimeAction *customAction = levelCustomization->levelStartedCallback(levelLayerProxy);
+        FiniteTimeAction *customAction =
+            levelCustomization->levelStartedCallback(levelLayerProxy, achievementTracker);
 
         if (customAction) {
             runAction(customAction);
@@ -782,6 +783,7 @@ void LevelLayer::removeOutstandingItems()
 void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
 {
     SoundHelper::getInstance().playEffectForItem(itemType);
+    achievementTracker.itemCaught(itemType);
 
     if (itemType == LevelCustomization::SPEEDUP) {
         speedUpItemEaten();
@@ -821,6 +823,10 @@ void LevelLayer::speedUpItemEaten()
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::DAZED);
 
     animationHelper->playRunningAnimation(ratSpeed);
+
+    if (std::isgreaterequal(ratSpeed, levelCustomization->getRatSpeedMax())) {
+        achievementTracker.maxSpeedReached();
+    }
 }
 
 void LevelLayer::slowDownItemEaten()
@@ -844,7 +850,7 @@ void LevelLayer::hoverItemEaten()
     stopDroppingItems();
 
     getAnySpriteOnBody(ratBody)
-        ->runAction(Sequence::create(DelayTime::create(2.0), CallFunc::create([this]() {
+        ->runAction(Sequence::create(DelayTime::create(hoverDuration), CallFunc::create([this]() {
                                          startDroppingItems();
                                          applyCustomGravity = true;
                                          ratBody->SetGravityScale(1.0);
@@ -901,6 +907,16 @@ void LevelLayer::frenzyItemEaten()
 }
 
 void LevelLayer::shieldItemEaten() { updateRatShield(1); }
+
+void LevelLayer::handleGameOver()
+{
+    achievementTracker.gameEnded();
+    levelCustomization->notifyAchivementTracker(achievementTracker);
+
+    if (gameFinishedCallback) {
+        gameFinishedCallback(gameScore);
+    }
+}
 
 std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemType) const
 {

@@ -12,10 +12,6 @@ void InAppPurchaseHelper::init()
         iapPresenter.purchaseAvailable();
         iapPresenter.purchaseCompleted();
 
-        // *** TODO remove for production code ***
-        // clear purchase when entring settings every second time
-        PermanentStorage::getInstance().setPurchaseState(productId, false);
-
         return;
     }
 

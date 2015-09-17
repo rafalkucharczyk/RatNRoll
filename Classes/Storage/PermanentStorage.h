@@ -3,6 +3,7 @@
 
 #include <json.h>
 #include "SoundHelper.h"
+#include "AchievementTracker.h"
 
 class PermanentStorage
 {
@@ -17,6 +18,14 @@ class PermanentStorage
 
     void setSoundSettings(const SoundSettings &soundSettings);
     SoundSettings getSoundSettings() const;
+
+    typedef std::map<std::string, int> CustomDataMap;
+
+    void setUnlockedAchievements(const CustomDataMap &achievements);
+    CustomDataMap getUnlockedAchievements() const;
+
+    void setAchievementTrackerState(const AchievementTracker::State &state);
+    AchievementTracker::State getAchievementTrackerState() const;
 
   private:
     PermanentStorage();

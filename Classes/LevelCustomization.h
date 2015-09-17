@@ -9,6 +9,8 @@
 #include <cocos2d.h>
 #include "TutorialBalloonLayer.h"
 
+class AchievementTracker;
+
 // Functions available for LevelCustomization to interact with LevelLayer
 class LevelLayerProxy
 {
@@ -45,7 +47,8 @@ class LevelCustomization
 
     // called by LevelLayer once, when level was loaded and started
     virtual cocos2d::FiniteTimeAction *
-    levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy)
+    levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy,
+                         AchievementTracker &achievementTracker)
     {
         return nullptr;
     };
@@ -59,6 +62,9 @@ class LevelCustomization
     {
         return nullptr;
     };
+
+    // called by LevelLayer when game is finished
+    virtual void notifyAchivementTracker(AchievementTracker &achievementTracker){};
 
   protected:
     bool isItemPositive(ItemType itemType)
@@ -114,10 +120,8 @@ class LevelTutorial : public LevelCustomization
     b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) override { return b2Vec2(0, 9); }
 
     cocos2d::FiniteTimeAction *
-    levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy) override
-    {
-        return spawnTutorialBalloon(TutorialBalloonLayer::BalloonType::CONTROLS, levelLayerProxy);
-    }
+    levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy,
+                         AchievementTracker &achievementTracker);
 
     void itemRemovedCallback(ItemType itemType) override { canDropNewItem = true; }
 
@@ -126,6 +130,8 @@ class LevelTutorial : public LevelCustomization
     {
         return spawnTutorialBalloon(itemTypeToBalloonType(itemType), levelLayerProxy);
     }
+
+    void notifyAchivementTracker(AchievementTracker &achievementTracker);
 
   private:
     cocos2d::FiniteTimeAction *
@@ -171,7 +177,7 @@ class LevelTutorial : public LevelCustomization
     std::set<TutorialBalloonLayer::BalloonType> shownBalloons;
 
     int currentItemIndex;
-    std::vector<int> itemsSequence = {0, 0, 0, 1, 1, 1, 2, 3};
+    std::vector<int> itemsSequence = {0, 0, 1, 1, 2, 3};
 };
 
 class Level01 : public LevelCustomization
