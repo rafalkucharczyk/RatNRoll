@@ -5,15 +5,15 @@ format: RGBA8888
 filter: Linear,Linear
 repeat: none
 arm_left
-  rotate: false
-  xy: 890, 911
+  rotate: true
+  xy: 473, 60
   size: 58, 18
   orig: 58, 18
   offset: 0, 0
   index: -1
 arm_right
-  rotate: true
-  xy: 609, 629
+  rotate: false
+  xy: 842, 307
   size: 58, 21
   orig: 58, 21
   offset: 0, 0
@@ -27,21 +27,21 @@ body
   index: -1
 duck
   rotate: false
-  xy: 499, 568
+  xy: 267, 92
   size: 108, 119
   orig: 128, 128
   offset: 9, 5
   index: -1
 ear_left
   rotate: false
-  xy: 499, 689
+  xy: 842, 689
   size: 136, 128
   orig: 136, 128
   offset: 0, 0
   index: -1
 ear_right
   rotate: false
-  xy: 654, 901
+  xy: 135, 90
   size: 130, 121
   orig: 130, 121
   offset: 0, 0
@@ -55,56 +55,56 @@ earth01
   index: -1
 eyelid_left_bot
   rotate: false
-  xy: 493, 494
+  xy: 2, 9
   size: 58, 31
   orig: 58, 31
   offset: 0, 0
   index: -1
 eyelid_left_top
-  rotate: false
-  xy: 248, 99
+  rotate: true
+  xy: 980, 689
   size: 58, 28
   orig: 58, 28
   offset: 0, 0
   index: -1
 eyelid_right_bot
   rotate: false
-  xy: 654, 822
+  xy: 836, 270
   size: 45, 35
   orig: 45, 35
   offset: 0, 0
   index: -1
 eyelid_right_top
   rotate: false
-  xy: 370, 129
+  xy: 980, 783
   size: 42, 34
   orig: 42, 34
   offset: 0, 0
   index: -1
 eyes
   rotate: false
-  xy: 370, 165
+  xy: 377, 72
   size: 94, 46
   orig: 94, 46
   offset: 0, 0
   index: -1
 feet_left
   rotate: true
-  xy: 466, 171
+  xy: 996, 613
   size: 40, 23
   orig: 40, 23
   offset: 0, 0
   index: -1
 feet_right
   rotate: true
-  xy: 1000, 980
+  xy: 836, 178
   size: 42, 19
   orig: 42, 19
   offset: 0, 0
   index: -1
 hamburger
-  rotate: false
-  xy: 248, 129
+  rotate: true
+  xy: 842, 330
   size: 120, 82
   orig: 128, 128
   offset: 4, 28
@@ -117,121 +117,162 @@ hand01
   offset: 10, 93
   index: -1
 hand_left
-  rotate: false
-  xy: 493, 463
+  rotate: true
+  xy: 836, 222
   size: 46, 29
   orig: 46, 29
   offset: 0, 0
   index: -1
 hand_right
   rotate: false
-  xy: 701, 825
+  xy: 980, 749
   size: 42, 32
   orig: 42, 32
   offset: 0, 0
   index: -1
 head
   rotate: false
-  xy: 499, 819
+  xy: 842, 819
   size: 153, 203
   orig: 153, 203
   offset: 0, 0
   index: -1
+helmet01
+  rotate: false
+  xy: 499, 785
+  size: 341, 237
+  orig: 341, 237
+  offset: 0, 0
+  index: -1
+helmet02
+  rotate: false
+  xy: 499, 546
+  size: 341, 237
+  orig: 341, 237
+  offset: 0, 0
+  index: -1
+helmet03
+  rotate: false
+  xy: 499, 307
+  size: 341, 237
+  orig: 341, 237
+  offset: 0, 0
+  index: -1
+helmet04
+  rotate: false
+  xy: 493, 68
+  size: 341, 237
+  orig: 341, 237
+  offset: 0, 0
+  index: -1
 lips
   rotate: true
-  xy: 585, 535
+  xy: 997, 970
   size: 31, 21
   orig: 31, 21
   offset: 0, 0
   index: -1
 nose_begin
   rotate: false
-  xy: 890, 931
+  xy: 377, 120
   size: 108, 91
   orig: 108, 91
   offset: 0, 0
   index: -1
 nose_end
   rotate: true
-  xy: 135, 47
+  xy: 135, 2
   size: 44, 107
   orig: 44, 107
   offset: 0, 0
   index: -1
 pupil_left
-  rotate: true
-  xy: 62, 2
+  rotate: false
+  xy: 926, 442
   size: 10, 8
   orig: 10, 8
   offset: 0, 0
   index: -1
 pupil_right
   rotate: false
-  xy: 637, 808
+  xy: 122, 31
   size: 11, 9
   orig: 11, 9
   offset: 0, 0
   index: -1
 shin_left
-  rotate: true
-  xy: 62, 14
+  rotate: false
+  xy: 996, 655
   size: 26, 32
   orig: 26, 32
   offset: 0, 0
   index: -1
 shin_right
-  rotate: false
-  xy: 308, 102
+  rotate: true
+  xy: 997, 1003
   size: 19, 25
   orig: 19, 25
   offset: 0, 0
   index: -1
 skull
   rotate: false
-  xy: 135, 93
+  xy: 842, 569
   size: 111, 118
   orig: 128, 128
   offset: 11, 4
   index: -1
 tail_begin
-  rotate: false
-  xy: 499, 527
+  rotate: true
+  xy: 955, 603
   size: 84, 39
   orig: 84, 39
   offset: 0, 0
   index: -1
 tail_end
   rotate: false
-  xy: 2, 10
+  xy: 62, 10
   size: 58, 30
   orig: 58, 30
   offset: 0, 0
   index: -1
 tail_mid
   rotate: true
-  xy: 654, 859
+  xy: 135, 48
   size: 40, 124
   orig: 40, 124
   offset: 0, 0
   index: -1
 thigh_left
-  rotate: false
-  xy: 414, 129
+  rotate: true
+  xy: 955, 570
   size: 31, 34
   orig: 31, 34
   offset: 0, 0
   index: -1
 thigh_right
   rotate: false
-  xy: 553, 495
+  xy: 836, 146
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 vial
   rotate: false
-  xy: 786, 907
+  xy: 842, 452
   size: 102, 115
   orig: 128, 128
   offset: 14, 5
+  index: -1
+
+skeleton2.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+helmet05
+  rotate: false
+  xy: 2, 2
+  size: 341, 237
+  orig: 341, 237
+  offset: 0, 0
   index: -1

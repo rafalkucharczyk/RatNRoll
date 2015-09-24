@@ -257,7 +257,7 @@ class AnimationHelper
         changeRunningAnimation(animationName, animationSpeed);
     }
 
-    void playHoveringAnimation() { changeRunningAnimation("run06.x", 1.0); }
+    void playHoveringAnimation() { changeRunningAnimation("hover_loop_01.x", 1.0); }
 
     /*
      eyes01.x : pojedyncze mrugnięcie (losowe urozmaicenie ?)
