@@ -85,16 +85,16 @@ class LevelTutorial : public LevelCustomization
   public:
     LevelTutorial() : canDropNewItem(true), currentItemIndex(0) {}
 
-    std::string getRubeJsonFileName() const { return "level_01.json"; }
+    std::string getRubeJsonFileName() const override { return "level_01.json"; };
 
-    float getItemDropInterval(int gameScore) { return 2.5; }
+    float getItemDropInterval(int gameScore) override { return 2.5; };
 
     float getRatSpeedMin() const override { return 0.2; }
     float getRatSpeedMax() const override { return 3.2; }
     float getRatSpeedStep() const override { return 0.3; }
     float getRatSpeedInitial() const override { return getRatSpeedMin() + getRatSpeedStep(); }
 
-    ItemType getDropItemType(float currentRatSpeed)
+    ItemType getDropItemType(float currentRatSpeed) override
     {
         if (!canDropNewItem) {
             return ITEM_TYPE_MAX;
@@ -111,7 +111,7 @@ class LevelTutorial : public LevelCustomization
         return normalizeDropItemType(itemType, currentRatSpeed);
     }
 
-    b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) { return b2Vec2(0, 9); }
+    b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) override { return b2Vec2(0, 9); }
 
     cocos2d::FiniteTimeAction *
     levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy) override
@@ -179,9 +179,9 @@ class Level01 : public LevelCustomization
   public:
     Level01() : currentItemIndex(0), bonusItemInjected(false), itemToDrop(ITEM_TYPE_MAX) {}
 
-    std::string getRubeJsonFileName() const { return "level_01.json"; }
+    std::string getRubeJsonFileName() const override { return "level_01.json"; }
 
-    float getItemDropInterval(int gameScore)
+    float getItemDropInterval(int gameScore) override
     {
         int minScore = 1000;
         int maxScore = 5000;
@@ -197,7 +197,7 @@ class Level01 : public LevelCustomization
     float getRatSpeedMax() const override { return 4.2; }
     float getRatSpeedStep() const override { return 0.4; }
 
-    ItemType getDropItemType(float currentRatSpeed)
+    ItemType getDropItemType(float currentRatSpeed) override
     {
         if (currentItemIndex == itemsSequence.size()) {
             currentItemIndex = 0;
@@ -218,7 +218,7 @@ class Level01 : public LevelCustomization
         return itemToDrop;
     }
 
-    b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition)
+    b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) override
     {
         const float maxX = 1.2;
         const float maxXOffset = 0.3;
