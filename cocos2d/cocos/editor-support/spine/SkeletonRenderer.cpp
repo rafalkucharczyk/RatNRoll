@@ -342,7 +342,7 @@ spAttachment* SkeletonRenderer::getAttachment (const std::string& slotName, cons
 	return spSkeleton_getAttachmentForSlotName(_skeleton, slotName.c_str(), attachmentName.c_str());
 }
 bool SkeletonRenderer::setAttachment (const std::string& slotName, const std::string& attachmentName) {
-	return spSkeleton_setAttachment(_skeleton, slotName.c_str(), attachmentName.c_str()) ? true : false;
+    return spSkeleton_setAttachment(_skeleton, slotName.c_str(), attachmentName.empty() ? NULL : attachmentName.c_str()) ? true : false;
 }
 
 spSkeleton* SkeletonRenderer::getSkeleton () {

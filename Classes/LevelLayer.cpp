@@ -383,8 +383,7 @@ LevelLayer::LevelLayer(LevelCustomization *customization)
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), paused(false), nextItemDropTime(0.0),
       contactListener(new LevelContactListener(this)), cheeseFrenzyParticleNode(nullptr),
-      skullShieldParticleNode(nullptr), halvePointsParticleNode(nullptr),
-      frenzyGameScoreMultiplier(1), skullShieldCount(0),
+      halvePointsParticleNode(nullptr), frenzyGameScoreMultiplier(1), skullShieldCount(0),
       animationHelper(new AnimationHelper(*customization))
 {
 }
@@ -594,15 +593,6 @@ void LevelLayer::attachParticleNodesToRatBody()
     ratSprite->addChild(cheeseFrenzyParticleNode, -1);
     cheeseFrenzyParticleNode->setPosition(Vec2(0, 0.25 * ratBoundingBox.size.height * scale));
     cheeseFrenzyParticleNode->setScale(5);
-
-    // ---
-
-    skullShieldParticleNode = ParticleSystemQuad::create("skull_shield.plist");
-    skullShieldParticleNode->stopSystem();
-
-    ratSprite->addChild(skullShieldParticleNode, -1);
-    skullShieldParticleNode->setPosition(Vec2(0, 0.7 * ratBoundingBox.size.height * scale));
-    skullShieldParticleNode->setScale(5);
 }
 
 void LevelLayer::runCustomActionOnStart()
@@ -839,9 +829,8 @@ void LevelLayer::halveItemEaten()
     if (skullShieldCount > 0) {
         animationHelper->playEyesAnimation(AnimationHelper::Eyes::WINKING);
 
-        if (--skullShieldCount == 0) {
-            skullShieldParticleNode->stopSystem();
-        }
+        --skullShieldCount;
+        updateRatHelmet();
 
         return;
     }
@@ -884,9 +873,9 @@ void LevelLayer::frenzyItemEaten()
 
 void LevelLayer::shieldItemEaten()
 {
-    if (++skullShieldCount == 1) {
-        skullShieldParticleNode->resetSystem();
-    }
+    ++skullShieldCount;
+
+    updateRatHelmet();
 }
 
 std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemType) const
@@ -991,4 +980,18 @@ spine::SkeletonAnimation *LevelLayer::getRatAnimation()
     assert(skeletonAnimation);
 
     return skeletonAnimation;
+}
+
+void LevelLayer::updateRatHelmet()
+{
+    const int manySkullShieldsCount = 5;
+
+    std::string attachmentName = "";
+
+    if (skullShieldCount > 0) {
+        attachmentName =
+            "helmet0" + std::to_string(std::min(skullShieldCount, manySkullShieldsCount));
+    }
+
+    getRatAnimation()->setAttachment("helmet", attachmentName);
 }

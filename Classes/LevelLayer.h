@@ -95,6 +95,8 @@ class LevelLayer : public RUBELayer
 
     spine::SkeletonAnimation *getRatAnimation();
 
+    void updateRatHelmet();
+
   private:
     std::unique_ptr<LevelCustomization> levelCustomization;
     b2Body *ratBody, *earthBody, *cageBody;
@@ -135,7 +137,6 @@ class LevelLayer : public RUBELayer
     std::function<void(int)> gameFinishedCallback;
 
     cocos2d::ParticleSystemQuad *cheeseFrenzyParticleNode;
-    cocos2d::ParticleSystemQuad *skullShieldParticleNode;
     cocos2d::ParticleSystemQuad *halvePointsParticleNode;
 
     int frenzyGameScoreMultiplier;

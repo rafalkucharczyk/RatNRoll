@@ -13,7 +13,6 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
 		25A22A701B8C362A00EBEA48 /* break01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25A22A6F1B8C362A00EBEA48 /* break01.png */; };
-		25ABD95D1B8ED5D9004D007F /* skull_shield.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD95C1B8ED5D9004D007F /* skull_shield.plist */; };
 		25ABD9601B8F9794004D007F /* frenzy01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD95F1B8F9794004D007F /* frenzy01.png */; };
 		25ABD9621B8F979B004D007F /* shield01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD9611B8F979B004D007F /* shield01.png */; };
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
@@ -153,7 +152,6 @@
 		255340CA1B772F9900C31F87 /* GameCenterPlayerScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterPlayerScore.h; sourceTree = "<group>"; };
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
 		25A22A6F1B8C362A00EBEA48 /* break01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = break01.png; sourceTree = "<group>"; };
-		25ABD95C1B8ED5D9004D007F /* skull_shield.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = skull_shield.plist; sourceTree = "<group>"; };
 		25ABD95F1B8F9794004D007F /* frenzy01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frenzy01.png; sourceTree = "<group>"; };
 		25ABD9611B8F979B004D007F /* shield01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shield01.png; sourceTree = "<group>"; };
 		25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DigitsPanel.cpp; path = Menu/DigitsPanel.cpp; sourceTree = "<group>"; };
@@ -427,7 +425,6 @@
 				B551AF6D1B1A41260076A8E9 /* cheese01.png */,
 				B55091C31B652517005A4E8B /* tutorial_balloon.png */,
 				2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */,
-				25ABD95C1B8ED5D9004D007F /* skull_shield.plist */,
 				25ACD8F91BA57B5900899F09 /* halve_points.plist */,
 			);
 			name = Resources;
@@ -727,7 +724,6 @@
 				B551AF6A1B1A34C90076A8E9 /* background01.png in Resources */,
 				B54CCC331B45E4CA00393F40 /* hover01.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
-				25ABD95D1B8ED5D9004D007F /* skull_shield.plist in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				B54C0DF11B5EEE12002B36B6 /* animations in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,

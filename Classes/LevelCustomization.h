@@ -199,9 +199,13 @@ class Level01 : public LevelCustomization
 
     ItemType getDropItemType(float currentRatSpeed) override
     {
+        itemsSequence = {FRENZY, SHIELD, HALVE};
+
         if (currentItemIndex == itemsSequence.size()) {
             currentItemIndex = 0;
         }
+
+        return static_cast<ItemType>(itemsSequence[currentItemIndex++]);
 
         if (currentItemIndex != 0 && currentItemIndex % 10 == 0 && bonusItemInjected == false) {
             bonusItemInjected = true;
@@ -214,8 +218,6 @@ class Level01 : public LevelCustomization
         bonusItemInjected = false;
 
         itemToDrop = normalizeDropItemType(itemType, currentRatSpeed);
-
-        return itemToDrop;
     }
 
     b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) override
