@@ -66,6 +66,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 // call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
+    Director::getInstance()->stopAnimation();
+
     if (GameFlow::getInstance().adsVisible()) {
         SonarCocosHelper::iAds::hideiAdBanner();
     }
@@ -78,6 +80,8 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    Director::getInstance()->startAnimation();
+
     if (GameFlow::getInstance().adsVisible()) {
         SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
     }
