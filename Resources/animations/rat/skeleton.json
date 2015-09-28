@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "zbdAmJHdXc+/ss6S0Bd6hSixmYM", "spine": "2.1.27", "width": 313.46, "height": 454.06, "images": "./rat_elems/" },
+"skeleton": { "hash": "deWus7mcCtMWYnHbZ0mCUgmkecE", "spine": "2.1.27", "width": 313.46, "height": 454.06, "images": "./rat_elems/" },
 "bones": [
 	{ "name": "root", "x": -2.41, "y": 157.89 },
 	{ "name": "arm_left", "parent": "root", "length": 37.45, "x": 28.4, "y": -5.69, "rotation": -2.7 },
@@ -151,8 +151,7 @@
 			"helmet01": { "x": 121.54, "y": 13.88, "rotation": -77.56, "width": 341, "height": 237 },
 			"helmet02": { "x": 121.54, "y": 13.88, "rotation": -77.56, "width": 341, "height": 237 },
 			"helmet03": { "x": 121.54, "y": 13.88, "rotation": -77.56, "width": 341, "height": 237 },
-			"helmet04": { "x": 121.54, "y": 13.88, "rotation": -77.56, "width": 341, "height": 237 },
-			"helmet05": { "x": 121.54, "y": 13.88, "rotation": -77.56, "width": 341, "height": 237 }
+			"helmet04": { "x": 121.54, "y": 13.88, "rotation": -77.56, "width": 341, "height": 237 }
 		},
 		"item": {
 			"duck": { "x": -0.13, "y": -2.41, "rotation": 90, "width": 128, "height": 128 }
@@ -1715,8 +1714,7 @@
 					{ "time": 0.7666, "angle": 23.76 }
 				],
 				"translate": [
-					{ "time": 0, "x": -13.8, "y": 486.08, "curve": "stepped" },
-					{ "time": 0.7666, "x": -13.8, "y": 486.08 }
+					{ "time": 0, "x": 0, "y": 0 }
 				]
 			},
 			"eyelid_right_bot": {
