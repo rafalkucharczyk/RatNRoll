@@ -390,6 +390,7 @@ const std::string LevelLayer::name = "LevelLayer";
 
 LevelLayer::LevelLayer(LevelCustomization *customization)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
+      cogWheelBody1(nullptr), cogWheelBody2(nullptr),
       ratSpeed(levelCustomization->getRatSpeedInitial()), applyCustomGravity(true), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), paused(false), nextItemDropTime(0.0),
@@ -489,6 +490,10 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
     assert(earthBody);
     cageBody = json->getBodyByName("cage");
     assert(cageBody);
+    cogWheelBody1 = json->getBodyByName("cogwheel1");
+    assert(cogWheelBody1);
+    cogWheelBody2 = json->getBodyByName("cogwheel2");
+    assert(cogWheelBody2);
 
     for (int i = LevelCustomization::SPEEDUP; i < LevelCustomization::ITEM_TYPE_MAX; i++) {
         LevelCustomization::ItemType itemType = static_cast<LevelCustomization::ItemType>(i);
@@ -663,6 +668,9 @@ void LevelLayer::doPhysicsCalculationStep()
     }
 
     shadowRatHelper->doPhysicsCalculationStep();
+
+    cogWheelBody2->SetAngularVelocity(3 * earthBody->GetAngularVelocity());
+    cogWheelBody1->SetAngularVelocity(-0.8 * cogWheelBody2->GetAngularVelocity());
 }
 
 float LevelLayer::getEarthRadius() const
