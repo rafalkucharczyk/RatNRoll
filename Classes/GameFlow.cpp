@@ -223,8 +223,10 @@ Scene *GameFlow::createSceneObject()
 {
     Scene *scene = Scene::create();
 
-    auto backgroundLayer =
-        BackgroundLayer::create("background/bg_item01.png", "background/bg_plane01.png");
+    std::string backgroundId = "0" + std::to_string(random(1, 3));
+
+    auto backgroundLayer = BackgroundLayer::create("background/bg_item" + backgroundId + ".png",
+                                                   "background/bg_plane" + backgroundId + ".png");
     scene->addChild(backgroundLayer, 0, backgroundLayerTag);
 
     return scene;
