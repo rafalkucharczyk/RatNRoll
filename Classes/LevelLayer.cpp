@@ -90,7 +90,7 @@ class LevelLayerProxyImpl : public LevelLayerProxy
             levelLayer.startDroppingItems();
         }
     }
-    void addOverlayingLayer(Layer *layer)
+    void addOverlayingLayer(Layer *layer) override
     {
         Director::getInstance()->getRunningScene()->addChild(layer, 0,
                                                              LevelLayer::proxyOverlayLayer);
@@ -313,6 +313,16 @@ class AnimationHelper
         skeleton->setAnimation(eyesMovingTrackIndex, os.str(), false);
     }
 
+    void playShowShieldAnimation()
+    {
+        skeleton->setAnimation(shieldShowingTrackIndex, "helmet_in_01.x", false);
+    }
+
+    void playHideShieldAnimation()
+    {
+        skeleton->setAnimation(shieldShowingTrackIndex, "helmet_out_01.x", false);
+    }
+
   private:
     void changeRunningAnimation(const std::string &newAnimationName, float newAnimationSpeed)
     {
@@ -373,6 +383,7 @@ class AnimationHelper
 
     static const int runningTrackIndex = 0;
     static const int eyesMovingTrackIndex = 1;
+    static const int shieldShowingTrackIndex = 2;
 };
 
 const std::string LevelLayer::name = "LevelLayer";
@@ -829,8 +840,7 @@ void LevelLayer::halveItemEaten()
     if (skullShieldCount > 0) {
         animationHelper->playEyesAnimation(AnimationHelper::Eyes::WINKING);
 
-        --skullShieldCount;
-        updateRatHelmet();
+        updateRatShield(-1);
 
         return;
     }
@@ -871,12 +881,7 @@ void LevelLayer::frenzyItemEaten()
                                      nullptr));
 }
 
-void LevelLayer::shieldItemEaten()
-{
-    ++skullShieldCount;
-
-    updateRatHelmet();
-}
+void LevelLayer::shieldItemEaten() { updateRatShield(1); }
 
 std::string LevelLayer::itemTypeToImageName(LevelCustomization::ItemType itemType) const
 {
@@ -982,16 +987,25 @@ spine::SkeletonAnimation *LevelLayer::getRatAnimation()
     return skeletonAnimation;
 }
 
-void LevelLayer::updateRatHelmet()
+void LevelLayer::updateRatShield(int delta)
 {
-    const int manySkullShieldsCount = 5;
+    assert(delta == -1 || delta == 1);
 
-    std::string attachmentName = "";
+    const int manySkullShieldsCount = 4;
 
-    if (skullShieldCount > 0) {
-        attachmentName =
-            "helmet0" + std::to_string(std::min(skullShieldCount, manySkullShieldsCount));
+    if (delta == 1 && skullShieldCount == 0) {
+        animationHelper->playShowShieldAnimation();
     }
 
-    getRatAnimation()->setAttachment("helmet", attachmentName);
+    if (delta == -1 && skullShieldCount == 1) {
+        animationHelper->playHideShieldAnimation();
+    }
+
+    skullShieldCount += delta;
+
+    if (skullShieldCount > 0) {
+        std::string attachmentName =
+            "helmet0" + std::to_string(std::min(skullShieldCount, manySkullShieldsCount));
+        getRatAnimation()->setAttachment("helmet", attachmentName);
+    }
 }

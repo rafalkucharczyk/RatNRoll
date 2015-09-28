@@ -158,7 +158,7 @@ helmet03
   orig: 341, 237
   offset: 0, 0
   index: -1
-helmet04
+helmet05
   rotate: false
   xy: 493, 68
   size: 341, 237
@@ -269,7 +269,7 @@ size: 512,256
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-helmet05
+helmet04
   rotate: false
   xy: 2, 2
   size: 341, 237

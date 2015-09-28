@@ -95,7 +95,7 @@ class LevelLayer : public RUBELayer
 
     spine::SkeletonAnimation *getRatAnimation();
 
-    void updateRatHelmet();
+    void updateRatShield(int delta);
 
   private:
     std::unique_ptr<LevelCustomization> levelCustomization;
