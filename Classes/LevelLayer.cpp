@@ -5,6 +5,8 @@
 #include <limits>
 #include <b2dJson.h>
 
+#include "SoundHelper.h"
+
 USING_NS_CC;
 
 class DropItemUserData
@@ -772,6 +774,8 @@ void LevelLayer::removeOutstandingItems()
 
 void LevelLayer::ratAteItem(LevelCustomization::ItemType itemType)
 {
+    SoundHelper::getInstance().playEffectForItem(itemType);
+
     if (itemType == LevelCustomization::SPEEDUP) {
         speedUpItemEaten();
     }

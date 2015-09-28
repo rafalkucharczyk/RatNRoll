@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 
 #include "GameFlow.h"
+#include "SoundHelper.h"
 
 #include "SonarFrameworks.h"
 
@@ -51,6 +52,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     if (GameFlow::getInstance().adsVisible()) {
         SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
     }
+
+    SoundHelper::getInstance().init();
 
     auto scene = GameFlow::getInstance().createInitialScene();
 

@@ -12,6 +12,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2542C43E1BB941D200727984 /* background in Resources */ = {isa = PBXBuildFile; fileRef = 2542C43D1BB941D200727984 /* background */; settings = {ASSET_TAGS = (); }; };
+		2542C4401BB967F500727984 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 2542C43F1BB967F500727984 /* sounds */; settings = {ASSET_TAGS = (); }; };
+		2542C4431BB9685700727984 /* SoundHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2542C4411BB9685700727984 /* SoundHelper.cpp */; settings = {ASSET_TAGS = (); }; };
 		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
 		25A22A701B8C362A00EBEA48 /* break01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25A22A6F1B8C362A00EBEA48 /* break01.png */; };
 		25ABD9601B8F9794004D007F /* frenzy01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD95F1B8F9794004D007F /* frenzy01.png */; };
@@ -148,6 +150,9 @@
 		1D6058910D05DD3D006BFB54 /* RatNRoll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RatNRoll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2542C43D1BB941D200727984 /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; path = background; sourceTree = "<group>"; };
+		2542C43F1BB967F500727984 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
+		2542C4411BB9685700727984 /* SoundHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundHelper.cpp; sourceTree = "<group>"; };
+		2542C4421BB9685700727984 /* SoundHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundHelper.h; sourceTree = "<group>"; };
 		2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cheese_frenzy.plist; sourceTree = "<group>"; };
 		255340CA1B772F9900C31F87 /* GameCenterPlayerScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterPlayerScore.h; sourceTree = "<group>"; };
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
@@ -405,6 +410,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2542C43F1BB967F500727984 /* sounds */,
 				2542C43D1BB941D200727984 /* background */,
 				B54C0DF01B5EEE12002B36B6 /* animations */,
 				521A8EA819F11F5000D177D7 /* fonts */,
@@ -458,6 +464,8 @@
 				B552BE061B237A0800D4851A /* PostLevelLayer.h */,
 				B55047A11B6B960A0020ECE4 /* SettingsLayer.cpp */,
 				B55047A21B6B960A0020ECE4 /* SettingsLayer.h */,
+				2542C4411BB9685700727984 /* SoundHelper.cpp */,
+				2542C4421BB9685700727984 /* SoundHelper.h */,
 				B55091C51B652572005A4E8B /* TutorialBalloonLayer.cpp */,
 				B55091C61B652572005A4E8B /* TutorialBalloonLayer.h */,
 				25C5F89E1B7E3033002DB80B /* TestLayer.cpp */,
@@ -750,6 +758,7 @@
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 				25ABD9601B8F9794004D007F /* frenzy01.png in Resources */,
+				2542C4401BB967F500727984 /* sounds in Resources */,
 				B54CCC381B46F91A00393F40 /* slowdown01.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -776,6 +785,7 @@
 				B5927EC71B5440DA00D59F09 /* IOSCPPHelper.mm in Sources */,
 				B5927EC91B5440DA00D59F09 /* IOSResults.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				2542C4431BB9685700727984 /* SoundHelper.cpp in Sources */,
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
 				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
 				B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */,
