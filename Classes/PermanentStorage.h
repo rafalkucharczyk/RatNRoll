@@ -6,21 +6,15 @@
 class PermanentStorage
 {
   public:
-    PermanentStorage();
+    static PermanentStorage &getInstance();
 
     void setBestScore(int levelNumber, int score);
     int getBestScore(int levelNumber) const;
 
   private:
-    bool hasValidFormat() const;
-    void initWithDefaults();
-    void load();
-    void save();
+    PermanentStorage();
 
-  private:
-    std::string storageFilePath;
-
-    Json::Value storageJsonData;
+    static PermanentStorage *instance;
 };
 
 #endif // __PERMANENTSTORAGE_H__

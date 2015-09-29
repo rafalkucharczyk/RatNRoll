@@ -1,69 +1,33 @@
 #include "PermanentStorage.h"
 
-#include <cocos/platform/CCFileUtils.h>
-
-#include <fstream>
+#include <cocos/base/CCUserDefault.h>
 
 USING_NS_CC;
 
-PermanentStorage::PermanentStorage()
-    : storageFilePath(FileUtils::getInstance()->getWritablePath() + "data.json")
+namespace
 {
-    if (FileUtils::getInstance()->isFileExist(storageFilePath)) {
-        load();
-        if (hasValidFormat()) {
-            return;
-        }
+std::string getBestScoreKey(int levelNumber) { return "bestScore." + std::to_string(levelNumber); }
+}
+
+PermanentStorage *PermanentStorage::instance = nullptr;
+
+PermanentStorage &PermanentStorage::getInstance()
+{
+    if (instance == nullptr) {
+        instance = new PermanentStorage();
     }
 
-    initWithDefaults();
-    save();
+    return *instance;
 }
+
+PermanentStorage::PermanentStorage() {}
 
 void PermanentStorage::setBestScore(int levelNumber, int score)
 {
-    if (!storageJsonData.isValidIndex(levelNumber)) {
-        storageJsonData.resize(levelNumber + 1);
-        storageJsonData[levelNumber] = Json::Value(Json::objectValue);
-    }
-
-    storageJsonData[levelNumber]["bestScore"] = score;
-
-    save();
+    UserDefault::getInstance()->setIntegerForKey(getBestScoreKey(levelNumber).c_str(), score);
 }
 
 int PermanentStorage::getBestScore(int levelNumber) const
 {
-    if (!storageJsonData.isValidIndex(levelNumber)) {
-        return 0;
-    }
-
-    return storageJsonData[levelNumber]["bestScore"].asInt();
-}
-
-bool PermanentStorage::hasValidFormat() const { return storageJsonData.isArray(); }
-
-void PermanentStorage::initWithDefaults() { storageJsonData = Json::Value(Json::arrayValue); }
-
-void PermanentStorage::load()
-{
-    std::ifstream ifs;
-    ifs.open(storageFilePath);
-
-    Json::Reader reader;
-    reader.parse(ifs, storageJsonData);
-
-    ifs.close();
-}
-
-void PermanentStorage::save()
-{
-    std::ofstream ofs;
-    ofs.open(storageFilePath);
-
-    Json::FastWriter writer;
-
-    ofs << writer.write(storageJsonData);
-
-    ofs.close();
+    return UserDefault::getInstance()->getIntegerForKey(getBestScoreKey(levelNumber).c_str(), 0);
 }

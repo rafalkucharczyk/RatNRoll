@@ -254,12 +254,10 @@ int GameFlow::updateBestScore(int levelNumber, int score)
 {
     SonarCocosHelper::GameCenter::submitScore(score, getLeaderboardName(levelNumber));
 
-    PermanentStorage gameStorage;
-
-    int currentBestScore = gameStorage.getBestScore(levelNumber);
+    int currentBestScore = PermanentStorage::getInstance().getBestScore(levelNumber);
 
     if (score > currentBestScore) {
-        gameStorage.setBestScore(levelNumber, score);
+        PermanentStorage::getInstance().setBestScore(levelNumber, score);
 
         return score;
     }
