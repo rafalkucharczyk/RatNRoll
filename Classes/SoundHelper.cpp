@@ -33,7 +33,7 @@ SoundHelper &SoundHelper::getInstance()
 
 void SoundHelper::init()
 {
-    CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("background/burger01.wav");
+    CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sounds/burger01.wav");
 }
 
 void SoundHelper::playEffectForItem(LevelCustomization::ItemType itemType)
