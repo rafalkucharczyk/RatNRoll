@@ -182,16 +182,20 @@ void IOSCPPHelper::gameCenterRegisterChallengeCallback(std::function<void(SonarC
 SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBestScores(__String leaderboardID)
 {
     [[IOSHelper instance] gameCenterGetFriendsBestScoresForLeaderboard:string2NSString(leaderboardID)
-                                                 withCompletionHandler:^(NSArray *results)
+                                                 withCompletionHandler:^(NSArray *friendsScores)
     {
         SonarCocosHelper::GameCenterPlayersScores scores;
 
-        for (GKScore* score in results) {
+        for (GKScore* score in friendsScores) {
+            bool isOwnScore = [[[GKLocalPlayer localPlayer] alias]
+                               isEqualToString: [[score player] alias]];
+
             scores.push_back(
                 SonarCocosHelper::GameCenterPlayerScore(NSString2string([[score player] alias]),
                                                         leaderboardID.getCString(),
                                                         [score value],
-                                                        false));
+                                                        false,
+                                                        isOwnScore));
         }
 
         friendsBestScores[leaderboardID.getCString()] = scores;

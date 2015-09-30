@@ -49,6 +49,9 @@ gameplay - new item, cheese frenzy (particles - cheeses)
 10
 initial screen - credits
 gamecenter - logic for achievements
+post game menu - get best score from game center (local if no connectivity), upload local to game
+                 center
+bug - crash in EAGLView::swap (sometimes happens when app is minimized)
 
 unordered:
 juice app a little, nicer transitions between screens, more animations
@@ -56,8 +59,6 @@ juice app a little, nicer transitions between screens, more animations
 - transitions between scenes
 gamelogic - refactor persistent storage (use keychain for ios), add api for querying iap, 'like us',
             current high score
-post game menu - get best score from game center (local if no connectivity), upload local to game
-                 center
 iap - unlock new item, (cheese frenzy)
 social - add facebook 'like us' (unlock new item, skull protection)
 post game menu - redesign, figure out how to handle visualization of current/high scores (local,
@@ -65,7 +66,6 @@ post game menu - redesign, figure out how to handle visualization of current/hig
 initial screen - settings
 post game menu(?) - rate us
 play music + sounds
-bug - crash in EAGLView::swap (sometimes happens when app is minimized)
 bug - background items are not distributed nicely after app is minimized (?)
 ios - add verification of iap
 settings - show iap icon immediately (initially disabled, enabled after getting product)

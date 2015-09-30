@@ -252,17 +252,24 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
 
 int GameFlow::updateBestScore(int levelNumber, int score)
 {
-    SonarCocosHelper::GameCenter::submitScore(score, getLeaderboardName(levelNumber));
+    // local
+    int bestScore = PermanentStorage::getInstance().getBestScore(levelNumber);
 
-    int currentBestScore = PermanentStorage::getInstance().getBestScore(levelNumber);
+    // remote
+    SonarCocosHelper::GameCenterPlayersScores gameCenterScores =
+        SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(levelNumber));
+    auto i = std::find_if(
+        gameCenterScores.begin(), gameCenterScores.end(),
+        [](SonarCocosHelper::GameCenterPlayerScore score) { return score.isOwnScore; });
+    int remoteBestScore = i != gameCenterScores.end() ? i->score : 0;
 
-    if (score > currentBestScore) {
-        PermanentStorage::getInstance().setBestScore(levelNumber, score);
+    // get max and save locally and remotely
+    bestScore = std::max(std::max(remoteBestScore, bestScore), score);
 
-        return score;
-    }
+    PermanentStorage::getInstance().setBestScore(levelNumber, bestScore);
+    SonarCocosHelper::GameCenter::submitScore(bestScore, getLeaderboardName(levelNumber));
 
-    return currentBestScore;
+    return bestScore;
 }
 
 LevelLayer &GameFlow::getCurrentLevelLayer()

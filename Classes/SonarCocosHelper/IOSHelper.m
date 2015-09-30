@@ -555,6 +555,7 @@ SCHEmptyProtocol
                  withCompletionHandler:(void (^)(NSArray*))completionHandler
 {
     GKLeaderboard *leaderboard = [[GKLeaderboard alloc] init];
+
     leaderboard.playerScope =  GKLeaderboardPlayerScopeFriendsOnly;
     leaderboard.identifier = leaderboardID;
 
