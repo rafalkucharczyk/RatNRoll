@@ -609,7 +609,7 @@ void LevelLayer::attachParticleNodesToRatBody()
     cheeseFrenzyParticleNode->stopSystem();
 
     ratSprite->addChild(cheeseFrenzyParticleNode, -1);
-    cheeseFrenzyParticleNode->setPosition(Vec2(0, 0.25 * ratBoundingBox.size.height * scale));
+    cheeseFrenzyParticleNode->setPosition(Vec2(0, 0.7 * ratBoundingBox.size.height * scale));
     cheeseFrenzyParticleNode->setScale(5);
 }
 
