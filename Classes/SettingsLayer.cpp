@@ -95,7 +95,10 @@ void SettingsLayer::purchaseInProgress() { menuHelper.runActionFor(0, 1); }
 void SettingsLayer::purchaseCompleted()
 {
     menuHelper.runActionFor(0, 2);
-    SonarCocosHelper::iAds::hideiAdBanner();
+
+    if (purchaseCompletedCallback) {
+        purchaseCompletedCallback();
+    }
 }
 
 void SettingsLayer::purchaseCancelled() { menuHelper.runActionFor(0, 3); }

@@ -16,14 +16,19 @@ class SettingsLayer : public cocos2d::Layer, public IAPPresenter
 
     void menuItemClicked(int itemIndex);
 
+    void setGotoMainMenuCallback(std::function<void()> callback)
+    {
+        gotoMainMenuCallback = callback;
+    }
+
     void setPurchaseRequestedCallback(std::function<void()> callback)
     {
         purchaseRequestedCallback = callback;
     }
 
-    void setGotoMainMenuCallback(std::function<void()> callback)
+    void setPurchaseCompletedCallback(std::function<void()> callback)
     {
-        gotoMainMenuCallback = callback;
+        purchaseCompletedCallback = callback;
     }
 
   public:
@@ -36,6 +41,7 @@ class SettingsLayer : public cocos2d::Layer, public IAPPresenter
   private:
     std::function<void()> gotoMainMenuCallback;
     std::function<void()> purchaseRequestedCallback;
+    std::function<void()> purchaseCompletedCallback;
 
     MenuHelper menuHelper;
 

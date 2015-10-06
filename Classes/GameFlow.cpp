@@ -167,6 +167,7 @@ void GameFlow::switchToSettingsScene()
         switchToInitialScene();
     });
     settingsLayer->setPurchaseRequestedCallback([this]() { iapHelper->purchaseProduct(); });
+    settingsLayer->setPurchaseCompletedCallback([]() { SonarCocosHelper::iAds::hideiAdBanner(); });
     scene->addChild(settingsLayer);
 
     Director::getInstance()->replaceScene(scene);
