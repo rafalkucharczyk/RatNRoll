@@ -11,13 +11,7 @@ SettingsLayer::SettingsLayer()
           {{{0.5, 0.41},
             0.15,
             "basket",
-            {[](Node *node) { node->setVisible(false); },
-             [](Node *node) { // purchaseAvailable
-                 float s = node->getScale();
-                 node->setScale(0);
-                 node->setVisible(true);
-                 node->runAction(EaseBackOut::create(ScaleTo::create(0.2, s)));
-             },
+            {[](Node *node) {},
              [](Node *node) { // purchaseInProgress
                  auto action = RepeatForever::create(RotateBy::create(2, 360));
                  action->setTag(inProgressActionTag);
@@ -94,16 +88,16 @@ void SettingsLayer::menuItemClicked(int itemIndex)
     }
 }
 
-void SettingsLayer::purchaseAvailable() { menuHelper.runActionFor(0, 1); }
+void SettingsLayer::purchaseAvailable() {}
 
-void SettingsLayer::purchaseInProgress() { menuHelper.runActionFor(0, 2); }
+void SettingsLayer::purchaseInProgress() { menuHelper.runActionFor(0, 1); }
 
 void SettingsLayer::purchaseCompleted()
 {
-    menuHelper.runActionFor(0, 3);
+    menuHelper.runActionFor(0, 2);
     SonarCocosHelper::iAds::hideiAdBanner();
 }
 
-void SettingsLayer::purchaseCancelled() { menuHelper.runActionFor(0, 4); }
+void SettingsLayer::purchaseCancelled() { menuHelper.runActionFor(0, 3); }
 
-void SettingsLayer::purchaseFailed() { menuHelper.runActionFor(0, 4); }
+void SettingsLayer::purchaseFailed() { menuHelper.runActionFor(0, 3); }

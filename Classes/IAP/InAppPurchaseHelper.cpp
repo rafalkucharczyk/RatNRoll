@@ -2,7 +2,7 @@
 #include "KeychainItem.h"
 
 InAppPurchaseHelper::InAppPurchaseHelper(const std::string &productId, IAPPresenter &iapPresenter)
-    : productId(productId), iapPresenter(iapPresenter)
+    : productId(productId), iapPresenter(iapPresenter), isPurchaseAvailable(false)
 {
 }
 
@@ -23,7 +23,14 @@ void InAppPurchaseHelper::init()
     inAppPurchaseEngine.requestProduct(productId);
 }
 
-void InAppPurchaseHelper::purchaseProduct() { inAppPurchaseEngine.purchaseProduct(); }
+void InAppPurchaseHelper::purchaseProduct()
+{
+    if (isPurchaseAvailable) {
+        inAppPurchaseEngine.purchaseProduct();
+    } else {
+        deferredAction = [this]() { inAppPurchaseEngine.purchaseProduct(); };
+    }
+}
 
 bool InAppPurchaseHelper::isPurchased(const std::string &productId)
 {
@@ -45,6 +52,12 @@ void InAppPurchaseHelper::inAppPurchaseNotificationReceived(int notification, st
         CCLOG("InAppPurchase::productReceived %s",
               inAppPurchaseEngine.getProductPriceInLocalCurrency().c_str());
         iapPresenter.purchaseAvailable();
+
+        isPurchaseAvailable = true;
+
+        if (deferredAction) {
+            deferredAction();
+        }
     } else if (notification == InAppPurchase::purchasingProduct) {
         CCLOG("InAppPurchase::purchasingProduct");
         iapPresenter.purchaseInProgress();

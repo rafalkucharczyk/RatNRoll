@@ -52,6 +52,7 @@ gamecenter - logic for achievements
 post game menu - get best score from game center (local if no connectivity), upload local to game
                  center
 bug - crash in EAGLView::swap (sometimes happens when app is minimized)
+settings - show iap icon immediately
 
 unordered:
 juice app a little, nicer transitions between screens, more animations
@@ -68,7 +69,6 @@ post game menu(?) - rate us
 play music + sounds
 bug - background items are not distributed nicely after app is minimized (?)
 ios - add verification of iap
-settings - show iap icon immediately (initially disabled, enabled after getting product)
 gameplay - make sure item is eaten when rat touches it (currently item is eaten only when touches
         rat's belly)
 

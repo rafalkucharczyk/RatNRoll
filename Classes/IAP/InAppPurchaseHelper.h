@@ -22,6 +22,9 @@ class InAppPurchaseHelper : public InAppPurchaseListener
     std::string productId;
     IAPPresenter &iapPresenter;
 
+    bool isPurchaseAvailable;
+    std::function<void()> deferredAction;
+
     InAppPurchase inAppPurchaseEngine;
 };
 
