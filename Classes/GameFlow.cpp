@@ -67,9 +67,9 @@ void GameFlow::pauseGame()
     runningScene->addChild(pauseLayer, 0, pauseLayerTag);
 }
 
-bool GameFlow::adsVisible() const
+bool GameFlow::iapPurchaseCompleted() const
 {
-    return !InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
+    return InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
 }
 
 void GameFlow::switchToInitialScene()
@@ -240,7 +240,7 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
         break;
 
     case 1:
-        return new Level01();
+        return new Level01(iapPurchaseCompleted(), true);
         break;
 
     default:

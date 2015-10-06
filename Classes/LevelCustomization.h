@@ -177,7 +177,11 @@ class LevelTutorial : public LevelCustomization
 class Level01 : public LevelCustomization
 {
   public:
-    Level01() : currentItemIndex(0), bonusItemInjected(false), itemToDrop(ITEM_TYPE_MAX) {}
+    Level01(bool frenzyEnabled, bool shieldEnabled)
+        : currentItemIndex(0), bonusItemInjected(false), itemToDrop(ITEM_TYPE_MAX),
+          frenzyEnabled(frenzyEnabled), shieldEnabled(shieldEnabled)
+    {
+    }
 
     std::string getRubeJsonFileName() const override { return "level_01.json"; }
 
@@ -208,12 +212,10 @@ class Level01 : public LevelCustomization
 #ifdef TEST_SEQUENCE
         return static_cast<ItemType>(itemsSequence[currentItemIndex++]);
 #endif
+        ItemType bonusItemType = getBonusItem();
 
-        if (currentItemIndex != 0 && currentItemIndex % 10 == 0 && bonusItemInjected == false) {
-            bonusItemInjected = true;
-
-            // TODO check if frenzy and/or shield is allowed
-            return cocos2d::rand_minus1_1() > 0 ? FRENZY : SHIELD;
+        if (bonusItemType != ITEM_TYPE_MAX) {
+            return bonusItemType;
         }
 
         ItemType itemType = static_cast<ItemType>(itemsSequence[currentItemIndex++]);
@@ -243,11 +245,38 @@ class Level01 : public LevelCustomization
     }
 
   private:
+    ItemType getBonusItem()
+    {
+        if (!frenzyEnabled && !shieldEnabled) {
+            return ITEM_TYPE_MAX;
+        }
+
+        if (currentItemIndex != 0 && currentItemIndex % 10 == 0 && bonusItemInjected == false) {
+            bonusItemInjected = true;
+
+            std::vector<ItemType> bonusItems;
+
+            if (frenzyEnabled) {
+                bonusItems.push_back(FRENZY);
+            }
+
+            if (shieldEnabled) {
+                bonusItems.push_back(SHIELD);
+            }
+
+            return bonusItems[cocos2d::random<int>(0, bonusItems.size() - 1)];
+        }
+
+        return ITEM_TYPE_MAX;
+    }
+
+  private:
 #include "LevelCustomization_itemsSequence.hxx"
 
     int currentItemIndex;
     bool bonusItemInjected;
     ItemType itemToDrop;
+    bool frenzyEnabled, shieldEnabled;
 };
 
 #endif // __LEVEL_LOGIC_H__

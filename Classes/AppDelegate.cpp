@@ -49,7 +49,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     register_all_packages();
 
     SonarCocosHelper::IOS::Setup();
-    if (GameFlow::getInstance().adsVisible()) {
+    if (!GameFlow::getInstance().iapPurchaseCompleted()) {
         SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
     }
 
@@ -68,7 +68,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
 
-    if (GameFlow::getInstance().adsVisible()) {
+    if (!GameFlow::getInstance().iapPurchaseCompleted()) {
         SonarCocosHelper::iAds::hideiAdBanner();
     }
     GameFlow::getInstance().pauseGame();
@@ -82,7 +82,7 @@ void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
 
-    if (GameFlow::getInstance().adsVisible()) {
+    if (!GameFlow::getInstance().iapPurchaseCompleted()) {
         SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
     }
     // if you use SimpleAudioEngine, it must resume here

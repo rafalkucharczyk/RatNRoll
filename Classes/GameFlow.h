@@ -20,7 +20,7 @@ class GameFlow
 
     void pauseGame();
 
-    bool adsVisible() const;
+    bool iapPurchaseCompleted() const;
 
   private:
     void switchToInitialScene();

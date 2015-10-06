@@ -53,14 +53,14 @@ post game menu - get best score from game center (local if no connectivity), upl
                  center
 bug - crash in EAGLView::swap (sometimes happens when app is minimized)
 settings - show iap icon immediately
+gamelogic - refactor persistent storage (use keychain for ios), add api for querying iap, 'like us',
+            current high score
+iap - unlock new item, (cheese frenzy)
 
 unordered:
 juice app a little, nicer transitions between screens, more animations
 - name of challenging player should be slightly bigger at the beginning
 - transitions between scenes
-gamelogic - refactor persistent storage (use keychain for ios), add api for querying iap, 'like us',
-            current high score
-iap - unlock new item, (cheese frenzy)
 social - add facebook 'like us' (unlock new item, skull protection)
 post game menu - redesign, figure out how to handle visualization of current/high scores (local,
                  leaderboards) and also replaying of challenges
