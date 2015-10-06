@@ -14,6 +14,8 @@
 		2542C43E1BB941D200727984 /* background in Resources */ = {isa = PBXBuildFile; fileRef = 2542C43D1BB941D200727984 /* background */; settings = {ASSET_TAGS = (); }; };
 		2542C4401BB967F500727984 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 2542C43F1BB967F500727984 /* sounds */; settings = {ASSET_TAGS = (); }; };
 		2542C4431BB9685700727984 /* SoundHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2542C4411BB9685700727984 /* SoundHelper.cpp */; settings = {ASSET_TAGS = (); }; };
+		2542C4521BC4567100727984 /* KeychainItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2542C4511BC4567100727984 /* KeychainItem.mm */; settings = {ASSET_TAGS = (); }; };
+		2542C4561BC4568100727984 /* PermanentStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2542C4541BC4568100727984 /* PermanentStorage.cpp */; settings = {ASSET_TAGS = (); }; };
 		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
 		25A22A701B8C362A00EBEA48 /* break01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25A22A6F1B8C362A00EBEA48 /* break01.png */; };
 		25ABD9601B8F9794004D007F /* frenzy01.png in Resources */ = {isa = PBXBuildFile; fileRef = 25ABD95F1B8F9794004D007F /* frenzy01.png */; };
@@ -76,8 +78,6 @@
 		B54CCC371B46F91A00393F40 /* halve01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC341B46F91A00393F40 /* halve01.png */; };
 		B54CCC381B46F91A00393F40 /* slowdown01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC351B46F91A00393F40 /* slowdown01.png */; };
 		B54CCC391B46F91A00393F40 /* speedup01.png in Resources */ = {isa = PBXBuildFile; fileRef = B54CCC361B46F91A00393F40 /* speedup01.png */; };
-		B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B54E63221B3B62D50019C20F /* PermanentStorage.cpp */; };
-		B54F1F271B6C18360093BD0A /* KeychainItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = B54F1F261B6C18360093BD0A /* KeychainItem.mm */; };
 		B550479C1B6B8FEE0020ECE4 /* InAppPurchase.mm in Sources */ = {isa = PBXBuildFile; fileRef = B550479B1B6B8FEE0020ECE4 /* InAppPurchase.mm */; };
 		B55047A01B6B921C0020ECE4 /* InAppPurchaseHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B550479E1B6B921C0020ECE4 /* InAppPurchaseHelper.cpp */; };
 		B55047A31B6B960A0020ECE4 /* SettingsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55047A11B6B960A0020ECE4 /* SettingsLayer.cpp */; };
@@ -153,6 +153,10 @@
 		2542C43F1BB967F500727984 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		2542C4411BB9685700727984 /* SoundHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SoundHelper.cpp; sourceTree = "<group>"; };
 		2542C4421BB9685700727984 /* SoundHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundHelper.h; sourceTree = "<group>"; };
+		2542C4511BC4567100727984 /* KeychainItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = KeychainItem.mm; path = Storage/ios/KeychainItem.mm; sourceTree = "<group>"; };
+		2542C4531BC4568100727984 /* KeychainItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainItem.h; path = Storage/KeychainItem.h; sourceTree = "<group>"; };
+		2542C4541BC4568100727984 /* PermanentStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PermanentStorage.cpp; path = Storage/PermanentStorage.cpp; sourceTree = "<group>"; };
+		2542C4551BC4568100727984 /* PermanentStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermanentStorage.h; path = Storage/PermanentStorage.h; sourceTree = "<group>"; };
 		2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cheese_frenzy.plist; sourceTree = "<group>"; };
 		255340CA1B772F9900C31F87 /* GameCenterPlayerScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterPlayerScore.h; sourceTree = "<group>"; };
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
@@ -227,10 +231,6 @@
 		B54CCC341B46F91A00393F40 /* halve01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = halve01.png; sourceTree = "<group>"; };
 		B54CCC351B46F91A00393F40 /* slowdown01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slowdown01.png; sourceTree = "<group>"; };
 		B54CCC361B46F91A00393F40 /* speedup01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speedup01.png; sourceTree = "<group>"; };
-		B54E63221B3B62D50019C20F /* PermanentStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PermanentStorage.cpp; sourceTree = "<group>"; };
-		B54E63231B3B62D50019C20F /* PermanentStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermanentStorage.h; sourceTree = "<group>"; };
-		B54F1F251B6C18360093BD0A /* KeychainItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeychainItem.h; path = IAP/ios/KeychainItem.h; sourceTree = "<group>"; };
-		B54F1F261B6C18360093BD0A /* KeychainItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = KeychainItem.mm; path = IAP/ios/KeychainItem.mm; sourceTree = "<group>"; };
 		B550479A1B6B8FEE0020ECE4 /* InAppPurchase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InAppPurchase.h; path = IAP/ios/InAppPurchase.h; sourceTree = "<group>"; };
 		B550479B1B6B8FEE0020ECE4 /* InAppPurchase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = InAppPurchase.mm; path = IAP/ios/InAppPurchase.mm; sourceTree = "<group>"; };
 		B550479D1B6B90B50020ECE4 /* IAPPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAPPresenter.h; sourceTree = "<group>"; };
@@ -365,6 +365,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2542C44F1BC4564100727984 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				2542C4531BC4568100727984 /* KeychainItem.h */,
+				2542C4541BC4568100727984 /* PermanentStorage.cpp */,
+				2542C4551BC4568100727984 /* PermanentStorage.h */,
+				2542C4501BC4565800727984 /* ios */,
+			);
+			name = Storage;
+			sourceTree = "<group>";
+		};
+		2542C4501BC4565800727984 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				2542C4511BC4567100727984 /* KeychainItem.mm */,
+			);
+			name = ios;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,6 +460,7 @@
 				B535EF401B1321F5004D647D /* Rube */,
 				B57B5BDF1B570BA900C98B37 /* Menu */,
 				B5927EBC1B5440DA00D59F09 /* SonarCocosHelper */,
+				2542C44F1BC4564100727984 /* Storage */,
 				B55047981B6B8FC30020ECE4 /* IAP */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
@@ -458,8 +478,6 @@
 				257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */,
 				B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */,
 				B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */,
-				B54E63221B3B62D50019C20F /* PermanentStorage.cpp */,
-				B54E63231B3B62D50019C20F /* PermanentStorage.h */,
 				B552BE051B237A0800D4851A /* PostLevelLayer.cpp */,
 				B552BE061B237A0800D4851A /* PostLevelLayer.h */,
 				B55047A11B6B960A0020ECE4 /* SettingsLayer.cpp */,
@@ -575,8 +593,6 @@
 		B55047991B6B8FD30020ECE4 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				B54F1F251B6C18360093BD0A /* KeychainItem.h */,
-				B54F1F261B6C18360093BD0A /* KeychainItem.mm */,
 				B550479A1B6B8FEE0020ECE4 /* InAppPurchase.h */,
 				B550479B1B6B8FEE0020ECE4 /* InAppPurchase.mm */,
 			);
@@ -789,8 +805,6 @@
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
 				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
 				B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */,
-				B54F1F271B6C18360093BD0A /* KeychainItem.mm in Sources */,
-				B54E63241B3B62D50019C20F /* PermanentStorage.cpp in Sources */,
 				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
 				B552BE011B2236DC00D4851A /* BackgroundLayer.cpp in Sources */,
 				B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */,
@@ -800,6 +814,7 @@
 				B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */,
 				B55047A31B6B960A0020ECE4 /* SettingsLayer.cpp in Sources */,
 				B55091C21B645358005A4E8B /* MipmapSprite.cpp in Sources */,
+				2542C4521BC4567100727984 /* KeychainItem.mm in Sources */,
 				B550479C1B6B8FEE0020ECE4 /* InAppPurchase.mm in Sources */,
 				25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
@@ -811,6 +826,7 @@
 				B552BE041B223D3500D4851A /* LevelMenuLayer.cpp in Sources */,
 				B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */,
 				B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */,
+				2542C4561BC4568100727984 /* PermanentStorage.cpp in Sources */,
 				B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);

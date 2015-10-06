@@ -1,5 +1,5 @@
 #include "InAppPurchaseHelper.h"
-#include "KeychainItem.h"
+#include "PermanentStorage.h"
 
 InAppPurchaseHelper::InAppPurchaseHelper(const std::string &productId, IAPPresenter &iapPresenter)
     : productId(productId), iapPresenter(iapPresenter), isPurchaseAvailable(false)
@@ -13,8 +13,8 @@ void InAppPurchaseHelper::init()
         iapPresenter.purchaseCompleted();
 
         // *** TODO remove for production code ***
-        KeychainItem keychainItem;
-        keychainItem.setData(""); // clear purchase when entring settings every second time
+        // clear purchase when entring settings every second time
+        PermanentStorage::getInstance().setPurchaseState(productId, false);
 
         return;
     }
@@ -34,8 +34,7 @@ void InAppPurchaseHelper::purchaseProduct()
 
 bool InAppPurchaseHelper::isPurchased(const std::string &productId)
 {
-    KeychainItem keychainItem;
-    return keychainItem.getData() == productId;
+    return PermanentStorage::getInstance().getPurchaseState(productId);
 }
 
 void InAppPurchaseHelper::inAppPurchaseNotificationReceived(int notification, std::string message,
@@ -66,8 +65,7 @@ void InAppPurchaseHelper::inAppPurchaseNotificationReceived(int notification, st
         CCLOG("InAppPurchase::productPurchased/productRestored");
         iapPresenter.purchaseCompleted();
 
-        KeychainItem keychainItem;
-        keychainItem.setData(productId);
+        PermanentStorage::getInstance().setPurchaseState(productId, true);
     } else if (notification == InAppPurchase::productPurchaseCancelled) {
         CCLOG("InAppPurchase::productPurchaseCancelled");
         iapPresenter.purchaseCancelled();

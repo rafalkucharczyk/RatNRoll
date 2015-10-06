@@ -11,6 +11,9 @@ class PermanentStorage
     void setBestScore(int levelNumber, int score);
     int getBestScore(int levelNumber) const;
 
+    void setPurchaseState(const std::string &productId, bool bought);
+    bool getPurchaseState(const std::string &productId) const;
+
   private:
     PermanentStorage();
 
