@@ -72,6 +72,16 @@ bool GameFlow::iapPurchaseCompleted() const
     return InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
 }
 
+SoundSettings GameFlow::getSoundSettings() const
+{
+    return PermanentStorage::getInstance().getSoundSettings();
+}
+
+void GameFlow::setSoundSettings(const SoundSettings &settings)
+{
+    PermanentStorage::getInstance().setSoundSettings(settings);
+}
+
 void GameFlow::switchToInitialScene()
 {
     currentLevelNumber = noLevelNumber;
@@ -158,7 +168,7 @@ void GameFlow::switchToSettingsScene()
 {
     auto scene = createSceneObject();
 
-    auto settingsLayer = SettingsLayer::createNoInit();
+    auto settingsLayer = SettingsLayer::createNoInit(getSoundSettings());
     iapHelper.reset(new InAppPurchaseHelper(iapProductId, *settingsLayer));
     settingsLayer->init([this]() { iapHelper->init(); });
 
@@ -168,6 +178,10 @@ void GameFlow::switchToSettingsScene()
     });
     settingsLayer->setPurchaseRequestedCallback([this]() { iapHelper->purchaseProduct(); });
     settingsLayer->setPurchaseCompletedCallback([]() { SonarCocosHelper::iAds::hideiAdBanner(); });
+    settingsLayer->setSoundSettingsChangedCallback([this](const SoundSettings &soundSettings) {
+        SoundHelper::getInstance().init(soundSettings);
+        setSoundSettings(soundSettings);
+    });
     scene->addChild(settingsLayer);
 
     Director::getInstance()->replaceScene(scene);

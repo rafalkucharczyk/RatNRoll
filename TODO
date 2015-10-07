@@ -56,6 +56,8 @@ settings - show iap icon immediately
 gamelogic - refactor persistent storage (use keychain for ios), add api for querying iap, 'like us',
             current high score
 iap - unlock new item, (cheese frenzy)
+play music + sounds
+initial screen - settings
 
 unordered:
 juice app a little, nicer transitions between screens, more animations
@@ -64,14 +66,12 @@ juice app a little, nicer transitions between screens, more animations
 social - add facebook 'like us' (unlock new item, skull protection)
 post game menu - redesign, figure out how to handle visualization of current/high scores (local,
                  leaderboards) and also replaying of challenges
-initial screen - settings
 post game menu(?) - rate us
-play music + sounds
 bug - background items are not distributed nicely after app is minimized (?)
 ios - add verification of iap
 gameplay - make sure item is eaten when rat touches it (currently item is eaten only when touches
         rat's belly)
-
+tutorial - shake tutorial button a little bit at the very beginning to encourage people to click it
 
 FUTURE
 gameplay - new item, thunderstorm, speed up to max speed for a while

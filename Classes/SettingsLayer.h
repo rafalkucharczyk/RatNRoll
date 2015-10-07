@@ -5,14 +5,15 @@
 
 #include "MenuHelper.h"
 #include "IAPPresenter.h"
+#include "SoundHelper.h"
 
 class SettingsLayer : public cocos2d::Layer, public IAPPresenter
 {
   public:
-    SettingsLayer();
+    SettingsLayer(const SoundSettings &soundSettings);
     virtual bool init(std::function<void()> initCallback);
 
-    static SettingsLayer *createNoInit();
+    static SettingsLayer *createNoInit(const SoundSettings &soundSettings);
 
     void menuItemClicked(int itemIndex);
 
@@ -31,6 +32,11 @@ class SettingsLayer : public cocos2d::Layer, public IAPPresenter
         purchaseCompletedCallback = callback;
     }
 
+    void setSoundSettingsChangedCallback(std::function<void(const SoundSettings &)> callback)
+    {
+        soundSettingsChangedCallback = callback;
+    }
+
   public:
     void purchaseAvailable() override;
     void purchaseInProgress() override;
@@ -42,8 +48,11 @@ class SettingsLayer : public cocos2d::Layer, public IAPPresenter
     std::function<void()> gotoMainMenuCallback;
     std::function<void()> purchaseRequestedCallback;
     std::function<void()> purchaseCompletedCallback;
+    std::function<void(const SoundSettings &)> soundSettingsChangedCallback;
 
     MenuHelper menuHelper;
+
+    SoundSettings soundSettings;
 
     static const int inProgressActionTag = 998877;
 };

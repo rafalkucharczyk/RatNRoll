@@ -42,6 +42,9 @@ std::string saveJsonData(const KeychainMapType &keychainMap)
 
     return writer.write(jsonValue);
 }
+
+const std::string effectsEnabledKey = "effects_enabled";
+const std::string musicEnabledKey = "music_enabled";
 }
 
 PermanentStorage *PermanentStorage::instance = nullptr;
@@ -85,4 +88,23 @@ bool PermanentStorage::getPurchaseState(const std::string &productId) const
     KeychainMapType keychainMap = readJsonData(keychainItem.getData());
 
     return (keychainMap.find(productId) != keychainMap.end()) && keychainMap[productId];
+}
+
+void PermanentStorage::setSoundSettings(const SoundSettings &soundSettings)
+{
+    UserDefault::getInstance()->setBoolForKey(effectsEnabledKey.c_str(),
+                                              soundSettings.effectsEnabled);
+    UserDefault::getInstance()->setBoolForKey(musicEnabledKey.c_str(), soundSettings.musicEnabled);
+}
+
+SoundSettings PermanentStorage::getSoundSettings() const
+{
+    SoundSettings soundSettings;
+
+    soundSettings.effectsEnabled =
+        UserDefault::getInstance()->getBoolForKey(effectsEnabledKey.c_str(), true);
+    soundSettings.musicEnabled =
+        UserDefault::getInstance()->getBoolForKey(musicEnabledKey.c_str(), true);
+
+    return soundSettings;
 }

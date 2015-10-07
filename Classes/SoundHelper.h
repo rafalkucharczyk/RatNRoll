@@ -5,16 +5,32 @@
 
 #include "MenuHelper.h"
 
+struct SoundSettings {
+  public:
+    SoundSettings() : effectsEnabled(true), musicEnabled(true) {}
+
+  public:
+    bool effectsEnabled;
+    bool musicEnabled;
+
+    constexpr static float effectsVolume = 0.5;
+    constexpr static float musicVolume = 0.1;
+};
+
 class SoundHelper
 {
   public:
     static SoundHelper &getInstance();
 
-    void init();
+    void init(const SoundSettings &soundSettings);
+
     void playEffectForItem(LevelCustomization::ItemType itemType);
 
   private:
-    SoundHelper(){};
+    bool effectsEnabled;
+
+  private:
+    SoundHelper();
 
     static SoundHelper *instance;
 };

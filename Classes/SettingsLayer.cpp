@@ -6,7 +6,7 @@
 
 USING_NS_CC;
 
-SettingsLayer::SettingsLayer()
+SettingsLayer::SettingsLayer(const SoundSettings &soundSettings)
     : menuHelper(
           {{{0.5, 0.41},
             0.15,
@@ -43,10 +43,33 @@ SettingsLayer::SettingsLayer()
                                     3),
                      nullptr));
              }}},
-           {{0.5, 0.58}, 0.15, "sound"},
-           {{0.5, 0.75}, 0.15, "music01"},
+           {{0.5, 0.58},
+            0.15,
+            "sound",
+            {[this](Node *node) {
+                MenuItemSprite *menuItemSprite = dynamic_cast<MenuItemSprite *>(node);
+
+                std::string img = this->soundSettings.effectsEnabled ? "sound" : "sound_disabled";
+
+                auto sprite = MenuItemButton::createSpriteForPath(img);
+
+                menuItemSprite->setNormalImage(sprite);
+            }}},
+           {{0.5, 0.75},
+            0.15,
+            "music01",
+            {[this](Node *node) {
+                MenuItemSprite *menuItemSprite = dynamic_cast<MenuItemSprite *>(node);
+
+                std::string img = this->soundSettings.musicEnabled ? "music01" : "music01_disabled";
+
+                auto sprite = MenuItemButton::createSpriteForPath(img);
+
+                menuItemSprite->setNormalImage(sprite);
+            }}},
            {{0.5, 0.2}, 0.1, "back"}},
-          std::bind(&SettingsLayer::menuItemClicked, this, std::placeholders::_1))
+          std::bind(&SettingsLayer::menuItemClicked, this, std::placeholders::_1)),
+      soundSettings(soundSettings)
 {
 }
 
@@ -64,9 +87,9 @@ bool SettingsLayer::init(std::function<void()> initCallback)
     return true;
 }
 
-SettingsLayer *SettingsLayer::createNoInit()
+SettingsLayer *SettingsLayer::createNoInit(const SoundSettings &soundSettings)
 {
-    SettingsLayer *ret = new (std::nothrow) SettingsLayer();
+    SettingsLayer *ret = new (std::nothrow) SettingsLayer(soundSettings);
     if (ret) {
         ret->autorelease();
         return ret;
@@ -81,6 +104,24 @@ void SettingsLayer::menuItemClicked(int itemIndex)
 {
     if (itemIndex == 0 && purchaseRequestedCallback) {
         purchaseRequestedCallback();
+    }
+
+    if (itemIndex == 1) {
+        soundSettings.effectsEnabled = !soundSettings.effectsEnabled;
+        menuHelper.runActionFor(1, 0);
+
+        if (soundSettingsChangedCallback) {
+            soundSettingsChangedCallback(soundSettings);
+        }
+    }
+
+    if (itemIndex == 2) {
+        soundSettings.musicEnabled = !soundSettings.musicEnabled;
+        menuHelper.runActionFor(2, 0);
+
+        if (soundSettingsChangedCallback) {
+            soundSettingsChangedCallback(soundSettings);
+        }
     }
 
     if (itemIndex == 3 && gotoMainMenuCallback) {

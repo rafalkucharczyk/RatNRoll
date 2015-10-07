@@ -4,6 +4,7 @@
 #include <cocos2d.h>
 
 #include "SonarCocosHelper/GameCenterPlayerScore.h"
+#include "SoundHelper.h"
 
 class LevelCustomization;
 class LevelLayer;
@@ -21,6 +22,11 @@ class GameFlow
     void pauseGame();
 
     bool iapPurchaseCompleted() const;
+
+    SoundSettings getSoundSettings() const;
+
+  private:
+    void setSoundSettings(const SoundSettings &settings);
 
   private:
     void switchToInitialScene();

@@ -6,6 +6,11 @@
 #include "SimpleAudioEngine.h"
 #include "cocos/base/ccRandom.h"
 
+#include "cocos2d.h"
+
+const float SoundSettings::effectsVolume;
+const float SoundSettings::musicVolume;
+
 struct SfxItem {
     std::string namePrefix;
     int count;
@@ -31,13 +36,40 @@ SoundHelper &SoundHelper::getInstance()
     return *instance;
 }
 
-void SoundHelper::init()
+SoundHelper::SoundHelper() : effectsEnabled(true) {}
+
+void SoundHelper::init(const SoundSettings &soundSettings)
 {
-    CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sounds/burger01.wav");
+    using namespace CocosDenshion;
+
+    SimpleAudioEngine *audioEngine = SimpleAudioEngine::getInstance();
+
+    if (soundSettings.effectsEnabled) {
+        audioEngine->resumeAllEffects();
+        audioEngine->preloadEffect("sounds/burger01.wav");
+        audioEngine->setEffectsVolume(soundSettings.effectsVolume);
+    } else {
+        audioEngine->stopAllEffects();
+    }
+    effectsEnabled = soundSettings.effectsEnabled;
+
+    if (soundSettings.musicEnabled) {
+        audioEngine->resumeBackgroundMusic();
+        if (!audioEngine->isBackgroundMusicPlaying()) {
+            audioEngine->playBackgroundMusic("sounds/background01.mp3", true);
+        }
+        audioEngine->setBackgroundMusicVolume(soundSettings.musicVolume);
+    } else {
+        audioEngine->stopBackgroundMusic();
+    }
 }
 
 void SoundHelper::playEffectForItem(LevelCustomization::ItemType itemType)
 {
+    if (!effectsEnabled) {
+        return;
+    }
+
     auto sfxItem = itemType2SfxItem.find(itemType);
 
     if (sfxItem == itemType2SfxItem.end()) {
