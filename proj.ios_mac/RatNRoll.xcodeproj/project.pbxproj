@@ -65,6 +65,12 @@
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		B29E71EB1BB356B300DCBE07 /* Default-768h.png in Resources */ = {isa = PBXBuildFile; fileRef = B29E71E91BB356B300DCBE07 /* Default-768h.png */; };
 		B29E71EC1BB356B300DCBE07 /* Default-768h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B29E71EA1BB356B300DCBE07 /* Default-768h@2x.png */; };
+		B2A105BA1BC9A3CC007CF879 /* ball01.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A105B91BC9A3CC007CF879 /* ball01.png */; settings = {ASSET_TAGS = (); }; };
+		B2A105BC1BC9A3D7007CF879 /* level_02.json in Resources */ = {isa = PBXBuildFile; fileRef = B2A105BB1BC9A3D7007CF879 /* level_02.json */; settings = {ASSET_TAGS = (); }; };
+		B2A105BE1BC9A43F007CF879 /* earth02.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A105BD1BC9A43F007CF879 /* earth02.png */; settings = {ASSET_TAGS = (); }; };
+		B2A105C01BC9C065007CF879 /* bone01.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A105BF1BC9C065007CF879 /* bone01.png */; settings = {ASSET_TAGS = (); }; };
+		B2A105C21BCD96A5007CF879 /* earth03.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A105C11BCD96A5007CF879 /* earth03.png */; settings = {ASSET_TAGS = (); }; };
+		B2A105C41BCD96BA007CF879 /* level_03.json in Resources */ = {isa = PBXBuildFile; fileRef = B2A105C31BCD96BA007CF879 /* level_03.json */; settings = {ASSET_TAGS = (); }; };
 		B535EF3F1B131C2F004D647D /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B535EF3E1B131C2F004D647D /* iAd.framework */; };
 		B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF411B1321F5004D647D /* b2dJson.cpp */; };
 		B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B535EF431B1321F5004D647D /* b2dJsonImage.cpp */; };
@@ -210,6 +216,12 @@
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B29E71E91BB356B300DCBE07 /* Default-768h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-768h.png"; sourceTree = "<group>"; };
 		B29E71EA1BB356B300DCBE07 /* Default-768h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-768h@2x.png"; sourceTree = "<group>"; };
+		B2A105B91BC9A3CC007CF879 /* ball01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball01.png; sourceTree = "<group>"; };
+		B2A105BB1BC9A3D7007CF879 /* level_02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level_02.json; sourceTree = "<group>"; };
+		B2A105BD1BC9A43F007CF879 /* earth02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth02.png; sourceTree = "<group>"; };
+		B2A105BF1BC9C065007CF879 /* bone01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bone01.png; sourceTree = "<group>"; };
+		B2A105C11BCD96A5007CF879 /* earth03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth03.png; sourceTree = "<group>"; };
+		B2A105C31BCD96BA007CF879 /* level_03.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level_03.json; sourceTree = "<group>"; };
 		B535EF3E1B131C2F004D647D /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/iAd.framework; sourceTree = DEVELOPER_DIR; };
 		B535EF411B1321F5004D647D /* b2dJson.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2dJson.cpp; sourceTree = "<group>"; };
 		B535EF421B1321F5004D647D /* b2dJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2dJson.h; sourceTree = "<group>"; };
@@ -436,6 +448,10 @@
 				3EACC98E19EE6D4300EB3C5E /* res */,
 				B5927EDB1B55BD5700D59F09 /* menu */,
 				B535EF571B1339D4004D647D /* level_01.json */,
+				B2A105BB1BC9A3D7007CF879 /* level_02.json */,
+				B2A105C31BCD96BA007CF879 /* level_03.json */,
+				B2A105B91BC9A3CC007CF879 /* ball01.png */,
+				B2A105BF1BC9C065007CF879 /* bone01.png */,
 				B551AF671B1902980076A8E9 /* rat.png */,
 				B54CCC321B45E4CA00393F40 /* hover01.png */,
 				B54CCC341B46F91A00393F40 /* halve01.png */,
@@ -445,6 +461,8 @@
 				25ABD9611B8F979B004D007F /* shield01.png */,
 				25ABD95F1B8F9794004D007F /* frenzy01.png */,
 				B551AF6B1B1A39DC0076A8E9 /* earth01.png */,
+				B2A105BD1BC9A43F007CF879 /* earth02.png */,
+				B2A105C11BCD96A5007CF879 /* earth03.png */,
 				B55091C31B652517005A4E8B /* tutorial_balloon.png */,
 				2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */,
 				25ACD8F91BA57B5900899F09 /* halve_points.plist */,
@@ -738,6 +756,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2A105BA1BC9A3CC007CF879 /* ball01.png in Resources */,
 				B29E71EC1BB356B300DCBE07 /* Default-768h@2x.png in Resources */,
 				B29E71EB1BB356B300DCBE07 /* Default-768h.png in Resources */,
 				B551AF681B1902980076A8E9 /* rat.png in Resources */,
@@ -767,15 +786,20 @@
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				B535EF581B1339D4004D647D /* level_01.json in Resources */,
+				B2A105C21BCD96A5007CF879 /* earth03.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
+				B2A105C01BC9C065007CF879 /* bone01.png in Resources */,
 				2542C43E1BB941D200727984 /* background in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 				25ABD9601B8F9794004D007F /* frenzy01.png in Resources */,
 				2542C4401BB967F500727984 /* sounds in Resources */,
+				B2A105BC1BC9A3D7007CF879 /* level_02.json in Resources */,
+				B2A105BE1BC9A43F007CF879 /* earth02.png in Resources */,
 				B54CCC381B46F91A00393F40 /* slowdown01.png in Resources */,
+				B2A105C41BCD96BA007CF879 /* level_03.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
