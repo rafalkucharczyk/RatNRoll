@@ -493,9 +493,7 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
     cageBody = json->getBodyByName("cage");
     assert(cageBody);
     cogWheelBody1 = json->getBodyByName("cogwheel1");
-    assert(cogWheelBody1);
     cogWheelBody2 = json->getBodyByName("cogwheel2");
-    assert(cogWheelBody2);
 
     for (int i = LevelCustomization::SPEEDUP; i < LevelCustomization::ITEM_TYPE_MAX; i++) {
         LevelCustomization::ItemType itemType = static_cast<LevelCustomization::ItemType>(i);
@@ -671,8 +669,10 @@ void LevelLayer::doPhysicsCalculationStep()
 
     shadowRatHelper->doPhysicsCalculationStep();
 
-    cogWheelBody2->SetAngularVelocity(3 * earthBody->GetAngularVelocity());
-    cogWheelBody1->SetAngularVelocity(-0.8 * cogWheelBody2->GetAngularVelocity());
+    if (cogWheelBody1 && cogWheelBody2) {
+        cogWheelBody2->SetAngularVelocity(3 * earthBody->GetAngularVelocity());
+        cogWheelBody1->SetAngularVelocity(-0.8 * cogWheelBody2->GetAngularVelocity());
+    }
 }
 
 float LevelLayer::getEarthRadius() const
