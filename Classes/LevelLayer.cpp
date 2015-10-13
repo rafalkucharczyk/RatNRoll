@@ -677,9 +677,16 @@ void LevelLayer::doPhysicsCalculationStep()
 
 float LevelLayer::getEarthRadius() const
 {
-    b2Fixture *earthFixture = earthBody->GetFixtureList();
-    assert(earthFixture && earthFixture->GetType() == b2Shape::e_circle);
-    return earthFixture->GetShape()->m_radius;
+    float max_radius = 0;
+
+    for (b2Fixture *f = earthBody->GetFixtureList(); f; f = f->GetNext()) {
+        if (f->GetType() == b2Shape::e_circle) {
+            max_radius = MAX(max_radius, f->GetShape()->m_radius);
+        }
+    }
+
+    assert(max_radius > 0.0);
+    return max_radius;
 }
 
 void LevelLayer::dropItem(float t)
