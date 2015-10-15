@@ -19,10 +19,11 @@ struct SfxItem {
 namespace
 {
 std::map<LevelCustomization::ItemType, SfxItem> itemType2SfxItem = {
-    {LevelCustomization::SLOWDOWN, {"burger", 6}},
-    {LevelCustomization::HALVE, {"skull", 6}},
-    {LevelCustomization::SPEEDUP, {"vial", 7}},
-    {LevelCustomization::BREAK, {"big_burger", 6}}};
+    {LevelCustomization::SLOWDOWN, {"burger", 6}}, {LevelCustomization::HALVE, {"skull", 6}},
+    {LevelCustomization::SPEEDUP, {"vial", 7}},    {LevelCustomization::BREAK, {"big_burger", 6}},
+    {LevelCustomization::FRENZY, {"frenzy", 7}},   {LevelCustomization::SHIELD, {"helmet", 6}},
+    {LevelCustomization::HOVER, {"hover", 7}},
+};
 }
 
 SoundHelper *SoundHelper::instance = nullptr;
@@ -36,7 +37,10 @@ SoundHelper &SoundHelper::getInstance()
     return *instance;
 }
 
-SoundHelper::SoundHelper() : effectsEnabled(true) {}
+SoundHelper::SoundHelper()
+    : effectsEnabled(true), nextEffectTime(std::chrono::system_clock::from_time_t(0))
+{
+}
 
 void SoundHelper::init(const SoundSettings &soundSettings)
 {
@@ -76,9 +80,36 @@ void SoundHelper::playEffectForItem(LevelCustomization::ItemType itemType)
         return;
     }
 
-    int soundId = cocos2d::random(1, sfxItem->second.count);
-    std::string wavFileName =
-        "sounds/" + sfxItem->second.namePrefix + "0" + std::to_string(soundId) + ".wav";
+    playOneEffect(sfxItem->second.namePrefix, sfxItem->second.count);
+}
+
+void SoundHelper::playGameOverEffect() { playOneEffect("fall", 7); }
+
+void SoundHelper::playBestScoreBeatenEffect() { playOneEffect("rec_beaten", 7); }
+
+void SoundHelper::playBestScoreNotBeatenEffect() { playOneEffect("rec_failed", 7); }
+
+void SoundHelper::playShadowPlayerEffect() { playOneEffect("shadow", 5); }
+
+void SoundHelper::playRandomEffect() { playOneEffect("random", 8); }
+
+void SoundHelper::playOneEffect(const std::string namePrefix, int maxCount)
+{
+    using namespace std::chrono;
+
+    if (system_clock::now() < nextEffectTime) {
+        return; // previous effect still in progress, skip this one
+    }
+
+    int soundId = cocos2d::random(1, maxCount);
+    std::string wavFileName = "sounds/" + namePrefix + "0" + std::to_string(soundId) + ".wav";
+
+    float effectDuration =
+        CocosDenshion::SimpleAudioEngine::getInstance()->getEffectDuration(wavFileName.c_str());
+
+    effectDuration *= 1.5; // increase the duration to have longer periods between sounds
+
+    nextEffectTime = system_clock::now() + duration_cast<seconds>(duration<float>(effectDuration));
 
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(wavFileName.c_str());
 }

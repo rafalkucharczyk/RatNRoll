@@ -195,6 +195,8 @@ public:
     virtual unsigned int playEffect(const char* filePath, bool loop = false,
                                     float pitch = 1.0f, float pan = 0.0f, float gain = 1.0f);
 
+    virtual float getEffectDuration(const char* filePath);
+
     /**
      * Pause playing sound effect.
      *

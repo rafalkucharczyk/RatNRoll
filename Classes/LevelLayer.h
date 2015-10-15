@@ -67,6 +67,7 @@ class LevelLayer : public RUBELayer
     void startDroppingItems();
     void stopDroppingItems();
     void scheduleRatEyesAnimations();
+    void scheduleRandomSoundEffects();
     void doPhysicsCalculationStep();
     float getEarthRadius() const;
 

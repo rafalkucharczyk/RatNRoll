@@ -5,6 +5,8 @@
 
 #include "MenuHelper.h"
 
+#include <chrono>
+
 struct SoundSettings {
   public:
     SoundSettings() : effectsEnabled(true), musicEnabled(true) {}
@@ -26,8 +28,18 @@ class SoundHelper
 
     void playEffectForItem(LevelCustomization::ItemType itemType);
 
+    void playGameOverEffect();
+    void playBestScoreBeatenEffect();
+    void playBestScoreNotBeatenEffect();
+    void playShadowPlayerEffect();
+    void playRandomEffect();
+
   private:
+    void playOneEffect(const std::string namePrefix, int maxCount);
+
     bool effectsEnabled;
+
+    std::chrono::time_point<std::chrono::system_clock> nextEffectTime;
 
   private:
     SoundHelper();
