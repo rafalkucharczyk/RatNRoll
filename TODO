@@ -47,7 +47,6 @@ gameplay - new item, temporal anti-skull shield (particles - shields?)
 gameplay - new item, cheese frenzy (particles - cheeses)
 
 10
-initial screen - credits
 gamecenter - logic for achievements
 post game menu - get best score from game center (local if no connectivity), upload local to game
                  center
@@ -58,8 +57,15 @@ gamelogic - refactor persistent storage (use keychain for ios), add api for quer
 iap - unlock new item, (cheese frenzy)
 play music + sounds
 initial screen - settings
+bug - background items are not distributed nicely after app is minimized
 
 unordered:
+initial menu - add layer with selection of level
+- initially grey out two bonus level
+- add like button on one of them and connect to 'like us' flow
+engine - figure out how to merge box2d world (generic part with level specific)
+gameplay - create 3 separate leaderboards
+initial screen - credits
 juice app a little, nicer transitions between screens, more animations
 - name of challenging player should be slightly bigger at the beginning
 - transitions between scenes
@@ -67,11 +73,14 @@ social - add facebook 'like us' (unlock new item, skull protection)
 post game menu - redesign, figure out how to handle visualization of current/high scores (local,
                  leaderboards) and also replaying of challenges
 post game menu(?) - rate us
-bug - background items are not distributed nicely after app is minimized (?)
 ios - add verification of iap
 gameplay - make sure item is eaten when rat touches it (currently item is eaten only when touches
         rat's belly)
 tutorial - shake tutorial button a little bit at the very beginning to encourage people to click it
+bug - pause game when full screen ad is shown
+bug - wrong animation is shown when hamburger is eaten at the highest speed (it should still be
+      animation for the highest speed, but slower, not the one below)
+achievement - pro runner
 
 FUTURE
 gameplay - new item, thunderstorm, speed up to max speed for a while
