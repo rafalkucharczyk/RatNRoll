@@ -63,6 +63,7 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		B26EE4CE1BD0352E00116659 /* ball02.png in Resources */ = {isa = PBXBuildFile; fileRef = B26EE4CD1BD0352E00116659 /* ball02.png */; settings = {ASSET_TAGS = (); }; };
 		B29E71EB1BB356B300DCBE07 /* Default-768h.png in Resources */ = {isa = PBXBuildFile; fileRef = B29E71E91BB356B300DCBE07 /* Default-768h.png */; };
 		B29E71EC1BB356B300DCBE07 /* Default-768h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B29E71EA1BB356B300DCBE07 /* Default-768h@2x.png */; };
 		B2A105BA1BC9A3CC007CF879 /* ball01.png in Resources */ = {isa = PBXBuildFile; fileRef = B2A105B91BC9A3CC007CF879 /* ball01.png */; settings = {ASSET_TAGS = (); }; };
@@ -214,6 +215,7 @@
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B26EE4CD1BD0352E00116659 /* ball02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball02.png; sourceTree = "<group>"; };
 		B29E71E91BB356B300DCBE07 /* Default-768h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-768h.png"; sourceTree = "<group>"; };
 		B29E71EA1BB356B300DCBE07 /* Default-768h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-768h@2x.png"; sourceTree = "<group>"; };
 		B2A105B91BC9A3CC007CF879 /* ball01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball01.png; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 				B2A105BB1BC9A3D7007CF879 /* level_02.json */,
 				B2A105C31BCD96BA007CF879 /* level_03.json */,
 				B2A105B91BC9A3CC007CF879 /* ball01.png */,
+				B26EE4CD1BD0352E00116659 /* ball02.png */,
 				B2A105BF1BC9C065007CF879 /* bone01.png */,
 				B551AF671B1902980076A8E9 /* rat.png */,
 				B54CCC321B45E4CA00393F40 /* hover01.png */,
@@ -770,6 +773,7 @@
 				25A22A701B8C362A00EBEA48 /* break01.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				B54CCC371B46F91A00393F40 /* halve01.png in Resources */,
+				B26EE4CE1BD0352E00116659 /* ball02.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
