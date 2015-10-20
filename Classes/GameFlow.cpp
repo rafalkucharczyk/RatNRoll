@@ -274,11 +274,25 @@ std::string GameFlow::getLeaderboardName(int levelNumber)
 Scene *GameFlow::createSceneObject()
 {
     Scene *scene = Scene::create();
+    // number of background items associated with each world
+    const int numElemsInWorld[] = {1, 1, 4};
+    const int numWorlds = sizeof(numElemsInWorld)/sizeof(numElemsInWorld[0]);
+    const int worldId = random(1, numWorlds);
+    const std::string worldIdStr = "0" + std::to_string(worldId);
+    std::vector<std::string> itemFileNames;
 
-    std::string backgroundId = "0" + std::to_string(random(1, 3));
+    // generate names of files with background item graphics
+    for (auto i = 0; i < numElemsInWorld[worldId - 1]; i++) {
+        std::string itemFileName = "background/bg_item" + worldIdStr;
+        if (i > 0) {
+            itemFileName += "_" + std::to_string(i);
+        }
+        itemFileName += ".png";
+        itemFileNames.push_back(itemFileName);
+    }
 
-    auto backgroundLayer = BackgroundLayer::create("background/bg_item" + backgroundId + ".png",
-                                                   "background/bg_plane" + backgroundId + ".png");
+    auto backgroundLayer = BackgroundLayer::create(itemFileNames,
+                                                   "background/bg_plane" + worldIdStr + ".png");
     scene->addChild(backgroundLayer, 0, backgroundLayerTag);
 
     return scene;

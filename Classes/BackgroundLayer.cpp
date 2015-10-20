@@ -8,23 +8,25 @@
 USING_NS_CC;
 using namespace std;
 
-BackgroundLayer::BackgroundLayer(const std::string &itemFileName,
+BackgroundLayer::BackgroundLayer(const std::vector<std::string> &itemFileNames,
                                  const std::string &backgroundFileName)
     : minItemsSpeed(0.05), maxItemsSpeed(0.5), deltaItemsSpeed(0.05), totalTime(0),
       itemsSpeed(minItemsSpeed), itemsDirection(1, -2),
       visibleSize(Director::getInstance()->getVisibleSize()), desiredItemsCount(20),
-      itemFileName(itemFileName), backgroundFileName(backgroundFileName)
+      itemFileNames(itemFileNames), backgroundFileName(backgroundFileName)
 {
 }
 
 void BackgroundLayer::addBackgroundItems(int count, RandomPositionFunction randomPositionFunction)
 {
     for (int i = 0; i < count; i++) {
-        insertBackgroundItem(randomPositionFunction);
+        int itemId = random(0, static_cast<int>(itemFileNames.size() - 1));
+        insertBackgroundItem(randomPositionFunction, itemFileNames[itemId]);
     }
 }
 
-void BackgroundLayer::insertBackgroundItem(RandomPositionFunction randomPositionFunction)
+void BackgroundLayer::insertBackgroundItem(RandomPositionFunction randomPositionFunction,
+                                           const std::string &itemFileName)
 {
     auto sprite = MipmapSprite::create(itemFileName);
 
@@ -181,10 +183,10 @@ void BackgroundLayer::setSpeed(int deltasCount)
     }
 }
 
-BackgroundLayer *BackgroundLayer::create(const std::string &itemFileName,
+BackgroundLayer *BackgroundLayer::create(const std::vector<std::string> &itemFileNames,
                                          const std::string &backgroundFileName)
 {
-    BackgroundLayer *ret = new (std::nothrow) BackgroundLayer(itemFileName, backgroundFileName);
+    BackgroundLayer *ret = new (std::nothrow) BackgroundLayer(itemFileNames, backgroundFileName);
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;

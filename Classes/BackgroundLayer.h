@@ -9,7 +9,7 @@
 class BackgroundLayer : public cocos2d::Layer
 {
   public:
-    BackgroundLayer(const std::string &itemFileName, const std::string &backgroundFileName);
+    BackgroundLayer(const std::vector<std::string> &itemFileNames, const std::string &backgroundFileName);
 
     virtual bool init();
 
@@ -18,7 +18,7 @@ class BackgroundLayer : public cocos2d::Layer
     // e.g: +1 increase current speed by delta, -2 decrease current speed by two deltas
     void setSpeed(int deltasCount);
 
-    static BackgroundLayer *create(const std::string &itemFileName,
+    static BackgroundLayer *create(const std::vector<std::string> &itemFileNames,
                                    const std::string &backgroundFileName);
 
   private:
@@ -35,7 +35,7 @@ class BackgroundLayer : public cocos2d::Layer
   private:
     typedef std::function<cocos2d::Vec2(const cocos2d::Size &)> RandomPositionFunction;
     void addBackgroundItems(int count, RandomPositionFunction randomPositionFunction);
-    void insertBackgroundItem(RandomPositionFunction randomPositionFunction);
+    void insertBackgroundItem(RandomPositionFunction randomPositionFunction, const std::string &itemFileName);
     void setBackgroundItemParams(cocos2d::Vec2 targetPosition, cocos2d::Vec2 initialPosition,
                                  BackgroundItem &item);
     cocos2d::Vec2 getRandomStartPointOnEdge(const cocos2d::Size &spriteSize);
@@ -56,7 +56,8 @@ class BackgroundLayer : public cocos2d::Layer
 
     int desiredItemsCount;
 
-    std::string itemFileName, backgroundFileName;
+    std::vector<std::string> itemFileNames;
+    std::string backgroundFileName;
 
     std::vector<BackgroundItem> items;
 };
