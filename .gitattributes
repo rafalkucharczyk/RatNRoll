@@ -1,3 +1,4 @@
 *.psd filter=lfs diff=lfs merge=lfs -crlf
 *.wav filter=lfs diff=lfs merge=lfs -crlf
 *.mp3 filter=lfs diff=lfs merge=lfs -crlf
+*.sfd filter=lfs diff=lfs merge=lfs -crlf
