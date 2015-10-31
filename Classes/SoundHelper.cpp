@@ -70,10 +70,6 @@ void SoundHelper::init(const SoundSettings &soundSettings)
 
 void SoundHelper::playEffectForItem(LevelCustomization::ItemType itemType)
 {
-    if (!effectsEnabled) {
-        return;
-    }
-
     auto sfxItem = itemType2SfxItem.find(itemType);
 
     if (sfxItem == itemType2SfxItem.end()) {
@@ -95,6 +91,10 @@ void SoundHelper::playRandomEffect() { playOneEffect("random", 8); }
 
 void SoundHelper::playOneEffect(const std::string namePrefix, int maxCount)
 {
+    if (!effectsEnabled) {
+        return;
+    }
+
     using namespace std::chrono;
 
     if (system_clock::now() < nextEffectTime) {
