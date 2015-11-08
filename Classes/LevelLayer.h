@@ -29,7 +29,7 @@ class LevelLayer : public RUBELayer
     static LevelLayer *create(LevelCustomization *customization,
                               AchievementTracker &AchievementTracker);
 
-    virtual std::string getFilename();
+    virtual std::list<std::string> getFilenames();
     virtual cocos2d::Point initialWorldOffset();
     virtual float initialWorldScale();
 

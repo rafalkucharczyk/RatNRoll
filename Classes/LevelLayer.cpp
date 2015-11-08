@@ -458,7 +458,10 @@ LevelLayer *LevelLayer::create(LevelCustomization *customization,
     }
 }
 
-std::string LevelLayer::getFilename() { return levelCustomization->getRubeJsonFileName(); }
+std::list<std::string> LevelLayer::getFilenames()
+{
+    return {"level_base.json", levelCustomization->getRubeJsonFileName()};
+}
 
 Point LevelLayer::initialWorldOffset()
 {

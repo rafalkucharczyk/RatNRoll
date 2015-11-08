@@ -57,8 +57,8 @@ class BasicRUBELayer : public cocos2d::Layer
     virtual bool init(); // virtual functions cannot be used in the constructor, but we want to
                          // allow some customization from subclasses
 
-    // override this in subclasses to specify which .json file to load
-    virtual std::string getFilename() = 0;
+    // override this in subclasses to specify which .json files to load
+    virtual std::list<std::string> getFilenames() = 0;
     // override this in subclasses to set the inital view position
     virtual cocos2d::Point initialWorldOffset() = 0;
     // override this in subclasses to set the initial view scale

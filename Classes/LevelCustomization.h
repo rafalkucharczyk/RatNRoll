@@ -32,6 +32,11 @@ class LevelCustomization
   public:
     virtual std::string getRubeJsonFileName() const = 0;
 
+    // Background plane for level searched in Resources/background (e.g bg_plane01)
+    virtual std::string getBgPlaneName() const = 0;
+    // List of background items for level searched in Resources/background (e.g bg_item01)
+    virtual std::list<std::string> getBgItemNames() const = 0;
+
     virtual float getItemDropInterval(int gameScore) = 0; // in seconds
 
     virtual float getRatSpeedMin() const = 0;
@@ -92,6 +97,9 @@ class LevelTutorial : public LevelCustomization
     LevelTutorial() : canDropNewItem(true), currentItemIndex(0) {}
 
     std::string getRubeJsonFileName() const override { return "level_01.json"; };
+
+    std::string getBgPlaneName() const { return "bg_plane01"; }
+    std::list<std::string> getBgItemNames() const { return {"bg_item01"}; }
 
     float getItemDropInterval(int gameScore) override { return 2.5; };
 
@@ -180,16 +188,14 @@ class LevelTutorial : public LevelCustomization
     std::vector<int> itemsSequence = {0, 0, 1, 1, 2, 3};
 };
 
-class Level01 : public LevelCustomization
+class LevelBase : public LevelCustomization
 {
   public:
-    Level01(bool frenzyEnabled, bool shieldEnabled)
+    LevelBase(bool frenzyEnabled, bool shieldEnabled)
         : currentItemIndex(0), bonusItemInjected(false), itemToDrop(ITEM_TYPE_MAX),
           frenzyEnabled(frenzyEnabled), shieldEnabled(shieldEnabled)
     {
     }
-
-    std::string getRubeJsonFileName() const override { return "level_01.json"; }
 
     float getItemDropInterval(int gameScore) override
     {
@@ -283,6 +289,36 @@ class Level01 : public LevelCustomization
     bool bonusItemInjected;
     ItemType itemToDrop;
     bool frenzyEnabled, shieldEnabled;
+};
+
+class Level01 : public LevelBase
+{
+  public:
+    Level01(bool frenzyEnabled, bool shieldEnabled) : LevelBase(frenzyEnabled, shieldEnabled) {}
+    std::string getRubeJsonFileName() const override { return "level_01.json"; }
+    std::string getBgPlaneName() const { return "bg_plane01"; }
+    std::list<std::string> getBgItemNames() const { return {"bg_item01"}; }
+};
+
+class Level02 : public LevelBase
+{
+  public:
+    Level02(bool frenzyEnabled, bool shieldEnabled) : LevelBase(frenzyEnabled, shieldEnabled) {}
+    std::string getRubeJsonFileName() const override { return "level_02.json"; }
+    std::string getBgPlaneName() const { return "bg_plane02"; }
+    std::list<std::string> getBgItemNames() const { return {"bg_item02"}; }
+};
+
+class Level03 : public LevelBase
+{
+  public:
+    Level03(bool frenzyEnabled, bool shieldEnabled) : LevelBase(frenzyEnabled, shieldEnabled) {}
+    std::string getRubeJsonFileName() const override { return "level_03.json"; }
+    std::string getBgPlaneName() const { return "bg_plane03"; }
+    std::list<std::string> getBgItemNames() const
+    {
+        return {"bg_item03", "bg_item03_1", "bg_item03_2", "bg_item03_3"};
+    }
 };
 
 #endif // __LEVEL_LOGIC_H__

@@ -72,46 +72,35 @@ void BasicRUBELayer::loadWorld()
     // and also whatever is done in the afterLoadProcessing method.
     clear();
 
-    // Get the name of the .json file to load, eg. "jointTypes.json"
-    string filename = getFilename();
-
-    // Find out the absolute path for the file
-    string fullpath = CCFileUtils::getInstance()->fullPathForFilename(filename.c_str());
-
-    // This will print out the actual location on disk that the file is read from.
-    // When using the simulator, exporting your RUBE scene to this folder means
-    // you can edit the scene and reload it without needing to restart the app.
-    CCLOG("Full path is: %s", fullpath.c_str());
-
-    // Create the world from the contents of the RUBE .json file. If something
-    // goes wrong, m_world will remain NULL and errMsg will contain some info
-    // about what happened.
     b2dJson json;
-    std::string errMsg;
-    std::string jsonContent = CCFileUtils::getInstance()->getStringFromFile(fullpath.c_str());
-    m_world = json.readFromString(jsonContent, errMsg);
+
+    // Get the name of the .json file to load, eg. "jointTypes.json"
+    for (string &filename : getFilenames()) {
+        string fullpath = FileUtils::getInstance()->fullPathForFilename(filename.c_str());
+
+        CCLOG("Full path is: %s", fullpath.c_str());
+
+        std::string errMsg;
+        std::string jsonContent = FileUtils::getInstance()->getStringFromFile(fullpath.c_str());
+        m_world = json.readFromString(jsonContent, errMsg, m_world);
+
+        if (!m_world) {
+            CCLOG("%s", errMsg.c_str());
+        }
+    }
 
     if (m_world) {
         CCLOG("Loaded JSON ok");
-
-        // Set up a debug draw so we can see what's going on in the physics engine.
-        // The scale for rendering will be handled by the layer scale, which will affect
-        // the entire layer, so we keep the PTM ratio here to 1 (ie. one physics unit
-        // will be one pixel)
-
         m_debugDraw = new Box2DDebugDraw(m_drawNode, 1);
 
-        // set the debug draw to show fixtures, and let the world know about it
         m_debugDraw->SetFlags(b2Draw::e_shapeBit | b2Draw::e_jointBit);
         m_world->SetDebugDraw(m_debugDraw);
 
-        // This body is needed if we want to use a mouse joint to drag things around.
         b2BodyDef bd;
         m_mouseJointGroundBody = m_world->CreateBody(&bd);
 
         afterLoadProcessing(&json);
-    } else
-        CCLOG("%s", errMsg.c_str());
+    }
 }
 
 // Override this in subclasses to do some extra processing (eg. acquire references

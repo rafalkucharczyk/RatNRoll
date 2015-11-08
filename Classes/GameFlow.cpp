@@ -6,6 +6,7 @@
 #include "InitialLayer.h"
 #include "LevelMenuLayer.h"
 #include "LevelLayer.h"
+#include "LevelSelectionLayer.h"
 #include "PostLevelLayer.h"
 #include "PauseLayer.h"
 #include "SettingsLayer.h"
@@ -61,7 +62,7 @@ void GameFlow::pauseGame()
     Director::getInstance()->pause();
     auto pauseLayer = PauseLayer::create();
     pauseLayer->setGameResumedCallback(std::bind(&GameFlow::resumeGame, this));
-    pauseLayer->setGameQuitCallback(std::bind(&GameFlow::switchToInitialScene, this));
+    pauseLayer->setGameQuitCallback(std::bind(&GameFlow::switchToLevelSelectionScene, this));
 
     Scene *runningScene = Director::getInstance()->getRunningScene();
 
@@ -89,24 +90,39 @@ void GameFlow::setSoundSettings(const SoundSettings &settings)
 
 void GameFlow::switchToInitialScene()
 {
-    currentLevelNumber = noLevelNumber;
-
-    Director::getInstance()->resume();
-
     Director::getInstance()->replaceScene(createInitialScene());
 }
 
 void GameFlow::handleInitialSceneMenu(int itemIndex)
 {
-    if (itemIndex <= 1) {
-        switchToLevelScene(itemIndex);
-    } else if (itemIndex == 2) {
+    if (itemIndex == 0) {
+        switchToLevelSelectionScene();
+    } else if (itemIndex == 1) {
         switchToSettingsScene();
-    } else if (itemIndex == 3) {
+    } else if (itemIndex == 2) {
         SonarCocosHelper::GameCenter::showLeaderboard();
-    } else if (itemIndex == 4) {
+    } else if (itemIndex == 3) {
         switchToAboutScene();
     }
+}
+
+void GameFlow::switchToLevelSelectionScene()
+{
+    currentLevelNumber = noLevelNumber;
+
+    Director::getInstance()->resume();
+
+    auto scene = createSceneObject();
+
+    auto levelSelectionLayer = LevelSelectionLayer::create();
+
+    levelSelectionLayer->setBackButtonClickedCallback([this]() { switchToInitialScene(); });
+    levelSelectionLayer->setLevelSelectedCallback(
+        [this](int levelNumber) { switchToLevelScene(levelNumber); });
+
+    scene->addChild(levelSelectionLayer);
+
+    Director::getInstance()->replaceScene(scene);
 }
 
 void GameFlow::switchToLevelScene(int levelNumber)
@@ -120,7 +136,10 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
 {
     srand(1); // random, but always the same...
 
-    auto scene = createSceneObject();
+    auto levelCustomization = getLevelCustomization(levelNumber);
+
+    auto scene = createSceneObject(levelCustomization->getBgPlaneName(),
+                                   levelCustomization->getBgItemNames());
     BackgroundLayer *backgroundLayer =
         dynamic_cast<BackgroundLayer *>(scene->getChildByTag(backgroundLayerTag));
 
@@ -128,8 +147,7 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     scene->addChild(levelMenuLayer);
     levelMenuLayer->setGamePausedCallback(std::bind(&GameFlow::pauseGame, this));
 
-    auto levelLayer =
-        LevelLayer::create(getLevelCustomization(levelNumber), addAchievementTracker(*scene));
+    auto levelLayer = LevelLayer::create(levelCustomization, addAchievementTracker(*scene));
 
     for (const SonarCocosHelper::GameCenterPlayerScore &score : scores) {
         levelLayer->addShadowRat(score.playerName, score.getLowerScoreBound(), score.score);
@@ -156,7 +174,8 @@ void GameFlow::switchToPostLevelScene(int score)
     postLevelLayer->displayBestScore(updateBestScore(currentLevelNumber, score));
     postLevelLayer->setRestartLevelCallback(
         std::bind(&GameFlow::switchToLevelScene, this, currentLevelNumber));
-    postLevelLayer->setGotoMainMenuCallback(std::bind(&GameFlow::switchToInitialScene, this));
+    postLevelLayer->setGotoMainMenuCallback(
+        std::bind(&GameFlow::switchToLevelSelectionScene, this));
     postLevelLayer->setShareOnFacebookCallback([this, score]() {
         SonarCocosHelper::Facebook::Share(nullptr, nullptr, getSocialShareMessage(score).c_str(),
                                           nullptr, "");
@@ -271,28 +290,18 @@ std::string GameFlow::getLeaderboardName(int levelNumber)
     return "ratnroll_leaderboard_" + std::to_string(levelNumber);
 }
 
-Scene *GameFlow::createSceneObject()
+Scene *GameFlow::createSceneObject(const std::string &bgPlaneName,
+                                   const std::list<std::string> &bgItemNames)
 {
     Scene *scene = Scene::create();
-    // number of background items associated with each world
-    const int numElemsInWorld[] = {1, 1, 4};
-    const int numWorlds = sizeof(numElemsInWorld)/sizeof(numElemsInWorld[0]);
-    const int worldId = random(1, numWorlds);
-    const std::string worldIdStr = "0" + std::to_string(worldId);
-    std::vector<std::string> itemFileNames;
 
-    // generate names of files with background item graphics
-    for (auto i = 0; i < numElemsInWorld[worldId - 1]; i++) {
-        std::string itemFileName = "background/bg_item" + worldIdStr;
-        if (i > 0) {
-            itemFileName += "_" + std::to_string(i);
-        }
-        itemFileName += ".png";
-        itemFileNames.push_back(itemFileName);
-    }
+    std::vector<std::string> itemFileNames(bgItemNames.size());
 
-    auto backgroundLayer = BackgroundLayer::create(itemFileNames,
-                                                   "background/bg_plane" + worldIdStr + ".png");
+    std::transform(bgItemNames.begin(), bgItemNames.end(), itemFileNames.begin(),
+                   [](const std::string &i) { return "background/" + i + ".png"; });
+
+    auto backgroundLayer =
+        BackgroundLayer::create(itemFileNames, "background/" + bgPlaneName + ".png");
     scene->addChild(backgroundLayer, 0, backgroundLayerTag);
 
     return scene;
@@ -307,6 +316,14 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
 
     case 1:
         return new Level01(iapPurchaseCompleted(), true);
+        break;
+
+    case 2:
+        return new Level02(iapPurchaseCompleted(), true);
+        break;
+
+    case 3:
+        return new Level03(iapPurchaseCompleted(), true);
         break;
 
     default:

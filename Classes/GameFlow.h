@@ -34,6 +34,7 @@ class GameFlow
 
     void handleInitialSceneMenu(int itemIndex);
 
+    void switchToLevelSelectionScene();
     void switchToLevelScene(int levelNumber);
     void switchToLevelSceneWithScores(int levelNumber,
                                       SonarCocosHelper::GameCenterPlayersScores scores);
@@ -58,7 +59,8 @@ class GameFlow
     std::string getLeaderboardName(int levelNumber);
 
   private:
-    cocos2d::Scene *createSceneObject();
+    cocos2d::Scene *createSceneObject(const std::string &bgPlaneName = "bg_plane01",
+                                      const std::list<std::string> &bgItemNames = {"bg_item01"});
     LevelCustomization *getLevelCustomization(int levelNumber) const;
     int updateBestScore(int levelNumber, int score);
 

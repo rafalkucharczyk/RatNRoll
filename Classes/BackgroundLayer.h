@@ -9,7 +9,8 @@
 class BackgroundLayer : public cocos2d::Layer
 {
   public:
-    BackgroundLayer(const std::vector<std::string> &itemFileNames, const std::string &backgroundFileName);
+    BackgroundLayer(const std::vector<std::string> &itemFileNames,
+                    const std::string &backgroundFileName);
 
     virtual bool init();
 
@@ -35,7 +36,8 @@ class BackgroundLayer : public cocos2d::Layer
   private:
     typedef std::function<cocos2d::Vec2(const cocos2d::Size &)> RandomPositionFunction;
     void addBackgroundItems(int count, RandomPositionFunction randomPositionFunction);
-    void insertBackgroundItem(RandomPositionFunction randomPositionFunction, const std::string &itemFileName);
+    void insertBackgroundItem(RandomPositionFunction randomPositionFunction,
+                              const std::string &itemFileName);
     void setBackgroundItemParams(cocos2d::Vec2 targetPosition, cocos2d::Vec2 initialPosition,
                                  BackgroundItem &item);
     cocos2d::Vec2 getRandomStartPointOnEdge(const cocos2d::Size &spriteSize);
