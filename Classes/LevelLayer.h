@@ -104,7 +104,7 @@ class LevelLayer : public RUBELayer
 
   private:
     std::unique_ptr<LevelCustomization> levelCustomization;
-    b2Body *ratBody, *earthBody, *cageBody, *cogWheelBody1, *cogWheelBody2;
+    b2Body *ratBody, *earthBody, *cageBody;
 
     typedef std::list<b2Body *> BodiesList;
     BodiesList itemsBodies;

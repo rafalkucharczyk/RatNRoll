@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include <memory>
 
 #include <Box2D/Common/b2Math.h>
 
@@ -10,12 +11,18 @@
 #include "TutorialBalloonLayer.h"
 
 class AchievementTracker;
+class b2dJson;
+class b2Body;
+
+// forward declaration of helper class for cogwheels in level_01.json
+class CogwheelHelper;
 
 // Functions available for LevelCustomization to interact with LevelLayer
 class LevelLayerProxy
 {
   public:
     virtual void pause() = 0;
+
     virtual void resume() = 0;
 
     virtual void addOverlayingLayer(cocos2d::Layer *layer) = 0;
@@ -49,6 +56,9 @@ class LevelCustomization
 
     // initial position of dropped item (in Box2D's world coordinates)
     virtual b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) = 0;
+
+    virtual void additionalAfterLoadProcessing(b2dJson *json) {}
+    virtual void customPhysicsStep(b2Body *earthBody) {}
 
     // called by LevelLayer once, when level was loaded and started
     virtual cocos2d::FiniteTimeAction *
@@ -94,7 +104,7 @@ class LevelCustomization
 class LevelTutorial : public LevelCustomization
 {
   public:
-    LevelTutorial() : canDropNewItem(true), currentItemIndex(0) {}
+    LevelTutorial();
 
     std::string getRubeJsonFileName() const override { return "level_01.json"; };
 
@@ -126,6 +136,9 @@ class LevelTutorial : public LevelCustomization
     }
 
     b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) override { return b2Vec2(0, 9); }
+
+    void additionalAfterLoadProcessing(b2dJson *json);
+    void customPhysicsStep(b2Body *earthBody);
 
     cocos2d::FiniteTimeAction *
     levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy,
@@ -186,6 +199,8 @@ class LevelTutorial : public LevelCustomization
 
     int currentItemIndex;
     std::vector<int> itemsSequence = {0, 0, 1, 1, 2, 3};
+
+    std::shared_ptr<CogwheelHelper> cogwheelHelper;
 };
 
 class LevelBase : public LevelCustomization
@@ -294,10 +309,16 @@ class LevelBase : public LevelCustomization
 class Level01 : public LevelBase
 {
   public:
-    Level01(bool frenzyEnabled, bool shieldEnabled) : LevelBase(frenzyEnabled, shieldEnabled) {}
+    Level01(bool frenzyEnabled, bool shieldEnabled);
     std::string getRubeJsonFileName() const override { return "level_01.json"; }
     std::string getBgPlaneName() const { return "bg_plane01"; }
     std::list<std::string> getBgItemNames() const { return {"bg_item01"}; }
+
+    void additionalAfterLoadProcessing(b2dJson *json);
+    void customPhysicsStep(b2Body *earthBody);
+
+  private:
+    std::shared_ptr<CogwheelHelper> cogwheelHelper;
 };
 
 class Level02 : public LevelBase
