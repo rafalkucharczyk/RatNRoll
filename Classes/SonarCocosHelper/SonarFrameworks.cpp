@@ -129,7 +129,9 @@ void GameCenter::showAchievements()
 void GameCenter::submitScore(int scoreNumber, cocos2d::__String leaderboardID)
 {
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    IOSCPPHelper::gameCenterSubmitScore(scoreNumber, leaderboardID);
+    if (leaderboardID.length() != 0) {
+        IOSCPPHelper::gameCenterSubmitScore(scoreNumber, leaderboardID);
+    }
     IOSCPPHelper::gameCenterSubmitScoreForChallenge(scoreNumber);
 #endif
 }

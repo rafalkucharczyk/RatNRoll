@@ -181,6 +181,11 @@ void IOSCPPHelper::gameCenterRegisterChallengeCallback(std::function<void(SonarC
 
 SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBestScores(__String leaderboardID)
 {
+    if (leaderboardID.length() == 0)
+    {
+        return {};
+    }
+
     [[IOSHelper instance] gameCenterGetFriendsBestScoresForLeaderboard:string2NSString(leaderboardID)
                                                  withCompletionHandler:^(NSArray *friendsScores)
     {

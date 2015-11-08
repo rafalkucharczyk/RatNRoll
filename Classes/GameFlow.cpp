@@ -271,8 +271,9 @@ void GameFlow::loginToGameCenter()
         std::bind(&GameFlow::startChallenge, this, std::placeholders::_1));
 
     SonarCocosHelper::GameCenter::signIn([this]() {
-        SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(0));
-        SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(1));
+        for (int levelNumber = 1; levelNumber <= 3; levelNumber++) {
+            SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(levelNumber));
+        }
     });
 }
 
@@ -287,6 +288,10 @@ void GameFlow::startChallenge(SonarCocosHelper::GameCenterPlayerScore score)
 
 std::string GameFlow::getLeaderboardName(int levelNumber)
 {
+    if (levelNumber == 0) {
+        return ""; // no leaderboard for tutorial
+    }
+
     return "ratnroll_leaderboard_" + std::to_string(levelNumber);
 }
 
