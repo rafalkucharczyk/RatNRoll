@@ -970,7 +970,8 @@ void LevelLayer::initScoreLabel(int score)
 
     addChild(scoreLabel, 1);
 
-    scoreLabel->setScale(0.2 * (1 / getScale()));
+    float f = getAnySpriteOnBody(earthBody)->getScale();
+    scoreLabel->setScale(0.35 * f);
 
     b2Vec2 pos = earthBody->GetWorldCenter();
     scoreLabel->setPosition(pos.x, pos.y);
