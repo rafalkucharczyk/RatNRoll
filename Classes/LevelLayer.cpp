@@ -859,15 +859,15 @@ void LevelLayer::hoverItemEaten()
 
     stopDroppingItems();
 
-    getAnySpriteOnBody(ratBody)
-        ->runAction(Sequence::create(DelayTime::create(hoverDuration), CallFunc::create([this]() {
-                                         startDroppingItems();
-                                         applyCustomGravity = true;
-                                         ratBody->SetGravityScale(1.0);
-
-                                         animationHelper->playRunningAnimation(ratSpeed);
-                                     }),
-                                     nullptr));
+    getAnySpriteOnBody(ratBody)->runAction(Sequence::create(
+        DelayTime::create(hoverDuration * 0.9),
+        CallFunc::create([this]() { animationHelper->playRunningAnimation(ratSpeed); }),
+        DelayTime::create(hoverDuration * 0.1), CallFunc::create([this]() {
+            startDroppingItems();
+            applyCustomGravity = true;
+            ratBody->SetGravityScale(1.0);
+        }),
+        nullptr));
 }
 
 void LevelLayer::halveItemEaten()
