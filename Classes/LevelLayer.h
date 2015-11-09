@@ -146,6 +146,7 @@ class LevelLayer : public RUBELayer
 
     int frenzyGameScoreMultiplier;
     int skullShieldCount;
+    static constexpr int maxSkullShieldsCount = 4;
 
   private:
     std::shared_ptr<ShadowRatHelper> shadowRatHelper;

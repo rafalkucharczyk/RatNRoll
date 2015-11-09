@@ -709,7 +709,8 @@ void LevelLayer::dropItem(float t)
 
 void LevelLayer::doItemDrop()
 {
-    LevelCustomization::ItemType itemType = levelCustomization->getDropItemType(ratSpeed);
+    LevelCustomization::ItemType itemType =
+        levelCustomization->getDropItemType(ratSpeed, skullShieldCount < maxSkullShieldsCount);
 
     if (itemType == LevelCustomization::ITEM_TYPE_MAX) {
         return;
@@ -1038,8 +1039,6 @@ void LevelLayer::updateRatShield(int delta)
 {
     assert(delta == -1 || delta == 1);
 
-    const int manySkullShieldsCount = 4;
-
     if (delta == 1 && skullShieldCount == 0) {
         animationHelper->playShowShieldAnimation();
     }
@@ -1050,9 +1049,10 @@ void LevelLayer::updateRatShield(int delta)
 
     skullShieldCount += delta;
 
+    assert(skullShieldCount >= 0 && skullShieldCount <= maxSkullShieldsCount);
+
     if (skullShieldCount > 0) {
-        std::string attachmentName =
-            "helmet0" + std::to_string(std::min(skullShieldCount, manySkullShieldsCount));
+        std::string attachmentName = "helmet0" + std::to_string(skullShieldCount);
         getRatAnimation()->setAttachment("helmet", attachmentName);
     }
 }

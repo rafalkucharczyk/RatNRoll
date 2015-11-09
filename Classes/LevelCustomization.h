@@ -10,6 +10,8 @@
 #include <cocos2d.h>
 #include "TutorialBalloonLayer.h"
 
+// #define TEST_SEQUENCE
+
 class AchievementTracker;
 class b2dJson;
 class b2Body;
@@ -52,7 +54,7 @@ class LevelCustomization
     virtual float getRatSpeedInitial() const { return getRatSpeedMin(); }
 
     // return ITEM_TYPE_MAX to skip dropping item
-    virtual ItemType getDropItemType(float currentRatSpeed) = 0;
+    virtual ItemType getDropItemType(float currentRatSpeed, bool shieldAllowed) = 0;
 
     // initial position of dropped item (in Box2D's world coordinates)
     virtual b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) = 0;
@@ -118,7 +120,7 @@ class LevelTutorial : public LevelCustomization
     float getRatSpeedStep() const override { return 0.3; }
     float getRatSpeedInitial() const override { return getRatSpeedMin() + getRatSpeedStep(); }
 
-    ItemType getDropItemType(float currentRatSpeed) override
+    ItemType getDropItemType(float currentRatSpeed, bool shieldAllowed) override
     {
         if (!canDropNewItem) {
             return ITEM_TYPE_MAX;
@@ -228,7 +230,7 @@ class LevelBase : public LevelCustomization
     float getRatSpeedMax() const override { return 4.2; }
     float getRatSpeedStep() const override { return 0.4; }
 
-    ItemType getDropItemType(float currentRatSpeed) override
+    ItemType getDropItemType(float currentRatSpeed, bool shieldAllowed) override
     {
 #ifdef TEST_SEQUENCE
         itemsSequence = {FRENZY, SHIELD, HALVE};
@@ -239,7 +241,7 @@ class LevelBase : public LevelCustomization
 #ifdef TEST_SEQUENCE
         return static_cast<ItemType>(itemsSequence[currentItemIndex++]);
 #endif
-        ItemType bonusItemType = getBonusItem();
+        ItemType bonusItemType = getBonusItem(shieldAllowed);
 
         if (bonusItemType != ITEM_TYPE_MAX) {
             return bonusItemType;
@@ -272,9 +274,9 @@ class LevelBase : public LevelCustomization
     }
 
   private:
-    ItemType getBonusItem()
+    ItemType getBonusItem(bool shieldAllowed)
     {
-        if (!frenzyEnabled && !shieldEnabled) {
+        if (!frenzyEnabled && !(shieldEnabled && shieldAllowed)) {
             return ITEM_TYPE_MAX;
         }
 
@@ -287,7 +289,7 @@ class LevelBase : public LevelCustomization
                 bonusItems.push_back(FRENZY);
             }
 
-            if (shieldEnabled) {
+            if (shieldEnabled && shieldAllowed) {
                 bonusItems.push_back(SHIELD);
             }
 
