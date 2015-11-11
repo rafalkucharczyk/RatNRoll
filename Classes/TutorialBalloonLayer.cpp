@@ -1,8 +1,40 @@
 #include "TutorialBalloonLayer.h"
 
 #include "MipmapSprite.h"
+#include "Menu/MenuLabel.h"
 
 USING_NS_CC;
+
+namespace
+{
+std::map<TutorialBalloonLayer::BalloonType, std::string> tutorialTexts = {
+    {TutorialBalloonLayer::BalloonType::CONTROLS, "ROLL THE WORLD AND KEEP\n"
+                                                  "YOURSELF ON TOP OF IT.\n"
+                                                  "THE MORE YOU ROLL,\n"
+                                                  "THE MORE YOU SCORE!\n\n"
+                                                  "OH... AND REMEMBER TO\n"
+                                                  "ALWAYS ROLL RIGHT,\n"
+                                                  "YOU GET NOTHING WHEN\n"
+                                                  "ROLLING LEFT"},
+    {TutorialBalloonLayer::BalloonType::SPEEDUP, "CATCH VIALS TO\n"
+                                                 "SPEED YOU UP!\n\n"
+                                                 "YOU GET MORE POINTS\n"
+                                                 "WHEN RUNNING FASTER.\n"
+                                                 "AND MORE FUN!"},
+    {TutorialBalloonLayer::BalloonType::SLOWDOWN, "AVOID HAMBURGERS,\n"
+                                                  "THEY SLOW YOU DOWN!\n\n"
+                                                  "YOU GET LESS POINTS THEN..."},
+    {TutorialBalloonLayer::BalloonType::HOVER, "GOOSE MAKES YOU FLY FOR\n"
+                                               "A LITTLE WHILE,\n"
+                                               "SO YOU CAN ROLL THE WORLD\n"
+                                               "AS FAST AS YOU CAN!\n\n"
+                                               "BUT BE CAREFUL WHEN\n"
+                                               "LANDING, THOUGH"},
+    {TutorialBalloonLayer::BalloonType::HALVE, "ALWAYS STAY CLEAR OF SKULLS\n"
+                                               "THEY DO NOT KILL YOU, BUT THEY\n"
+                                               "TAKE HALF OF YOUR POINTS!\n"
+                                               "IT HURTS EVEN MORE..."}};
+}
 
 TutorialBalloonLayer::TutorialBalloonLayer(BalloonType balloonType,
                                            std::function<void()> closeCallback)
@@ -27,7 +59,7 @@ TutorialBalloonLayer *TutorialBalloonLayer::create(BalloonType balloonType,
 
 bool TutorialBalloonLayer::init()
 {
-    if (!LayerColor::initWithColor(Color4B(255, 255, 255, 216))) {
+    if (!LayerColor::initWithColor(Color4B(255, 255, 255, 232))) {
         return false;
     }
 
@@ -40,15 +72,9 @@ bool TutorialBalloonLayer::init()
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener,
                                                                                           this);
 
-    animationNode = spine::SkeletonAnimation::createWithFile("animations/rat/skeleton.json",
-                                                             "animations/rat/skeleton.atlas");
-
-    digitsPanel = DigitsPanel::createWithNumberOfDigits(4);
-    digitsPanel->setVisible(false);
-    addChild(digitsPanel);
-    MenuHelper::positionNode(*digitsPanel, {0.7, 0.5}, 0.04);
-
-    addBalloonSprite();
+    addText();
+    addDigitsPanel();
+    addAnimationSprite();
 
     runAction(Sequence::create(DelayTime::create(getAnimationDuration(getAnimationName())),
                                CallFunc::create([this]() { this->selfCleanUp(); }), nullptr));
@@ -63,8 +89,29 @@ void TutorialBalloonLayer::onExit()
     closeCallback();
 }
 
-void TutorialBalloonLayer::addBalloonSprite()
+void TutorialBalloonLayer::addText()
 {
+    auto menuLabel = MenuLabel::create(tutorialTexts[balloonType], {0.5, 0.3}, 0.03);
+    menuLabel->setCascadeOpacityEnabled(true);
+    menuLabel->setOpacity(0);
+
+    addChild(menuLabel);
+    menuLabel->runAction(FadeIn::create(1.0));
+}
+
+void TutorialBalloonLayer::addDigitsPanel()
+{
+    digitsPanel = DigitsPanel::createWithNumberOfDigits(4);
+    digitsPanel->setVisible(false);
+    addChild(digitsPanel);
+    MenuHelper::positionNode(*digitsPanel, {0.7, 0.5}, 0.04);
+}
+
+void TutorialBalloonLayer::addAnimationSprite()
+{
+    animationNode = spine::SkeletonAnimation::createWithFile("animations/rat/skeleton.json",
+                                                             "animations/rat/skeleton.atlas");
+
     animationNode->setAnimation(0, getAnimationName(), false);
     animationNode->updateWorldTransform();
     animationNode->setEventListener([this](int trackIndex, spEvent *event) {

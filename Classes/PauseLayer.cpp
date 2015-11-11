@@ -10,7 +10,7 @@ PauseLayer::PauseLayer()
 
 bool PauseLayer::init()
 {
-    if (!LayerColor::initWithColor(Color4B(255, 255, 255, 216))) {
+    if (!LayerColor::initWithColor(Color4B(255, 255, 255, 232))) {
         return false;
     }
 

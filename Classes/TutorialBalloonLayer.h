@@ -22,7 +22,10 @@ class TutorialBalloonLayer : public cocos2d::LayerColor
     void onExit() override;
 
   private:
-    void addBalloonSprite();
+    void addText();
+    void addDigitsPanel();
+
+    void addAnimationSprite();
     std::string getAnimationName() const;
     cocos2d::Vec2 getAnimationInitPos() const;
 
