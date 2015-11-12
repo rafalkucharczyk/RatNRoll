@@ -921,7 +921,6 @@ void LevelLayer::shieldItemEaten() { updateRatShield(1); }
 void LevelLayer::handleGameOver()
 {
     achievementTracker.gameEnded();
-    levelCustomization->notifyAchivementTracker(achievementTracker);
 
     SoundHelper::getInstance().playGameOverEffect();
 

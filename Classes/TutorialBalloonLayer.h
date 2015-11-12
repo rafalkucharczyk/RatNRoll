@@ -11,7 +11,7 @@
 class TutorialBalloonLayer : public cocos2d::LayerColor
 {
   public:
-    enum class BalloonType { CONTROLS, SPEEDUP, SLOWDOWN, HOVER, HALVE, MAX_TYPE_COUNT };
+    enum class BalloonType { CONTROLS, SPEEDUP, SLOWDOWN, HOVER, HALVE, FINAL, MAX_TYPE_COUNT };
 
     TutorialBalloonLayer(BalloonType balloonType, std::function<void()> closeCallback);
     static TutorialBalloonLayer *create(BalloonType balloonType,

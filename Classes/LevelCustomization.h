@@ -80,9 +80,6 @@ class LevelCustomization
         return nullptr;
     };
 
-    // called by LevelLayer when game is finished
-    virtual void notifyAchivementTracker(AchievementTracker &achievementTracker){};
-
   protected:
     bool isItemPositive(ItemType itemType)
     {
@@ -154,29 +151,10 @@ class LevelTutorial : public LevelCustomization
         return spawnTutorialBalloon(itemTypeToBalloonType(itemType), levelLayerProxy);
     }
 
-    void notifyAchivementTracker(AchievementTracker &achievementTracker);
-
   private:
     cocos2d::FiniteTimeAction *
     spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonType,
-                         std::shared_ptr<LevelLayerProxy> levelLayerProxy)
-    {
-        USING_NS_CC;
-
-        if (shownBalloons.find(balloonType) != shownBalloons.end()) {
-            return nullptr;
-        }
-
-        shownBalloons.insert(balloonType);
-
-        return Sequence::create(CallFunc::create([levelLayerProxy]() { levelLayerProxy->pause(); }),
-                                CallFunc::create([=]() {
-                                    levelLayerProxy->addOverlayingLayer(
-                                        TutorialBalloonLayer::create(
-                                            balloonType, [=]() { levelLayerProxy->resume(); }));
-                                }),
-                                nullptr);
-    }
+                         std::shared_ptr<LevelLayerProxy> levelLayerProxy);
 
     TutorialBalloonLayer::BalloonType itemTypeToBalloonType(ItemType itemType)
     {
@@ -194,6 +172,8 @@ class LevelTutorial : public LevelCustomization
         return TutorialBalloonLayer::BalloonType::SPEEDUP;
     }
 
+    void notifyTutorialCompletedAchievement();
+
   private:
     bool canDropNewItem;
 
@@ -203,6 +183,8 @@ class LevelTutorial : public LevelCustomization
     std::vector<int> itemsSequence = {0, 0, 1, 1, 2, 3};
 
     std::shared_ptr<CogwheelHelper> cogwheelHelper;
+
+    AchievementTracker *tracker;
 };
 
 class LevelBase : public LevelCustomization

@@ -29,7 +29,8 @@ class CogwheelHelper
 };
 
 LevelTutorial::LevelTutorial()
-    : canDropNewItem(true), currentItemIndex(0), cogwheelHelper(new CogwheelHelper())
+    : canDropNewItem(true), currentItemIndex(0), cogwheelHelper(new CogwheelHelper()),
+      tracker(nullptr)
 {
 }
 
@@ -43,6 +44,53 @@ void LevelTutorial::customPhysicsStep(b2Body *earthBody)
     cogwheelHelper->customPhysicsStep(earthBody);
 }
 
+cocos2d::FiniteTimeAction *
+LevelTutorial::levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy,
+                                    AchievementTracker &achievementTracker)
+{
+    tracker = &achievementTracker;
+
+    achievementTracker.tutorialEntered();
+
+    return spawnTutorialBalloon(TutorialBalloonLayer::BalloonType::CONTROLS, levelLayerProxy);
+}
+
+cocos2d::FiniteTimeAction *
+LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonType,
+                                    std::shared_ptr<LevelLayerProxy> levelLayerProxy)
+{
+    USING_NS_CC;
+
+    if (shownBalloons.size() ==
+        static_cast<size_t>(TutorialBalloonLayer::BalloonType::MAX_TYPE_COUNT) - 1) {
+        balloonType = TutorialBalloonLayer::BalloonType::FINAL;
+    }
+
+    if (shownBalloons.find(balloonType) != shownBalloons.end()) {
+        return nullptr;
+    }
+
+    shownBalloons.insert(balloonType);
+    notifyTutorialCompletedAchievement();
+
+    return Sequence::create(CallFunc::create([levelLayerProxy]() { levelLayerProxy->pause(); }),
+                            CallFunc::create([=]() {
+                                levelLayerProxy->addOverlayingLayer(TutorialBalloonLayer::create(
+                                    balloonType, [=]() { levelLayerProxy->resume(); }));
+                            }),
+                            nullptr);
+}
+
+void LevelTutorial::notifyTutorialCompletedAchievement()
+{
+    if (shownBalloons.size() ==
+        static_cast<size_t>(TutorialBalloonLayer::BalloonType::MAX_TYPE_COUNT)) {
+        if (tracker) {
+            tracker->tutorialCompleted();
+        }
+    }
+}
+
 Level01::Level01(bool frenzyEnabled, bool shieldEnabled)
     : LevelBase(frenzyEnabled, shieldEnabled), cogwheelHelper(new CogwheelHelper())
 {
@@ -54,20 +102,3 @@ void Level01::additionalAfterLoadProcessing(b2dJson *json)
 }
 
 void Level01::customPhysicsStep(b2Body *earthBody) { cogwheelHelper->customPhysicsStep(earthBody); }
-
-cocos2d::FiniteTimeAction *
-LevelTutorial::levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy,
-                                    AchievementTracker &achievementTracker)
-{
-    achievementTracker.tutorialEntered();
-
-    return spawnTutorialBalloon(TutorialBalloonLayer::BalloonType::CONTROLS, levelLayerProxy);
-}
-
-void LevelTutorial::notifyAchivementTracker(AchievementTracker &achievementTracker)
-{
-    if (shownBalloons.size() ==
-        static_cast<size_t>(TutorialBalloonLayer::BalloonType::MAX_TYPE_COUNT)) {
-        achievementTracker.tutorialCompleted();
-    }
-}

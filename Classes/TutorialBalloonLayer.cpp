@@ -33,7 +33,12 @@ std::map<TutorialBalloonLayer::BalloonType, std::string> tutorialTexts = {
     {TutorialBalloonLayer::BalloonType::HALVE, "ALWAYS STAY CLEAR OF SKULLS\n"
                                                "THEY DO NOT KILL YOU, BUT THEY\n"
                                                "TAKE HALF OF YOUR POINTS!\n"
-                                               "IT HURTS EVEN MORE..."}};
+                                               "IT HURTS EVEN MORE..."},
+    {TutorialBalloonLayer::BalloonType::FINAL, "CONGRATULATIONS!\n"
+                                               "YOU COMPLETED THE TUTORIAL\n\n"
+                                               "YOU MAY NOW PRATICE\n"
+                                               "MORE HERE OR QUIT AND PLUNGE\n"
+                                               "INTO THE FIRST LEVEL"}};
 }
 
 TutorialBalloonLayer::TutorialBalloonLayer(BalloonType balloonType,
@@ -145,6 +150,8 @@ std::string TutorialBalloonLayer::getAnimationName() const
         return "tutorial03.x";
     case BalloonType::HALVE:
         return "tutorial04.x";
+    case BalloonType::FINAL:
+        return "tutorial01.x";
     default:
         assert(false);
         return "";
@@ -165,7 +172,10 @@ cocos2d::Vec2 TutorialBalloonLayer::getAnimationInitPos() const
         return cocos2d::Vec2(0.25, yPos);
     case BalloonType::HALVE:
         return cocos2d::Vec2(0.3, yPos);
+    case BalloonType::FINAL:
+        return cocos2d::Vec2(0.0, yPos);
     default:
+        assert(false);
         return cocos2d::Vec2(0.0, yPos);
     }
 }
