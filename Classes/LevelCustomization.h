@@ -50,7 +50,7 @@ class LevelCustomization
 
     virtual float getRatSpeedMin() const = 0;
     virtual float getRatSpeedMax() const = 0;
-    virtual float getRatSpeedStep() const = 0;
+    float getRatSpeedStep() const { return (getRatSpeedMax() - getRatSpeedMin()) / 10.; }
     virtual float getRatSpeedInitial() const { return getRatSpeedMin(); }
 
     // return ITEM_TYPE_MAX to skip dropping item
@@ -114,7 +114,6 @@ class LevelTutorial : public LevelCustomization
 
     float getRatSpeedMin() const override { return 0.2; }
     float getRatSpeedMax() const override { return 3.2; }
-    float getRatSpeedStep() const override { return 0.3; }
     float getRatSpeedInitial() const override { return getRatSpeedMin() + getRatSpeedStep(); }
 
     ItemType getDropItemType(float currentRatSpeed, bool shieldAllowed) override
@@ -210,12 +209,11 @@ class LevelBase : public LevelCustomization
 
     float getRatSpeedMin() const override { return 0.2; }
     float getRatSpeedMax() const override { return 4.2; }
-    float getRatSpeedStep() const override { return 0.4; }
 
     ItemType getDropItemType(float currentRatSpeed, bool shieldAllowed) override
     {
 #ifdef TEST_SEQUENCE
-        itemsSequence = {FRENZY, SHIELD, HALVE};
+        itemsSequence = {SPEEDUP, SPEEDUP, SPEEDUP, SPEEDUP, SPEEDUP, SLOWDOWN};
 #endif
         if (currentItemIndex == itemsSequence.size()) {
             currentItemIndex = 0;

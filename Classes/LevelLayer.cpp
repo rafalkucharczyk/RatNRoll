@@ -352,10 +352,10 @@ class AnimationHelper
 
     std::pair<std::string, float> getRunningAnimationParams(float ratSpeed) const
     {
-        int animationIndex =
-            std::min(scheduledAnimations.size() - 1,
-                     static_cast<size_t>((ratSpeed - levelCustomization.getRatSpeedMin()) /
-                                         levelCustomization.getRatSpeedStep()));
+        float speedStage =
+            (ratSpeed - levelCustomization.getRatSpeedMin()) / levelCustomization.getRatSpeedStep();
+        int animationIndex = std::min(scheduledAnimations.size() - 1,
+                                      static_cast<size_t>(std::floor(speedStage + 0.5)));
 
         return scheduledAnimations[animationIndex];
     }
