@@ -255,7 +255,7 @@ typedef void (*GameCenterChallengeCallback)(GKScoreChallenge *);
 #if SCH_IS_GOOGLE_ANALYTICS_ENABLED == true
 - (void)setGAScreenName:(NSString *)screenString;
 - (void)setGADispatchInterval:(int)dispatchInterval;
-- (void)sendGAEvent:(NSString *)category:(NSString *)action:(NSString *)label;
+- (void)sendGAEvent:(NSString *)category:(NSString *)action:(NSString *)label:(NSNumber *)value;
 #endif
 
 #if SCH_IS_ADCOLONY_ENABLED == true

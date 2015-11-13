@@ -93,7 +93,7 @@ class IOSCPPHelper
 #if SCH_IS_GOOGLE_ANALYTICS_ENABLED == true
     static void setGAScreenName(__String screenName);
     static void setGADispatchInterval(int dispatchInterval);
-    static void sendGAEvent(__String category, __String action, __String label);
+    static void sendGAEvent(__String category, __String action, __String label, long value);
 #endif
 
 #if SCH_IS_ADCOLONY_ENABLED == true

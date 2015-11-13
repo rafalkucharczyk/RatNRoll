@@ -307,7 +307,7 @@ class GoogleAnalytics
      * @param category (required) a string of what the event category is
      * @param action (required) a string of what the action performed is
      * @param label (optional) a string of what the label for the action is
-     * @param label (optional, only for Android not iOS) a value of the event that has occurred
+     * @param label (optional) a value of the event that has occurred
      */
     static void sendEvent(cocos2d::__String category, cocos2d::__String action,
                           cocos2d::__String label, long value);

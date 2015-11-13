@@ -49,9 +49,9 @@
 // -ObjC
 // -fobjc-arc to every MoPub file
 #define SCH_IS_GOOGLE_ANALYTICS_ENABLED                                                            \
-    false // CoreData.framework, SystemConfiguration.framework, libz.dylib, libsqlite3.dylib,
-          // libGoogleAnalyticsServices.a, libAdIdAccess.a, AdSupport.framework, iAd.framework,
-          // GameController.framework
+    true // CoreData.framework, SystemConfiguration.framework, libz.dylib, libsqlite3.dylib,
+         // libGoogleAnalyticsServices.a, libAdIdAccess.a, AdSupport.framework, iAd.framework,
+         // GameController.framework
 // GOOGLE ANALYTICS also needs these Linker flags for IDFA
 // -framework AdSupport
 // -force_load "${SRCROOT}/GoogleAnalyticsFramework/libAdIdAccess.a"
@@ -90,7 +90,7 @@
 #define SCH_AD_MOB_FULLSCREEN_AD_UNIT_ID @""
 #define SCH_AD_MOB_TEST_DEVICE @""
 
-#define SCH_GOOGLE_ANALYTICS_TRACKING_ID @""
+#define SCH_GOOGLE_ANALYTICS_TRACKING_ID @"UA-70067829-1"
 
 //#define SCH_EVERYPLAY_CLIENT_ID @""
 //#define SCH_EVERYPLAY_CLIENT_SECRET @""

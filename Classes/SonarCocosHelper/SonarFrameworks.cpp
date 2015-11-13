@@ -474,7 +474,7 @@ void GoogleAnalytics::sendEvent(cocos2d::__String category, cocos2d::__String ac
                                          action.getCString(), label.getCString(), value);
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #if SCH_IS_GOOGLE_ANALYTICS_ENABLED == true
-    IOSCPPHelper::sendGAEvent(category, action, label);
+    IOSCPPHelper::sendGAEvent(category, action, label, value);
 #endif
 #endif
 }

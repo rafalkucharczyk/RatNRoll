@@ -105,6 +105,7 @@ void GameFlow::setSoundSettings(const SoundSettings &settings)
 
 void GameFlow::switchToInitialScene()
 {
+    SonarCocosHelper::GoogleAnalytics::setScreenName("Initial");
     Director::getInstance()->replaceScene(createInitialScene());
 }
 
@@ -176,6 +177,7 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     levelLayer->setBackgroundSpeedFunction(
         std::bind(&BackgroundLayer::setSpeed, backgroundLayer, std::placeholders::_1));
 
+    SonarCocosHelper::GoogleAnalytics::setScreenName("Level" + std::to_string(levelNumber));
     Director::getInstance()->replaceScene(scene);
 }
 
@@ -204,6 +206,7 @@ void GameFlow::switchToPostLevelScene(int score)
 
     currentLevelNumber = noLevelNumber;
 
+    SonarCocosHelper::GoogleAnalytics::setScreenName("PostLevel");
     Director::getInstance()->replaceScene(scene);
 }
 
@@ -227,6 +230,7 @@ void GameFlow::switchToSettingsScene()
     });
     scene->addChild(settingsLayer);
 
+    SonarCocosHelper::GoogleAnalytics::setScreenName("Settings");
     Director::getInstance()->replaceScene(scene);
 }
 
@@ -253,6 +257,7 @@ void GameFlow::switchToAboutScene()
     scene->addChild(aboutLayer);
 
     achivementTracker.creditsEntered();
+    SonarCocosHelper::GoogleAnalytics::setScreenName("About");
     Director::getInstance()->replaceScene(scene);
 }
 
