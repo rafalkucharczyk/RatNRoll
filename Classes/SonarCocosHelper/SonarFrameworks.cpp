@@ -428,6 +428,14 @@ void iAds::showiAdBanner(int position)
 #endif
 }
 
+void iAds::showiAdBannerWithCallbacks(int position, std::function<void(bool)> adShownCallback,
+                                      std::function<void()> adHiddenCallback)
+{
+#if SCH_IS_iADS_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    IOSCPPHelper::showiAdBannerWithCallbacks(position, adShownCallback, adHiddenCallback);
+#endif
+}
+
 void iAds::hideiAdBanner()
 {
 #if SCH_IS_iADS_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS

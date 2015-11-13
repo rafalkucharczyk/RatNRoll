@@ -59,6 +59,8 @@ class IOSCPPHelper
 
 #if SCH_IS_iADS_ENABLED == true
     static void showiAdBanner(int position);
+    static void showiAdBannerWithCallbacks(int position, std::function<void(bool)> adShownCallback,
+                                           std::function<void()> adHiddenCallback);
     static void hideiAdBanner();
 #endif
 

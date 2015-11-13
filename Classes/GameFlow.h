@@ -21,6 +21,7 @@ class GameFlow
     cocos2d::Scene *createInitialScene();
 
     void pauseGame();
+    void resumeGame();
 
     bool iapPurchaseCompleted() const;
 
@@ -48,8 +49,6 @@ class GameFlow
 #ifdef COCOS2D_DEBUG
     void switchToTestScene();
 #endif // COCOS2D_DEBUG
-
-    void resumeGame();
 
   private:
     void loginToGameCenter();

@@ -132,16 +132,15 @@ SCHEmptyProtocol
     
     adView = [[ADBannerView alloc] initWithFrame:CGRectZero];
     adView.frame = CGRectMake( 0, view.frame.size.height * 2, adView.frame.size.width, adView.frame.size.height );
-    
+
     if ( view.frame.size.width > view.frame.size.height )
     { adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierLandscape; }
     else
     { adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait; }
 
     adView.currentContentSizeIdentifier = ADBannerContentSizeIdentifierPortrait;
-    
-    adView.delegate = self;
 
+    adView.delegate = self;
 #endif
     
 #if SCH_IS_AD_MOB_ENABLED == true
@@ -183,6 +182,19 @@ SCHEmptyProtocol
 }
 
 #if SCH_IS_iADS_ENABLED == true
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner
+               willLeaveApplication:(BOOL)willLeave
+{
+    self.adBannerShownCallback(!willLeave);
+
+    return YES;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner
+{
+    self.adBannerHiddenCallback();
+}
+
 // display iAd banner
 -( void )showiAdBanner:( int ) position
 {
@@ -191,6 +203,8 @@ SCHEmptyProtocol
     
     if ( !isBannerVisible && isBannerLoaded )
     {
+        [adView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin];
+
         [view addSubview:adView];
         // check where the ad is to be positioned
         if ( bannerPosition == ADBANNERPOSITION_TOP )

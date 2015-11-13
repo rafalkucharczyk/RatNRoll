@@ -73,6 +73,21 @@ void GameFlow::pauseGame()
     runningScene->addChild(pauseLayer, 0, pauseLayerTag);
 }
 
+void GameFlow::resumeGame()
+{
+    if (!Director::getInstance()->isPaused()) {
+        return;
+    }
+
+    getAchievementTracker().gameResumed();
+
+    Director::getInstance()->resume();
+
+    Director::getInstance()->getRunningScene()->removeChildByTag(pauseLayerTag);
+
+    getCurrentLevelLayer().resumeLevel();
+}
+
 bool GameFlow::iapPurchaseCompleted() const
 {
     return InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
@@ -253,17 +268,6 @@ void GameFlow::switchToTestScene()
     Director::getInstance()->replaceScene(scene);
 }
 #endif
-
-void GameFlow::resumeGame()
-{
-    getAchievementTracker().gameResumed();
-
-    Director::getInstance()->resume();
-
-    Director::getInstance()->getRunningScene()->removeChildByTag(pauseLayerTag);
-
-    getCurrentLevelLayer().resumeLevel();
-}
 
 void GameFlow::loginToGameCenter()
 {

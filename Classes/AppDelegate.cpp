@@ -50,7 +50,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     SonarCocosHelper::IOS::Setup();
     if (!GameFlow::getInstance().iapPurchaseCompleted()) {
-        SonarCocosHelper::iAds::showiAdBanner(SonarCocosHelper::eBottom);
+        SonarCocosHelper::iAds::showiAdBannerWithCallbacks(
+            SonarCocosHelper::eBottom,
+            [](bool /* stillActive */) { GameFlow::getInstance().pauseGame(); },
+            [] { GameFlow::getInstance().resumeGame(); });
     }
 
     SoundHelper::getInstance().init(GameFlow::getInstance().getSoundSettings());

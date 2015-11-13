@@ -50,10 +50,43 @@ void IOSCPPHelper::showRevMobPopupAd( )
 #endif
 
 #if SCH_IS_iADS_ENABLED == true
+
+namespace {
+    std::function<void(bool)> _adShownCallback;
+    std::function<void()> _adHiddenCallback;
+
+    void helperAdShownCallback(bool needPause)
+    {
+        assert(_adShownCallback);
+
+        _adShownCallback(needPause);
+    }
+
+    void helperAdHiddenCallback()
+    {
+        assert(_adHiddenCallback);
+
+        _adHiddenCallback();
+    }
+}
+
 void IOSCPPHelper::showiAdBanner( int position )
 {
     [[IOSHelper instance] showiAdBanner:position];
 }
+
+void IOSCPPHelper::showiAdBannerWithCallbacks(
+                                       int position,
+                                       std::function<void(bool)> adShownCallback,
+                                       std::function<void()> adHiddenCallback)
+{
+    _adShownCallback = adShownCallback;
+    _adHiddenCallback = adHiddenCallback;
+
+    [[IOSHelper instance] setAdBannerShownCallback:helperAdShownCallback];
+    [[IOSHelper instance] setAdBannerHiddenCallback:helperAdHiddenCallback];
+}
+
 
 void IOSCPPHelper::hideiAdBanner( )
 {
@@ -108,7 +141,7 @@ namespace {
         return std::string([str UTF8String]);
     }
 
-    void helperCallback(GKScoreChallenge *challenge)
+    void helperChallengeCallback(GKScoreChallenge *challenge)
     {
         assert(gameCenterChallengeCallback);
 
@@ -176,7 +209,7 @@ void IOSCPPHelper::gameCenterResetPlayerAchievements( )
 void IOSCPPHelper::gameCenterRegisterChallengeCallback(std::function<void(SonarCocosHelper::GameCenterPlayerScore)> callback)
 {
     gameCenterChallengeCallback = callback;
-    [[IOSHelper instance] gameCenterRegisterChallengeCallback:helperCallback];
+    [[IOSHelper instance] gameCenterRegisterChallengeCallback:helperChallengeCallback];
 }
 
 SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBestScores(__String leaderboardID)

@@ -192,6 +192,9 @@ class iAds
      * @param SonarCocosHelper::eBottom displays the ad banner at the bottom of the screen
      */
     static void showiAdBanner(int position);
+
+    static void showiAdBannerWithCallbacks(int position, std::function<void(bool)> adShownCallback,
+                                           std::function<void()> adHiddenCallback);
     /**
      * Hide ad banner
      */

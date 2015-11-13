@@ -76,6 +76,11 @@
 @protocol SCHEmptyProtocol
 @end
 
+#if SCH_IS_iADS_ENABLED == true
+typedef void (*ADBannerShownCallback)(bool stillActive);
+typedef void (*ADBannerHiddenCallback)();
+#endif
+
 #if SCH_IS_GAME_CENTER_ENABLED == true
 typedef void (*GameCenterChallengeCallback)(GKScoreChallenge *);
 
@@ -176,6 +181,9 @@ typedef void (*GameCenterChallengeCallback)(GKScoreChallenge *);
 - (void)initialise;
 
 #if SCH_IS_iADS_ENABLED == true
+@property(nonatomic) ADBannerShownCallback adBannerShownCallback;
+@property(nonatomic) ADBannerHiddenCallback adBannerHiddenCallback;
+
 //-( void )showiAdBanner;
 - (void)showiAdBanner:(int)position;
 - (void)hideiAdBanner;
