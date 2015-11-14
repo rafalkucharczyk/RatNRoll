@@ -7,6 +7,9 @@
 #include "LevelMenuLayer.h"
 #include "LevelLayer.h"
 #include "LevelSelectionLayer.h"
+#include "LevelBlockerLayer.h"
+#include "IAPLayer.h"
+#include "FacebookLikeLayer.h"
 #include "PostLevelLayer.h"
 #include "PauseLayer.h"
 #include "SettingsLayer.h"
@@ -16,7 +19,6 @@
 #include "PermanentStorage.h"
 
 #include "LevelCustomization.h"
-#include "InAppPurchaseHelper.h"
 
 #include "AchievementTracker.h"
 
@@ -51,7 +53,7 @@ Scene *GameFlow::createInitialScene()
 
 void GameFlow::pauseGame()
 {
-    if (Director::getInstance()->isPaused() || currentLevelNumber == noLevelNumber) {
+    if (Director::getInstance()->isPaused() || !isGamePlayActive()) {
         return;
     }
 
@@ -87,6 +89,8 @@ void GameFlow::resumeGame()
 
     getCurrentLevelLayer().resumeLevel();
 }
+
+bool GameFlow::likingCompleted() const { return PermanentStorage::getInstance().getLikingState(); }
 
 bool GameFlow::iapPurchaseCompleted() const
 {
@@ -172,6 +176,8 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     currentLevelNumber = levelNumber;
     scene->addChild(levelLayer);
 
+    blockLevel(*scene, *levelLayer, levelNumber);
+
     levelLayer->setGameFinishedCallback(
         std::bind(&GameFlow::switchToPostLevelScene, this, std::placeholders::_1));
     levelLayer->setBackgroundSpeedFunction(
@@ -179,6 +185,39 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
 
     SonarCocosHelper::GoogleAnalytics::setScreenName("Level" + std::to_string(levelNumber));
     Director::getInstance()->replaceScene(scene);
+}
+
+void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber)
+{
+    Layer *actionLayer = nullptr;
+
+    auto levelBlockerLayer = LevelBlockerLayer::create(levelLayer);
+    levelBlockerLayer->setGotoMenuCallback(std::bind(&GameFlow::switchToLevelSelectionScene, this));
+    levelBlockerLayer->setTag(levelBlockerTag);
+
+    if (levelNumber == 2 && !likingCompleted()) {
+        auto facebookLikeLayer = FacebookLikeLayer::create({0.5, 0.625}, 0.2);
+        facebookLikeLayer->setLikingCompletedCallback([levelBlockerLayer]() {
+            levelBlockerLayer->unblock();
+            PermanentStorage::getInstance().setLikingState(true);
+        });
+        actionLayer = facebookLikeLayer;
+    }
+
+    if (levelNumber == 3 && !iapPurchaseCompleted()) {
+        auto iapLayer = IAPLayer::create(iapProductId, {0.5, 0.625}, 0.2);
+        iapLayer->setPurchaseCompletedCallback([levelBlockerLayer]() {
+            levelBlockerLayer->unblock();
+            SonarCocosHelper::iAds::hideiAdBanner();
+        });
+        actionLayer = iapLayer;
+    }
+
+    if (actionLayer) {
+        levelBlockerLayer->addChild(actionLayer);
+
+        scene.addChild(levelBlockerLayer);
+    }
 }
 
 void GameFlow::switchToPostLevelScene(int score)
@@ -214,20 +253,17 @@ void GameFlow::switchToSettingsScene()
 {
     auto scene = createSceneObject();
 
-    auto settingsLayer = SettingsLayer::createNoInit(getSoundSettings());
-    iapHelper.reset(new InAppPurchaseHelper(iapProductId, *settingsLayer));
-    settingsLayer->init([this]() { iapHelper->init(); });
+    auto settingsLayer = SettingsLayer::create(getSoundSettings());
+    auto iapLayer = IAPLayer::create(iapProductId, {0.5, 0.41}, 0.15);
 
-    settingsLayer->setGotoMainMenuCallback([this]() {
-        iapHelper.reset();
-        switchToInitialScene();
-    });
-    settingsLayer->setPurchaseRequestedCallback([this]() { iapHelper->purchaseProduct(); });
-    settingsLayer->setPurchaseCompletedCallback([]() { SonarCocosHelper::iAds::hideiAdBanner(); });
+    settingsLayer->setGotoMainMenuCallback([this]() { switchToInitialScene(); });
+
+    iapLayer->setPurchaseCompletedCallback([]() { SonarCocosHelper::iAds::hideiAdBanner(); });
     settingsLayer->setSoundSettingsChangedCallback([this](const SoundSettings &soundSettings) {
         SoundHelper::getInstance().init(soundSettings);
         setSoundSettings(soundSettings);
     });
+    scene->addChild(iapLayer);
     scene->addChild(settingsLayer);
 
     SonarCocosHelper::GoogleAnalytics::setScreenName("Settings");
@@ -252,6 +288,7 @@ void GameFlow::switchToAboutScene()
         PermanentStorage::getInstance().setUnlockedAchievements(PermanentStorage::CustomDataMap());
 
         PermanentStorage::getInstance().setPurchaseState(GameFlow::iapProductId, false);
+        PermanentStorage::getInstance().setLikingState(false);
     });
 
     scene->addChild(aboutLayer);
@@ -329,15 +366,15 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
         break;
 
     case 1:
-        return new Level01(iapPurchaseCompleted(), true);
+        return new Level01(iapPurchaseCompleted(), likingCompleted());
         break;
 
     case 2:
-        return new Level02(iapPurchaseCompleted(), true);
+        return new Level02(iapPurchaseCompleted(), likingCompleted());
         break;
 
     case 3:
-        return new Level03(iapPurchaseCompleted(), true);
+        return new Level03(iapPurchaseCompleted(), likingCompleted());
         break;
 
     default:
@@ -376,6 +413,13 @@ LevelLayer &GameFlow::getCurrentLevelLayer()
     assert(levelLayer);
 
     return *levelLayer;
+}
+
+bool GameFlow::isGamePlayActive() const
+{
+    // unblocked level layer
+    return (currentLevelNumber != noLevelNumber) &&
+           (Director::getInstance()->getRunningScene()->getChildByTag(levelBlockerTag) == nullptr);
 }
 
 AchievementTracker &GameFlow::addAchievementTracker(cocos2d::Node &parent) const

@@ -8,7 +8,6 @@
 
 class LevelCustomization;
 class LevelLayer;
-class InAppPurchaseHelper;
 class AchievementTracker;
 
 class GameFlow
@@ -23,6 +22,7 @@ class GameFlow
     void pauseGame();
     void resumeGame();
 
+    bool likingCompleted() const;
     bool iapPurchaseCompleted() const;
 
     SoundSettings getSoundSettings() const;
@@ -39,6 +39,7 @@ class GameFlow
     void switchToLevelScene(int levelNumber);
     void switchToLevelSceneWithScores(int levelNumber,
                                       SonarCocosHelper::GameCenterPlayersScores scores);
+    void blockLevel(cocos2d::Scene &scene, LevelLayer &levelLayer, int levelNumber);
 
     void switchToPostLevelScene(int score);
 
@@ -67,6 +68,8 @@ class GameFlow
 
     int currentLevelNumber;
 
+    bool isGamePlayActive() const;
+
   private:
     AchievementTracker &addAchievementTracker(cocos2d::Node &parent) const;
     AchievementTracker &getAchievementTracker() const;
@@ -75,8 +78,6 @@ class GameFlow
     std::string getSocialShareMessage(int score);
 
   private:
-    std::shared_ptr<InAppPurchaseHelper> iapHelper;
-
     static const std::string iapProductId;
 
   private:
@@ -85,6 +86,7 @@ class GameFlow
     const static int pauseLayerTag = 123;
     const static int backgroundLayerTag = 124;
     const static int achievementTrackerTag = 125;
+    const static int levelBlockerTag = 126;
     const static int noLevelNumber = -1;
 };
 

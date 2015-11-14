@@ -7,13 +7,13 @@
 #include "IAPPresenter.h"
 #include "SoundHelper.h"
 
-class SettingsLayer : public cocos2d::Layer, public IAPPresenter
+class SettingsLayer : public cocos2d::Layer
 {
   public:
     SettingsLayer(const SoundSettings &soundSettings);
-    virtual bool init(std::function<void()> initCallback);
+    virtual bool init();
 
-    static SettingsLayer *createNoInit(const SoundSettings &soundSettings);
+    static SettingsLayer *create(const SoundSettings &soundSettings);
 
     void menuItemClicked(int itemIndex);
 
@@ -22,39 +22,18 @@ class SettingsLayer : public cocos2d::Layer, public IAPPresenter
         gotoMainMenuCallback = callback;
     }
 
-    void setPurchaseRequestedCallback(std::function<void()> callback)
-    {
-        purchaseRequestedCallback = callback;
-    }
-
-    void setPurchaseCompletedCallback(std::function<void()> callback)
-    {
-        purchaseCompletedCallback = callback;
-    }
-
     void setSoundSettingsChangedCallback(std::function<void(const SoundSettings &)> callback)
     {
         soundSettingsChangedCallback = callback;
     }
 
-  public:
-    void purchaseAvailable() override;
-    void purchaseInProgress() override;
-    void purchaseCompleted() override;
-    void purchaseCancelled() override;
-    void purchaseFailed() override;
-
   private:
     std::function<void()> gotoMainMenuCallback;
-    std::function<void()> purchaseRequestedCallback;
-    std::function<void()> purchaseCompletedCallback;
     std::function<void(const SoundSettings &)> soundSettingsChangedCallback;
 
     MenuHelper menuHelper;
 
     SoundSettings soundSettings;
-
-    static const int inProgressActionTag = 998877;
 };
 
 #endif // __SETTINGS_LAYER_H__

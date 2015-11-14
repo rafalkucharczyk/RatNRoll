@@ -17,6 +17,9 @@
 		2507070F1BF649A100ED74E3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2507070E1BF649A100ED74E3 /* SystemConfiguration.framework */; };
 		250707111BF649D300ED74E3 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 250707101BF649D300ED74E3 /* libsqlite3.tbd */; };
 		250707131BF64A2800ED74E3 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 250707121BF64A2800ED74E3 /* AdSupport.framework */; };
+		25365D001BF7360600668802 /* LevelBlockerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25365CFE1BF7360600668802 /* LevelBlockerLayer.cpp */; };
+		25365D081BF89FC600668802 /* IAPLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25365D061BF89FC600668802 /* IAPLayer.cpp */; };
+		25365D0C1BF8F76000668802 /* FacebookLikeLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25365D0A1BF8F76000668802 /* FacebookLikeLayer.cpp */; };
 		253CC72A1BF3ED9D0042D6E7 /* MenuLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 253CC7281BF3ED9D0042D6E7 /* MenuLabel.cpp */; };
 		2542C43E1BB941D200727984 /* background in Resources */ = {isa = PBXBuildFile; fileRef = 2542C43D1BB941D200727984 /* background */; };
 		2542C4401BB967F500727984 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 2542C43F1BB967F500727984 /* sounds */; };
@@ -184,6 +187,12 @@
 		2507070E1BF649A100ED74E3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		250707101BF649D300ED74E3 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		250707121BF64A2800ED74E3 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		25365CFE1BF7360600668802 /* LevelBlockerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelBlockerLayer.cpp; sourceTree = "<group>"; };
+		25365CFF1BF7360600668802 /* LevelBlockerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelBlockerLayer.h; sourceTree = "<group>"; };
+		25365D061BF89FC600668802 /* IAPLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IAPLayer.cpp; sourceTree = "<group>"; };
+		25365D071BF89FC600668802 /* IAPLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPLayer.h; sourceTree = "<group>"; };
+		25365D0A1BF8F76000668802 /* FacebookLikeLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FacebookLikeLayer.cpp; sourceTree = "<group>"; };
+		25365D0B1BF8F76000668802 /* FacebookLikeLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookLikeLayer.h; sourceTree = "<group>"; };
 		253CC7281BF3ED9D0042D6E7 /* MenuLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuLabel.cpp; path = Menu/MenuLabel.cpp; sourceTree = "<group>"; };
 		253CC7291BF3ED9D0042D6E7 /* MenuLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuLabel.h; path = Menu/MenuLabel.h; sourceTree = "<group>"; };
 		2542C43D1BB941D200727984 /* background */ = {isa = PBXFileReference; lastKnownFileType = folder; path = background; sourceTree = "<group>"; };
@@ -561,10 +570,16 @@
 				46880B8519C43A87006E1F66 /* AppDelegate.h */,
 				B552BDFF1B2236DC00D4851A /* BackgroundLayer.cpp */,
 				B552BE001B2236DC00D4851A /* BackgroundLayer.h */,
+				25365D0A1BF8F76000668802 /* FacebookLikeLayer.cpp */,
+				25365D0B1BF8F76000668802 /* FacebookLikeLayer.h */,
 				B552BE081B24234A00D4851A /* GameFlow.cpp */,
 				B552BE091B24234A00D4851A /* GameFlow.h */,
+				25365D061BF89FC600668802 /* IAPLayer.cpp */,
+				25365D071BF89FC600668802 /* IAPLayer.h */,
 				B55887C81B41E0B900B13416 /* InitialLayer.cpp */,
 				B55887C91B41E0B900B13416 /* InitialLayer.h */,
+				25365CFE1BF7360600668802 /* LevelBlockerLayer.cpp */,
+				25365CFF1BF7360600668802 /* LevelBlockerLayer.h */,
 				B552BE021B223D3500D4851A /* LevelMenuLayer.cpp */,
 				B552BE031B223D3500D4851A /* LevelMenuLayer.h */,
 				B552BDFA1B1CE54E00D4851A /* LevelLayer.cpp */,
@@ -916,8 +931,10 @@
 				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
 				B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */,
 				25F8B1521BD0357C00B84B96 /* LevelCustomization.cpp in Sources */,
+				25365D081BF89FC600668802 /* IAPLayer.cpp in Sources */,
 				B535EF511B1330ED004D647D /* BasicRUBELayer.cpp in Sources */,
 				B552BE011B2236DC00D4851A /* BackgroundLayer.cpp in Sources */,
+				25365D001BF7360600668802 /* LevelBlockerLayer.cpp in Sources */,
 				B535EF4A1B1321F5004D647D /* b2dJsonImage.cpp in Sources */,
 				B551AF661B18FCB50076A8E9 /* RUBELayer.cpp in Sources */,
 				25F8B1551BD0409F00B84B96 /* AboutLayer.cpp in Sources */,
@@ -938,6 +955,7 @@
 				B552BE041B223D3500D4851A /* LevelMenuLayer.cpp in Sources */,
 				B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */,
 				B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */,
+				25365D0C1BF8F76000668802 /* FacebookLikeLayer.cpp in Sources */,
 				2542C4561BC4568100727984 /* PermanentStorage.cpp in Sources */,
 				B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,

@@ -69,6 +69,7 @@ cocos2d::Sprite *MenuItemButton::createSpriteForPath(const std::string &imagePat
     auto bgSprite = Sprite::create("menu/" + imagePath + "_bg.png");
 
     sprite->addChild(bgSprite, -1);
+    sprite->setCascadeOpacityEnabled(true);
     bgSprite->setOpacity(192);
     bgSprite->setAnchorPoint(Vec2(0, 0));
 

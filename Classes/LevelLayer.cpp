@@ -213,7 +213,8 @@ class AnimationHelper
 {
   public:
     AnimationHelper(const LevelCustomization &levelCustomization)
-        : levelCustomization(levelCustomization), eyesAnimationInProgress(false), skeleton(nullptr)
+        : levelCustomization(levelCustomization), eyesAnimationInProgress(false),
+          lastRunningAnimationTimeScale(0), skeleton(nullptr)
     {
 
         float speedRange =
@@ -326,6 +327,30 @@ class AnimationHelper
         skeleton->setAnimation(shieldShowingTrackIndex, "helmet_out_01.x", false);
     }
 
+    void pauseRunningAnimation()
+    {
+        assert(skeleton);
+
+        spTrackEntry *entry = skeleton->getCurrent(runningTrackIndex);
+
+        if (entry != nullptr) {
+            lastRunningAnimationTimeScale = entry->timeScale;
+            entry->timeScale = 0;
+        }
+    }
+
+    void resumeRunningAnimation()
+    {
+        assert(skeleton);
+
+        spTrackEntry *entry = skeleton->getCurrent(runningTrackIndex);
+
+        if (entry != nullptr && lastRunningAnimationTimeScale > 0) {
+            entry->timeScale = lastRunningAnimationTimeScale;
+            lastRunningAnimationTimeScale = 0;
+        }
+    }
+
   private:
     void changeRunningAnimation(const std::string &newAnimationName, float newAnimationSpeed)
     {
@@ -383,6 +408,8 @@ class AnimationHelper
     std::set<std::pair<std::string, std::string>> mixesSet;
 
     bool eyesAnimationInProgress;
+
+    float lastRunningAnimationTimeScale;
 
     static const int runningTrackIndex = 0;
     static const int eyesMovingTrackIndex = 1;
@@ -543,6 +570,18 @@ void LevelLayer::update(float dt)
     doPhysicsCalculationStep();
 
     calculateScore();
+}
+
+void LevelLayer::pauseLevel()
+{
+    paused = true;
+    animationHelper->pauseRunningAnimation();
+}
+
+void LevelLayer::resumeLevel()
+{
+    paused = false;
+    animationHelper->resumeRunningAnimation();
 }
 
 bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,

@@ -45,6 +45,7 @@ const std::string effectsEnabledKey = "effects_enabled";
 const std::string musicEnabledKey = "music_enabled";
 const std::string unlockedAchievementsKey = "unlocked_achievements";
 const std::string achievementsStateKey = "achievements_state";
+const std::string keychainLikingKey = "facebook_like";
 }
 
 PermanentStorage *PermanentStorage::instance = nullptr;
@@ -72,23 +73,17 @@ int PermanentStorage::getBestScore(int levelNumber) const
 
 void PermanentStorage::setPurchaseState(const std::string &productId, bool bought)
 {
-    KeychainItem keychainItem;
-
-    CustomDataMap keychainMap = readJsonData(keychainItem.getData());
-
-    keychainMap[productId] = static_cast<int>(bought);
-
-    keychainItem.setData(saveJsonData(keychainMap));
+    saveToKeychain(productId, bought);
 }
 
 bool PermanentStorage::getPurchaseState(const std::string &productId) const
 {
-    KeychainItem keychainItem;
-
-    CustomDataMap keychainMap = readJsonData(keychainItem.getData());
-
-    return (keychainMap.find(productId) != keychainMap.end()) && keychainMap[productId];
+    return readFromKeychain(productId);
 }
+
+void PermanentStorage::setLikingState(bool liked) { saveToKeychain(keychainLikingKey, liked); }
+
+bool PermanentStorage::getLikingState() const { return readFromKeychain(keychainLikingKey); }
 
 void PermanentStorage::setSoundSettings(const SoundSettings &soundSettings)
 {
@@ -168,4 +163,24 @@ AchievementTracker::State PermanentStorage::getAchievementTrackerState() const
     assert(i == data.end());
 
     return state;
+}
+
+void PermanentStorage::saveToKeychain(const std::string &keychainItemKey, bool value)
+{
+    KeychainItem keychainItem;
+
+    CustomDataMap keychainMap = readJsonData(keychainItem.getData());
+
+    keychainMap[keychainItemKey] = static_cast<int>(value);
+
+    keychainItem.setData(saveJsonData(keychainMap));
+}
+
+bool PermanentStorage::readFromKeychain(const std::string &keychainItemKey) const
+{
+    KeychainItem keychainItem;
+
+    CustomDataMap keychainMap = readJsonData(keychainItem.getData());
+
+    return (keychainMap.find(keychainItemKey) != keychainMap.end()) && keychainMap[keychainItemKey];
 }

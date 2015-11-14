@@ -36,8 +36,8 @@ class LevelLayer : public RUBELayer
     virtual void afterLoadProcessing(b2dJson *json);
 
     virtual void update(float dt);
-    void pauseLevel() { paused = true; }
-    void resumeLevel() { paused = false; }
+    void pauseLevel();
+    void resumeLevel();
 
     bool setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *imageInfo,
                                                   cocos2d::Point &position, float &angle);

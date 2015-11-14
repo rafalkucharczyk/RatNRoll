@@ -16,6 +16,9 @@ class PermanentStorage
     void setPurchaseState(const std::string &productId, bool bought);
     bool getPurchaseState(const std::string &productId) const;
 
+    void setLikingState(bool liked);
+    bool getLikingState() const;
+
     void setSoundSettings(const SoundSettings &soundSettings);
     SoundSettings getSoundSettings() const;
 
@@ -29,6 +32,9 @@ class PermanentStorage
 
   private:
     PermanentStorage();
+
+    void saveToKeychain(const std::string &keychainItemKey, bool value);
+    bool readFromKeychain(const std::string &keychainItemKey) const;
 
     static PermanentStorage *instance;
 };
