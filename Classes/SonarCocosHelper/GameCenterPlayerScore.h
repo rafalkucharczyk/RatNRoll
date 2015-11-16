@@ -22,7 +22,18 @@ struct GameCenterPlayerScore {
     bool isChallenge;
     bool isOwnScore; // true for local player
 
-    int getLowerScoreBound() const { return isChallenge ? 0 : std::max(0, score - 50); }
+    // returns function giving lower score bound depending on current score multiplier
+    std::function<int(int)> getLowerScoreBound() const
+    {
+        if (isChallenge) {
+            return [](int) { return 0; };
+        }
+
+        int _score = score;
+
+        return
+            [_score](int scoreMultiplier) { return std::max(0, _score - 100 * scoreMultiplier); };
+    }
 };
 
 typedef std::vector<GameCenterPlayerScore> GameCenterPlayersScores;

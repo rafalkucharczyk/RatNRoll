@@ -113,19 +113,19 @@ class ShadowRatHelper
 
   private:
     struct ShadowRatEntry {
-        ShadowRatEntry() : scoreFrom(0), scoreTo(0), body(nullptr) {}
-        ShadowRatEntry(int scoreFrom, int scoreTo)
+        ShadowRatEntry() : scoreTo(0), body(nullptr) {}
+        ShadowRatEntry(std::function<int(int)> scoreFrom, int scoreTo)
             : scoreFrom(scoreFrom), scoreTo(scoreTo), body(nullptr)
         {
         }
 
-        int scoreFrom;
+        std::function<int(int)> scoreFrom;
         int scoreTo;
         b2Body *body;
     };
 
   public:
-    void addShadow(const std::string &playerName, int scoreFrom, int scoreTo)
+    void addShadow(const std::string &playerName, std::function<int(int)> scoreFrom, int scoreTo)
     {
         if (shadowEntries.find(playerName) == shadowEntries.end()) {
             shadowEntries[playerName] = ShadowRatEntry(scoreFrom, scoreTo);
@@ -148,8 +148,9 @@ class ShadowRatHelper
 
     void scoreUpdated(int newScore)
     {
-        auto inRange = [newScore](ShadowRatEntry &entry) -> bool {
-            return (newScore >= entry.scoreFrom) && (newScore <= entry.scoreTo);
+        auto inRange = [newScore, this](ShadowRatEntry &entry) -> bool {
+            return (newScore >= entry.scoreFrom(levelLayer.getGameScoreDelta())) &&
+                   (newScore <= entry.scoreTo);
         };
 
         for (auto i = shadowEntries.begin(); i != shadowEntries.end(); i++) {
@@ -190,14 +191,20 @@ class ShadowRatHelper
 
     void addPlayerNameLabelToNode(Node *node, const std::string &playerName)
     {
-        auto label = Label::createWithSystemFont("", "Marker Felt", 80);
+        auto label = Label::createWithTTF("", "fonts/rat.ttf", 160);
         label->setColor(Color3B::BLACK);
-        label->setOpacity(node->getOpacity());
+        label->runAction(Sequence::create(
+            DelayTime::create(1), Spawn::create(ScaleTo::create(0.5, 0.5),
+                                                FadeTo::create(0.5, node->getOpacity()), nullptr),
+            nullptr));
 
         Size cs = node->getContentSize();
         label->setPosition(Vec2(cs.width / 2, cs.height));
 
-        label->setString(playerName);
+        // TODO: remove when lowercase letters are available in rat.ttf
+        std::string name = playerName;
+        std::transform(name.begin(), name.end(), name.begin(), ::toupper);
+        label->setString(name);
 
         node->addChild(label);
     }
@@ -631,7 +638,8 @@ bool LevelLayer::setCustomImagePositionsFromPhysicsBodies(const RUBEImageInfo *i
 
 bool LevelLayer::isFixtureTouchable(b2Fixture *fixture) { return fixture->GetBody() == earthBody; }
 
-void LevelLayer::addShadowRat(const std::string &name, int fromScore, int toScore)
+void LevelLayer::addShadowRat(const std::string &name, std::function<int(int)> fromScore,
+                              int toScore)
 {
     if (!name.empty()) {
         shadowRatHelper->addShadow(name, fromScore, toScore);
@@ -1032,17 +1040,7 @@ void LevelLayer::calculateScore()
 {
     float currentAngle = -earthRevoluteJoint->GetJointAngle();
     if (currentAngle - previousRevoluteJointAngle > 0.2) {
-        float speedRatio =
-            (ratSpeed - levelCustomization->getRatSpeedMin()) /
-            (levelCustomization->getRatSpeedMax() - levelCustomization->getRatSpeedMin());
-
-        int gameScoreDelta =
-            1 + std::lround(speedRatio * 2 +
-                            (ratSpeed == levelCustomization->getRatSpeedMax() ? 1 : 0));
-
-        gameScoreDelta *= frenzyGameScoreMultiplier;
-
-        gameScore += gameScoreDelta;
+        gameScore += getGameScoreDelta();
 
         updateScore();
 
@@ -1093,4 +1091,19 @@ void LevelLayer::updateRatShield(int delta)
         std::string attachmentName = "helmet0" + std::to_string(skullShieldCount);
         getRatAnimation()->setAttachment("helmet", attachmentName);
     }
+}
+
+int LevelLayer::getGameScoreDelta() const
+{
+    float speedRatio =
+        (ratSpeed - levelCustomization->getRatSpeedMin()) /
+        (levelCustomization->getRatSpeedMax() - levelCustomization->getRatSpeedMin());
+
+    int gameScoreDelta =
+        1 +
+        std::lround(speedRatio * 2 + (ratSpeed == levelCustomization->getRatSpeedMax() ? 1 : 0));
+
+    gameScoreDelta *= frenzyGameScoreMultiplier;
+
+    return gameScoreDelta;
 }

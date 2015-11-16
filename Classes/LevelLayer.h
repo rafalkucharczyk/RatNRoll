@@ -56,7 +56,7 @@ class LevelLayer : public RUBELayer
         backgroundSpeedFunction = function;
     }
 
-    void addShadowRat(const std::string &name, int fromScore, int toScore);
+    void addShadowRat(const std::string &name, std::function<int(int)> fromScore, int toScore);
 
     static const int proxyOverlayLayer = 1111;
 
@@ -147,6 +147,8 @@ class LevelLayer : public RUBELayer
     int frenzyGameScoreMultiplier;
     int skullShieldCount;
     static constexpr int maxSkullShieldsCount = 4;
+
+    int getGameScoreDelta() const;
 
   private:
     std::shared_ptr<ShadowRatHelper> shadowRatHelper;
