@@ -176,7 +176,8 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     currentLevelNumber = levelNumber;
     scene->addChild(levelLayer);
 
-    blockLevel(*scene, *levelLayer, levelNumber);
+    blockLevel(*scene, *levelLayer, levelNumber,
+               scores.size() ? scores.front() : SonarCocosHelper::GameCenterPlayerScore());
 
     levelLayer->setGameFinishedCallback(
         std::bind(&GameFlow::switchToPostLevelScene, this, std::placeholders::_1));
@@ -187,7 +188,8 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     Director::getInstance()->replaceScene(scene);
 }
 
-void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber)
+void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
+                          const SonarCocosHelper::GameCenterPlayerScore &score)
 {
     Layer *actionLayer = nullptr;
 
@@ -213,7 +215,7 @@ void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber)
         actionLayer = iapLayer;
     }
 
-    if (actionLayer) {
+    if (actionLayer && !score.isChallenge) {
         levelBlockerLayer->addChild(actionLayer);
 
         scene.addChild(levelBlockerLayer);
