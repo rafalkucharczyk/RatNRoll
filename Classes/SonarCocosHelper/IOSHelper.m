@@ -561,11 +561,9 @@ SCHEmptyProtocol
 
 - (void)player:(GKPlayer *)player wantsToPlayChallenge:(GKChallenge *)challenge
 {
-    GKScoreChallenge *scoreChallenge = (GKScoreChallenge*)challenge;
-
-    if (scoreChallenge != nil)
+    if ([challenge isKindOfClass:[GKScoreChallenge class]])
     {
-        self.challengeCallback(scoreChallenge);
+        self.challengeCallback((GKScoreChallenge*)challenge);
     }
 }
 
