@@ -40,6 +40,7 @@ class IOSCPPHelper
     static void gameCenterLogin(std::function<void()> signedInCallback);
     static void gameCenterShowLeaderboard();
     static void gameCenterShowAchievements();
+    static void gameCenterHideUi();
     static void gameCenterSubmitScore(int scoreNumber, __String leaderboardID);
     static void gameCenterSubmitScoreForChallenge(int scoreNumber);
     static void gameCenterUnlockAchievement(__String achievementID, float percent);

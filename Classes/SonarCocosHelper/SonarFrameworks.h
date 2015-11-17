@@ -263,6 +263,10 @@ class GameCenter
      */
     static void showAchievements();
     /**
+     * Hide Game Center UI
+     */
+    static void hideUI();
+    /**
      * Submit score to online leaderboard
      * @param scoreNumber is the score to submit online
      * @param leaderboardID is the name of your leaderboard

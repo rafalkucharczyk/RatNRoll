@@ -69,8 +69,7 @@
 #endif
 
 #if SCH_IS_GAME_CENTER_ENABLED == true
-#import <GameKit/GKLocalPlayer.h>
-#import <GameKit/GKChallenge.h>
+#import <GameKit/GameKit.h>
 #endif
 
 @protocol SCHEmptyProtocol
@@ -213,10 +212,12 @@ typedef void (*GameCenterChallengeCallback)(GKScoreChallenge *);
 @property(nonatomic) BOOL gameCenterEnabled;
 @property(nonatomic, copy) NSString *leaderboardIdentifier;
 @property(nonatomic) GameCenterChallengeCallback challengeCallback;
+@property(nonatomic) GKGameCenterViewController *gameCenterViewController;
 
 - (void)gameCenterLoginWithCompletionHandler:(void (^)())completionHandler;
 - (void)gameCenterShowLeaderboard;
 - (void)gameCenterShowAchievements;
+- (void)gameCenterHideUi;
 - (void)gameCenterSubmitScore:(int)scoreNumber andLeaderboard:(NSString *)leaderboardID;
 - (void)gameCenterSubmitScore:(int)scoreNumber
                  forChallenge:(GKScoreChallenge *)challenge

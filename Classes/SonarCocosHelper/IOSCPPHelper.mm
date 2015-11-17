@@ -178,6 +178,11 @@ void IOSCPPHelper::gameCenterShowAchievements( )
     [[IOSHelper instance] gameCenterShowAchievements];
 }
 
+void IOSCPPHelper::gameCenterHideUi( )
+{
+    [[IOSHelper instance] gameCenterHideUi];
+}
+
 void IOSCPPHelper::gameCenterSubmitScore( int scoreNumber, __String leaderboardID )
 {
     [[IOSHelper instance] gameCenterSubmitScore:scoreNumber

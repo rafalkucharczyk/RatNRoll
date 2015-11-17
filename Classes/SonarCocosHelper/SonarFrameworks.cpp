@@ -126,6 +126,13 @@ void GameCenter::showAchievements()
 #endif
 }
 
+void GameCenter::hideUI()
+{
+#if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    IOSCPPHelper::gameCenterHideUi();
+#endif
+}
+
 void GameCenter::submitScore(int scoreNumber, cocos2d::__String leaderboardID)
 {
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS

@@ -29,10 +29,6 @@
     #import <Social/Social.h>
 #endif
 
-#if SCH_IS_GAME_CENTER_ENABLED == true
-    #import <GameKit/GameKit.h>
-#endif
-
 @interface IOSHelper ( )
 <
 SCHEmptyProtocol
@@ -497,14 +493,15 @@ SCHEmptyProtocol
     if ( _gameCenterEnabled )
     {
         // Init the following view controller object.
-        GKGameCenterViewController *gcViewController = [[GKGameCenterViewController alloc] init];
+        self.gameCenterViewController = [[GKGameCenterViewController alloc] init];
         
         // Set self as its delegate.
-        gcViewController.gameCenterDelegate = self;
-        gcViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+        self.gameCenterViewController.gameCenterDelegate = self;
+        self.gameCenterViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
         //gcViewController.leaderboardIdentifier = _leaderboardIdentifier;
         
-        [localViewController presentViewController:gcViewController animated:YES completion:nil];
+        [localViewController presentViewController:self.gameCenterViewController
+                                          animated:YES completion:nil];
     }
     else
     {
@@ -517,13 +514,20 @@ SCHEmptyProtocol
 
 -( void )gameCenterShowAchievements
 {
-    GKGameCenterViewController *gcViewController = [[GKGameCenterViewController alloc] init];
+    self.gameCenterViewController = [[GKGameCenterViewController alloc] init];
     
-    gcViewController.gameCenterDelegate = self;
+    self.gameCenterViewController.gameCenterDelegate = self;
     
-    gcViewController.viewState = GKGameCenterViewControllerStateAchievements;
+    self.gameCenterViewController.viewState = GKGameCenterViewControllerStateAchievements;
     
-    [localViewController presentViewController:gcViewController animated:YES completion:nil];
+    [localViewController presentViewController:self.gameCenterViewController
+                                      animated:YES completion:nil];
+}
+
+-( void )gameCenterHideUi
+{
+    [self.gameCenterViewController dismissViewControllerAnimated:YES
+                                                      completion:^{self.gameCenterViewController = nil; }];
 }
 
 -( void )gameCenterUnlockAchievement:( NSString* )achievementID andPercentage: ( float )percent

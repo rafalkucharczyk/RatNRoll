@@ -329,6 +329,8 @@ void GameFlow::startChallenge(SonarCocosHelper::GameCenterPlayerScore score)
 
     Director::getInstance()->resume();
 
+    SonarCocosHelper::GameCenter::hideUI();
+
     switchToLevelSceneWithScores(levelNumber, {score});
 }
 
