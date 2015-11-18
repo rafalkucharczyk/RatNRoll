@@ -619,10 +619,10 @@
         "massData-I" : 2893.651611328125,
         "massData-center" : 
         {
-          "x" : -0.0007347410428337753,
-          "y" : -0.009480781853199005
+          "x" : -0.0007347411592490971,
+          "y" : -0.009480783715844154
         },
-        "massData-mass" : 1003.825927734375,
+        "massData-mass" : 1003.825866699219,
         "name" : "earth",
         "position" : 
         {
@@ -1069,7 +1069,7 @@
         "id" : 1,
         "name" : "image0",
         "opacity" : 0.5,
-        "renderOrder" : 1,
+        "renderOrder" : 2,
         "scale" : 4.995652198791504
       },
       
@@ -1087,6 +1087,7 @@
         "id" : 13,
         "name" : "image3",
         "opacity" : 0.5,
+        "renderOrder" : 2,
         "scale" : 0.2112366706132889
       },
       
@@ -1104,6 +1105,7 @@
         "id" : 16,
         "name" : "image3",
         "opacity" : 0.5,
+        "renderOrder" : 2,
         "scale" : 0.4894503951072693
       },
       
@@ -1117,6 +1119,7 @@
         "id" : 25,
         "name" : "image1",
         "opacity" : 0.5,
+        "renderOrder" : 2,
         "scale" : 0.3993684947490692
       },
       
@@ -1134,6 +1137,7 @@
         "id" : 27,
         "name" : "image1",
         "opacity" : 0.5,
+        "renderOrder" : 2,
         "scale" : 0.6075454950332642
       },
       
@@ -1147,6 +1151,7 @@
         "id" : 28,
         "name" : "image1",
         "opacity" : 0.5,
+        "renderOrder" : 2,
         "scale" : 0.5286672711372375
       },
       
@@ -1159,11 +1164,12 @@
           "y" : 2.384185791015625e-07
         },
         "file" : "bone01.png",
-        "filter" : 1,
+        "filter" : 0,
         "flip" : false,
         "id" : 29,
         "name" : "image1",
         "opacity" : 0.5,
+        "renderOrder" : 2,
         "scale" : 0.7783866524696350
       },
       
@@ -1180,6 +1186,7 @@
         "id" : 30,
         "name" : "image2",
         "opacity" : 0.5,
+        "renderOrder" : 1,
         "scale" : 5.140729904174805
       }
     ],
