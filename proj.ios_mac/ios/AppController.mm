@@ -28,6 +28,8 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 @implementation AppController
 
 #pragma mark -
@@ -108,6 +110,18 @@ static AppDelegate s_sharedApplication;
 - (void)applicationWillTerminate:(UIApplication *)application {
 }
 
+#pragma mark -
+#pragma mark Facebook delegate
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
+}
 
 #pragma mark -
 #pragma mark Memory management

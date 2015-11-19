@@ -3,8 +3,6 @@
 
 #include "cocos2d.h"
 
-#include "MenuHelper.h"
-
 class FacebookLikeLayer : public cocos2d::Layer
 {
   public:
@@ -13,8 +11,6 @@ class FacebookLikeLayer : public cocos2d::Layer
 
     static FacebookLikeLayer *create(const cocos2d::Vec2 &buttonPosition, float buttonSize);
 
-    void menuItemClicked(int itemIndex);
-
     void setLikingCompletedCallback(std::function<void()> callback)
     {
         likingCompletedCallback = callback;
@@ -22,8 +18,8 @@ class FacebookLikeLayer : public cocos2d::Layer
 
   private:
     std::function<void()> likingCompletedCallback;
-
-    MenuHelper menuHelper;
+    cocos2d::Vec2 buttonPosition;
+    float buttonSize;
 };
 
 #endif // __FACEBOOK_LIKE_LAYER_H__

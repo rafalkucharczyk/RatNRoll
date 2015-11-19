@@ -22,6 +22,8 @@
 
 #include "AchievementTracker.h"
 
+#include "Facebook/FacebookHelper.h"
+
 USING_NS_CC;
 
 const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
@@ -198,7 +200,7 @@ void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
     levelBlockerLayer->setTag(levelBlockerTag);
 
     if (levelNumber == 2 && !likingCompleted()) {
-        auto facebookLikeLayer = FacebookLikeLayer::create({0.5, 0.625}, 0.2);
+        auto facebookLikeLayer = FacebookLikeLayer::create({0.5, 0.625}, 0.5);
         facebookLikeLayer->setLikingCompletedCallback([levelBlockerLayer]() {
             levelBlockerLayer->unblock();
             PermanentStorage::getInstance().setLikingState(true);
@@ -291,6 +293,9 @@ void GameFlow::switchToAboutScene()
 
         PermanentStorage::getInstance().setPurchaseState(GameFlow::iapProductId, false);
         PermanentStorage::getInstance().setLikingState(false);
+
+        FacebookHelper facebookHelper;
+        facebookHelper.logOut();
     });
 
     scene->addChild(aboutLayer);
