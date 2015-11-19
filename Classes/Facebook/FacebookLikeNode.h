@@ -12,8 +12,7 @@ class FacebookLikeNode : public cocos2d::Node
     // width - 0 < width <= 1
     static FacebookLikeNode *create(const std::string &objectId, const cocos2d::Vec2 &position,
                                     float width, std::function<void()> likedCallback);
-
-    void onExit();
+    ~FacebookLikeNode();
 
   private:
     void addFacebookLoginControl(const std::string &objectId, const cocos2d::Vec2 &position,

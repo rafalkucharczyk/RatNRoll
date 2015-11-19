@@ -4,6 +4,12 @@
 
 USING_NS_CC;
 
+FacebookLikeNode::~FacebookLikeNode()
+{
+    facebookHelper.hideLoginControl();
+    facebookHelper.hideLikeControl();
+}
+
 FacebookLikeNode *FacebookLikeNode::create(const std::string &objectId, const Vec2 &position,
                                            float width, std::function<void()> likedCallback)
 {
@@ -19,14 +25,6 @@ FacebookLikeNode *FacebookLikeNode::create(const std::string &objectId, const Ve
 
     CC_SAFE_DELETE(ret);
     return nullptr;
-}
-
-void FacebookLikeNode::onExit()
-{
-    Node::onExit();
-
-    facebookHelper.hideLoginControl();
-    facebookHelper.hideLikeControl();
 }
 
 void FacebookLikeNode::addFacebookLoginControl(const std::string &objectId, const Vec2 &position,
