@@ -8,9 +8,16 @@ MenuItemButton *MenuItemButton::create(const std::string &imagePath, const ccMen
 {
     MenuItemButton *ret = new (std::nothrow) MenuItemButton();
 
-    auto sprite = createSpriteForPath(imagePath);
+    Sprite *disabledSprite = nullptr;
+    Sprite *sprite = createSpriteForPath(imagePath);
 
-    if (ret && ret->initWithNormalSprite(sprite, sprite, sprite, callback)) {
+    if (FileUtils::getInstance()->isFileExist("menu/" + imagePath + "_disabled.png")) {
+        disabledSprite = createSpriteForPath(imagePath + "_disabled");
+    } else {
+        disabledSprite = sprite;
+    }
+
+    if (ret && ret->initWithNormalSprite(sprite, sprite, disabledSprite, callback)) {
         ret->autorelease();
         return ret;
     }

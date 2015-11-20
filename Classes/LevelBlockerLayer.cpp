@@ -3,7 +3,7 @@
 USING_NS_CC;
 
 LevelBlockerLayer::LevelBlockerLayer(LevelLayer &levelLayer)
-    : menuHelper({{{0.5, 0.325}, 0.1, "back"}},
+    : menuHelper({{{0.5, 0.2}, 0.1, "back"}},
                  std::bind(&LevelBlockerLayer::itemClicked, this, std::placeholders::_1)),
       levelLayer(levelLayer)
 {

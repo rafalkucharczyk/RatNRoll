@@ -9,7 +9,8 @@
 #include "LevelSelectionLayer.h"
 #include "LevelBlockerLayer.h"
 #include "IAPLayer.h"
-#include "FacebookLikeLayer.h"
+#include "UnlockGraveyardLayer.h"
+#include "UnlockMagicHallLayer.h"
 #include "PostLevelLayer.h"
 #include "PauseLayer.h"
 #include "SettingsLayer.h"
@@ -21,8 +22,6 @@
 #include "LevelCustomization.h"
 
 #include "AchievementTracker.h"
-
-#include "Facebook/FacebookHelper.h"
 
 USING_NS_CC;
 
@@ -200,20 +199,23 @@ void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
     levelBlockerLayer->setTag(levelBlockerTag);
 
     if (levelNumber == 2 && !likingCompleted()) {
-        auto facebookLikeLayer = FacebookLikeLayer::create({0.5, 0.625}, 0.5);
-        facebookLikeLayer->setLikingCompletedCallback([levelBlockerLayer]() {
+        auto unlockGraveyardLayer = UnlockGraveyardLayer::create(getBestScore(1, 0) >= 10000);
+        unlockGraveyardLayer->setLikingCompletedCallback([levelBlockerLayer]() {
             levelBlockerLayer->unblock();
             PermanentStorage::getInstance().setLikingState(true);
         });
-        actionLayer = facebookLikeLayer;
+        actionLayer = unlockGraveyardLayer;
     }
 
     if (levelNumber == 3 && !iapPurchaseCompleted()) {
-        auto iapLayer = IAPLayer::create(iapProductId, {0.5, 0.625}, 0.2);
+        auto iapLayer = IAPLayer::create(iapProductId, {0.5, 0.78}, 0.15);
         iapLayer->setPurchaseCompletedCallback([levelBlockerLayer]() {
             levelBlockerLayer->unblock();
             SonarCocosHelper::iAds::hideiAdBanner();
         });
+        auto unlockMagicHallLayer = UnlockMagicHallLayer::create();
+        iapLayer->addChild(unlockMagicHallLayer);
+
         actionLayer = iapLayer;
     }
 
@@ -293,9 +295,6 @@ void GameFlow::switchToAboutScene()
 
         PermanentStorage::getInstance().setPurchaseState(GameFlow::iapProductId, false);
         PermanentStorage::getInstance().setLikingState(false);
-
-        FacebookHelper facebookHelper;
-        facebookHelper.logOut();
     });
 
     scene->addChild(aboutLayer);
@@ -393,7 +392,7 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
     }
 }
 
-int GameFlow::updateBestScore(int levelNumber, int score)
+int GameFlow::getBestScore(int levelNumber, int currentScore)
 {
     // local
     int bestScore = PermanentStorage::getInstance().getBestScore(levelNumber);
@@ -406,8 +405,12 @@ int GameFlow::updateBestScore(int levelNumber, int score)
         [](SonarCocosHelper::GameCenterPlayerScore score) { return score.isOwnScore; });
     int remoteBestScore = i != gameCenterScores.end() ? i->score : 0;
 
-    // get max and save locally and remotely
-    bestScore = std::max(std::max(remoteBestScore, bestScore), score);
+    return std::max(std::max(remoteBestScore, bestScore), currentScore);
+}
+
+int GameFlow::updateBestScore(int levelNumber, int currentScore)
+{
+    int bestScore = getBestScore(levelNumber, currentScore);
 
     PermanentStorage::getInstance().setBestScore(levelNumber, bestScore);
     SonarCocosHelper::GameCenter::submitScore(bestScore, getLeaderboardName(levelNumber));

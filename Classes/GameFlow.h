@@ -63,7 +63,8 @@ class GameFlow
     cocos2d::Scene *createSceneObject(const std::string &bgPlaneName = "bg_plane01",
                                       const std::list<std::string> &bgItemNames = {"bg_item01"});
     LevelCustomization *getLevelCustomization(int levelNumber) const;
-    int updateBestScore(int levelNumber, int score);
+    int getBestScore(int levelNumber, int currentScore);
+    int updateBestScore(int levelNumber, int currentScore);
 
     LevelLayer &getCurrentLevelLayer();
 
