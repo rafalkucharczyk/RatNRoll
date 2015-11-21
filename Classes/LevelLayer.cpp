@@ -666,18 +666,17 @@ void LevelLayer::attachParticleNodesToRatBody()
 
 void LevelLayer::runCustomActionOnStart()
 {
-    scheduleOnce([this](float t) {
-        std::shared_ptr<LevelLayerProxyImpl> levelLayerProxy(
-            new LevelLayerProxyImpl(*this, nullptr));
-        FiniteTimeAction *customAction =
-            levelCustomization->levelStartedCallback(levelLayerProxy, achievementTracker);
+    std::shared_ptr<LevelLayerProxyImpl> levelLayerProxy(new LevelLayerProxyImpl(*this, nullptr));
+    FiniteTimeAction *customAction =
+        levelCustomization->levelStartedCallback(levelLayerProxy, achievementTracker);
 
-        if (customAction) {
-            runAction(customAction);
-        } else {
-            startDroppingItems();
-        }
-    }, 0.5, "customStartAction");
+    if (customAction) {
+        customAction->retain();
+        scheduleOnce([this, customAction](float t) { runAction(customAction); }, 0.05,
+                     "customStartAction");
+    } else {
+        scheduleOnce([this](float t) { startDroppingItems(); }, 0.5, "customStartAction");
+    }
 }
 
 void LevelLayer::startDroppingItems()

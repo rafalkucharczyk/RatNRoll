@@ -135,11 +135,16 @@ void GameFlow::switchToLevelSelectionScene()
 
     auto scene = createSceneObject();
 
-    auto levelSelectionLayer = LevelSelectionLayer::create();
+    auto levelSelectionLayer =
+        LevelSelectionLayer::create(!PermanentStorage::getInstance().getTutorialEntered());
 
     levelSelectionLayer->setBackButtonClickedCallback([this]() { switchToInitialScene(); });
-    levelSelectionLayer->setLevelSelectedCallback(
-        [this](int levelNumber) { switchToLevelScene(levelNumber); });
+    levelSelectionLayer->setLevelSelectedCallback([this](int levelNumber) {
+        if (levelNumber == 0) {
+            PermanentStorage::getInstance().setTutorialEntered(true);
+        }
+        switchToLevelScene(levelNumber);
+    });
 
     scene->addChild(levelSelectionLayer);
 
@@ -295,6 +300,7 @@ void GameFlow::switchToAboutScene()
 
         PermanentStorage::getInstance().setPurchaseState(GameFlow::iapProductId, false);
         PermanentStorage::getInstance().setLikingState(false);
+        PermanentStorage::getInstance().setTutorialEntered(false);
     });
 
     scene->addChild(aboutLayer);

@@ -64,6 +64,7 @@ void DigitsPanel::setNumber(int number)
     std::vector<int> newDigits = sanitizeNumber(number);
 
     for (int i = 0; i < digitNodes.size(); i++) {
+        digitNodes[i].first = newDigits[i];
         setDigitOnNode(*digitNodes[i].second, newDigits[i]);
     }
 }
@@ -124,7 +125,9 @@ void DigitsPanel::setDigitOnNode(spine::SkeletonAnimation &digitNode, int digit)
     assert(digit >= 0 && digit <= 9);
 
     digitNode.setAttachment("top_bg", std::to_string(digit) + "_top");
+    digitNode.setAttachment("top", std::to_string(digit) + "_top");
     digitNode.setAttachment("bot_bg", std::to_string(digit) + "_bot");
+    digitNode.setAttachment("bot", std::to_string(digit) + "_bot");
 }
 
 std::vector<int> DigitsPanel::intToDigits(int number)

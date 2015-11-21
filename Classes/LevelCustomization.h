@@ -176,10 +176,10 @@ class LevelTutorial : public LevelCustomization
   private:
     bool canDropNewItem;
 
-    std::set<TutorialBalloonLayer::BalloonType> shownBalloons;
+    std::map<TutorialBalloonLayer::BalloonType, int> shownBalloons;
 
     int currentItemIndex;
-    std::vector<int> itemsSequence = {0, 0, 1, 1, 2, 3};
+    std::vector<int> itemsSequence = {0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
 
     std::shared_ptr<CogwheelHelper> cogwheelHelper;
 

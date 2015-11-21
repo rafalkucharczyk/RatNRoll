@@ -8,10 +8,17 @@
 #include "MenuHelper.h"
 #include "Menu/DigitsPanel.h"
 
+struct TutorialScreen {
+    std::string animationName;
+    cocos2d::Vec2 animationPosition;
+    std::string text;
+    float textYPosition;
+};
+
 class TutorialBalloonLayer : public cocos2d::LayerColor
 {
   public:
-    enum class BalloonType { CONTROLS, SPEEDUP, SLOWDOWN, HOVER, HALVE, FINAL, MAX_TYPE_COUNT };
+    enum class BalloonType { WELCOME, SPEEDUP, SLOWDOWN, HOVER, HALVE, FINAL, MAX_TYPE_COUNT };
 
     TutorialBalloonLayer(BalloonType balloonType, std::function<void()> closeCallback);
     static TutorialBalloonLayer *create(BalloonType balloonType,
@@ -22,21 +29,17 @@ class TutorialBalloonLayer : public cocos2d::LayerColor
     void onExit() override;
 
   private:
-    void addText();
     void addDigitsPanel();
 
-    void addAnimationSprite();
-    std::string getAnimationName() const;
-    cocos2d::Vec2 getAnimationInitPos() const;
-
-    float getAnimationDuration(const std::string &animationName) const;
+    void createScreen(const TutorialScreen &screen);
 
     void itemClicked(int itemIndex);
 
     void selfCleanUp();
 
-    BalloonType balloonType;
     std::function<void()> closeCallback;
+
+    std::list<TutorialScreen> currentTutorialScreens;
 
     MenuHelper menuHelper;
 

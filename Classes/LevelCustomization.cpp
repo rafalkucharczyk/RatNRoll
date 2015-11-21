@@ -52,7 +52,7 @@ LevelTutorial::levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerP
 
     achievementTracker.tutorialEntered();
 
-    return spawnTutorialBalloon(TutorialBalloonLayer::BalloonType::CONTROLS, levelLayerProxy);
+    return spawnTutorialBalloon(TutorialBalloonLayer::BalloonType::WELCOME, levelLayerProxy);
 }
 
 cocos2d::FiniteTimeAction *
@@ -61,16 +61,18 @@ LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonTyp
 {
     USING_NS_CC;
 
-    if (shownBalloons.size() ==
-        static_cast<size_t>(TutorialBalloonLayer::BalloonType::MAX_TYPE_COUNT) - 1) {
+    auto i = shownBalloons.find(TutorialBalloonLayer::BalloonType::HALVE);
+
+    if (i != shownBalloons.end() && i->second == 3) {
         balloonType = TutorialBalloonLayer::BalloonType::FINAL;
     }
 
     if (shownBalloons.find(balloonType) != shownBalloons.end()) {
+        shownBalloons[balloonType]++;
         return nullptr;
     }
 
-    shownBalloons.insert(balloonType);
+    shownBalloons.insert(std::make_pair(balloonType, 1));
     notifyTutorialCompletedAchievement();
 
     return Sequence::create(CallFunc::create([levelLayerProxy]() { levelLayerProxy->pause(); }),

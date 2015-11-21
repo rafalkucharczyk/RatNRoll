@@ -8,10 +8,10 @@
 class LevelSelectionLayer : public cocos2d::Layer
 {
   public:
-    LevelSelectionLayer();
+    LevelSelectionLayer(bool shakeTutorialButton);
     virtual bool init();
 
-    CREATE_FUNC(LevelSelectionLayer);
+    static LevelSelectionLayer *create(bool shakeTutorialButton);
 
     void setLevelSelectedCallback(std::function<void(int)> callback)
     {

@@ -30,6 +30,9 @@ class PermanentStorage
     void setAchievementTrackerState(const AchievementTracker::State &state);
     AchievementTracker::State getAchievementTrackerState() const;
 
+    void setTutorialEntered(bool entered);
+    bool getTutorialEntered() const;
+
   private:
     PermanentStorage();
 
