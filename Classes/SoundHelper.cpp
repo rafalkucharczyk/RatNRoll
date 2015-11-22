@@ -87,8 +87,6 @@ void SoundHelper::playBestScoreNotBeatenEffect() { playOneEffect("rec_failed", 7
 
 void SoundHelper::playShadowPlayerEffect() { playOneEffect("shadow", 5); }
 
-void SoundHelper::playRandomEffect() { playOneEffect("random", 8); }
-
 void SoundHelper::playOneEffect(const std::string namePrefix, int maxCount)
 {
     if (!effectsEnabled) {

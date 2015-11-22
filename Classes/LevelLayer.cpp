@@ -449,7 +449,6 @@ bool LevelLayer::init()
     m_world->SetContactListener(contactListener.get());
 
     scheduleRatEyesAnimations();
-    scheduleRandomSoundEffects();
     animationHelper->playRunningAnimation(ratSpeed);
 
     initScoreLabel(gameScore);
@@ -694,12 +693,6 @@ void LevelLayer::scheduleRatEyesAnimations()
         animationHelper->playEyesAnimation(
             random(AnimationHelper::EYES_FIRST, AnimationHelper::EYES_MAX));
     }, 5.0, "ratEyes");
-}
-
-void LevelLayer::scheduleRandomSoundEffects()
-{
-    schedule([this](float t) { SoundHelper::getInstance().playRandomEffect(); }, 10.5,
-             "randomSoundEffects");
 }
 
 void LevelLayer::doPhysicsCalculationStep()

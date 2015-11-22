@@ -32,7 +32,6 @@ class SoundHelper
     void playBestScoreBeatenEffect();
     void playBestScoreNotBeatenEffect();
     void playShadowPlayerEffect();
-    void playRandomEffect();
 
   private:
     void playOneEffect(const std::string namePrefix, int maxCount);
