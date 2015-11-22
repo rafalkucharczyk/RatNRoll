@@ -130,6 +130,7 @@ void GameFlow::handleInitialSceneMenu(int itemIndex)
 void GameFlow::switchToLevelSelectionScene()
 {
     currentLevelNumber = noLevelNumber;
+    clearCurrentChallenge();
 
     Director::getInstance()->resume();
 
@@ -153,8 +154,16 @@ void GameFlow::switchToLevelSelectionScene()
 
 void GameFlow::switchToLevelScene(int levelNumber)
 {
-    switchToLevelSceneWithScores(levelNumber, SonarCocosHelper::GameCenter::getFriendsBestScores(
-                                                  getLeaderboardName(levelNumber)));
+    SonarCocosHelper::GameCenterPlayersScores scores;
+
+    if (currentChallenge) {
+        scores.push_back(*currentChallenge);
+    } else {
+        scores =
+            SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(levelNumber));
+    }
+
+    switchToLevelSceneWithScores(levelNumber, scores);
 }
 
 void GameFlow::switchToLevelSceneWithScores(int levelNumber,
@@ -343,7 +352,9 @@ void GameFlow::startChallenge(SonarCocosHelper::GameCenterPlayerScore score)
 
     SonarCocosHelper::GameCenter::hideUI();
 
-    switchToLevelSceneWithScores(levelNumber, {score});
+    currentChallenge.reset(new SonarCocosHelper::GameCenterPlayerScore(score));
+
+    switchToLevelScene(levelNumber);
 }
 
 std::string GameFlow::getLeaderboardName(int levelNumber)
@@ -353,6 +364,12 @@ std::string GameFlow::getLeaderboardName(int levelNumber)
     }
 
     return "ratnroll_leaderboard_" + std::to_string(levelNumber);
+}
+
+void GameFlow::clearCurrentChallenge()
+{
+    currentChallenge.reset();
+    SonarCocosHelper::GameCenter::clearCurrentChallenge();
 }
 
 Scene *GameFlow::createSceneObject(const std::string &bgPlaneName,

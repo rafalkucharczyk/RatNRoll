@@ -59,6 +59,10 @@ class GameFlow
 
     std::string getLeaderboardName(int levelNumber);
 
+    std::shared_ptr<SonarCocosHelper::GameCenterPlayerScore> currentChallenge;
+
+    void clearCurrentChallenge();
+
   private:
     cocos2d::Scene *createSceneObject(const std::string &bgPlaneName = "bg_plane01",
                                       const std::list<std::string> &bgItemNames = {"bg_item01"});

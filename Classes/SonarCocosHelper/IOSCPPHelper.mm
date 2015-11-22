@@ -246,6 +246,11 @@ SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBest
 
     return friendsBestScores[leaderboardID.getCString()];
 }
+
+void IOSCPPHelper::gameCenterClearCurrentChallenge()
+{
+    currentChallenge = nullptr;
+}
 #endif
 
 #if SCH_IS_AD_MOB_ENABLED == true

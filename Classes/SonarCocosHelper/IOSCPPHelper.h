@@ -49,6 +49,7 @@ class IOSCPPHelper
         std::function<void(SonarCocosHelper::GameCenterPlayerScore)> callback);
     static SonarCocosHelper::GameCenterPlayersScores
     gameCenterGetFriendsBestScores(__String leaderboardID);
+    static void gameCenterClearCurrentChallenge();
 #endif
 
 #if SCH_IS_REVMOB_ENABLED == true

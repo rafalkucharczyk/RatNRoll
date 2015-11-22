@@ -171,6 +171,13 @@ void GameCenter::registerChallengeCallback(std::function<void(GameCenterPlayerSc
 #endif
 }
 
+void GameCenter::clearCurrentChallenge()
+{
+#if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    IOSCPPHelper::gameCenterClearCurrentChallenge();
+#endif
+}
+
 GameCenterPlayersScores GameCenter::getFriendsBestScores(const std::string &leaderboardID)
 {
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS

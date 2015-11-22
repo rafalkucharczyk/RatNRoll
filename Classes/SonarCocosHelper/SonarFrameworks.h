@@ -290,6 +290,8 @@ class GameCenter
 
     static void registerChallengeCallback(std::function<void(GameCenterPlayerScore)> callback);
 
+    static void clearCurrentChallenge();
+
     static GameCenterPlayersScores getFriendsBestScores(const std::string &leaderboardID);
 };
 
