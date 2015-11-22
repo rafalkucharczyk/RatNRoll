@@ -55,7 +55,8 @@ class AchievementTracker : public cocos2d::Node
     void gameResumed();
 
   private:
-    void unlock(const std::string &achievementName);
+    // progress = [0.0, 1.0], 1.0 == completed
+    void unlock(const std::string &achievementName, float progress = 1.0);
 
     State state;
     std::map<std::string, int> unlocked;
