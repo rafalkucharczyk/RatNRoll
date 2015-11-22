@@ -403,11 +403,11 @@ LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
         break;
 
     case 2:
-        return new Level02(iapPurchaseCompleted(), likingCompleted());
+        return new Level02(iapPurchaseCompleted(), true);
         break;
 
     case 3:
-        return new Level03(iapPurchaseCompleted(), likingCompleted());
+        return new Level03(true, likingCompleted());
         break;
 
     default:
