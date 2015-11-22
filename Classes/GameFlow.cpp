@@ -245,9 +245,11 @@ void GameFlow::switchToPostLevelScene(int score)
     auto scene = createSceneObject();
     addAchievementTracker(*scene);
 
-    auto postLevelLayer = PostLevelLayer::create();
-    postLevelLayer->displayCurrentScore(score);
-    postLevelLayer->displayBestScore(updateBestScore(currentLevelNumber, score));
+    auto postLevelLayer =
+        PostLevelLayer::create(score, updateBestScore(currentLevelNumber, score),
+                               currentChallenge ? currentChallenge->score : 0,
+                               currentChallenge ? currentChallenge->playerName : "");
+
     postLevelLayer->setRestartLevelCallback(
         std::bind(&GameFlow::switchToLevelScene, this, currentLevelNumber));
     postLevelLayer->setGotoMainMenuCallback(
