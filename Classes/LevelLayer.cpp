@@ -88,7 +88,8 @@ class LevelLayerProxyImpl : public LevelLayerProxy
         if (body) {
             levelLayer.runDropItemAction(body);
         } else {
-            levelLayer.startDroppingItems();
+            levelLayer.scheduleOnce([this](float) { levelLayer.startDroppingItems(); }, 3.0,
+                                    "LevelLayerProxyImpl_resume");
         }
     }
     void addOverlayingLayer(Layer *layer) override

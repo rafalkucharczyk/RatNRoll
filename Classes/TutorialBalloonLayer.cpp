@@ -29,7 +29,7 @@ std::map<TutorialBalloonLayer::BalloonType, std::list<TutorialScreen>> tutorialS
     {TutorialBalloonLayer::BalloonType::SPEEDUP,
      {{"tutorial02.x",
        {0.65, 0.7},
-       "CATCH VIALS TO\n"
+       "CATCH THE BOTTLES TO\n"
        "SPEED YOU UP!\n\n"
        "YOU GET MORE POINTS\n"
        "WHEN RUNNING FASTER.\n"
@@ -38,14 +38,14 @@ std::map<TutorialBalloonLayer::BalloonType, std::list<TutorialScreen>> tutorialS
     {TutorialBalloonLayer::BalloonType::SLOWDOWN,
      {{"tutorial03.x",
        {0.25, 0.7},
-       "AVOID HAMBURGERS,\n"
+       "AVOID ANY HAMBURGERS,\n"
        "THEY SLOW YOU DOWN!\n\n"
        "YOU GET LESS POINTS THEN...",
        0.45}}},
     {TutorialBalloonLayer::BalloonType::HOVER,
      {{"tutorial04.x",
        {0.25, 0.68},
-       "GOOSE MAKES YOU FLY FOR\n"
+       "A GOOSE MAKES YOU FLY FOR\n"
        "A LITTLE WHILE,\n"
        "SO YOU CAN ROLL THE WORLD\n"
        "AS FAST AS YOU CAN!\n\n"
@@ -56,7 +56,7 @@ std::map<TutorialBalloonLayer::BalloonType, std::list<TutorialScreen>> tutorialS
      {{"tutorial05.x",
        {0.3, 0.7},
        "ALWAYS STAY CLEAR\n"
-       "OF SKULLS. THEY DO NOT\n"
+       "OF THE SKULLS. THEY DO NOT\n"
        "KILL YOU, BUT THEY\n"
        "TAKE HALF OF YOUR POINTS!\n\n"
        "IT HURTS EVEN MORE...",
@@ -65,7 +65,7 @@ std::map<TutorialBalloonLayer::BalloonType, std::list<TutorialScreen>> tutorialS
      {{"post_happy_01.x",
        {0.5, 0.7},
        "CONGRATULATIONS!\n"
-       "YOU COMPLETED THE TUTORIAL\n\n"
+       "YOU'VE COMPLETED THE TUTORIAL\n\n"
        "YOU MAY NOW PRATICE\n"
        "MORE HERE OR QUIT AND PLUNGE\n"
        "INTO THE FIRST LEVEL",

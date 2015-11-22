@@ -159,7 +159,7 @@ class LevelTutorial : public LevelCustomization
     {
         if (itemType == SPEEDUP) {
             return TutorialBalloonLayer::BalloonType::SPEEDUP;
-        } else if (itemType == SLOWDOWN) {
+        } else if (itemType == SLOWDOWN || itemType == BREAK) {
             return TutorialBalloonLayer::BalloonType::SLOWDOWN;
         } else if (itemType == HOVER) {
             return TutorialBalloonLayer::BalloonType::HOVER;
@@ -179,7 +179,7 @@ class LevelTutorial : public LevelCustomization
     std::map<TutorialBalloonLayer::BalloonType, int> shownBalloons;
 
     int currentItemIndex;
-    std::vector<int> itemsSequence = {0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
+    std::vector<int> itemsSequence = {0, 0, 0, 0, 0, 1, 1, 1, 4, 4, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3};
 
     std::shared_ptr<CogwheelHelper> cogwheelHelper;
 

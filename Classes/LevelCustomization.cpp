@@ -63,7 +63,7 @@ LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonTyp
 
     auto i = shownBalloons.find(TutorialBalloonLayer::BalloonType::HALVE);
 
-    if (i != shownBalloons.end() && i->second == 3) {
+    if (i != shownBalloons.end() && i->second == 5) {
         balloonType = TutorialBalloonLayer::BalloonType::FINAL;
     }
 
