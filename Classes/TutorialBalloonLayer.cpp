@@ -123,6 +123,11 @@ void TutorialBalloonLayer::onExit()
 
 void TutorialBalloonLayer::addDigitsPanel()
 {
+    digitsPanelBackground = MipmapSprite::create("background/inner03.png");
+    digitsPanelBackground->setVisible(false);
+    addChild(digitsPanelBackground);
+    MenuHelper::positionNode(*digitsPanelBackground, {0.7, 0.595}, 0.36);
+
     digitsPanel = DigitsPanel::createWithNumberOfDigits(4);
     digitsPanel->setVisible(false);
     addChild(digitsPanel);
@@ -157,6 +162,7 @@ void TutorialBalloonLayer::createScreen(const TutorialScreen &screen)
     animationNode->setEventListener([this](int trackIndex, spEvent *event) {
         if (std::string(event->data->name) == "score") {
             digitsPanel->setVisible(true);
+            digitsPanelBackground->setVisible(true);
 
             std::string mode((event->stringValue != nullptr) ? event->stringValue : "");
             int score = event->intValue;

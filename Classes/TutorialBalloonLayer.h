@@ -45,6 +45,7 @@ class TutorialBalloonLayer : public cocos2d::LayerColor
 
     spine::SkeletonAnimation *animationNode;
     DigitsPanel *digitsPanel;
+    cocos2d::Sprite *digitsPanelBackground;
 };
 
 #endif /* __TUTORIALBALLOON_LAYER_H__ */
