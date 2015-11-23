@@ -17,6 +17,7 @@
 		2507070F1BF649A100ED74E3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2507070E1BF649A100ED74E3 /* SystemConfiguration.framework */; };
 		250707111BF649D300ED74E3 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 250707101BF649D300ED74E3 /* libsqlite3.tbd */; };
 		250707131BF64A2800ED74E3 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 250707121BF64A2800ED74E3 /* AdSupport.framework */; };
+		25208C541C03A3C300F870A6 /* TransitionSlideChildren.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25208C521C03A3C300F870A6 /* TransitionSlideChildren.cpp */; };
 		25344ECE1BFFC7630046A022 /* UnlockMagicHallLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25344ECC1BFFC7630046A022 /* UnlockMagicHallLayer.cpp */; };
 		25365D001BF7360600668802 /* LevelBlockerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25365CFE1BF7360600668802 /* LevelBlockerLayer.cpp */; };
 		25365D081BF89FC600668802 /* IAPLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25365D061BF89FC600668802 /* IAPLayer.cpp */; };
@@ -192,6 +193,8 @@
 		2507070E1BF649A100ED74E3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		250707101BF649D300ED74E3 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		250707121BF64A2800ED74E3 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.1.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
+		25208C521C03A3C300F870A6 /* TransitionSlideChildren.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TransitionSlideChildren.cpp; path = Menu/TransitionSlideChildren.cpp; sourceTree = "<group>"; };
+		25208C531C03A3C300F870A6 /* TransitionSlideChildren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionSlideChildren.h; path = Menu/TransitionSlideChildren.h; sourceTree = "<group>"; };
 		25344ECC1BFFC7630046A022 /* UnlockMagicHallLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UnlockMagicHallLayer.cpp; sourceTree = "<group>"; };
 		25344ECD1BFFC7630046A022 /* UnlockMagicHallLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnlockMagicHallLayer.h; sourceTree = "<group>"; };
 		25365CFE1BF7360600668802 /* LevelBlockerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelBlockerLayer.cpp; sourceTree = "<group>"; };
@@ -755,14 +758,16 @@
 		B57B5BDF1B570BA900C98B37 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				253CC7281BF3ED9D0042D6E7 /* MenuLabel.cpp */,
-				253CC7291BF3ED9D0042D6E7 /* MenuLabel.h */,
 				25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */,
 				25ACD8F71BA3519D00899F09 /* DigitsPanel.h */,
+				253CC7281BF3ED9D0042D6E7 /* MenuLabel.cpp */,
+				253CC7291BF3ED9D0042D6E7 /* MenuLabel.h */,
 				B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */,
 				B57B5BE11B570BC400C98B37 /* MenuHelper.h */,
 				B57B5BE41B570BED00C98B37 /* MenuItemButton.cpp */,
 				B57B5BE31B570BE500C98B37 /* MenuItemButton.h */,
+				25208C521C03A3C300F870A6 /* TransitionSlideChildren.cpp */,
+				25208C531C03A3C300F870A6 /* TransitionSlideChildren.h */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -983,6 +988,7 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */,
 				25344ECE1BFFC7630046A022 /* UnlockMagicHallLayer.cpp in Sources */,
+				25208C541C03A3C300F870A6 /* TransitionSlideChildren.cpp in Sources */,
 				B55047A31B6B960A0020ECE4 /* SettingsLayer.cpp in Sources */,
 				B55091C21B645358005A4E8B /* MipmapSprite.cpp in Sources */,
 				2542C4521BC4567100727984 /* KeychainItem.mm in Sources */,

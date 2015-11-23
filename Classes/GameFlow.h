@@ -31,6 +31,8 @@ class GameFlow
     void setSoundSettings(const SoundSettings &settings);
 
   private:
+    void replaceScene(cocos2d::Scene *scene);
+
     void switchToInitialScene();
 
     void handleInitialSceneMenu(int itemIndex);
