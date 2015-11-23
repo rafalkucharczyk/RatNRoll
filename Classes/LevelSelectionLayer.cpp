@@ -8,9 +8,9 @@ LevelSelectionLayer::LevelSelectionLayer(bool shakeTutorialButton)
                    "tutorial",
                    {[shakeTutorialButton](Node *node) {
                        if (shakeTutorialButton) {
-                           auto rotateAction = RotateBy::create(0.5, 10);
                            node->runAction(RepeatForever::create(
-                               Sequence::create(rotateAction, rotateAction->reverse(), nullptr)));
+                               Sequence::create(RotateBy::create(0.5, 10), RotateBy::create(1, -20),
+                                                RotateBy::create(0.5, 10), nullptr)));
                        }
                    }}},
                   {{0.7 + 0.01, 0.7 - 0.01}, 0.2, "cheese_factory"},
