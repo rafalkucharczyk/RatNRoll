@@ -69,10 +69,6 @@ void GameFlow::pauseGame()
 
     Scene *runningScene = Director::getInstance()->getRunningScene();
 
-    if (runningScene->getChildByTag(LevelLayer::proxyOverlayLayer)) {
-        runningScene->removeChildByTag(LevelLayer::proxyOverlayLayer);
-    }
-
     runningScene->addChild(pauseLayer, 0, pauseLayerTag);
 }
 
@@ -456,7 +452,10 @@ bool GameFlow::isGamePlayActive() const
 {
     // unblocked level layer
     return (currentLevelNumber != noLevelNumber) &&
-           (Director::getInstance()->getRunningScene()->getChildByTag(levelBlockerTag) == nullptr);
+           (Director::getInstance()->getRunningScene()->getChildByTag(levelBlockerTag) ==
+            nullptr) &&
+           (Director::getInstance()->getRunningScene()->getChildByTag(
+                LevelLayer::proxyOverlayLayerTag) == nullptr);
 }
 
 AchievementTracker &GameFlow::addAchievementTracker(cocos2d::Node &parent) const

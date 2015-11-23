@@ -95,7 +95,7 @@ class LevelLayerProxyImpl : public LevelLayerProxy
     void addOverlayingLayer(Layer *layer) override
     {
         Director::getInstance()->getRunningScene()->addChild(layer, 0,
-                                                             LevelLayer::proxyOverlayLayer);
+                                                             LevelLayer::proxyOverlayLayerTag);
     }
 
   private:

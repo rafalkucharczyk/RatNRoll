@@ -58,7 +58,7 @@ class LevelLayer : public RUBELayer
 
     void addShadowRat(const std::string &name, std::function<int(int)> fromScore, int toScore);
 
-    static const int proxyOverlayLayer = 1111;
+    static const int proxyOverlayLayerTag = 1111;
 
   private:
     void attachParticleNodesToRatBody();
