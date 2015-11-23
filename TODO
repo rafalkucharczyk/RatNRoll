@@ -59,28 +59,63 @@ play music + sounds
 initial screen - settings
 bug - background items are not distributed nicely after app is minimized
 
-unordered:
-initial menu - add layer with selection of level
-- initially grey out two bonus level
-- add like button on one of them and connect to 'like us' flow
+11
 engine - figure out how to merge box2d world (generic part with level specific)
+initial menu - add layer with selection of level
+- initially grey out two bonus levels
+- add like button on one of them and connect to 'like us' flow
 gameplay - create 3 separate leaderboards
-initial screen - credits
-juice app a little, nicer transitions between screens, more animations
-- name of challenging player should be slightly bigger at the beginning
-- transitions between scenes
+bug - digits panel is not scaled correctly on ipad
 social - add facebook 'like us' (unlock new item, skull protection)
-post game menu - redesign, figure out how to handle visualization of current/high scores (local,
-                 leaderboards) and also replaying of challenges
-post game menu(?) - rate us
-ios - add verification of iap
-gameplay - make sure item is eaten when rat touches it (currently item is eaten only when touches
-        rat's belly)
-tutorial - shake tutorial button a little bit at the very beginning to encourage people to click it
+menu - figure out how to scale text
+tutorial - add manual
 bug - pause game when full screen ad is shown
+integrate analytics (yahoo, google or facebook?)
 bug - wrong animation is shown when hamburger is eaten at the highest speed (it should still be
       animation for the highest speed, but slower, not the one below)
+initial screen - credits
+juice - name of challenging player should be slightly bigger at the beginning
+bug - fix crash when running challenges for achievements
+bug - unlock level when played from challenge
+bug - hide game center overlay when playing score challenge
+level blocker - add texts and show unlocked items
+tutorial - shake tutorial button a little bit at the very beginning to encourage people to click it
+tutorial - add welcome screen, plug proper animations
+tutorial - do not close tutorial screen automatically, loop animations, remove close button,
+           add play button instead
+bug - score challenge is not forgotten and response to challenge is sent even if user played single
+      player mode later
+post game menu - replaying of challenges
+post game menu - redesign, figure out how to handle visualization of current/high scores (local,
+                 leaderboards)
+bug - digits panel looks ugly in tutorial, black background is needed
+achievements - rework achievements to unlock percentage
+bug - minimize app on tutorial screen, screen disappears and rat loses animations
+bug - click ads banner on tutorial screen, screen disappears and rat loses animations
+juice - transitions between scenes
+
+unordered:
+post game menu - rate us
+ios - add verification of iap
 achievement - pro runner
+move all strings to separate file, use strings ids to prepare for localization
+improved sounds / music
+
+bug - make sure item is eaten when rat touches it (currently item is eaten only when touches
+        rat's belly)
+bug - view is messed up (goes to landscape) when device is rotated when viewing iAd
+bug - in app purchase button does not respond nicely (nothing happens) when network is not available
+bug - sharing via facebook does not work anymore
+bug - hide game center overlay when playing achievement challenge
+bug - font size in tutorial looks ugly (iPad 2)
+bug - sporadic crash on accessing keychain after IAP
+bug - poor performance on older devices (preload textures?)
+bug - game center button does respond nicely (nothing happens) when network is not available
+bug - share the same background scene when navigating through screens (so items do not jump from
+      position to position)
+bug - MipmapSprite are not transitioned with TransitionSlideChild
+bug - weird transition of DigitsPanel with TransitionSlideChild
+
 
 FUTURE
 gameplay - new item, thunderstorm, speed up to max speed for a while
