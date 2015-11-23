@@ -181,7 +181,7 @@ void AchievementTracker::unlock(const std::string &achievementName, float progre
         return;
     }
 
-    if (progress >= 100.0) {
+    if (progress >= 1.0) {
         unlocked[achievementName] = 1;
     }
 
