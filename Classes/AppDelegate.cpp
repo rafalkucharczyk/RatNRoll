@@ -3,6 +3,8 @@
 #include "GameFlow.h"
 #include "SoundHelper.h"
 
+#include "TransitionSlideChildren.h"
+
 #include "SonarFrameworks.h"
 
 USING_NS_CC;
@@ -60,7 +62,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     auto scene = GameFlow::getInstance().createInitialScene();
 
-    director->runWithScene(scene);
+    director->runWithScene(TransitionSlideChildren::create(0.33, scene));
 
     return true;
 }

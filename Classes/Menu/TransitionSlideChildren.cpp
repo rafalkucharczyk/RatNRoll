@@ -31,7 +31,6 @@ void TransitionSlideChildren::onEnter()
     _inScene->runAction(
         Sequence::create(CallFuncN::create([this, t](Node *node) {
                              node->enumerateChildren("//", [this, t](Node *child) {
-                                 CCLOG("child=%p", child);
                                  Vec2 p = child->getPosition();
                                  child->setPosition(this->getAnimationPoint(*child));
                                  child->runAction(Sequence::create(DelayTime::create(t),
