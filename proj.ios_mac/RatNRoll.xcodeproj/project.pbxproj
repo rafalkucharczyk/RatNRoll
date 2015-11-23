@@ -110,7 +110,6 @@
 		B55047A01B6B921C0020ECE4 /* InAppPurchaseHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B550479E1B6B921C0020ECE4 /* InAppPurchaseHelper.cpp */; };
 		B55047A31B6B960A0020ECE4 /* SettingsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55047A11B6B960A0020ECE4 /* SettingsLayer.cpp */; };
 		B55091C21B645358005A4E8B /* MipmapSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55091C01B645358005A4E8B /* MipmapSprite.cpp */; };
-		B55091C41B652517005A4E8B /* tutorial_balloon.png in Resources */ = {isa = PBXBuildFile; fileRef = B55091C31B652517005A4E8B /* tutorial_balloon.png */; };
 		B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55091C51B652572005A4E8B /* TutorialBalloonLayer.cpp */; };
 		B551AF661B18FCB50076A8E9 /* RUBELayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B551AF641B18FCB50076A8E9 /* RUBELayer.cpp */; };
 		B551AF681B1902980076A8E9 /* rat.png in Resources */ = {isa = PBXBuildFile; fileRef = B551AF671B1902980076A8E9 /* rat.png */; };
@@ -316,7 +315,6 @@
 		B55047A21B6B960A0020ECE4 /* SettingsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsLayer.h; sourceTree = "<group>"; };
 		B55091C01B645358005A4E8B /* MipmapSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MipmapSprite.cpp; sourceTree = "<group>"; };
 		B55091C11B645358005A4E8B /* MipmapSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MipmapSprite.h; sourceTree = "<group>"; };
-		B55091C31B652517005A4E8B /* tutorial_balloon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorial_balloon.png; sourceTree = "<group>"; };
 		B55091C51B652572005A4E8B /* TutorialBalloonLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialBalloonLayer.cpp; sourceTree = "<group>"; };
 		B55091C61B652572005A4E8B /* TutorialBalloonLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialBalloonLayer.h; sourceTree = "<group>"; };
 		B551AF641B18FCB50076A8E9 /* RUBELayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RUBELayer.cpp; sourceTree = "<group>"; };
@@ -585,7 +583,6 @@
 				B551AF6B1B1A39DC0076A8E9 /* earth01.png */,
 				B2A105BD1BC9A43F007CF879 /* earth02.png */,
 				B2A105C11BCD96A5007CF879 /* earth03.png */,
-				B55091C31B652517005A4E8B /* tutorial_balloon.png */,
 				2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */,
 				25ACD8F91BA57B5900899F09 /* halve_points.plist */,
 			);
@@ -918,7 +915,6 @@
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				B551AF6C1B1A39DC0076A8E9 /* earth01.png in Resources */,
 				B54CCC391B46F91A00393F40 /* speedup01.png in Resources */,
-				B55091C41B652517005A4E8B /* tutorial_balloon.png in Resources */,
 				25EC24321BEFA2260018180D /* level_base.json in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
