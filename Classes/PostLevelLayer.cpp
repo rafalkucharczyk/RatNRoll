@@ -15,10 +15,10 @@ struct PostAnimationInfo {
 };
 
 std::vector<PostAnimationInfo> happyAnimations = {
-    {"post_happy_01.x", {0.5, 0.54}}, {"post_happy_02.x", {0.5, 0.53}}, {"jump01.x", {0.5, 0.53}}};
+    {"post_happy_01.x", {0.5, 0.53}}, {"post_happy_02.x", {0.5, 0.52}}, {"jump01.x", {0.5, 0.52}}};
 
 std::vector<PostAnimationInfo> sadAnimations = {
-    {"post_sad_01.x", {0.5, 0.56}}, {"post_sad_02.x", {0.5, 0.6}}, {"post_sad_03.x", {0.5, 0.59}}};
+    {"post_sad_01.x", {0.5, 0.54}}, {"post_sad_02.x", {0.5, 0.56}}, {"post_sad_03.x", {0.5, 0.57}}};
 
 const PostAnimationInfo &getRandomAnimation(bool sad)
 {
@@ -34,8 +34,8 @@ PostLevelLayer::PostLevelLayer(int currentScore, int bestScore, int challengedSc
       challengedUserName(challengedUserName),
       menuHelper({{{0.35, 0.23}, 0.12, "back"},
                   {{0.65, 0.23}, 0.12, "restart"},
-                  {{0.44, 0.875}, 0.06, "twitter"},
-                  {{0.56, 0.875}, 0.06, "facebook"}},
+                  {{0.44, 0.72}, 0.06, "twitter"},
+                  {{0.56, 0.72}, 0.06, "facebook"}},
                  std::bind(&PostLevelLayer::menuItemClicked, this, std::placeholders::_1))
 {
 }
@@ -63,7 +63,7 @@ bool PostLevelLayer::init()
         std::string name = challengedUserName;
         std::transform(name.begin(), name.end(), name.begin(), ::toupper);
 
-        textBottom = name + "\n" + "SCORE";
+        textBottom = name;
         scoreBottom = challengedScore;
 
         if (bestScore > challengedScore) {
@@ -76,7 +76,7 @@ bool PostLevelLayer::init()
     }
 
     addDigitsPanel({0.5, 0.8}, textTop, scoreTop);
-    addDigitsPanel({0.5, 0.45}, textBottom, scoreBottom);
+    addDigitsPanel({0.5, 0.4}, textBottom, scoreBottom);
 
     const PostAnimationInfo &info = getRandomAnimation(scoreTop < scoreBottom);
     CCLOG("name:%s", info.name.c_str());
@@ -146,7 +146,7 @@ void PostLevelLayer::addDigitsPanel(const cocos2d::Vec2 &position, const std::st
     MenuHelper::positionNode(*panel, position, 0.05);
     addChild(panel, 1);
 
-    addChild(MenuLabel::create(text, position - Vec2(0, 0.075), 0.03));
+    addChild(MenuLabel::create(text, position + Vec2(0, 0.0625), 0.03));
 
     panel->animateToNumber(score);
 
