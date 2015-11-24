@@ -10,6 +10,8 @@ class TransitionSlideChildren : public cocos2d::TransitionScene
     void onEnter();
 
   private:
+    void listChildren(Node *node, std::function<void(Node *node)> callback);
+
     cocos2d::Vec2 getAnimationPoint(const Node &node);
 };
 
