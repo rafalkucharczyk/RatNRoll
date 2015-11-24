@@ -50,9 +50,7 @@ class GameFlow
 
     void switchToAboutScene();
 
-#ifdef COCOS2D_DEBUG
     void switchToTestScene();
-#endif // COCOS2D_DEBUG
 
   private:
     void loginToGameCenter();

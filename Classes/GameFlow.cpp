@@ -322,6 +322,8 @@ void GameFlow::switchToAboutScene()
         PermanentStorage::getInstance().setTutorialEntered(false);
     });
 
+    aboutLayer->setGotoTestLayerCallback([this]() { switchToTestScene(); });
+
     scene->addChild(aboutLayer);
 
     achivementTracker.creditsEntered();
@@ -329,18 +331,20 @@ void GameFlow::switchToAboutScene()
     replaceScene(scene);
 }
 
-#ifdef COCOS2D_DEBUG
 void GameFlow::switchToTestScene()
 {
+#ifdef COCOS2D_DEBUG
     auto scene = Scene::create();
 
     auto layer = TestLayer::create();
 
+    layer->setGotoMainMenuCallback([this]() { switchToInitialScene(); });
+
     scene->addChild(layer);
 
     replaceScene(scene);
-}
 #endif
+}
 
 void GameFlow::loginToGameCenter()
 {

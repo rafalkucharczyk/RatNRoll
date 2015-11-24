@@ -25,11 +25,17 @@ class AboutLayer : public cocos2d::Layer
         resetGameStateCallback = callback;
     }
 
+    void setGotoTestLayerCallback(std::function<void()> callback)
+    {
+        gotoTestLayerCallback = callback;
+    }
+
   private:
     MenuHelper menuHelper;
 
     std::function<void()> gotoMainMenuCallback;
     std::function<void()> resetGameStateCallback;
+    std::function<void()> gotoTestLayerCallback;
 };
 
 #endif // __ABOUT_LAYER_H__

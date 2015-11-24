@@ -48,7 +48,7 @@ void TransitionSlideChildren::listChildren(Node *node, std::function<void(Node *
 {
     auto filter = [](Node *_node) {
         return dynamic_cast<MenuItemButton *>(_node) || dynamic_cast<DigitsPanel *>(_node) ||
-        dynamic_cast<Label*>(_node);
+               dynamic_cast<Label *>(_node);
     };
 
     for (Node *child : node->getChildren()) {

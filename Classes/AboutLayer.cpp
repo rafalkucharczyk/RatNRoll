@@ -6,8 +6,9 @@
 USING_NS_CC;
 
 AboutLayer::AboutLayer()
-    : menuHelper({{{0.9, 0.2}, 0.1, "settings"}, {{0.5, 0.2}, 0.1, "back"}},
-                 std::bind(&AboutLayer::menuItemClicked, this, std::placeholders::_1))
+    : menuHelper(
+          {{{0.9, 0.2}, 0.1, "settings"}, {{0.9, 0.3}, 0.1, "play"}, {{0.5, 0.2}, 0.1, "back"}},
+          std::bind(&AboutLayer::menuItemClicked, this, std::placeholders::_1))
 {
 }
 
@@ -40,7 +41,11 @@ void AboutLayer::menuItemClicked(int itemIndex)
         resetGameStateCallback();
     }
 
-    if (itemIndex == 1 && gotoMainMenuCallback) {
+    if (itemIndex == 1 && gotoTestLayerCallback) {
+        gotoTestLayerCallback();
+    }
+
+    if (itemIndex == 2 && gotoMainMenuCallback) {
         gotoMainMenuCallback();
     }
 }
