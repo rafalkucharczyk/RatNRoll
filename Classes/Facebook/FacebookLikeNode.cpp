@@ -34,15 +34,12 @@ void FacebookLikeNode::addFacebookLikeControl(const std::string &objectId, const
 std::tuple<float, float, float>
 FacebookLikeNode::getViewPositionAndWidth(const cocos2d::Vec2 &position, float width)
 {
-    GLViewImpl *glView = dynamic_cast<GLViewImpl *>(Director::getInstance()->getOpenGLView());
-    assert(glView);
-
-    Vec2 p = Vec2(position.x, 1 - position.y) / glView->getContentScaleFactor();
+    Vec2 p = Vec2(position.x, 1 - position.y) / MenuHelper::getContentScaleFactor();
 
     MenuHelper::positionNode(*this, p, 1);
 
-    float w =
-        width / glView->getContentScaleFactor() * Director::getInstance()->getVisibleSize().width;
+    float w = width / MenuHelper::getContentScaleFactor() *
+              Director::getInstance()->getVisibleSize().width;
 
     return std::make_tuple(getPosition().x, getPosition().y, w);
 }

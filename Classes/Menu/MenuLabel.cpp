@@ -34,7 +34,8 @@ void MenuLabel::addLabel(const std::string &text, const cocos2d::Vec2 &position,
 {
     auto linesCount = std::count(text.begin(), text.end(), '\n') + 1;
 
-    label = Label::createWithTTF(text, "fonts/rat.ttf", 80, Size::ZERO, TextHAlignment::CENTER);
+    label = Label::createWithTTF(text, "fonts/rat.ttf", 40 * MenuHelper::getContentScaleFactor(),
+                                 Size::ZERO, TextHAlignment::CENTER);
 
     label->setColor(Color3B::BLACK);
 

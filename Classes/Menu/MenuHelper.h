@@ -37,6 +37,7 @@ class MenuHelper
 
   public:
     static void positionNode(cocos2d::Node &node, const cocos2d::Vec2 &position, float size);
+    static float getContentScaleFactor();
 
   private:
     MenuItemButton *createMenuItemButton(const ButtonConfig &config);

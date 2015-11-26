@@ -43,6 +43,14 @@ void MenuHelper::positionNode(cocos2d::Node &node, const cocos2d::Vec2 &position
     node.setScale(size / (node.getBoundingBox().size.height / visibleSize.y));
 }
 
+float MenuHelper::getContentScaleFactor()
+{
+    GLViewImpl *glView = dynamic_cast<GLViewImpl *>(Director::getInstance()->getOpenGLView());
+    assert(glView);
+
+    return glView->getContentScaleFactor();
+}
+
 MenuItemButton *MenuHelper::createMenuItemButton(const ButtonConfig &config)
 {
     auto item = MenuItemButton::create(config.imagePath,
