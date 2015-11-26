@@ -429,7 +429,8 @@ const std::string LevelLayer::name = "LevelLayer";
 LevelLayer::LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
 
-      ratSpeed(levelCustomization->getRatSpeedInitial()), applyCustomGravity(true), gameScore(0),
+      ratSpeed(levelCustomization->getRatSpeedInitial()), applyCustomGravity(true),
+      proRunnerInProgress(false), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), paused(false), nextItemDropTime(0.0),
       contactListener(new LevelContactListener(this)), cheeseFrenzyParticleNode(nullptr),
@@ -718,6 +719,18 @@ void LevelLayer::doPhysicsCalculationStep()
         g.Normalize();
         g *= 30;
         ratBody->ApplyForce(ratBody->GetMass() * g, ratBody->GetWorldCenter(), true);
+
+        // handle pro runner achivement
+        // 1. get below center of earth with max speed...
+        if ((ratCenter.y < earthCenter.y) && (ratSpeed >= levelCustomization->getRatSpeedMax()) &&
+            !proRunnerInProgress) {
+            proRunnerInProgress = true;
+        }
+
+        // 2. ...and recover after a while
+        if (ratCenter.y > earthCenter.y && proRunnerInProgress) {
+            achievementTracker.proRunner();
+        }
     }
 
     shadowRatHelper->doPhysicsCalculationStep();

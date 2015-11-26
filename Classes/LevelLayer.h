@@ -121,6 +121,8 @@ class LevelLayer : public RUBELayer
 
     bool applyCustomGravity;
 
+    bool proRunnerInProgress;
+
   private:
     b2RevoluteJoint *earthRevoluteJoint;
     int gameScore;
