@@ -1,5 +1,7 @@
 #include "InitialLayer.h"
 
+#include "AssetsPreloader.h"
+
 USING_NS_CC;
 
 InitialLayer::InitialLayer()
@@ -19,6 +21,11 @@ bool InitialLayer::init()
     }
 
     addChild(menuHelper.getMenu());
+
+    scheduleOnce([](float f) {
+        CCLOG("preloading...");
+        AssetsPreloader::preload();
+    }, 10, "preloading");
 
     return true;
 }

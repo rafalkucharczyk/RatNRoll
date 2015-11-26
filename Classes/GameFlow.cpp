@@ -3,6 +3,7 @@
 #include "SonarFrameworks.h"
 
 #include "BackgroundLayer.h"
+#include "PreloadingLayer.h"
 #include "InitialLayer.h"
 #include "LevelMenuLayer.h"
 #include "LevelLayer.h"
@@ -42,14 +43,14 @@ GameFlow &GameFlow::getInstance()
     return *instance;
 }
 
-Scene *GameFlow::createInitialScene()
+Scene *GameFlow::createPreloadingScene()
 {
-    auto scene = createSceneObject();
+    auto scene = Scene::create();
 
-    auto initialLayer = InitialLayer::create();
-    initialLayer->setMenuItemClickedCallback(
-        std::bind(&GameFlow::handleInitialSceneMenu, this, std::placeholders::_1));
-    scene->addChild(initialLayer);
+    auto preloadingScene = PreloadingLayer::create();
+    preloadingScene->setPreloadingCompletedCallback(
+        std::bind(&GameFlow::switchToInitialScene, this));
+    scene->addChild(preloadingScene);
 
     return scene;
 }
@@ -114,7 +115,15 @@ void GameFlow::replaceScene(cocos2d::Scene *scene)
 void GameFlow::switchToInitialScene()
 {
     SonarCocosHelper::GoogleAnalytics::setScreenName("Initial");
-    replaceScene(createInitialScene());
+
+    auto scene = createSceneObject();
+
+    auto initialLayer = InitialLayer::create();
+    initialLayer->setMenuItemClickedCallback(
+        std::bind(&GameFlow::handleInitialSceneMenu, this, std::placeholders::_1));
+    scene->addChild(initialLayer);
+
+    replaceScene(scene);
 }
 
 void GameFlow::handleInitialSceneMenu(int itemIndex)

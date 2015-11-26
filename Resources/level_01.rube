@@ -435,7 +435,7 @@
           "x" : -0.01026353240013123,
           "y" : -0.05876835435628891
         },
-        "file" : "earth01.png",
+        "file" : "earth/earth01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 1,
@@ -453,7 +453,7 @@
           "x" : -4.172325134277344e-07,
           "y" : 2.384185791015625e-07
         },
-        "file" : "background/inner01_item02.png",
+        "file" : "earth/inner01_item02.png",
         "filter" : 1,
         "flip" : false,
         "id" : 9,
@@ -466,7 +466,7 @@
         "aspectScale" : 1,
         "body" : 13,
         "center" : 0,
-        "file" : "background/inner01_item01.png",
+        "file" : "earth/inner01_item01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 10,
@@ -482,7 +482,7 @@
           "x" : -0.05470919609069824,
           "y" : 2.988401651382446
         },
-        "file" : "background/inner01.png",
+        "file" : "earth/inner01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 14,

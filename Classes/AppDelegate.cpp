@@ -60,9 +60,9 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     SoundHelper::getInstance().init(GameFlow::getInstance().getSoundSettings());
 
-    auto scene = GameFlow::getInstance().createInitialScene();
+    auto scene = GameFlow::getInstance().createPreloadingScene();
 
-    director->runWithScene(TransitionSlideChildren::create(0.33, scene));
+    director->runWithScene(scene);
 
     return true;
 }

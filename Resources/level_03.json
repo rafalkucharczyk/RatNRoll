@@ -151,7 +151,7 @@
 					5.377710342407227
 				]
 			},
-			"file" : "background/inner03.png",
+			"file" : "earth/inner03.png",
 			"filter" : 1,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
 			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],
@@ -196,7 +196,7 @@
 					2.439057826995850
 				]
 			},
-			"file" : "earth03.png",
+			"file" : "earth/earth03.png",
 			"filter" : 1,
 			"glDrawElements" : [ 0, 1, 2, 2, 3, 0 ],
 			"glTexCoordPointer" : [ 0.0, 0.0, 1, 0.0, 1, 1, 0.0, 1 ],

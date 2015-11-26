@@ -170,7 +170,7 @@
           "x" : -0.01026353240013123,
           "y" : -0.05876835435628891
         },
-        "file" : "earth03.png",
+        "file" : "earth/earth03.png",
         "filter" : 1,
         "flip" : false,
         "id" : 1,
@@ -187,7 +187,7 @@
           "x" : -0.05470919609069824,
           "y" : 2.988401651382446
         },
-        "file" : "background/inner03.png",
+        "file" : "earth/inner03.png",
         "filter" : 1,
         "flip" : false,
         "id" : 14,

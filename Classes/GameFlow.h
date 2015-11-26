@@ -17,7 +17,7 @@ class GameFlow
     static GameFlow &getInstance();
 
   public:
-    cocos2d::Scene *createInitialScene();
+    cocos2d::Scene *createPreloadingScene();
 
     void pauseGame();
     void resumeGame();

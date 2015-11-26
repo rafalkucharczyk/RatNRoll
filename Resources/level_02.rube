@@ -620,7 +620,7 @@
         "massData-center" : 
         {
           "x" : -0.0007347411592490971,
-          "y" : -0.009480783715844154
+          "y" : -0.009480782784521580
         },
         "massData-mass" : 1003.825866699219,
         "name" : "earth",
@@ -1063,7 +1063,7 @@
           "x" : -0.01026353240013123,
           "y" : -0.05876835435628891
         },
-        "file" : "earth02.png",
+        "file" : "earth/earth02.png",
         "filter" : 1,
         "flip" : false,
         "id" : 1,
@@ -1081,7 +1081,7 @@
           "x" : 0,
           "y" : -2.384185791015625e-07
         },
-        "file" : "ball01.png",
+        "file" : "earth/ball01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 13,
@@ -1099,7 +1099,7 @@
           "x" : 4.351604729890823e-07,
           "y" : -0.005850381217896938
         },
-        "file" : "ball02.png",
+        "file" : "earth/ball02.png",
         "filter" : 1,
         "flip" : false,
         "id" : 16,
@@ -1113,7 +1113,7 @@
         "aspectScale" : 1,
         "body" : 30,
         "center" : 0,
-        "file" : "bone01.png",
+        "file" : "earth/bone01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 25,
@@ -1131,7 +1131,7 @@
           "x" : -7.450580596923828e-09,
           "y" : 0
         },
-        "file" : "bone01.png",
+        "file" : "earth/bone01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 27,
@@ -1145,7 +1145,7 @@
         "aspectScale" : 1,
         "body" : 32,
         "center" : 0,
-        "file" : "bone01.png",
+        "file" : "earth/bone01.png",
         "filter" : 1,
         "flip" : false,
         "id" : 28,
@@ -1163,7 +1163,7 @@
           "x" : 0,
           "y" : 2.384185791015625e-07
         },
-        "file" : "bone01.png",
+        "file" : "earth/bone01.png",
         "filter" : 0,
         "flip" : false,
         "id" : 29,
@@ -1180,7 +1180,7 @@
           "x" : -0.003158681094646454,
           "y" : 2.974264621734619
         },
-        "file" : "background/inner02.png",
+        "file" : "earth/inner02.png",
         "filter" : 1,
         "flip" : false,
         "id" : 30,

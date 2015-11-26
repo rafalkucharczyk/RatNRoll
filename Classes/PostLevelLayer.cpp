@@ -150,7 +150,7 @@ void PostLevelLayer::addDigitsPanel(const cocos2d::Vec2 &position, const std::st
 
     panel->animateToNumber(score);
 
-    auto background = MipmapSprite::create("background/inner03.png");
+    auto background = MipmapSprite::create("earth/inner03.png");
     MenuHelper::positionNode(*background, position - Vec2(0, 0.01), 0.55);
     addChild(background);
 }

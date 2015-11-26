@@ -37,7 +37,7 @@ bool UnlockGraveyardLayer::init(bool unlockingEnabled)
 
     addChild(MenuLabel::create("AND GET A NEW ITEM", {0.5, 0.65}, 0.03));
 
-    Sprite *helmetSprite = MipmapSprite::create("shield01.png");
+    Sprite *helmetSprite = MipmapSprite::create("items/shield01.png");
     MenuHelper::positionNode(*helmetSprite, {0.5, 0.57}, 0.075);
     addChild(helmetSprite);
     auto scaleAction = ScaleBy::create(0.5, 1.5);

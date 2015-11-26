@@ -17,14 +17,14 @@ bool UnlockMagicHallLayer::init()
 
     addChild(MenuLabel::create("AND GET A NEW ITEM", {0.5, 0.65}, 0.03));
 
-    Sprite *frenzySprite = MipmapSprite::create("frenzy01.png");
+    Sprite *frenzySprite = MipmapSprite::create("items/frenzy01.png");
     MenuHelper::positionNode(*frenzySprite, {0.5, 0.58}, 0.075);
     addChild(frenzySprite);
     auto scaleAction = ScaleBy::create(0.5, 1.5);
     frenzySprite->runAction(
         RepeatForever::create(Sequence::create(scaleAction, scaleAction->reverse(), nullptr)));
 
-    addChild(MenuLabel::create("CHESSE FRENZY\n\n"
+    addChild(MenuLabel::create("CHEESE FRENZY\n\n"
                                "BOOSTS YOUR POINTS\n"
                                "FOR A FEW SECONDS",
                                {0.5, 0.45}, 0.03));

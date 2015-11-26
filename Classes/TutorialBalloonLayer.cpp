@@ -123,7 +123,7 @@ void TutorialBalloonLayer::onExit()
 
 void TutorialBalloonLayer::addDigitsPanel()
 {
-    digitsPanelBackground = MipmapSprite::create("background/inner03.png");
+    digitsPanelBackground = MipmapSprite::create("earth/inner03.png");
     digitsPanelBackground->setVisible(false);
     addChild(digitsPanelBackground);
     MenuHelper::positionNode(*digitsPanelBackground, {0.7, 0.595}, 0.36);
