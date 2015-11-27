@@ -4,10 +4,10 @@ Struct.new('Sequence', :speedup, :slowdown, :hover, :halve, :break, :repeat)
 
 config = {
     sequences: [
-        Struct::Sequence.new(5, 2, 2, 0, 1, 1),
-        Struct::Sequence.new(4, 2, 2, 1, 1, 5),
-        Struct::Sequence.new(2, 2, 1, 4, 1, 25),
-        Struct::Sequence.new(3, 1, 1, 4, 1, 50)
+        Struct::Sequence.new(5, 2, 2, 1, 0, 5),
+        Struct::Sequence.new(4, 2, 2, 2, 0, 10),
+        Struct::Sequence.new(3, 2, 2, 2, 1, 25),
+        Struct::Sequence.new(3, 1, 1, 3, 2, 100)
     ]
 }
 

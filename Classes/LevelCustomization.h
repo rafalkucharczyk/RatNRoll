@@ -260,7 +260,14 @@ class LevelBase : public LevelCustomization
             return ITEM_TYPE_MAX;
         }
 
-        if (currentItemIndex != 0 && currentItemIndex % 10 == 0 && bonusItemInjected == false) {
+        int period = 10;
+
+        if (frenzyEnabled && shieldEnabled)
+        {
+            period = 7;
+        }
+
+        if (currentItemIndex != 0 && currentItemIndex % period == 0 && bonusItemInjected == false) {
             bonusItemInjected = true;
 
             std::vector<ItemType> bonusItems;
