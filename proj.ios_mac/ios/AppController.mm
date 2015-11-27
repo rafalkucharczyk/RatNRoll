@@ -30,7 +30,11 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
+#import "iRate.h"
+
 @implementation AppController
+
+@synthesize window;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -56,7 +60,7 @@ static AppDelegate s_sharedApplication;
                                   preserveBackbuffer: NO
                                           sharegroup: nil
                                        multiSampling: NO
-                                     numberOfSamples: 0 ];
+                                     numberOfSamples: 0];
     
     // Enable or disable multiple touches
     [eaglView setMultipleTouchEnabled:NO];
@@ -84,6 +88,9 @@ static AppDelegate s_sharedApplication;
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
     cocos2d::Director::getInstance()->setOpenGLView(glview);
+
+    [iRate sharedInstance].daysUntilPrompt = 10;
+    [iRate sharedInstance].usesUntilPrompt = 20;
 
     app->run();
 

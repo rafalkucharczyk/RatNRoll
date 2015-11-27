@@ -36,6 +36,8 @@
 		25476AB21C078D5B005DED73 /* earth in Resources */ = {isa = PBXBuildFile; fileRef = 25476AB11C078D5B005DED73 /* earth */; };
 		25476AB51C07A5D2005DED73 /* AssetsPreloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25476AB31C07A5D2005DED73 /* AssetsPreloader.cpp */; };
 		25476AB81C07AFB5005DED73 /* PreloadingLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25476AB61C07AFB5005DED73 /* PreloadingLayer.cpp */; };
+		25476ABE1C08BCCC005DED73 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25476ABD1C08BCCC005DED73 /* iRate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		25476AC01C08C3E7005DED73 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25476ABF1C08C3E7005DED73 /* iRate.bundle */; };
 		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
 		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
@@ -214,6 +216,9 @@
 		25476AB41C07A5D2005DED73 /* AssetsPreloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetsPreloader.h; sourceTree = "<group>"; };
 		25476AB61C07AFB5005DED73 /* PreloadingLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PreloadingLayer.cpp; sourceTree = "<group>"; };
 		25476AB71C07AFB5005DED73 /* PreloadingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreloadingLayer.h; sourceTree = "<group>"; };
+		25476ABC1C08BCCC005DED73 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iRate.h; path = ios/iRate.h; sourceTree = SOURCE_ROOT; };
+		25476ABD1C08BCCC005DED73 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iRate.m; path = ios/iRate.m; sourceTree = SOURCE_ROOT; };
+		25476ABF1C08C3E7005DED73 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cheese_frenzy.plist; sourceTree = "<group>"; };
 		255340CA1B772F9900C31F87 /* GameCenterPlayerScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterPlayerScore.h; sourceTree = "<group>"; };
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
@@ -411,6 +416,8 @@
 				503AE0FD17EB989F00D1A890 /* Prefix.pch */,
 				503AE0FE17EB989F00D1A890 /* RootViewController.h */,
 				503AE0FF17EB989F00D1A890 /* RootViewController.mm */,
+				25476ABC1C08BCCC005DED73 /* iRate.h */,
+				25476ABD1C08BCCC005DED73 /* iRate.m */,
 			);
 			name = ios;
 			path = Classes;
@@ -558,6 +565,7 @@
 				B2A105C31BCD96BA007CF879 /* level_03.json */,
 				2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */,
 				25ACD8F91BA57B5900899F09 /* halve_points.plist */,
+				25476ABF1C08C3E7005DED73 /* iRate.bundle */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -901,6 +909,7 @@
 				2542C43E1BB941D200727984 /* background in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
+				25476AC01C08C3E7005DED73 /* iRate.bundle in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 				2542C4401BB967F500727984 /* sounds in Resources */,
 				B2A105BC1BC9A3D7007CF879 /* level_02.json in Resources */,
@@ -964,6 +973,7 @@
 				B552BE071B237A0800D4851A /* PostLevelLayer.cpp in Sources */,
 				B54C0DEE1B5D9D48002B36B6 /* PauseLayer.cpp in Sources */,
 				B552BE041B223D3500D4851A /* LevelMenuLayer.cpp in Sources */,
+				25476ABE1C08BCCC005DED73 /* iRate.m in Sources */,
 				25476AB81C07AFB5005DED73 /* PreloadingLayer.cpp in Sources */,
 				B535EF491B1321F5004D647D /* b2dJson.cpp in Sources */,
 				B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */,
