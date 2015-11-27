@@ -23,7 +23,6 @@ bool InitialLayer::init()
     addChild(menuHelper.getMenu());
 
     scheduleOnce([](float f) {
-        CCLOG("preloading...");
         AssetsPreloader::preload();
     }, 10, "preloading");
 
