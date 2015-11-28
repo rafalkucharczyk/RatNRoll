@@ -619,10 +619,10 @@
         "massData-I" : 2893.651611328125,
         "massData-center" : 
         {
-          "x" : -0.0007347411592490971,
-          "y" : -0.009480782784521580
+          "x" : -0.0007347410428337753,
+          "y" : -0.009480781853199005
         },
-        "massData-mass" : 1003.825866699219,
+        "massData-mass" : 1003.825927734375,
         "name" : "earth",
         "position" : 
         {
@@ -641,7 +641,7 @@
         [
           
           {
-            "density" : 2.331618785858154,
+            "density" : 0.8060764670372009,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -666,13 +666,13 @@
         "gravityScale" : 0.7,
         "id" : 21,
         "linearVelocity" : 0,
-        "massData-I" : 0.0003569482360035181,
+        "massData-I" : 0.0001234024966834113,
         "massData-center" : 
         {
           "x" : 0,
           "y" : -2.384185791015625e-07
         },
-        "massData-mass" : 0.07231382280588150,
+        "massData-mass" : 0.02500000037252903,
         "name" : "ball03",
         "position" : 
         {
@@ -691,7 +691,7 @@
         [
           
           {
-            "density" : 2.331618785858154,
+            "density" : 0.6005619168281555,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -716,13 +716,13 @@
         "gravityScale" : 0.7,
         "id" : 23,
         "linearVelocity" : 0,
-        "massData-I" : 0.01028873585164547,
+        "massData-I" : 0.002650100272148848,
         "massData-center" : 
         {
           "x" : 5.470845962918247e-07,
-          "y" : 9.072042672642056e-08
+          "y" : 9.072043383184791e-08
         },
-        "massData-mass" : 0.3882395029067993,
+        "massData-mass" : 0.1,
         "name" : "ball01",
         "position" : 
         {
@@ -741,7 +741,7 @@
         [
           
           {
-            "density" : 4,
+            "density" : 0.8565106987953186,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -796,13 +796,13 @@
         ],
         "id" : 30,
         "linearVelocity" : 0,
-        "massData-I" : 0.001985243987292051,
+        "massData-I" : 0.0004250956990290433,
         "massData-center" : 
         {
-          "x" : -0.002457111608237028,
-          "y" : 0.006792415399104357
+          "x" : -0.002457110676914454,
+          "y" : 0.006792412605136633
         },
-        "massData-mass" : 0.1167527735233307,
+        "massData-mass" : 0.02500000037252903,
         "name" : "body3",
         "position" : 
         {
@@ -821,7 +821,7 @@
         [
           
           {
-            "density" : 4,
+            "density" : 1.036288619041443,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -876,13 +876,13 @@
         ],
         "id" : 31,
         "linearVelocity" : 0,
-        "massData-I" : 0.01063247863203287,
+        "massData-I" : 0.002754579065367579,
         "massData-center" : 
         {
-          "x" : -0.003737892024219036,
-          "y" : 0.01033291500061750
+          "x" : -0.00373788969591260,
+          "y" : 0.01033291406929493
         },
-        "massData-mass" : 0.2701950073242188,
+        "massData-mass" : 0.07,
         "name" : "body3",
         "position" : 
         {
@@ -901,7 +901,7 @@
         [
           
           {
-            "density" : 4,
+            "density" : 0.9775643348693848,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -956,13 +956,13 @@
         ],
         "id" : 32,
         "linearVelocity" : 0,
-        "massData-I" : 0.006096056662499905,
+        "massData-I" : 0.001489821937866509,
         "massData-center" : 
         {
-          "x" : -0.003252461785450578,
-          "y" : 0.008991338312625885
+          "x" : -0.003252462251111865,
+          "y" : 0.008991336449980736
         },
-        "massData-mass" : 0.2045901417732239,
+        "massData-mass" : 0.05,
         "name" : "body3",
         "position" : 
         {
@@ -981,7 +981,7 @@
         [
           
           {
-            "density" : 4,
+            "density" : 0.9018805027008057,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -1036,13 +1036,13 @@
         ],
         "id" : 33,
         "linearVelocity" : 0,
-        "massData-I" : 0.02864846214652061,
+        "massData-I" : 0.006459372583776712,
         "massData-center" : 
         {
-          "x" : -0.004788981750607491,
-          "y" : 0.01323842070996761
+          "x" : -0.004788977093994617,
+          "y" : 0.01323841977864504
         },
-        "massData-mass" : 0.4435177445411682,
+        "massData-mass" : 0.1,
         "name" : "body3",
         "position" : 
         {
