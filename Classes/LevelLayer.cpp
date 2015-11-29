@@ -143,7 +143,15 @@ class ShadowRatHelper
             b2Vec2 vv = levelLayer.earthBody->GetPosition() +
                         b2Vec2(0, levelLayer.getEarthRadius()) - i->second.body->GetPosition();
             vv.Normalize();
-            i->second.body->ApplyForceToCenter((30 + 30 * rand_0_1()) * vv, true);
+
+            double f = 30;
+            // apply much more "gravity" when shadow rat is falling down, so it does not bounce
+            if ((i->second.body->GetPosition() - levelLayer.earthBody->GetPosition()).Length() >
+                1.1 * levelLayer.getEarthRadius()) {
+                f = 300;
+            }
+
+            i->second.body->ApplyForceToCenter((f + 30 * rand_0_1()) * vv, true);
         }
     }
 
@@ -155,13 +163,25 @@ class ShadowRatHelper
         };
 
         for (auto i = shadowEntries.begin(); i != shadowEntries.end(); i++) {
-            if (inRange(i->second) && i->second.body == nullptr) {
-                i->second.body = insertShadowRat(i->first);
-                assert(i->second.body);
-            } else if (!inRange(i->second) && i->second.body != nullptr) {
+            if (!inRange(i->second) && i->second.body != nullptr) {
                 removeShadowRat(i->second.body);
                 i->second.body = nullptr;
             }
+        }
+
+        // only one shadow rat allowed, return if we still have one
+        if (std::find_if(shadowEntries.begin(), shadowEntries.end(),
+                         [](ShadowEntries::value_type &v) { return v.second.body != nullptr; }) !=
+            shadowEntries.end()) {
+            return;
+        }
+
+        for (auto i = shadowEntries.begin(); i != shadowEntries.end(); i++) {
+            if (inRange(i->second) && i->second.body == nullptr) {
+                i->second.body = insertShadowRat(i->first);
+                assert(i->second.body);
+                return; // only one shadow rat allowed
+            };
         }
     }
 
@@ -192,15 +212,16 @@ class ShadowRatHelper
 
     void addPlayerNameLabelToNode(Node *node, const std::string &playerName)
     {
-        auto label = Label::createWithTTF("", "fonts/rat.ttf", 160);
+        auto label =
+            Label::createWithTTF("", "fonts/rat.ttf", 80 * MenuHelper::getContentScaleFactor());
         label->setColor(Color3B::BLACK);
         label->runAction(Sequence::create(
-            DelayTime::create(1), Spawn::create(ScaleTo::create(0.5, 0.5),
-                                                FadeTo::create(0.5, node->getOpacity()), nullptr),
+            DelayTime::create(1.5), Spawn::create(ScaleTo::create(0.5, 0.75),
+                                                  FadeTo::create(0.5, node->getOpacity()), nullptr),
             nullptr));
 
         Size cs = node->getContentSize();
-        label->setPosition(Vec2(cs.width / 2, cs.height));
+        label->setPosition(Vec2(cs.width / 2, 1.25 * cs.height));
 
         // TODO: remove when lowercase letters are available in rat.ttf
         std::string name = playerName;
@@ -214,7 +235,8 @@ class ShadowRatHelper
     LevelLayer &levelLayer;
     Json::Value shadowRatJson; // keeps representation of parsed shadow rat, needed for duplication
 
-    std::map<std::string, ShadowRatEntry> shadowEntries;
+    typedef std::map<std::string, ShadowRatEntry> ShadowEntries;
+    ShadowEntries shadowEntries;
 };
 
 class AnimationHelper
