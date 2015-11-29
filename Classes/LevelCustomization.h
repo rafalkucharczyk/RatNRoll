@@ -262,8 +262,7 @@ class LevelBase : public LevelCustomization
 
         int period = 10;
 
-        if (frenzyEnabled && shieldEnabled)
-        {
+        if (frenzyEnabled && shieldEnabled) {
             period = 7;
         }
 
