@@ -47,6 +47,7 @@ const std::string unlockedAchievementsKey = "unlocked_achievements";
 const std::string achievementsStateKey = "achievements_state";
 const std::string keychainLikingKey = "facebook_like";
 const std::string tutorialEnteredKey = "tutorial_entered";
+const std::string tutorialStageKey = "tutorial_stage";
 }
 
 PermanentStorage *PermanentStorage::instance = nullptr;
@@ -174,6 +175,16 @@ void PermanentStorage::setTutorialEntered(bool entered)
 bool PermanentStorage::getTutorialEntered() const
 {
     return UserDefault::getInstance()->getBoolForKey(tutorialEnteredKey.c_str());
+}
+
+void PermanentStorage::setTutorialStage(int ballonType)
+{
+    UserDefault::getInstance()->setIntegerForKey(tutorialStageKey.c_str(), ballonType);
+}
+
+int PermanentStorage::getTutorialStage() const
+{
+    return UserDefault::getInstance()->getIntegerForKey(tutorialStageKey.c_str(), -1);
 }
 
 void PermanentStorage::saveToKeychain(const std::string &keychainItemKey, bool value)

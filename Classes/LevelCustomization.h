@@ -130,7 +130,7 @@ class LevelTutorial : public LevelCustomization
 
         ItemType itemType = static_cast<ItemType>(itemsSequence[currentItemIndex++]);
 
-        return normalizeDropItemType(itemType, currentRatSpeed);
+        return itemType;
     }
 
     b2Vec2 getDropItemSpot(const b2Vec2 &ratPosition) override { return b2Vec2(0, 9); }
@@ -173,12 +173,16 @@ class LevelTutorial : public LevelCustomization
 
     void notifyTutorialCompletedAchievement();
 
+    void setTutorialScreenCompleted(TutorialBalloonLayer::BalloonType ballonType);
+    bool isTutorialScreenCompleted(TutorialBalloonLayer::BalloonType ballonType);
+
   private:
     bool canDropNewItem;
 
     std::map<TutorialBalloonLayer::BalloonType, int> shownBalloons;
 
     int currentItemIndex;
+    const int singleItemSequenceLength = 5;
     std::vector<int> itemsSequence = {0, 0, 0, 0, 0, 1, 1, 1, 4, 4, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3};
 
     std::shared_ptr<CogwheelHelper> cogwheelHelper;

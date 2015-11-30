@@ -4,6 +4,7 @@
 #include <json.h>
 #include "SoundHelper.h"
 #include "AchievementTracker.h"
+#include "TutorialBalloonLayer.h"
 
 class PermanentStorage
 {
@@ -32,6 +33,9 @@ class PermanentStorage
 
     void setTutorialEntered(bool entered);
     bool getTutorialEntered() const;
+
+    void setTutorialStage(int ballonType);
+    int getTutorialStage() const;
 
   private:
     PermanentStorage();

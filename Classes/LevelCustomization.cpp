@@ -1,6 +1,7 @@
 #include "LevelCustomization.h"
 
 #include "AchievementTracker.h"
+#include "Storage/PermanentStorage.h"
 
 #include <Box2D/Dynamics/b2Body.h>
 #include <b2dJson.h>
@@ -32,6 +33,17 @@ LevelTutorial::LevelTutorial()
     : canDropNewItem(true), currentItemIndex(0), cogwheelHelper(new CogwheelHelper()),
       tracker(nullptr)
 {
+    for (int i = static_cast<int>(TutorialBalloonLayer::BalloonType::SPEEDUP);
+         i < static_cast<int>(TutorialBalloonLayer::BalloonType::MAX_TYPE_COUNT); i++) {
+        TutorialBalloonLayer::BalloonType balloonType =
+            static_cast<TutorialBalloonLayer::BalloonType>(i);
+        if (isTutorialScreenCompleted(balloonType)) {
+            currentItemIndex += singleItemSequenceLength;
+            shownBalloons.insert(std::make_pair(balloonType, singleItemSequenceLength));
+        } else {
+            break;
+        }
+    }
 }
 
 void LevelTutorial::additionalAfterLoadProcessing(b2dJson *json)
@@ -52,6 +64,10 @@ LevelTutorial::levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerP
 
     achievementTracker.tutorialEntered();
 
+    if (isTutorialScreenCompleted(TutorialBalloonLayer::BalloonType::WELCOME)) {
+        return nullptr;
+    }
+
     return spawnTutorialBalloon(TutorialBalloonLayer::BalloonType::WELCOME, levelLayerProxy);
 }
 
@@ -63,7 +79,7 @@ LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonTyp
 
     auto i = shownBalloons.find(TutorialBalloonLayer::BalloonType::HALVE);
 
-    if (i != shownBalloons.end() && i->second == 5) {
+    if (i != shownBalloons.end() && i->second == singleItemSequenceLength) {
         balloonType = TutorialBalloonLayer::BalloonType::FINAL;
     }
 
@@ -77,8 +93,11 @@ LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonTyp
 
     return Sequence::create(CallFunc::create([levelLayerProxy]() { levelLayerProxy->pause(); }),
                             CallFunc::create([=]() {
-                                levelLayerProxy->addOverlayingLayer(TutorialBalloonLayer::create(
-                                    balloonType, [=]() { levelLayerProxy->resume(); }));
+                                levelLayerProxy->addOverlayingLayer(
+                                    TutorialBalloonLayer::create(balloonType, [=]() {
+                                        this->setTutorialScreenCompleted(balloonType);
+                                        levelLayerProxy->resume();
+                                    }));
                             }),
                             nullptr);
 }
@@ -91,6 +110,26 @@ void LevelTutorial::notifyTutorialCompletedAchievement()
             tracker->tutorialCompleted();
         }
     }
+}
+
+void LevelTutorial::setTutorialScreenCompleted(TutorialBalloonLayer::BalloonType ballonType)
+{
+    int stage = static_cast<int>(ballonType);
+
+    if (stage > 0) {
+        PermanentStorage::getInstance().setTutorialStage(stage - 1);
+    }
+}
+
+bool LevelTutorial::isTutorialScreenCompleted(TutorialBalloonLayer::BalloonType ballonType)
+{
+    int stage = PermanentStorage::getInstance().getTutorialStage();
+
+    if (stage == -1) {
+        return false;
+    }
+
+    return stage >= static_cast<int>(ballonType);
 }
 
 Level01::Level01(bool frenzyEnabled, bool shieldEnabled)
