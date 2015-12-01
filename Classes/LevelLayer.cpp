@@ -178,7 +178,7 @@ class ShadowRatHelper
 
         for (auto i = shadowEntries.begin(); i != shadowEntries.end(); i++) {
             if (inRange(i->second) && i->second.body == nullptr) {
-                i->second.body = insertShadowRat(i->first);
+                i->second.body = insertShadowRat(i->first, i->second.scoreTo);
                 assert(i->second.body);
                 return; // only one shadow rat allowed
             };
@@ -186,7 +186,7 @@ class ShadowRatHelper
     }
 
   private:
-    b2Body *insertShadowRat(const std::string &playerName)
+    b2Body *insertShadowRat(const std::string &playerName, int score)
     {
         b2Body *body = levelLayer.jsonParser.j2b2Body(levelLayer.m_world, shadowRatJson);
         body->SetTransform(b2Vec2(0, 10), 0);
@@ -196,7 +196,7 @@ class ShadowRatHelper
         levelLayer.getAnySpriteOnBody(body)->setVisible(true);
         Node *node = levelLayer.getAnySpriteOnBody(body);
 
-        addPlayerNameLabelToNode(node, playerName);
+        addPlayerNameLabelToNode(node, playerName, score);
 
         SoundHelper::getInstance().playShadowPlayerEffect();
 
@@ -210,7 +210,7 @@ class ShadowRatHelper
             CallFunc::create([=]() { levelLayer.removeBodyFromWorld(body); }), nullptr));
     }
 
-    void addPlayerNameLabelToNode(Node *node, const std::string &playerName)
+    void addPlayerNameLabelToNode(Node *node, const std::string &playerName, int score)
     {
         auto label =
             Label::createWithTTF("", "fonts/rat.ttf", 80 * MenuHelper::getContentScaleFactor());
@@ -226,7 +226,8 @@ class ShadowRatHelper
         // TODO: remove when lowercase letters are available in rat.ttf
         std::string name = playerName;
         std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-        label->setString(name);
+        label->setAlignment(TextHAlignment::CENTER);
+        label->setString(name + "\n" + std::to_string(score));
 
         node->addChild(label);
     }
