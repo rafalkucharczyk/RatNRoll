@@ -25,9 +25,9 @@ bool AboutLayer::init()
     MenuHelper::positionNode(*sprite, {0.5, 0.75}, 0.1);
     addChild(sprite);
 
-    MenuLabel *label = MenuLabel::create("LUKASZ\nKUCHARCZYK\n\n"
+    MenuLabel *label = MenuLabel::create("£UKASZ\nKUCHARCZYK\n\n"
                                          "MARTA\nKUCHARCZYK\n\n"
-                                         "RAFAL\nKUCHARCZYK",
+                                         "RAFA£\nKUCHARCZYK",
                                          {0.5, 0.55}, 0.03);
 
     addChild(label);
