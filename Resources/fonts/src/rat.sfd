@@ -7,8 +7,8 @@ Copyright: Copyright (c) 2015, Lukasz Kucharczyk
 UComments: "2015-10-18: Created with FontForge (http://fontforge.org)"
 Version: 001.000
 ItalicAngle: 0
-UnderlinePosition: -102.4
-UnderlineWidth: 51.2
+UnderlinePosition: -102
+UnderlineWidth: 51
 Ascent: 819
 Descent: 205
 InvalidEm: 0
@@ -21,8 +21,13 @@ OS2Version: 0
 OS2_WeightWidthSlopeOnly: 0
 OS2_UseTypoMetrics: 1
 CreationTime: 1445191964
-ModificationTime: 1449007987
-OS2TypoAscent: 0
+ModificationTime: 1449094900
+PfmFamily: 17
+TTFWeight: 400
+TTFWidth: 5
+LineGap: 92
+VLineGap: 0
+OS2TypoAscent: -300
 OS2TypoAOffset: 1
 OS2TypoDescent: 0
 OS2TypoDOffset: 1
@@ -31,12 +36,13 @@ OS2WinAscent: 0
 OS2WinAOffset: 1
 OS2WinDescent: 0
 OS2WinDOffset: 1
-HheadAscent: 0
+HheadAscent: -300
 HheadAOffset: 1
 HheadDescent: 0
 HheadDOffset: 1
 OS2CapHeight: 0
 OS2XHeight: 0
+OS2Vendor: 'PfEd'
 MarkAttachClasses: 1
 DEI: 91125
 Encoding: ISO8859-1
@@ -45,7 +51,7 @@ NameList: AGL For New Fonts
 DisplaySize: -48
 AntiAlias: 1
 FitToEm: 1
-WinInfo: 48 16 6
+WinInfo: 160 16 6
 BeginPrivate: 0
 EndPrivate
 BeginChars: 256 97
