@@ -17,6 +17,8 @@
 using namespace std;
 using namespace cocos2d;
 
+RUBELayer::~RUBELayer() { clear(); }
+
 // This is called after the Box2D world has been loaded, and while the b2dJson information
 // is still available to do extra loading. Here is where we load the images.
 void RUBELayer::afterLoadProcessing(b2dJson *json)
@@ -140,6 +142,7 @@ void RUBELayer::clear()
     for (set<RUBEImageInfo *>::iterator it = m_imageInfos.begin(); it != m_imageInfos.end(); ++it) {
         RUBEImageInfo *imgInfo = *it;
         removeChild(imgInfo->sprite, true);
+        delete imgInfo;
     }
     m_imageInfos.clear();
 
@@ -209,8 +212,10 @@ void RUBELayer::removeBodyFromWorld(b2Body *body)
     }
 
     // also remove the infos for those images from the image info array
-    for (int i = 0; i < imagesToRemove.size(); i++)
+    for (int i = 0; i < imagesToRemove.size(); i++) {
         m_imageInfos.erase(imagesToRemove[i]);
+        delete imagesToRemove[i];
+    }
 }
 
 // Remove one image from the layer

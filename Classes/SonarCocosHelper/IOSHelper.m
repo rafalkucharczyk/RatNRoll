@@ -580,6 +580,8 @@ SCHEmptyProtocol
         {
             completionHandler(scores);
         }
+
+        [leaderboard release];
     }];
 }
 #endif

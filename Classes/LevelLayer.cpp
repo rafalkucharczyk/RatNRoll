@@ -600,6 +600,12 @@ void LevelLayer::update(float dt)
     calculateScore();
 }
 
+void LevelLayer::onExit()
+{
+    RUBELayer::onExit();
+    removeOutstandingItems();
+}
+
 void LevelLayer::pauseLevel()
 {
     paused = true;

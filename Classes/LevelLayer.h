@@ -36,6 +36,7 @@ class LevelLayer : public RUBELayer
     virtual void afterLoadProcessing(b2dJson *json);
 
     virtual void update(float dt);
+    virtual void onExit();
     void pauseLevel();
     void resumeLevel();
 

@@ -55,6 +55,8 @@ class RUBELayer : public BasicRUBELayer
     void duplicateImageForBody(const std::string &name, b2Body *body);
 
   public:
+    ~RUBELayer();
+
     virtual void afterLoadProcessing(b2dJson *json); // overrides base class
     virtual void clear();                            // overrides base class
 

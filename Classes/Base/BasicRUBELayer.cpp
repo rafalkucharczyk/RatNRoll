@@ -115,10 +115,13 @@ void BasicRUBELayer::clear()
     if (m_world) {
         CCLOG("Deleting Box2D world");
         delete m_world;
+        m_world = NULL;
     }
 
-    if (m_debugDraw)
+    if (m_debugDraw) {
         delete m_debugDraw;
+        m_debugDraw = NULL;
+    }
 
     m_world = NULL;
     m_mouseJoint = NULL;
