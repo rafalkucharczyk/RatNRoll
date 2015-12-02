@@ -59,26 +59,48 @@ void AchievementTracker::itemCaught(LevelCustomization::ItemType itemType)
 {
     state.itemsCount[itemType]++;
 
-    unlock(Achievements::SUPER_SIZE_ME::name,
-           state.itemsCount[LevelCustomization::SLOWDOWN] / 100.);
-    unlock(Achievements::AS_FAT_AS_CAN_BE::name,
-           state.itemsCount[LevelCustomization::BREAK] / 100.);
-    unlock(Achievements::CARDIAC::name, (state.itemsCount[LevelCustomization::BREAK] +
-                                         state.itemsCount[LevelCustomization::SLOWDOWN]) /
-                                            1000.);
-    unlock(Achievements::JUNKIE::name, state.itemsCount[LevelCustomization::SPEEDUP] / 100.);
-    unlock(Achievements::ALCHEMIST::name, state.itemsCount[LevelCustomization::SPEEDUP] / 1000.);
-
-    if (state.itemsCount[LevelCustomization::HOVER] == 1) {
-        unlock(Achievements::I_BELIEVE_I_CAN_FLY::name);
+    if (itemType == LevelCustomization::SLOWDOWN) {
+        unlock(Achievements::SUPER_SIZE_ME::name,
+               state.itemsCount[LevelCustomization::SLOWDOWN] / 100.);
     }
 
-    unlock(Achievements::FREQUENT_FLYER::name, state.itemsCount[LevelCustomization::HOVER] / 100.);
-    unlock(Achievements::ANGEL::name, state.itemsCount[LevelCustomization::HOVER] / 1000.);
+    if (itemType == LevelCustomization::BREAK) {
+        unlock(Achievements::AS_FAT_AS_CAN_BE::name,
+               state.itemsCount[LevelCustomization::BREAK] / 100.);
+    }
 
-    unlock(Achievements::JACK_THE_REAPER::name, state.itemsCount[LevelCustomization::HALVE] / 100.);
-    unlock(Achievements::DEVIL::name, state.itemsCount[LevelCustomization::HALVE] / 1000.);
-    unlock(Achievements::CHEESEIONAIRE::name, state.itemsCount[LevelCustomization::FRENZY] / 100.);
+    if (itemType == LevelCustomization::SLOWDOWN || itemType == LevelCustomization::BREAK) {
+        unlock(Achievements::CARDIAC::name, (state.itemsCount[LevelCustomization::BREAK] +
+                                             state.itemsCount[LevelCustomization::SLOWDOWN]) /
+                                                1000.);
+    }
+
+    if (itemType == LevelCustomization::SPEEDUP) {
+        unlock(Achievements::JUNKIE::name, state.itemsCount[LevelCustomization::SPEEDUP] / 100.);
+        unlock(Achievements::ALCHEMIST::name,
+               state.itemsCount[LevelCustomization::SPEEDUP] / 1000.);
+    }
+
+    if (itemType == LevelCustomization::HOVER) {
+        if (state.itemsCount[LevelCustomization::HOVER] == 1) {
+            unlock(Achievements::I_BELIEVE_I_CAN_FLY::name);
+        }
+
+        unlock(Achievements::FREQUENT_FLYER::name,
+               state.itemsCount[LevelCustomization::HOVER] / 100.);
+        unlock(Achievements::ANGEL::name, state.itemsCount[LevelCustomization::HOVER] / 1000.);
+    }
+
+    if (itemType == LevelCustomization::HALVE) {
+        unlock(Achievements::JACK_THE_REAPER::name,
+               state.itemsCount[LevelCustomization::HALVE] / 100.);
+        unlock(Achievements::DEVIL::name, state.itemsCount[LevelCustomization::HALVE] / 1000.);
+    }
+
+    if (itemType == LevelCustomization::FRENZY) {
+        unlock(Achievements::CHEESEIONAIRE::name,
+               state.itemsCount[LevelCustomization::FRENZY] / 100.);
+    }
 
     // JACKPOT
 
