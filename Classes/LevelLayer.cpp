@@ -223,11 +223,8 @@ class ShadowRatHelper
         Size cs = node->getContentSize();
         label->setPosition(Vec2(cs.width / 2, 1.25 * cs.height));
 
-        // TODO: remove when lowercase letters are available in rat.ttf
-        std::string name = playerName;
-        std::transform(name.begin(), name.end(), name.begin(), ::toupper);
         label->setAlignment(TextHAlignment::CENTER);
-        label->setString(name + "\n" + std::to_string(score));
+        label->setString(playerName + "\n" + std::to_string(score));
 
         node->addChild(label);
     }

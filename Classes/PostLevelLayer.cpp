@@ -59,11 +59,7 @@ bool PostLevelLayer::init()
         scoreTop = currentScore;
         scoreBottom = bestScore;
     } else {
-        // TODO: remove when lowercase letters are available in rat.ttf
-        std::string name = challengedUserName;
-        std::transform(name.begin(), name.end(), name.begin(), ::toupper);
-
-        textBottom = name;
+        textBottom = challengedUserName;
         scoreBottom = challengedScore;
 
         if (bestScore > challengedScore) {
