@@ -561,6 +561,8 @@ SCHEmptyProtocol
 
 - (void)player:(GKPlayer *)player wantsToPlayChallenge:(GKChallenge *)challenge
 {
+    [self gameCenterHideUi];
+
     if ([challenge isKindOfClass:[GKScoreChallenge class]])
     {
         self.challengeCallback((GKScoreChallenge*)challenge);
