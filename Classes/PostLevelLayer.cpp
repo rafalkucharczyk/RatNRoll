@@ -75,7 +75,6 @@ bool PostLevelLayer::init()
     addDigitsPanel({0.5, 0.4}, textBottom, scoreBottom);
 
     const PostAnimationInfo &info = getRandomAnimation(scoreTop < scoreBottom);
-    CCLOG("name:%s", info.name.c_str());
     addAnimation(info.name, info.position);
 
     return true;

@@ -52,6 +52,8 @@ class GameFlow
 
     void switchToTestScene();
 
+    void overlayGameCompletedScene(LevelLayer *levelLayer);
+
   private:
     void loginToGameCenter();
 
@@ -93,6 +95,7 @@ class GameFlow
     const static int backgroundLayerTag = 124;
     const static int achievementTrackerTag = 125;
     const static int levelBlockerTag = 126;
+    const static int levelCompletedTag = 127;
     const static int noLevelNumber = -1;
 };
 

@@ -43,6 +43,7 @@
 		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
 		25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */; };
 		25C5F8A01B7E3033002DB80B /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C5F89E1B7E3033002DB80B /* TestLayer.cpp */; };
+		25C973F81C1162D5007171C7 /* GameCompletedLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C973F61C1162D5007171C7 /* GameCompletedLayer.cpp */; };
 		25D9C1841BFE462E0027336B /* FacebookLikeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25D9C1821BFE462E0027336B /* FacebookLikeNode.cpp */; };
 		25EC24321BEFA2260018180D /* level_base.json in Resources */ = {isa = PBXBuildFile; fileRef = 25EC24311BEFA2260018180D /* level_base.json */; };
 		25EC24351BEFA3740018180D /* LevelSelectionLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25EC24331BEFA3740018180D /* LevelSelectionLayer.cpp */; };
@@ -229,6 +230,8 @@
 		25ACD8FD1BA9D62A00899F09 /* AchievementTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementTracker.h; sourceTree = "<group>"; };
 		25C5F89E1B7E3033002DB80B /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		25C5F89F1B7E3033002DB80B /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
+		25C973F61C1162D5007171C7 /* GameCompletedLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameCompletedLayer.cpp; sourceTree = "<group>"; };
+		25C973F71C1162D5007171C7 /* GameCompletedLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCompletedLayer.h; sourceTree = "<group>"; };
 		25D9C1821BFE462E0027336B /* FacebookLikeNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FacebookLikeNode.cpp; path = Facebook/FacebookLikeNode.cpp; sourceTree = "<group>"; };
 		25D9C1831BFE462E0027336B /* FacebookLikeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookLikeNode.h; path = Facebook/FacebookLikeNode.h; sourceTree = "<group>"; };
 		25EC24311BEFA2260018180D /* level_base.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level_base.json; sourceTree = "<group>"; };
@@ -591,6 +594,8 @@
 				25476AB41C07A5D2005DED73 /* AssetsPreloader.h */,
 				B552BDFF1B2236DC00D4851A /* BackgroundLayer.cpp */,
 				B552BE001B2236DC00D4851A /* BackgroundLayer.h */,
+				25C973F61C1162D5007171C7 /* GameCompletedLayer.cpp */,
+				25C973F71C1162D5007171C7 /* GameCompletedLayer.h */,
 				B552BE081B24234A00D4851A /* GameFlow.cpp */,
 				B552BE091B24234A00D4851A /* GameFlow.h */,
 				25365D061BF89FC600668802 /* IAPLayer.cpp */,
@@ -937,6 +942,7 @@
 				B5927ECA1B5440DA00D59F09 /* SonarFrameworks.cpp in Sources */,
 				25EC24351BEFA3740018180D /* LevelSelectionLayer.cpp in Sources */,
 				B552BDFC1B1CE54E00D4851A /* LevelLayer.cpp in Sources */,
+				25C973F81C1162D5007171C7 /* GameCompletedLayer.cpp in Sources */,
 				B5927EC71B5440DA00D59F09 /* IOSCPPHelper.mm in Sources */,
 				B5927EC91B5440DA00D59F09 /* IOSResults.mm in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,

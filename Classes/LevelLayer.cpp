@@ -10,6 +10,8 @@
 
 USING_NS_CC;
 
+const int LevelLayer::gameCompletedScore;
+
 class DropItemUserData
 {
   public:
@@ -672,7 +674,7 @@ void LevelLayer::addShadowRat(const std::string &name, std::function<int(int)> f
         shadowRatHelper->addShadow(name, fromScore, toScore);
     }
 
-    updateScore();
+    scheduleUpdateScore();
 }
 
 void LevelLayer::attachParticleNodesToRatBody()
@@ -962,7 +964,7 @@ void LevelLayer::halveItemEaten()
     int halfScore = gameScore / 2;
     gameScore -= halfScore;
 
-    updateScore();
+    scheduleUpdateScore();
 
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::SAD);
 
@@ -1062,10 +1064,16 @@ void LevelLayer::initScoreLabel(int score)
     scoreLabel->addChild(halvePointsParticleNode, -1);
 }
 
-void LevelLayer::updateScoreDisplay(float t)
+void LevelLayer::updateScore(float t)
 {
+    gameScore = std::min(gameScore, gameCompletedScore);
+
     scoreLabel->animateToNumber(gameScore);
     shadowRatHelper->scoreUpdated(gameScore);
+
+    if (gameScore == gameCompletedScore && gameCompletedCallback) {
+        gameCompletedCallback();
+    }
 }
 
 void LevelLayer::calculateScore()
@@ -1074,7 +1082,7 @@ void LevelLayer::calculateScore()
     if (currentAngle - previousRevoluteJointAngle > 0.2) {
         gameScore += getGameScoreDelta();
 
-        updateScore();
+        scheduleUpdateScore();
 
         previousRevoluteJointAngle = currentAngle;
     } else if (currentAngle < previousRevoluteJointAngle) {
@@ -1082,15 +1090,15 @@ void LevelLayer::calculateScore()
     }
 }
 
-void LevelLayer::updateScore()
+void LevelLayer::scheduleUpdateScore()
 {
-    if (!isScheduled(schedule_selector(LevelLayer::updateScoreDisplay))) {
+    if (!isScheduled(schedule_selector(LevelLayer::updateScore))) {
         // do update of score label and shadow rats in next event loop
         // (to prevent re-entering box2d engine, since it may happen we try
         //  to add shadow rat's b2Body when world is still locked when handling
         //  collisions. and score gets updated as a result of collision
         //  with skull item.)
-        scheduleOnce(schedule_selector(LevelLayer::updateScoreDisplay), 0);
+        scheduleOnce(schedule_selector(LevelLayer::updateScore), 0);
     }
 }
 

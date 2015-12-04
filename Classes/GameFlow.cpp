@@ -16,6 +16,7 @@
 #include "PauseLayer.h"
 #include "SettingsLayer.h"
 #include "AboutLayer.h"
+#include "GameCompletedLayer.h"
 #include "TestLayer.h"
 
 #include "PermanentStorage.h"
@@ -211,6 +212,8 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
         std::bind(&GameFlow::switchToPostLevelScene, this, std::placeholders::_1));
     levelLayer->setBackgroundSpeedFunction(
         std::bind(&BackgroundLayer::setSpeed, backgroundLayer, std::placeholders::_1));
+    levelLayer->setGameCompletedCallback(
+        std::bind(&GameFlow::overlayGameCompletedScene, this, levelLayer));
 
     SonarCocosHelper::GoogleAnalytics::setScreenName("Level" + std::to_string(levelNumber));
 
@@ -357,6 +360,18 @@ void GameFlow::switchToTestScene()
 #endif
 }
 
+void GameFlow::overlayGameCompletedScene(LevelLayer *levelLayer)
+{
+    getAchievementTracker().levelCompleted(currentLevelNumber);
+
+    auto gameCompletionLayer = GameCompletedLayer::create(currentLevelNumber);
+    levelLayer->pauseLevel();
+    levelLayer->setTag(levelCompletedTag);
+    Director::getInstance()->getRunningScene()->addChild(gameCompletionLayer);
+    gameCompletionLayer->setCompletionConifrmedCallback(
+        [this]() { this->switchToPostLevelScene(LevelLayer::gameCompletedScore); });
+}
+
 void GameFlow::loginToGameCenter()
 {
     SonarCocosHelper::GameCenter::registerChallengeCallback(
@@ -475,12 +490,13 @@ LevelLayer &GameFlow::getCurrentLevelLayer()
 
 bool GameFlow::isGamePlayActive() const
 {
-    // unblocked level layer
+    Scene *scene = Director::getInstance()->getRunningScene();
+    assert(scene);
+
     return (currentLevelNumber != noLevelNumber) &&
-           (Director::getInstance()->getRunningScene()->getChildByTag(levelBlockerTag) ==
-            nullptr) &&
-           (Director::getInstance()->getRunningScene()->getChildByTag(
-                LevelLayer::proxyOverlayLayerTag) == nullptr);
+           scene->getChildByTag(levelBlockerTag) == nullptr &&
+           scene->getChildByTag(LevelLayer::proxyOverlayLayerTag) == nullptr &&
+           scene->getChildByTag(levelCompletedTag) == nullptr;
 }
 
 AchievementTracker &GameFlow::addAchievementTracker(cocos2d::Node &parent) const

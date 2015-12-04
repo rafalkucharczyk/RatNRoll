@@ -32,11 +32,14 @@ ACHIEVEMENT(CHEESEIONAIRE)    // 100 cheese frenzy
 ACHIEVEMENT(SUICIDE)          // 10 game over
 ACHIEVEMENT(ROAD_RUNNER)      // run with maximum speed for the first time
 ACHIEVEMENT(GET_A_LIFE)       // sharing via twitter or facebook
-ACHIEVEMENT(PRO_RUNNER)       // reach fall out point with the highest speed and recover [TODO]
+ACHIEVEMENT(PRO_RUNNER)       // reach fall out point with the highest speed and recover
 ACHIEVEMENT(
     WE_DO_NOT_KNOW_HOW_TO_NAME_THIS_ACHIEVEMENT) // pause/resume game 3 times within 5 seconds
 ACHIEVEMENT(I_BELIEVE_I_CAN_FLY)                 // 1st goose
 ACHIEVEMENT(WRIGHT_BROTHERS)                     // first fall after hovering
+ACHIEVEMENT(SHIFT_MANAGER)                       // score 999999 points in the Cheese Factory
+ACHIEVEMENT(GRAVEDIGGER)                         // score 999999 points in the Graveyard
+ACHIEVEMENT(MAGICIAN)                            // score 999999 points in the Magic Hall
 };
 
 namespace
@@ -194,6 +197,21 @@ void AchievementTracker::gameResumed()
     } else {
         gamePausedStartTime = std::chrono::system_clock::from_time_t(0);
         state.resumeCount = 0;
+    }
+}
+
+void AchievementTracker::levelCompleted(int levelNumber)
+{
+    if (levelNumber == 1) {
+        unlock(Achievements::SHIFT_MANAGER::name);
+    }
+
+    if (levelNumber == 2) {
+        unlock(Achievements::GRAVEDIGGER::name);
+    }
+
+    if (levelNumber == 3) {
+        unlock(Achievements::MAGICIAN::name);
     }
 }
 

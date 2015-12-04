@@ -54,6 +54,8 @@ class AchievementTracker : public cocos2d::Node
     void gamePaused();
     void gameResumed();
 
+    void levelCompleted(int levelNumber);
+
   private:
     // progress = [0.0, 1.0], 1.0 == completed
     void unlock(const std::string &achievementName, float progress = 1.0);

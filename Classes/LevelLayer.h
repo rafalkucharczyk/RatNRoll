@@ -52,6 +52,11 @@ class LevelLayer : public RUBELayer
         gameFinishedCallback = callback;
     }
 
+    void setGameCompletedCallback(std::function<void()> callback)
+    {
+        gameCompletedCallback = callback;
+    }
+
     void setBackgroundSpeedFunction(std::function<void(int)> function)
     {
         backgroundSpeedFunction = function;
@@ -94,9 +99,9 @@ class LevelLayer : public RUBELayer
     std::string itemTypeToImageName(LevelCustomization::ItemType itemType) const;
 
     void initScoreLabel(int score);
-    void updateScoreDisplay(float t);
+    void updateScore(float t);
     void calculateScore();
-    void updateScore();
+    void scheduleUpdateScore();
 
     spine::SkeletonAnimation *getRatAnimation();
 
@@ -142,6 +147,7 @@ class LevelLayer : public RUBELayer
     friend class ShadowRatHelper;
 
     std::function<void(int)> gameFinishedCallback;
+    std::function<void()> gameCompletedCallback;
 
     cocos2d::ParticleSystemQuad *cheeseFrenzyParticleNode;
     cocos2d::ParticleSystemQuad *halvePointsParticleNode;
@@ -162,6 +168,7 @@ class LevelLayer : public RUBELayer
   public:
     static const std::string name;
     static constexpr float hoverDuration = 2.0;
+    static constexpr int gameCompletedScore = 100;
 };
 
 #endif // __LEVEL_SCENE_H__
