@@ -10,9 +10,11 @@ IAPLayer::IAPLayer(const std::string &productId, const cocos2d::Vec2 &buttonPosi
             "basket",
             {[](Node *node) {},
              [](Node *node) { // purchaseInProgress
-                 auto action = RepeatForever::create(RotateBy::create(2, 360));
-                 action->setTag(inProgressActionTag);
-                 node->runAction(action);
+                 if (node->getActionByTag(inProgressActionTag) == nullptr) {
+                     auto action = RepeatForever::create(RotateBy::create(2, 360));
+                     action->setTag(inProgressActionTag);
+                     node->runAction(action);
+                 }
              },
              [](Node *node) { // purchaseCompleted
                  node->stopActionByTag(inProgressActionTag);
@@ -79,6 +81,7 @@ IAPLayer *IAPLayer::create(const std::string &productId, const cocos2d::Vec2 &bu
 void IAPLayer::menuItemClicked(int itemIndex)
 {
     if (itemIndex == 0) {
+        menuHelper.runActionFor(0, 1);
         iapHelper->purchaseProduct();
     }
 }

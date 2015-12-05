@@ -4,7 +4,7 @@
 using namespace std;
 
 @interface InAppPurchaseWrapper
-    : NSObject <SKProductsRequestDelegate, SKPaymentTransactionObserver> {
+    : NSObject <SKRequestDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver> {
     InAppPurchase *owner;
 }
 
@@ -83,6 +83,13 @@ static InAppPurchaseWrapper *wrapper = nil;
     } else if (!product) {
         [self sendNotification:InAppPurchase::error withMessage:"Product not valid."];
     }
+}
+
+- (void)request:(SKRequest *)request didFailWithError:(NSError *)error
+{
+    // wknd - let's notify higher layer the product is available to purchase and
+    // handle errors during actual purchase
+    [self sendNotification:InAppPurchase::productReceived];
 }
 
 - (void)purchase
