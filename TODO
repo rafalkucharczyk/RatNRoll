@@ -94,30 +94,42 @@ bug - minimize app on tutorial screen, screen disappears and rat loses animation
 bug - click ads banner on tutorial screen, screen disappears and rat loses animations
 juice - transitions between scenes
 
-unordered:
-post game menu - rate us
-ios - add verification of iap
-achievement - pro runner
-move all strings to separate file, use strings ids to prepare for localization
-improved sounds / music
-
-bug - make sure item is eaten when rat touches it (currently item is eaten only when touches
-        rat's belly)
-bug - view is messed up (goes to landscape) when device is rotated when viewing iAd
-bug - in app purchase button does not respond nicely (nothing happens) when network is not available
-bug - sharing via facebook does not work anymore
-bug - hide game center overlay when playing achievement challenge
+12
+bug - weird transition of DigitsPanel with TransitionSlideChild
 bug - font size in tutorial looks ugly (iPad 2)
-bug - sporadic crash on accessing keychain after IAP
 bug - poor performance on older devices (preload textures?)
+achievement - pro runner
+post game menu - rate us
+gameplay - less big burgers, more bonus items
+bug - shadow rat is sometimes completely messed up when earth is rolled fast
+bug - earth in graveyard level is vibrating sometimes
+tutorial - resume tutorial instead of restarting when user ended the game somewhere in the middle
+bug - hide game center overlay when playing achievement challenge
+gameplay - scene when user reaches max score + achievement
+bug - in app purchase button does not respond nicely (nothing happens) when network is not available
+
+unordered:
+ios - add verification of iap
+move all strings to separate file, use strings ids to prepare for localization
+level selection - move cheese factory icon a little bit when tutorial is completed
+improved sounds / music
+gameplay - add more info when shadow rat is dropped/removed
+
+bug - sharing via facebook does not work anymore
 bug - game center button does respond nicely (nothing happens) when network is not available
 bug - share the same background scene when navigating through screens (so items do not jump from
       position to position)
 bug - MipmapSprite are not transitioned with TransitionSlideChild
-bug - weird transition of DigitsPanel with TransitionSlideChild
+bug - periodic glitch when playing in offline mode
+bug - sporadic crash on accessing keychain after IAP
+bug - view is messed up (goes to landscape) when device is rotated when viewing iAd
+bug - make sure item is eaten when rat touches it (currently item is eaten only when touches
+        rat's belly)
 
 
 FUTURE
 gameplay - new item, thunderstorm, speed up to max speed for a while
 gameplay - new item, mirror
 
+integrate replaykit
+randomly choose animation for the highest speed and record gameplay then
