@@ -67,8 +67,6 @@ class LevelLayer : public RUBELayer
     static const int proxyOverlayLayerTag = 1111;
 
   private:
-    void attachParticleNodesToRatBody();
-
     void runCustomActionOnStart();
     void startDroppingItems();
     void stopDroppingItems();

@@ -581,8 +581,6 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
 
     animationHelper->setSkeleton(getRatAnimation());
 
-    attachParticleNodesToRatBody();
-
     levelCustomization->additionalAfterLoadProcessing(json);
 }
 
@@ -675,22 +673,6 @@ void LevelLayer::addShadowRat(const std::string &name, std::function<int(int)> f
     }
 
     scheduleUpdateScore();
-}
-
-void LevelLayer::attachParticleNodesToRatBody()
-{
-    auto ratSprite = getAnySpriteOnBody(ratBody);
-    Rect ratBoundingBox = ratSprite->getBoundingBox();
-    float scale = 1 / ratSprite->getScale();
-
-    // ---
-
-    cheeseFrenzyParticleNode = ParticleSystemQuad::create("cheese_frenzy.plist");
-    cheeseFrenzyParticleNode->stopSystem();
-
-    ratSprite->addChild(cheeseFrenzyParticleNode, -1);
-    cheeseFrenzyParticleNode->setPosition(Vec2(0, 0.7 * ratBoundingBox.size.height * scale));
-    cheeseFrenzyParticleNode->setScale(5);
 }
 
 void LevelLayer::runCustomActionOnStart()
@@ -969,7 +951,7 @@ void LevelLayer::halveItemEaten()
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::SAD);
 
     scoreLabel->runAction(Sequence::create(
-        CallFunc::create([=]() { halvePointsParticleNode->resetSystem(); }), DelayTime::create(1),
+        CallFunc::create([=]() { halvePointsParticleNode->resetSystem(); }), DelayTime::create(1.5),
         CallFunc::create([=]() { halvePointsParticleNode->stopSystem(); }), nullptr));
 }
 
@@ -989,12 +971,13 @@ void LevelLayer::frenzyItemEaten()
     cheeseFrenzyParticleNode->resetSystem();
     frenzyGameScoreMultiplier = 5;
 
-    getAnySpriteOnBody(ratBody)
-        ->runAction(Sequence::create(DelayTime::create(5.0), CallFunc::create([this]() {
-                                         frenzyGameScoreMultiplier = 1;
-                                         cheeseFrenzyParticleNode->stopSystem();
-                                     }),
-                                     nullptr));
+    scoreLabel->runAction(
+        Sequence::create(CallFunc::create([=]() { cheeseFrenzyParticleNode->resetSystem(); }),
+                         DelayTime::create(5.0), CallFunc::create([=]() {
+                             frenzyGameScoreMultiplier = 1;
+                             cheeseFrenzyParticleNode->stopSystem();
+                         }),
+                         nullptr));
 }
 
 void LevelLayer::shieldItemEaten() { updateRatShield(1); }
@@ -1062,6 +1045,14 @@ void LevelLayer::initScoreLabel(int score)
     halvePointsParticleNode->setScale(5);
     halvePointsParticleNode->stopSystem();
     scoreLabel->addChild(halvePointsParticleNode, -1);
+
+    // ---
+
+    cheeseFrenzyParticleNode = ParticleSystemQuad::create("cheese_frenzy.plist");
+    cheeseFrenzyParticleNode->setScale(5);
+    cheeseFrenzyParticleNode->stopSystem();
+
+    scoreLabel->addChild(cheeseFrenzyParticleNode, -1);
 }
 
 void LevelLayer::updateScore(float t)
