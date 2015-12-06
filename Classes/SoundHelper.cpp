@@ -19,10 +19,10 @@ struct SfxItem {
 namespace
 {
 std::map<LevelCustomization::ItemType, SfxItem> itemType2SfxItem = {
-    {LevelCustomization::SLOWDOWN, {"burger", 6}}, {LevelCustomization::HALVE, {"skull", 6}},
-    {LevelCustomization::SPEEDUP, {"vial", 7}},    {LevelCustomization::BREAK, {"big_burger", 6}},
-    {LevelCustomization::FRENZY, {"frenzy", 7}},   {LevelCustomization::SHIELD, {"helmet", 6}},
-    {LevelCustomization::HOVER, {"hover", 7}},
+    {LevelCustomization::SLOWDOWN, {"burger", 3}}, {LevelCustomization::HALVE, {"skull", 3}},
+    {LevelCustomization::SPEEDUP, {"vial", 3}},    {LevelCustomization::BREAK, {"big_burger", 2}},
+    {LevelCustomization::FRENZY, {"frenzy", 3}},   {LevelCustomization::SHIELD, {"helmet", 3}},
+    {LevelCustomization::HOVER, {"hover", 3}},
 };
 }
 
@@ -79,13 +79,9 @@ void SoundHelper::playEffectForItem(LevelCustomization::ItemType itemType)
     playOneEffect(sfxItem->second.namePrefix, sfxItem->second.count);
 }
 
-void SoundHelper::playGameOverEffect() { playOneEffect("fall", 7); }
-
 void SoundHelper::playBestScoreBeatenEffect() { playOneEffect("rec_beaten", 7); }
 
 void SoundHelper::playBestScoreNotBeatenEffect() { playOneEffect("rec_failed", 7); }
-
-void SoundHelper::playShadowPlayerEffect() { playOneEffect("shadow", 5); }
 
 void SoundHelper::playOneEffect(const std::string namePrefix, int maxCount)
 {

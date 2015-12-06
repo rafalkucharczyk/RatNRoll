@@ -28,10 +28,8 @@ class SoundHelper
 
     void playEffectForItem(LevelCustomization::ItemType itemType);
 
-    void playGameOverEffect();
     void playBestScoreBeatenEffect();
     void playBestScoreNotBeatenEffect();
-    void playShadowPlayerEffect();
 
   private:
     void playOneEffect(const std::string namePrefix, int maxCount);

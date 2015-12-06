@@ -200,8 +200,6 @@ class ShadowRatHelper
 
         addPlayerNameLabelToNode(node, playerName, score);
 
-        SoundHelper::getInstance().playShadowPlayerEffect();
-
         return body;
     }
 
@@ -994,8 +992,6 @@ void LevelLayer::shieldItemEaten() { updateRatShield(1); }
 void LevelLayer::handleGameOver()
 {
     achievementTracker.gameEnded();
-
-    SoundHelper::getInstance().playGameOverEffect();
 
     if (gameFinishedCallback) {
         gameFinishedCallback(gameScore);
