@@ -141,7 +141,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -185,7 +185,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -218,7 +218,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -251,7 +251,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -284,7 +284,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -317,7 +317,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -350,7 +350,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -383,7 +383,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -416,7 +416,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -449,7 +449,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -482,7 +482,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -515,7 +515,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -548,7 +548,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -581,7 +581,7 @@
           },
           
           {
-            "density" : 1,
+            "density" : 0.01,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -616,13 +616,13 @@
         "gravityScale" : 0.1,
         "id" : 5,
         "linearVelocity" : 0,
-        "massData-I" : 2893.651611328125,
+        "massData-I" : 2880.646728515625,
         "massData-center" : 
         {
-          "x" : -0.0007347410428337753,
-          "y" : -0.009480781853199005
+          "x" : -0.0002521984861232340,
+          "y" : -0.008865788578987122
         },
-        "massData-mass" : 1003.825927734375,
+        "massData-mass" : 1000.187438964844,
         "name" : "earth",
         "position" : 
         {
@@ -641,7 +641,7 @@
         [
           
           {
-            "density" : 0.8060764670372009,
+            "density" : 0.08060764521360397,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -663,16 +663,16 @@
             }
           }
         ],
-        "gravityScale" : 0.7,
+        "gravityScale" : 0.07,
         "id" : 21,
         "linearVelocity" : 0,
-        "massData-I" : 0.0001234024966834113,
+        "massData-I" : 1.234024875884643e-05,
         "massData-center" : 
         {
           "x" : 0,
           "y" : -2.384185791015625e-07
         },
-        "massData-mass" : 0.02500000037252903,
+        "massData-mass" : 0.002499999944120646,
         "name" : "ball03",
         "position" : 
         {
@@ -691,7 +691,7 @@
         [
           
           {
-            "density" : 0.6005619168281555,
+            "density" : 0.06005618721246719,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -716,13 +716,13 @@
         "gravityScale" : 0.7,
         "id" : 23,
         "linearVelocity" : 0,
-        "massData-I" : 0.002650100272148848,
+        "massData-I" : 0.0002650099922902882,
         "massData-center" : 
         {
           "x" : 5.470845962918247e-07,
-          "y" : 9.072043383184791e-08
+          "y" : 9.072044093727527e-08
         },
-        "massData-mass" : 0.1,
+        "massData-mass" : 0.01,
         "name" : "ball01",
         "position" : 
         {
@@ -741,7 +741,7 @@
         [
           
           {
-            "density" : 0.8565106987953186,
+            "density" : 0.08565106242895126,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -796,13 +796,13 @@
         ],
         "id" : 30,
         "linearVelocity" : 0,
-        "massData-I" : 0.0004250956990290433,
+        "massData-I" : 4.250956408213824e-05,
         "massData-center" : 
         {
-          "x" : -0.002457110676914454,
-          "y" : 0.006792412605136633
+          "x" : -0.002457111608237028,
+          "y" : 0.006792413070797920
         },
-        "massData-mass" : 0.02500000037252903,
+        "massData-mass" : 0.002499999711290002,
         "name" : "body3",
         "position" : 
         {
@@ -821,7 +821,7 @@
         [
           
           {
-            "density" : 1.036288619041443,
+            "density" : 0.1036288663744926,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -876,13 +876,13 @@
         ],
         "id" : 31,
         "linearVelocity" : 0,
-        "massData-I" : 0.002754579065367579,
+        "massData-I" : 0.0002754579181782901,
         "massData-center" : 
         {
-          "x" : -0.00373788969591260,
-          "y" : 0.01033291406929493
+          "x" : -0.003737892024219036,
+          "y" : 0.01033291500061750
         },
-        "massData-mass" : 0.07,
+        "massData-mass" : 0.007000000216066837,
         "name" : "body3",
         "position" : 
         {
@@ -901,7 +901,7 @@
         [
           
           {
-            "density" : 0.9775643348693848,
+            "density" : 0.09775642305612564,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -956,13 +956,13 @@
         ],
         "id" : 32,
         "linearVelocity" : 0,
-        "massData-I" : 0.001489821937866509,
+        "massData-I" : 0.0001489821879658848,
         "massData-center" : 
         {
-          "x" : -0.003252462251111865,
-          "y" : 0.008991336449980736
+          "x" : -0.003252463648095727,
+          "y" : 0.008991340175271034
         },
-        "massData-mass" : 0.05,
+        "massData-mass" : 0.004999999888241291,
         "name" : "body3",
         "position" : 
         {
@@ -981,7 +981,7 @@
         [
           
           {
-            "density" : 0.9018805027008057,
+            "density" : 0.09018804132938385,
             "filter-categoryBits" : 32768,
             "filter-maskBits" : 32768,
             "friction" : 0.2,
@@ -1036,13 +1036,13 @@
         ],
         "id" : 33,
         "linearVelocity" : 0,
-        "massData-I" : 0.006459372583776712,
+        "massData-I" : 0.0006459371652454138,
         "massData-center" : 
         {
-          "x" : -0.004788977093994617,
-          "y" : 0.01323841977864504
+          "x" : -0.004788971506059170,
+          "y" : 0.01323841884732246
         },
-        "massData-mass" : 0.1,
+        "massData-mass" : 0.01,
         "name" : "body3",
         "position" : 
         {
