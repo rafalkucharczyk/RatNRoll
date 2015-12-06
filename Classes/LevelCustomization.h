@@ -212,14 +212,14 @@ class LevelBase : public LevelCustomization
 
     float getItemDropInterval(int gameScore) override
     {
-        int minScore = 1000;
-        int maxScore = 5000;
+        int minScore = 0;
+        int maxScore = 500000;
 
         float delta = float(gameScore - minScore) / (maxScore - minScore);
 
         delta = std::min(std::max(0.0f, delta), 1.0f);
 
-        return 3.0 - 1.5 * delta * cocos2d::rand_0_1();
+        return 3.0 - 2.2 * delta - 0.8 * (1 - delta) * cocos2d::rand_0_1();
     }
 
     float getRatSpeedMin() const override { return 0.2; }
