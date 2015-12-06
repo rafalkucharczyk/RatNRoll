@@ -30,6 +30,16 @@ class LevelLayerProxy
     virtual void addOverlayingLayer(cocos2d::Layer *layer) = 0;
 };
 
+// Properties of item's fixtures
+struct ItemProps
+{
+    ItemProps(float Friction = 0.0, float Restitution = 0.0, float Density = 0.0) :
+        Friction(Friction), Restitution(Restitution), Density(Density) {};
+    float Friction;
+    float Restitution;
+    float Density;
+};
+
 class LevelCustomization
 {
   public:
@@ -61,6 +71,7 @@ class LevelCustomization
 
     virtual void additionalAfterLoadProcessing(b2dJson *json) {}
     virtual void customPhysicsStep(b2Body *earthBody) {}
+    virtual ItemProps getItemProps(ItemType itemType) const { return ItemProps(); };
 
     // called by LevelLayer once, when level was loaded and started
     virtual cocos2d::FiniteTimeAction *
@@ -320,6 +331,7 @@ class Level02 : public LevelBase
     std::string getRubeJsonFileName() const override { return "level_02.json"; }
     std::string getBgPlaneName() const { return "bg_plane02"; }
     std::list<std::string> getBgItemNames() const { return {"bg_item02"}; }
+    ItemProps getItemProps(LevelCustomization::ItemType itemType) const override;
 };
 
 class Level03 : public LevelBase
@@ -332,6 +344,7 @@ class Level03 : public LevelBase
     {
         return {"bg_item03", "bg_item03_1", "bg_item03_2", "bg_item03_3"};
     }
+    ItemProps getItemProps(LevelCustomization::ItemType itemType) const override;
 };
 
 #endif // __LEVEL_LOGIC_H__

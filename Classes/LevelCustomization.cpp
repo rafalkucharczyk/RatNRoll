@@ -143,3 +143,28 @@ void Level01::additionalAfterLoadProcessing(b2dJson *json)
 }
 
 void Level01::customPhysicsStep(b2Body *earthBody) { cogwheelHelper->customPhysicsStep(earthBody); }
+
+ItemProps Level02::getItemProps(LevelCustomization::ItemType itemType) const
+{
+    switch (itemType) {
+        case LevelCustomization::HALVE:
+        case LevelCustomization::SHIELD:
+        case LevelCustomization::SLOWDOWN:
+        case LevelCustomization::BREAK:
+            return ItemProps(-0.2, 0.0, -0.5);
+        default:
+            return ItemProps(-0.1, 0.0, -0.3);
+    }
+}
+
+ItemProps Level03::getItemProps(LevelCustomization::ItemType itemType) const
+{
+    switch (itemType) {
+        case LevelCustomization::SPEEDUP:
+        case LevelCustomization::HALVE:
+        case LevelCustomization::SHIELD:
+            return ItemProps(0.0, 0.45, 0.0);
+        default:
+            return ItemProps(0.0, 0.25, 0.0);
+    }
+}
