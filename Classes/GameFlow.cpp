@@ -491,9 +491,8 @@ LevelLayer &GameFlow::getCurrentLevelLayer()
 bool GameFlow::isGamePlayActive() const
 {
     Scene *scene = Director::getInstance()->getRunningScene();
-    assert(scene);
 
-    return (currentLevelNumber != noLevelNumber) &&
+    return (currentLevelNumber != noLevelNumber) && scene != nullptr &&
            scene->getChildByTag(levelBlockerTag) == nullptr &&
            scene->getChildByTag(LevelLayer::proxyOverlayLayerTag) == nullptr &&
            scene->getChildByTag(levelCompletedTag) == nullptr;
