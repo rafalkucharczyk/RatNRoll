@@ -39,6 +39,7 @@
 		25476ABE1C08BCCC005DED73 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25476ABD1C08BCCC005DED73 /* iRate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		25476AC01C08C3E7005DED73 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25476ABF1C08C3E7005DED73 /* iRate.bundle */; };
 		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
+		259DE4F11C15919400AD7941 /* PostTutorialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */; };
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
 		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
 		25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */; };
@@ -223,6 +224,8 @@
 		2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cheese_frenzy.plist; sourceTree = "<group>"; };
 		255340CA1B772F9900C31F87 /* GameCenterPlayerScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterPlayerScore.h; sourceTree = "<group>"; };
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
+		259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostTutorialLayer.cpp; sourceTree = "<group>"; };
+		259DE4F01C15919400AD7941 /* PostTutorialLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTutorialLayer.h; sourceTree = "<group>"; };
 		25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DigitsPanel.cpp; path = Menu/DigitsPanel.cpp; sourceTree = "<group>"; };
 		25ACD8F71BA3519D00899F09 /* DigitsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DigitsPanel.h; path = Menu/DigitsPanel.h; sourceTree = "<group>"; };
 		25ACD8F91BA57B5900899F09 /* halve_points.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = halve_points.plist; sourceTree = "<group>"; };
@@ -615,6 +618,8 @@
 				25EC24341BEFA3740018180D /* LevelSelectionLayer.h */,
 				B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */,
 				B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */,
+				259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */,
+				259DE4F01C15919400AD7941 /* PostTutorialLayer.h */,
 				B552BE051B237A0800D4851A /* PostLevelLayer.cpp */,
 				B552BE061B237A0800D4851A /* PostLevelLayer.h */,
 				25476AB61C07AFB5005DED73 /* PreloadingLayer.cpp */,
@@ -950,6 +955,7 @@
 				B535EF4B1B1321F5004D647D /* jsoncpp.cpp in Sources */,
 				25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */,
 				B552BE0A1B24234A00D4851A /* GameFlow.cpp in Sources */,
+				259DE4F11C15919400AD7941 /* PostTutorialLayer.cpp in Sources */,
 				B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */,
 				25F8B1521BD0357C00B84B96 /* LevelCustomization.cpp in Sources */,
 				25365D081BF89FC600668802 /* IAPLayer.cpp in Sources */,

@@ -66,9 +66,9 @@ std::map<TutorialBalloonLayer::BalloonType, std::list<TutorialScreen>> tutorialS
        {0.5, 0.7},
        "CONGRATULATIONS!\n"
        "YOU'VE COMPLETED THE TUTORIAL\n\n"
-       "YOU MAY NOW PRATICE\n"
-       "MORE HERE OR QUIT AND PLUNGE\n"
-       "INTO THE FIRST LEVEL",
+       "NOW YOU'RE READY\n"
+       "TO PLUNGE INTO\n"
+       "THE FIRST LEVEL",
        0.45}}}};
 
 const int screenLayerTag = 123;

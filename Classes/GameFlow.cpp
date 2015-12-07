@@ -13,6 +13,7 @@
 #include "UnlockGraveyardLayer.h"
 #include "UnlockMagicHallLayer.h"
 #include "PostLevelLayer.h"
+#include "PostTutorialLayer.h"
 #include "PauseLayer.h"
 #include "SettingsLayer.h"
 #include "AboutLayer.h"
@@ -208,16 +209,24 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     blockLevel(*scene, *levelLayer, levelNumber,
                scores.size() ? scores.front() : SonarCocosHelper::GameCenterPlayerScore());
 
-    levelLayer->setGameFinishedCallback(
-        std::bind(&GameFlow::switchToPostLevelScene, this, std::placeholders::_1));
     levelLayer->setBackgroundSpeedFunction(
         std::bind(&BackgroundLayer::setSpeed, backgroundLayer, std::placeholders::_1));
-    levelLayer->setGameCompletedCallback(
-        std::bind(&GameFlow::overlayGameCompletedScene, this, levelLayer));
 
     SonarCocosHelper::GoogleAnalytics::setScreenName("Level" + std::to_string(levelNumber));
 
-    levelNumber == 0 ? Director::getInstance()->replaceScene(scene) : replaceScene(scene);
+    // special handling for tutorial
+    if (levelNumber == 0) {
+        levelLayer->setGameCompletedCallback(
+            std::bind(&GameFlow::switchToLevelSelectionScene, this));
+        Director::getInstance()->replaceScene(scene);
+        levelLayer->setGameFinishedCallback(std::bind(&GameFlow::switchToPostTutorialScene, this));
+    } else {
+        levelLayer->setGameCompletedCallback(
+            std::bind(&GameFlow::overlayGameCompletedScene, this, levelLayer));
+        levelLayer->setGameFinishedCallback(
+            std::bind(&GameFlow::switchToPostLevelScene, this, std::placeholders::_1));
+        replaceScene(scene);
+    }
 }
 
 void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
@@ -289,6 +298,24 @@ void GameFlow::switchToPostLevelScene(int score)
     currentLevelNumber = noLevelNumber;
 
     SonarCocosHelper::GoogleAnalytics::setScreenName("PostLevel");
+    replaceScene(scene);
+}
+
+void GameFlow::switchToPostTutorialScene()
+{
+    auto scene = createSceneObject();
+    addAchievementTracker(*scene);
+
+    auto postLevelLayer = PostTutorialLayer::create();
+    postLevelLayer->setRestartLevelCallback(
+        std::bind(&GameFlow::switchToLevelScene, this, currentLevelNumber));
+    postLevelLayer->setGotoMainMenuCallback(
+        std::bind(&GameFlow::switchToLevelSelectionScene, this));
+    scene->addChild(postLevelLayer);
+
+    currentLevelNumber = noLevelNumber;
+
+    SonarCocosHelper::GoogleAnalytics::setScreenName("PostTutorial");
     replaceScene(scene);
 }
 

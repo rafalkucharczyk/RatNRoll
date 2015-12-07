@@ -94,6 +94,12 @@ class LevelLayerProxyImpl : public LevelLayerProxy
                                     "LevelLayerProxyImpl_resume");
         }
     }
+    void quit() override
+    {
+        if (levelLayer.gameCompletedCallback) {
+            levelLayer.gameCompletedCallback();
+        }
+    }
     void addOverlayingLayer(Layer *layer) override
     {
         Director::getInstance()->getRunningScene()->addChild(layer, 0,

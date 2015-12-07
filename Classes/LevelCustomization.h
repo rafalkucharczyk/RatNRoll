@@ -27,14 +27,15 @@ class LevelLayerProxy
 
     virtual void resume() = 0;
 
+    virtual void quit() = 0;
+
     virtual void addOverlayingLayer(cocos2d::Layer *layer) = 0;
 };
 
 // Properties of item's fixtures
-struct ItemProps
-{
-    ItemProps(float Friction = 0.0, float Restitution = 0.0, float Density = 0.0) :
-        Friction(Friction), Restitution(Restitution), Density(Density) {};
+struct ItemProps {
+    ItemProps(float Friction = 0.0, float Restitution = 0.0, float Density = 0.0)
+        : Friction(Friction), Restitution(Restitution), Density(Density){};
     float Friction;
     float Restitution;
     float Density;

@@ -45,6 +45,7 @@ class GameFlow
                     const SonarCocosHelper::GameCenterPlayerScore &score);
 
     void switchToPostLevelScene(int score);
+    void switchToPostTutorialScene();
 
     void switchToSettingsScene();
 

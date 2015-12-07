@@ -91,15 +91,19 @@ LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonTyp
     shownBalloons.insert(std::make_pair(balloonType, 1));
     notifyTutorialCompletedAchievement();
 
-    return Sequence::create(CallFunc::create([levelLayerProxy]() { levelLayerProxy->pause(); }),
-                            CallFunc::create([=]() {
-                                levelLayerProxy->addOverlayingLayer(
-                                    TutorialBalloonLayer::create(balloonType, [=]() {
-                                        this->setTutorialScreenCompleted(balloonType);
-                                        levelLayerProxy->resume();
-                                    }));
-                            }),
-                            nullptr);
+    return Sequence::create(
+        CallFunc::create([levelLayerProxy]() { levelLayerProxy->pause(); }),
+        CallFunc::create([=]() {
+            levelLayerProxy->addOverlayingLayer(TutorialBalloonLayer::create(balloonType, [=]() {
+                this->setTutorialScreenCompleted(balloonType);
+                if (balloonType == TutorialBalloonLayer::BalloonType::FINAL) {
+                    levelLayerProxy->quit();
+                } else {
+                    levelLayerProxy->resume();
+                }
+            }));
+        }),
+        nullptr);
 }
 
 void LevelTutorial::notifyTutorialCompletedAchievement()
@@ -147,24 +151,24 @@ void Level01::customPhysicsStep(b2Body *earthBody) { cogwheelHelper->customPhysi
 ItemProps Level02::getItemProps(LevelCustomization::ItemType itemType) const
 {
     switch (itemType) {
-        case LevelCustomization::HALVE:
-        case LevelCustomization::SHIELD:
-        case LevelCustomization::SLOWDOWN:
-        case LevelCustomization::BREAK:
-            return ItemProps(-0.2, 0.0, -0.5);
-        default:
-            return ItemProps(-0.1, 0.0, -0.3);
+    case LevelCustomization::HALVE:
+    case LevelCustomization::SHIELD:
+    case LevelCustomization::SLOWDOWN:
+    case LevelCustomization::BREAK:
+        return ItemProps(-0.2, 0.0, -0.5);
+    default:
+        return ItemProps(-0.1, 0.0, -0.3);
     }
 }
 
 ItemProps Level03::getItemProps(LevelCustomization::ItemType itemType) const
 {
     switch (itemType) {
-        case LevelCustomization::SPEEDUP:
-        case LevelCustomization::HALVE:
-        case LevelCustomization::SHIELD:
-            return ItemProps(0.0, 0.45, 0.0);
-        default:
-            return ItemProps(0.0, 0.25, 0.0);
+    case LevelCustomization::SPEEDUP:
+    case LevelCustomization::HALVE:
+    case LevelCustomization::SHIELD:
+        return ItemProps(0.0, 0.45, 0.0);
+    default:
+        return ItemProps(0.0, 0.25, 0.0);
     }
 }
