@@ -34,11 +34,11 @@ class LevelLayerProxy
 
 // Properties of item's fixtures
 struct ItemProps {
-    ItemProps(float Friction = 0.0, float Restitution = 0.0, float Density = 0.0)
-        : Friction(Friction), Restitution(Restitution), Density(Density){};
-    float Friction;
-    float Restitution;
-    float Density;
+    ItemProps(float friction = 0.0, float restitution = 0.0, float density = 0.0)
+        : friction(friction), restitution(restitution), density(density){};
+    float friction;
+    float restitution;
+    float density;
 };
 
 class LevelCustomization

@@ -568,9 +568,9 @@ void LevelLayer::afterLoadProcessing(b2dJson *json)
         /* Apply level-specific adjustmenets of item properties */
         auto props = levelCustomization->getItemProps(itemType);
         for (auto f = body->GetFixtureList(); f; f = f->GetNext()) {
-            f->SetRestitution(f->GetRestitution() + props.Restitution);
-            f->SetFriction(f->GetFriction() + props.Friction);
-            f->SetDensity(f->GetDensity() + props.Density);
+            f->SetRestitution(f->GetRestitution() + props.restitution);
+            f->SetFriction(f->GetFriction() + props.friction);
+            f->SetDensity(f->GetDensity() + props.density);
         }
 
         itemJsons[itemType] = json->b2j(body);
