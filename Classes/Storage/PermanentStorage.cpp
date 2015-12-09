@@ -47,6 +47,7 @@ const std::string unlockedAchievementsKey = "unlocked_achievements";
 const std::string achievementsStateKey = "achievements_state";
 const std::string keychainLikingKey = "facebook_like";
 const std::string tutorialEnteredKey = "tutorial_entered";
+const std::string cheeseFactoryEnteredKey = "cheese_factory_entered";
 const std::string tutorialStageKey = "tutorial_stage";
 }
 
@@ -175,6 +176,16 @@ void PermanentStorage::setTutorialEntered(bool entered)
 bool PermanentStorage::getTutorialEntered() const
 {
     return UserDefault::getInstance()->getBoolForKey(tutorialEnteredKey.c_str());
+}
+
+void PermanentStorage::setCheeseFactoryEntered(bool entered)
+{
+    UserDefault::getInstance()->setBoolForKey(cheeseFactoryEnteredKey.c_str(), entered);
+}
+
+bool PermanentStorage::getCheeseFactoryEntered() const
+{
+    return UserDefault::getInstance()->getBoolForKey(cheeseFactoryEnteredKey.c_str());
 }
 
 void PermanentStorage::setTutorialStage(int ballonType)

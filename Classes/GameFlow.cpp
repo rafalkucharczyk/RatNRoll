@@ -150,14 +150,20 @@ void GameFlow::switchToLevelSelectionScene()
 
     auto scene = createSceneObject();
 
-    auto levelSelectionLayer =
-        LevelSelectionLayer::create(!PermanentStorage::getInstance().getTutorialEntered());
-    PermanentStorage::getInstance().setTutorialStage(-1);
+    bool tutorialCompleted = ((PermanentStorage::getInstance().getTutorialStage() + 1) ==
+                              static_cast<int>(TutorialBalloonLayer::BalloonType::FINAL));
+
+    auto levelSelectionLayer = LevelSelectionLayer::create(
+        !PermanentStorage::getInstance().getTutorialEntered(),
+        tutorialCompleted && !PermanentStorage::getInstance().getCheeseFactoryEntered());
 
     levelSelectionLayer->setBackButtonClickedCallback([this]() { switchToInitialScene(); });
     levelSelectionLayer->setLevelSelectedCallback([this](int levelNumber) {
         if (levelNumber == 0) {
             PermanentStorage::getInstance().setTutorialEntered(true);
+        }
+        if (levelNumber == 1) {
+            PermanentStorage::getInstance().setCheeseFactoryEntered(true);
         }
         switchToLevelScene(levelNumber);
     });
@@ -216,6 +222,7 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
 
     // special handling for tutorial
     if (levelNumber == 0) {
+        PermanentStorage::getInstance().setTutorialStage(-1);
         levelLayer->setGameCompletedCallback(
             std::bind(&GameFlow::switchToLevelSelectionScene, this));
         Director::getInstance()->replaceScene(scene);
@@ -360,6 +367,7 @@ void GameFlow::switchToAboutScene()
         PermanentStorage::getInstance().setPurchaseState(GameFlow::iapProductId, false);
         PermanentStorage::getInstance().setLikingState(false);
         PermanentStorage::getInstance().setTutorialEntered(false);
+        PermanentStorage::getInstance().setCheeseFactoryEntered(false);
         PermanentStorage::getInstance().setTutorialStage(-1);
     });
 

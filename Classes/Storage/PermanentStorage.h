@@ -34,6 +34,9 @@ class PermanentStorage
     void setTutorialEntered(bool entered);
     bool getTutorialEntered() const;
 
+    void setCheeseFactoryEntered(bool entered);
+    bool getCheeseFactoryEntered() const;
+
     void setTutorialStage(int ballonType);
     int getTutorialStage() const;
 
