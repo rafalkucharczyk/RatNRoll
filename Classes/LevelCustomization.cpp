@@ -38,8 +38,8 @@ LevelTutorial::LevelTutorial()
         TutorialBalloonLayer::BalloonType balloonType =
             static_cast<TutorialBalloonLayer::BalloonType>(i);
         if (isTutorialScreenCompleted(balloonType)) {
-            currentItemIndex += singleItemSequenceLength;
-            shownBalloons.insert(std::make_pair(balloonType, singleItemSequenceLength));
+            currentItemIndex += singleItemSequenceLength[i - 1];
+            shownBalloons.insert(std::make_pair(balloonType, singleItemSequenceLength[i - 1]));
         } else {
             break;
         }
@@ -79,7 +79,10 @@ LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonTyp
 
     auto i = shownBalloons.find(TutorialBalloonLayer::BalloonType::HALVE);
 
-    if (i != shownBalloons.end() && i->second == singleItemSequenceLength) {
+    if (i != shownBalloons.end() &&
+        i->second ==
+            singleItemSequenceLength[static_cast<int>(TutorialBalloonLayer::BalloonType::HALVE) -
+                                     1]) {
         balloonType = TutorialBalloonLayer::BalloonType::FINAL;
     }
 

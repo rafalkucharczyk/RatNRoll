@@ -194,8 +194,8 @@ class LevelTutorial : public LevelCustomization
     std::map<TutorialBalloonLayer::BalloonType, int> shownBalloons;
 
     int currentItemIndex;
-    const int singleItemSequenceLength = 5;
-    std::vector<int> itemsSequence = {0, 0, 0, 0, 0, 1, 1, 1, 4, 4, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3};
+    const std::vector<int> singleItemSequenceLength = {5, 3, 3, 3};
+    std::vector<int> itemsSequence = {0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3};
 
     std::shared_ptr<CogwheelHelper> cogwheelHelper;
 
