@@ -36,6 +36,28 @@ vector<string> listDirectory(string const &path, string const &pattern)
     return ret;
 }
 
+string getFileExtension(const string &s)
+{
+    size_t i = s.rfind('.', s.length());
+
+    if (i != string::npos) {
+        return s.substr(i + 1, s.length() - i);
+    }
+
+    return "";
+}
+
+string dirname(const string &s)
+{
+    size_t i = s.rfind('.', s.length());
+
+    if (i != string::npos) {
+        return s.substr(0, i);
+    }
+
+    return "";
+}
+
 void generateMipmap(Texture2D &texture)
 {
     if (texture.getPixelsWide() == ccNextPOT(texture.getPixelsWide()) &&
@@ -48,8 +70,10 @@ void generateMipmap(Texture2D &texture)
 }
 }
 
-void AssetsPreloader::preload()
+vector<string> AssetsPreloader::list()
 {
+    vector<string> result;
+
     string resourcesDir = FileUtils::getInstance()->fullPathForFilename("level_base.json");
 
     auto i = resourcesDir.find_last_of("/");
@@ -58,16 +82,27 @@ void AssetsPreloader::preload()
     for (string assetsSubdir : {"earth", "items"}) {
         for (auto pngFilename :
              listDirectory(resourcesDir + std::string("/") + assetsSubdir, ".png")) {
-            Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(
-                assetsSubdir + "/" + pngFilename);
-            assert(texture);
-            generateMipmap(*texture);
+            result.push_back(assetsSubdir + "/" + pngFilename);
         }
     }
 
     for (string animationName : {"rat", "digits"}) {
-        spine::SkeletonAnimation::createWithFile(
-            string("animations/") + animationName + string("/skeleton.json"),
-            string("animations/") + animationName + string("/skeleton.atlas"));
+        result.push_back(string("animations/") + animationName + string("/skeleton.atlas"));
+    }
+
+    return result;
+}
+
+void AssetsPreloader::preload(const string &fileName)
+{
+    if (getFileExtension(fileName) == "png") {
+        Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(fileName);
+        assert(texture);
+        generateMipmap(*texture);
+    }
+
+    if (getFileExtension(fileName) == "atlas") {
+        std::string jsonFile = dirname(fileName) + ".json";
+        spine::SkeletonAnimation::createWithFile(jsonFile, fileName);
     }
 }

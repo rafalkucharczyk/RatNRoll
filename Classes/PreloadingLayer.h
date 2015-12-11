@@ -5,7 +5,7 @@
 
 #include "MenuHelper.h"
 
-class PreloadingLayer : public cocos2d::LayerColor
+class PreloadingLayer : public cocos2d::Layer
 {
   public:
     PreloadingLayer();
@@ -19,7 +19,15 @@ class PreloadingLayer : public cocos2d::LayerColor
     }
 
   private:
+    void preload(float t);
+
+    void insertBackgroundItem();
+    std::vector<std::string> filesToPreload;
+
     std::function<void()> preloadingCompletedCallback;
+
+    int currentItemsCount;
+    static const int maxItemsCount = 10;
 };
 
 #endif // __PRELOADING_LAYER_H__

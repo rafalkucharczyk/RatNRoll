@@ -6,6 +6,8 @@ Sprite *MipmapSprite::create(const std::string &filename)
 {
     Sprite *sprite = Sprite::create(filename);
 
+    assert(sprite);
+
     if (!sprite->getTexture()->hasMipmaps()) {
         sprite->getTexture()->generateMipmap();
         Texture2D::TexParams texParams = {GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE,

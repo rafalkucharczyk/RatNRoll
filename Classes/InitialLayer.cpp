@@ -22,7 +22,5 @@ bool InitialLayer::init()
 
     addChild(menuHelper.getMenu());
 
-    scheduleOnce([](float f) { AssetsPreloader::preload(); }, 10, "preloading");
-
     return true;
 }
