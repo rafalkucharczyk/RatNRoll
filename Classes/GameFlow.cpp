@@ -161,6 +161,7 @@ void GameFlow::switchToLevelSelectionScene()
     levelSelectionLayer->setLevelSelectedCallback([this](int levelNumber) {
         if (levelNumber == 0) {
             PermanentStorage::getInstance().setTutorialEntered(true);
+            PermanentStorage::getInstance().setTutorialStage(-1);
         }
         if (levelNumber == 1) {
             PermanentStorage::getInstance().setCheeseFactoryEntered(true);
@@ -222,7 +223,6 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
 
     // special handling for tutorial
     if (levelNumber == 0) {
-        PermanentStorage::getInstance().setTutorialStage(-1);
         levelLayer->setGameCompletedCallback(
             std::bind(&GameFlow::switchToLevelSelectionScene, this));
         Director::getInstance()->replaceScene(scene);
