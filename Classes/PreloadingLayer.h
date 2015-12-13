@@ -21,13 +21,13 @@ class PreloadingLayer : public cocos2d::Layer
   private:
     void preload(float t);
 
-    void insertBackgroundItem();
+    void insertBackgroundItem(int no);
     std::vector<std::string> filesToPreload;
 
     std::function<void()> preloadingCompletedCallback;
 
     int currentItemsCount;
-    static const int maxItemsCount = 10;
+    static const int maxItemsCount = 20;
 };
 
 #endif // __PRELOADING_LAYER_H__
