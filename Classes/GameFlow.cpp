@@ -254,6 +254,7 @@ void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
             PermanentStorage::getInstance().setLikingState(true);
         });
         layer->addChild(unlockGraveyardLayer);
+        layer->setCascadeOpacityEnabled(true);
 
         actionLayer = layer;
     }

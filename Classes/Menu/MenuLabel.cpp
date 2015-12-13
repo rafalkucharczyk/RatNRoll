@@ -13,6 +13,7 @@ MenuLabel *MenuLabel::create(const std::string &text, const cocos2d::Vec2 &posit
     if (ret && ret->init()) {
         ret->autorelease();
 
+        ret->setCascadeOpacityEnabled(true);
         ret->addLabel(text, position, size);
         return ret;
     }
