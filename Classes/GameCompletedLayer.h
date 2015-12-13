@@ -18,12 +18,14 @@ class GameCompletedLayer : public cocos2d::LayerColor
         completionConifrmedCallback = callback;
     }
 
+  private:
     void itemClicked(int itemIndex);
 
-  private:
     MenuHelper menuHelper;
     std::function<void()> completionConifrmedCallback;
     int levelNumber;
+
+    cocos2d::ParticleSystemQuad *levelCompletedParticleNode;
 };
 
 #endif // __GAME_COMPLETED_LAYER_H__

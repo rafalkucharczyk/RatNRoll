@@ -40,6 +40,7 @@
 		25476AC01C08C3E7005DED73 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25476ABF1C08C3E7005DED73 /* iRate.bundle */; };
 		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
 		259DE4F11C15919400AD7941 /* PostTutorialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */; };
+		259DE4F31C1DD35600AD7941 /* level_completed.plist in Resources */ = {isa = PBXBuildFile; fileRef = 259DE4F21C1DD35600AD7941 /* level_completed.plist */; };
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
 		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
 		25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */; };
@@ -226,6 +227,7 @@
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
 		259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostTutorialLayer.cpp; sourceTree = "<group>"; };
 		259DE4F01C15919400AD7941 /* PostTutorialLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTutorialLayer.h; sourceTree = "<group>"; };
+		259DE4F21C1DD35600AD7941 /* level_completed.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = level_completed.plist; sourceTree = "<group>"; };
 		25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DigitsPanel.cpp; path = Menu/DigitsPanel.cpp; sourceTree = "<group>"; };
 		25ACD8F71BA3519D00899F09 /* DigitsPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DigitsPanel.h; path = Menu/DigitsPanel.h; sourceTree = "<group>"; };
 		25ACD8F91BA57B5900899F09 /* halve_points.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = halve_points.plist; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 				B2A105C31BCD96BA007CF879 /* level_03.json */,
 				2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */,
 				25ACD8F91BA57B5900899F09 /* halve_points.plist */,
+				259DE4F21C1DD35600AD7941 /* level_completed.plist */,
 				25476ABF1C08C3E7005DED73 /* iRate.bundle */,
 			);
 			name = Resources;
@@ -890,6 +893,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				259DE4F31C1DD35600AD7941 /* level_completed.plist in Resources */,
 				25476AB21C078D5B005DED73 /* earth in Resources */,
 				B29E71EC1BB356B300DCBE07 /* Default-768h@2x.png in Resources */,
 				B29E71EB1BB356B300DCBE07 /* Default-768h.png in Resources */,

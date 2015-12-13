@@ -34,12 +34,17 @@ bool GameCompletedLayer::init()
     auto menu = menuHelper.getMenu();
     addChild(menu);
 
-    addChild(MenuLabel::create("LEVEL COMPLETED", {0.5, 0.8}, 0.03));
+    levelCompletedParticleNode = ParticleSystemQuad::create("level_completed.plist");
+    MenuHelper::positionNode(*levelCompletedParticleNode, {0.5, 0.9}, 0);
+    levelCompletedParticleNode->setScale(1.5);
+    addChild(levelCompletedParticleNode);
+
+    addChild(MenuLabel::create("LEVEL COMPLETED!", {0.5, 0.8}, 0.03));
 
     auto ratNode = spine::SkeletonAnimation::createWithFile("animations/rat/skeleton.json",
                                                             "animations/rat/skeleton.atlas");
 
-    ratNode->setAnimation(0, "post_happy_01.x", true);
+    ratNode->setAnimation(0, "game_completed_0" + std::to_string(levelNumber) + ".x", true);
     ratNode->updateWorldTransform();
     MenuHelper::positionNode(*ratNode, {0.5, 0.4}, 0.25);
     addChild(ratNode);
