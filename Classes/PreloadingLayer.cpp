@@ -8,7 +8,6 @@
 USING_NS_CC;
 using namespace std;
 
-
 PreloadingLayer::PreloadingLayer() : currentItemsCount(0) {}
 
 bool PreloadingLayer::init()
@@ -72,18 +71,17 @@ void PreloadingLayer::insertBackgroundItem(int no)
         {0.69, 0.53}, {0.92, 0.89}, {0.09, 0.63}, {0.34, 0.79}, {0.89, 0.48},
         {0.63, 0.79}, {0.80, 0.11}, {0.18, 0.32}, {0.30, 0.55}, {0.78, 0.95},
         {0.75, 0.33}, {0.50, 0.85}, {0.56, 0.11}, {0.33, 0.93}, {0.12, 0.08},
-        {0.93, 0.69}, {0.92, 0.32}, {0.48, 0.69}, {0.29, 0.44}, {0.13, 0.72}
-    };
-    const size_t presetsSize = (sizeof(posPresets)/sizeof(cocos2d::Vec2));
+        {0.93, 0.69}, {0.92, 0.32}, {0.48, 0.69}, {0.29, 0.44}, {0.13, 0.72}};
+    const size_t presetsSize = (sizeof(posPresets) / sizeof(cocos2d::Vec2));
 
     auto sprite = MipmapSprite::create("background/bg_item01.png");
 
     auto itemPos = posPresets[no % presetsSize];
-    if (no/presetsSize > 0) {
+    if (no / presetsSize > 0) {
         // we run out of prests, adjust the position with a random delta
-        const cocos2d::Vec2 delta = cocos2d::Vec2(0.386, 0.581) +
-        cocos2d::Vec2(0.219, 0.327)*rand_0_1();
-        itemPos += delta*(no/presetsSize);
+        const cocos2d::Vec2 delta =
+            cocos2d::Vec2(0.386, 0.581) + cocos2d::Vec2(0.219, 0.327) * rand_0_1();
+        itemPos += delta * (no / presetsSize);
         itemPos.x = itemPos.x - floor(itemPos.x);
         itemPos.y = itemPos.y - floor(itemPos.y);
     }
@@ -93,5 +91,4 @@ void PreloadingLayer::insertBackgroundItem(int no)
     sprite->setRotation(rand_0_1() * 360);
 
     addChild(sprite);
-
 }
