@@ -123,7 +123,7 @@ class LevelLayer : public RUBELayer
 
     std::function<void(int)> backgroundSpeedFunction;
 
-    bool applyCustomGravity;
+    bool isHovering;
 
     bool proRunnerInProgress;
 

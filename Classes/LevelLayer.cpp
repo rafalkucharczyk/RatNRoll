@@ -394,7 +394,6 @@ class AnimationHelper
             spTrackEntry *entry = skeleton->setAnimation(runningTrackIndex, newAnimationName, true);
             entry->timeScale = newAnimationSpeed;
         } else {
-
             setMix(newAnimationName);
 
             skeleton->runAction(CallFunc::create([=]() {
@@ -455,7 +454,7 @@ const std::string LevelLayer::name = "LevelLayer";
 LevelLayer::LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
 
-      ratSpeed(levelCustomization->getRatSpeedInitial()), applyCustomGravity(true),
+      ratSpeed(levelCustomization->getRatSpeedInitial()), isHovering(false),
       proRunnerInProgress(false), gameScore(0),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), paused(false), nextItemDropTime(0.0),
@@ -737,7 +736,7 @@ void LevelLayer::doPhysicsCalculationStep()
     }
 
     // custom gravity, stop applying at the bottom of earth
-    if (ratCenter.y > earthCenter.y - radius * 0.33 && applyCustomGravity) {
+    if (ratCenter.y > earthCenter.y - radius * 0.33 && !isHovering) {
         b2Vec2 g = earthCenter - ratCenter;
         g.Normalize();
         g *= 30;
@@ -908,7 +907,9 @@ void LevelLayer::speedUpItemEaten()
 
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::DAZED);
 
-    animationHelper->playRunningAnimation(ratSpeed);
+    if (!isHovering) {
+        animationHelper->playRunningAnimation(ratSpeed);
+    }
 
     if (std::isgreaterequal(ratSpeed, levelCustomization->getRatSpeedMax())) {
         achievementTracker.maxSpeedReached();
@@ -923,12 +924,14 @@ void LevelLayer::slowDownItemEaten()
 
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::SLEEPY);
 
-    animationHelper->playRunningAnimation(ratSpeed);
+    if (!isHovering) {
+        animationHelper->playRunningAnimation(ratSpeed);
+    }
 }
 
 void LevelLayer::hoverItemEaten()
 {
-    applyCustomGravity = false;
+    isHovering = true;
 
     animationHelper->playHoveringAnimation();
     ratBody->SetGravityScale(-2);
@@ -940,7 +943,7 @@ void LevelLayer::hoverItemEaten()
         CallFunc::create([this]() { animationHelper->playRunningAnimation(ratSpeed); }),
         DelayTime::create(hoverDuration * 0.1), CallFunc::create([this]() {
             startDroppingItems();
-            applyCustomGravity = true;
+            isHovering = false;
             ratBody->SetGravityScale(1.0);
         }),
         nullptr));
@@ -976,7 +979,9 @@ void LevelLayer::breakItemEaten()
 
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::IRRITATED);
 
-    animationHelper->playRunningAnimation(ratSpeed);
+    if (!isHovering) {
+        animationHelper->playRunningAnimation(ratSpeed);
+    }
 }
 
 void LevelLayer::frenzyItemEaten()
