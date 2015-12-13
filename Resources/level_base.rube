@@ -285,6 +285,8 @@
           
           {
             "density" : 1,
+            "filter-categoryBits" : 64,
+            "filter-maskBits" : 65533,
             "friction" : 0.2,
             "id" : 4,
             "name" : "fixture0",
@@ -492,11 +494,11 @@
         "gravityScale" : 0.5,
         "id" : 7,
         "linearVelocity" : 0,
-        "massData-I" : 0.005760435480624437,
+        "massData-I" : 0.005760434549301863,
         "massData-center" : 
         {
-          "x" : 0.002312888856977224,
-          "y" : -5.760382191510871e-05
+          "x" : 0.002312888624146581,
+          "y" : -5.760553540312685e-05
         },
         "massData-mass" : 0.2,
         "name" : "item_slowdown",
