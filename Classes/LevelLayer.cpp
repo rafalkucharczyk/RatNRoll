@@ -451,11 +451,12 @@ class AnimationHelper
 
 const std::string LevelLayer::name = "LevelLayer";
 
-LevelLayer::LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker)
+LevelLayer::LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker,
+                       int initialGameScore)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
 
       ratSpeed(levelCustomization->getRatSpeedInitial()), isHovering(false),
-      proRunnerInProgress(false), gameScore(0),
+      proRunnerInProgress(false), gameScore(initialGameScore),
       previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
       totalTime(0.0), paused(false), nextItemDropTime(0.0),
       contactListener(new LevelContactListener(this)), cheeseFrenzyParticleNode(nullptr),
@@ -505,9 +506,10 @@ void LevelLayer::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transfor
 }
 
 LevelLayer *LevelLayer::create(LevelCustomization *customization,
-                               AchievementTracker &achievementTracker)
+                               AchievementTracker &achievementTracker, int initialGameScore)
 {
-    LevelLayer *ret = new (std::nothrow) LevelLayer(customization, achievementTracker);
+    LevelLayer *ret =
+        new (std::nothrow) LevelLayer(customization, achievementTracker, initialGameScore);
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -685,6 +687,11 @@ void LevelLayer::addShadowRat(const std::string &name, std::function<int(int)> f
     }
 
     scheduleUpdateScore();
+}
+
+int LevelLayer::getFixedScoreThresholdForGameScore(int gameScore)
+{
+    return levelCustomization->getFixedScoreThresholdForGameScore(gameScore);
 }
 
 void LevelLayer::runCustomActionOnStart()

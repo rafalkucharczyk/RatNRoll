@@ -49,6 +49,7 @@ const std::string keychainLikingKey = "facebook_like";
 const std::string tutorialEnteredKey = "tutorial_entered";
 const std::string cheeseFactoryEnteredKey = "cheese_factory_entered";
 const std::string tutorialStageKey = "tutorial_stage";
+const std::string thresholdScore = "threshold_score";
 }
 
 PermanentStorage *PermanentStorage::instance = nullptr;
@@ -196,6 +197,28 @@ void PermanentStorage::setTutorialStage(int ballonType)
 int PermanentStorage::getTutorialStage() const
 {
     return UserDefault::getInstance()->getIntegerForKey(tutorialStageKey.c_str(), -1);
+}
+
+void PermanentStorage::setScoreThresholdForLevel(int levelNumber, int score)
+{
+    CustomDataMap data =
+        readJsonData(UserDefault::getInstance()->getStringForKey(thresholdScore.c_str()));
+
+    data[std::to_string(levelNumber)] = score;
+
+    UserDefault::getInstance()->setStringForKey(thresholdScore.c_str(), saveJsonData(data));
+}
+
+int PermanentStorage::getScoreThresholdForLevel(int levelNumber) const
+{
+    CustomDataMap data =
+        readJsonData(UserDefault::getInstance()->getStringForKey(thresholdScore.c_str()));
+
+    if (data.find(std::to_string(levelNumber)) != data.end()) {
+        return data[std::to_string(levelNumber)];
+    }
+
+    return 0;
 }
 
 void PermanentStorage::saveToKeychain(const std::string &keychainItemKey, bool value)

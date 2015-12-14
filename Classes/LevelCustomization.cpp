@@ -6,6 +6,31 @@
 #include <Box2D/Dynamics/b2Body.h>
 #include <b2dJson.h>
 
+namespace
+{
+
+struct ScoreThresholdInfo {
+    float dropItemInterval;
+    float dropItemIntervalRandomness;
+};
+
+std::map<int, ScoreThresholdInfo> scoreThresholdInfos = {
+    {0, {2.8, 0.5}},      {10000, {2.4, 0.6}},  {50000, {2.0, 0.6}},   {100000, {1.6, 0.7}},
+    {250000, {1.2, 0.5}}, {500000, {0.7, 0.0}}, {1000000, {0.7, 0.0}},
+};
+
+std::map<int, ScoreThresholdInfo>::iterator getRightBoundThresholdForScore(int score)
+{
+    auto rightBound = std::find_if(scoreThresholdInfos.begin(), scoreThresholdInfos.end(),
+                                   [score](const std::map<int, ScoreThresholdInfo>::value_type &x) {
+                                       return score < x.first;
+                                   });
+    assert(rightBound != scoreThresholdInfos.begin());
+
+    return rightBound;
+}
+}
+
 class CogwheelHelper
 {
   public:
@@ -28,6 +53,34 @@ class CogwheelHelper
   private:
     b2Body *cogwheelBody1, *cogwheelBody2;
 };
+
+float LevelBase::getItemDropInterval(int gameScore)
+{
+    auto rightBound = getRightBoundThresholdForScore(gameScore);
+
+    auto leftBound = rightBound;
+    leftBound--;
+
+    int minScore = leftBound->first;
+    int maxScore = rightBound->first;
+
+    float delta = float(gameScore - minScore) / (maxScore - minScore);
+
+    delta = std::min(std::max(0.0f, delta), 1.0f);
+
+    float interval = leftBound->second.dropItemInterval -
+                     leftBound->second.dropItemIntervalRandomness * delta * cocos2d::rand_0_1();
+
+    return interval;
+}
+
+int LevelBase::getFixedScoreThresholdForGameScore(int gameScore)
+{
+    auto rightBound = getRightBoundThresholdForScore(gameScore);
+
+    rightBound--;
+    return rightBound->first;
+}
 
 LevelTutorial::LevelTutorial()
     : canDropNewItem(true), currentItemIndex(0), cogwheelHelper(new CogwheelHelper()),

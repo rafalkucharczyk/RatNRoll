@@ -44,7 +44,7 @@ class GameFlow
     void blockLevel(cocos2d::Scene &scene, LevelLayer &levelLayer, int levelNumber,
                     const SonarCocosHelper::GameCenterPlayerScore &score);
 
-    void switchToPostLevelScene(int score);
+    void switchToPostLevelScene(int score, int completedGameScoreThreshold);
     void switchToPostTutorialScene();
 
     void switchToSettingsScene();

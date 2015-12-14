@@ -19,7 +19,8 @@ class AchievementTracker;
 class LevelLayer : public RUBELayer
 {
   public:
-    LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker);
+    LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker,
+               int initialGameScore);
 
     virtual bool init();
 
@@ -27,7 +28,7 @@ class LevelLayer : public RUBELayer
                       uint32_t transformUpdated);
 
     static LevelLayer *create(LevelCustomization *customization,
-                              AchievementTracker &AchievementTracker);
+                              AchievementTracker &AchievementTracker, int initialGameScore);
 
     virtual std::list<std::string> getFilenames();
     virtual cocos2d::Point initialWorldOffset();
@@ -63,6 +64,8 @@ class LevelLayer : public RUBELayer
     }
 
     void addShadowRat(const std::string &name, std::function<int(int)> fromScore, int toScore);
+
+    int getFixedScoreThresholdForGameScore(int gameScore);
 
     static const int proxyOverlayLayerTag = 1111;
 

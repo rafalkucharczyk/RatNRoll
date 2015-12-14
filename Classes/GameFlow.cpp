@@ -204,7 +204,9 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     scene->addChild(levelMenuLayer);
     levelMenuLayer->setGamePausedCallback(std::bind(&GameFlow::pauseGame, this));
 
-    auto levelLayer = LevelLayer::create(levelCustomization, addAchievementTracker(*scene));
+    auto levelLayer =
+        LevelLayer::create(levelCustomization, addAchievementTracker(*scene),
+                           PermanentStorage::getInstance().getScoreThresholdForLevel(levelNumber));
 
     for (const SonarCocosHelper::GameCenterPlayerScore &score : scores) {
         levelLayer->addShadowRat(score.playerName, score.getLowerScoreBound(), score.score);
@@ -230,8 +232,10 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     } else {
         levelLayer->setGameCompletedCallback(
             std::bind(&GameFlow::overlayGameCompletedScene, this, levelLayer));
-        levelLayer->setGameFinishedCallback(
-            std::bind(&GameFlow::switchToPostLevelScene, this, std::placeholders::_1));
+        levelLayer->setGameFinishedCallback([this, levelLayer](int score) {
+            this->switchToPostLevelScene(score,
+                                         levelLayer->getFixedScoreThresholdForGameScore(score));
+        });
         replaceScene(scene);
     }
 }
@@ -278,8 +282,13 @@ void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
     }
 }
 
-void GameFlow::switchToPostLevelScene(int score)
+void GameFlow::switchToPostLevelScene(int score, int completedGameScoreThreshold)
 {
+    if (score > PermanentStorage::getInstance().getScoreThresholdForLevel(currentLevelNumber)) {
+        PermanentStorage::getInstance().setScoreThresholdForLevel(currentLevelNumber,
+                                                                  completedGameScoreThreshold);
+    }
+
     auto scene = createSceneObject();
     addAchievementTracker(*scene);
 
@@ -370,6 +379,9 @@ void GameFlow::switchToAboutScene()
         PermanentStorage::getInstance().setTutorialEntered(false);
         PermanentStorage::getInstance().setCheeseFactoryEntered(false);
         PermanentStorage::getInstance().setTutorialStage(-1);
+        PermanentStorage::getInstance().setScoreThresholdForLevel(1, 0);
+        PermanentStorage::getInstance().setScoreThresholdForLevel(2, 0);
+        PermanentStorage::getInstance().setScoreThresholdForLevel(3, 0);
     });
 
     aboutLayer->setGotoTestLayerCallback([this]() { switchToTestScene(); });
@@ -404,8 +416,11 @@ void GameFlow::overlayGameCompletedScene(LevelLayer *levelLayer)
     levelLayer->pauseLevel();
     levelLayer->setTag(levelCompletedTag);
     Director::getInstance()->getRunningScene()->addChild(gameCompletionLayer);
-    gameCompletionLayer->setCompletionConifrmedCallback(
-        [this]() { this->switchToPostLevelScene(LevelLayer::gameCompletedScore); });
+    gameCompletionLayer->setCompletionConifrmedCallback([this, levelLayer]() {
+        this->switchToPostLevelScene(
+            LevelLayer::gameCompletedScore,
+            levelLayer->getFixedScoreThresholdForGameScore(LevelLayer::gameCompletedScore));
+    });
 }
 
 void GameFlow::loginToGameCenter()

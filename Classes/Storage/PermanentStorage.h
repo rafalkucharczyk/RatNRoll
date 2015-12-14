@@ -40,6 +40,9 @@ class PermanentStorage
     void setTutorialStage(int ballonType);
     int getTutorialStage() const;
 
+    void setScoreThresholdForLevel(int levelNumber, int score);
+    int getScoreThresholdForLevel(int levelNumber) const;
+
   private:
     PermanentStorage();
 

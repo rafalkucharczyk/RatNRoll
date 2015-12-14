@@ -74,6 +74,8 @@ class LevelCustomization
     virtual void customPhysicsStep(b2Body *earthBody) {}
     virtual ItemProps getItemProps(ItemType itemType) const { return ItemProps(); };
 
+    virtual int getFixedScoreThresholdForGameScore(int gameScore) { return 0; }
+
     // called by LevelLayer once, when level was loaded and started
     virtual cocos2d::FiniteTimeAction *
     levelStartedCallback(std::shared_ptr<LevelLayerProxy> levelLayerProxy,
@@ -211,18 +213,7 @@ class LevelBase : public LevelCustomization
     {
     }
 
-    float getItemDropInterval(int gameScore) override
-    {
-        int minScore = 0;
-        int maxScore = 500000;
-
-        float delta = float(gameScore - minScore) / (maxScore - minScore);
-
-        delta = std::min(std::max(0.0f, delta), 1.0f);
-
-        return 3.0 - 2.2 * delta - 0.8 * (1 - delta) * cocos2d::rand_0_1();
-    }
-
+    float getItemDropInterval(int gameScore) override;
     float getRatSpeedMin() const override { return 0.2; }
     float getRatSpeedMax() const override { return 4.2; }
 
@@ -268,6 +259,8 @@ class LevelBase : public LevelCustomization
 
         return b2Vec2(x, 9);
     }
+
+    int getFixedScoreThresholdForGameScore(int gameScore);
 
   private:
     ItemType getBonusItem(bool shieldAllowed)
