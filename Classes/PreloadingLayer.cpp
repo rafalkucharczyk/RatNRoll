@@ -16,19 +16,7 @@ bool PreloadingLayer::init()
         return false;
     }
 
-    Vec2 visibleSize(Director::getInstance()->getVisibleSize());
-
-    auto backgroundImage = Sprite::create("background/bg_plane01.png");
-    backgroundImage->setPosition(visibleSize / 2);
-    backgroundImage->setScale(visibleSize.x / backgroundImage->getContentSize().width,
-                              visibleSize.y / backgroundImage->getContentSize().height);
-    addChild(backgroundImage);
-
-    auto loadingImage = MipmapSprite::create("menu/loading.png");
-    loadingImage->setPosition(visibleSize * 0.5);
-    loadingImage->setScale(visibleSize.x / loadingImage->getContentSize().width * 0.45);
-    addChild(loadingImage);
-
+    addBackgroundImage();
     addChild(MenuLabel::create("LOADING", {0.5, 0.27}, 0.03));
 
     filesToPreload = AssetsPreloader::list();
@@ -62,6 +50,22 @@ void PreloadingLayer::preload(float t)
             preloadingCompletedCallback();
         }
     }
+}
+
+void PreloadingLayer::addBackgroundImage()
+{
+    Vec2 visibleSize(Director::getInstance()->getVisibleSize());
+
+    auto backgroundImage = Application::getInstance()->getSplashScreen();
+
+    if (backgroundImage == nullptr) {
+        backgroundImage = Sprite::create("background/bg_plane01.png");
+        backgroundImage->setScale(visibleSize.x / backgroundImage->getContentSize().width,
+                                  visibleSize.y / backgroundImage->getContentSize().height);
+    }
+
+    backgroundImage->setPosition(visibleSize / 2);
+    addChild(backgroundImage);
 }
 
 void PreloadingLayer::insertBackgroundItem(int no)

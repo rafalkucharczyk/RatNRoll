@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
+#include "2d/CCSprite.h"
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
 
@@ -99,6 +100,8 @@ public:
 	@param new height
 	*/
 	virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
+
+    Sprite *getSplashScreen();
 
 protected:
     static Application * sm_pSharedApplication;

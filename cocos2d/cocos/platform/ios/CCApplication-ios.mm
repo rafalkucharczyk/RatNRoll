@@ -31,6 +31,7 @@
 
 #import "math/CCGeometry.h"
 #import "CCDirectorCaller-ios.h"
+#import "platform/CCImage.h"
 
 NS_CC_BEGIN
 
@@ -188,6 +189,48 @@ bool Application::openURL(const std::string &url)
 
 void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 
+}
+
+namespace {
+
+cocos2d::Sprite* getCCSpriteFromUIImage(UIImage *uiImage)
+{
+    NSData *imageData = UIImagePNGRepresentation(uiImage);
+
+    cocos2d::Image *image =new cocos2d::Image();
+
+    image->initWithImageData(static_cast<const Byte*>([imageData bytes]), imageData.length);
+    image->autorelease();
+
+    cocos2d::Texture2D* texture = new cocos2d::Texture2D();
+    texture->initWithImage(image);
+    texture->autorelease();
+
+    return cocos2d::Sprite::createWithTexture(texture);
+}
+
+}
+
+Sprite *Application::getSplashScreen()
+{
+    NSArray *pngImageNames = [[NSBundle mainBundle] pathsForResourcesOfType:@"png"
+                                                                 inDirectory:nil];
+
+    for (NSString *imageName in pngImageNames)
+    {
+        if ([imageName containsString:@"Default"])
+        {
+            UIImage *uiImage = [UIImage imageNamed:imageName];
+
+            if (uiImage.scale == [UIScreen mainScreen].scale &&
+                CGSizeEqualToSize(uiImage.size, [UIScreen mainScreen].bounds.size))
+            {
+                return getCCSpriteFromUIImage(uiImage);
+            }
+        }
+    }
+
+    return NULL;
 }
 
 NS_CC_END

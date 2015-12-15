@@ -21,6 +21,8 @@ class PreloadingLayer : public cocos2d::Layer
   private:
     void preload(float t);
 
+    void addBackgroundImage();
+
     void insertBackgroundItem(int no);
     std::vector<std::string> filesToPreload;
 

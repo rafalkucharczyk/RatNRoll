@@ -44,6 +44,7 @@
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
 		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
 		25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */; };
+		25BC15671C20949F007D4AEA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25BC15661C20949F007D4AEA /* Default@2x.png */; };
 		25C5F8A01B7E3033002DB80B /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C5F89E1B7E3033002DB80B /* TestLayer.cpp */; };
 		25C973F81C1162D5007171C7 /* GameCompletedLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C973F61C1162D5007171C7 /* GameCompletedLayer.cpp */; };
 		25D9C1841BFE462E0027336B /* FacebookLikeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25D9C1821BFE462E0027336B /* FacebookLikeNode.cpp */; };
@@ -233,6 +234,7 @@
 		25ACD8F91BA57B5900899F09 /* halve_points.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = halve_points.plist; sourceTree = "<group>"; };
 		25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementTracker.cpp; sourceTree = "<group>"; };
 		25ACD8FD1BA9D62A00899F09 /* AchievementTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementTracker.h; sourceTree = "<group>"; };
+		25BC15661C20949F007D4AEA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "ios/Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		25C5F89E1B7E3033002DB80B /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		25C5F89F1B7E3033002DB80B /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
 		25C973F61C1162D5007171C7 /* GameCompletedLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameCompletedLayer.cpp; sourceTree = "<group>"; };
@@ -672,6 +674,7 @@
 				521A8E6219F0C34300D177D7 /* Default-667h@2x.png */,
 				521A8E6319F0C34300D177D7 /* Default-736h@3x.png */,
 				5087E77217EB970100C73F5D /* Default-568h@2x.png */,
+				25BC15661C20949F007D4AEA /* Default@2x.png */,
 				5087E77317EB970100C73F5D /* Default.png */,
 				50EF62A017ECD613001EB2F8 /* Icon-29.png */,
 				50EF62A117ECD613001EB2F8 /* Icon-50.png */,
@@ -905,6 +908,7 @@
 				25476AB01C078D51005DED73 /* items in Resources */,
 				25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
+				25BC15671C20949F007D4AEA /* Default@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
