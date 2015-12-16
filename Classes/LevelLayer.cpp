@@ -1060,6 +1060,13 @@ void LevelLayer::initScoreLabel(int score)
     float f = getAnySpriteOnBody(earthBody)->getScale();
     scoreLabel->setScale(0.35 * f);
 
+    auto scaleAction = ScaleBy::create(0.15, 1.5);
+    auto reversedScaleAction = scaleAction->reverse();
+    reversedScaleAction->setDuration(2);
+    // bounce effect
+    scoreLabel->runAction(
+        Sequence::create(scaleAction, EaseElasticOut::create(reversedScaleAction), nullptr));
+
     b2Vec2 pos = earthBody->GetWorldCenter();
     scoreLabel->setPosition(pos.x, pos.y);
     scoreLabel->animateToNumber(score);
