@@ -193,16 +193,16 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 
 namespace {
 
-cocos2d::Sprite* getCCSpriteFromUIImage(UIImage *uiImage)
+cocos2d::Sprite *getCCSpriteFromUIImage(UIImage *uiImage)
 {
     NSData *imageData = UIImagePNGRepresentation(uiImage);
 
-    cocos2d::Image *image =new cocos2d::Image();
+    cocos2d::Image *image = new cocos2d::Image();
 
     image->initWithImageData(static_cast<const Byte*>([imageData bytes]), imageData.length);
     image->autorelease();
 
-    cocos2d::Texture2D* texture = new cocos2d::Texture2D();
+    cocos2d::Texture2D *texture = new cocos2d::Texture2D();
     texture->initWithImage(image);
     texture->autorelease();
 
@@ -211,6 +211,23 @@ cocos2d::Sprite* getCCSpriteFromUIImage(UIImage *uiImage)
 
 }
 
+/* Resolution of launch images along with filenames
+  iPhone
+    4s  320x480 (x2) -> 640x960, Default@2x.png
+    5   320x568 (x2) -> 640x1136, Default-568h@2x.png
+    5s  320x568 (x2) -> 640x1136, Default-568h@2x.png
+    6   375x667 (x2) -> 750*1334, Default-667h@2x.png
+    6+  414x736 (x3) -> 1242*2208, Default-736h@3x.png
+    6s  375x667 (x2) -> 750*1334, Default-667h@2x.png
+    6s+ 414x736 (x3) -> 1242*2208, Default-736h@3x.png
+
+  iPad
+    2 768x1024 (x1) -> 768x1024, Default-768h.png
+    air 768x1024 (x2) -> 1536x2048, Default-768h@2x.png
+    air2 768x1024 (x2) -> 1536x2048, Default-768h@2x.png
+    pro 768x1024 (x2) -> 1536x2048, Default-768h@2x.png
+    retina 768x1024 (x2) -> 1536x2048, Default-768h@2x.png
+*/
 Sprite *Application::getSplashScreen()
 {
     NSArray *pngImageNames = [[NSBundle mainBundle] pathsForResourcesOfType:@"png"
