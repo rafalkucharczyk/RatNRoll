@@ -8,6 +8,8 @@
 USING_NS_CC;
 using namespace std;
 
+BackgroundItemsInitialState BackgroundLayer::backgroundItemsInitialState = {};
+
 BackgroundLayer::BackgroundLayer(const std::vector<std::string> &itemFileNames,
                                  const std::string &backgroundFileName)
     : minItemsSpeed(0.05), maxItemsSpeed(0.5), deltaItemsSpeed(0.05), totalTime(0),
@@ -17,26 +19,49 @@ BackgroundLayer::BackgroundLayer(const std::vector<std::string> &itemFileNames,
 {
 }
 
-void BackgroundLayer::addBackgroundItems(int count, RandomPositionFunction randomPositionFunction)
+BackgroundItemInitialState
+BackgroundLayer::randomizeBackgroundItemInitialState(RandomPositionFunction positionFunction)
+{
+    BackgroundItemInitialState ret;
+
+    if (BackgroundLayer::backgroundItemsInitialState.size() > 0) {
+        ret = BackgroundLayer::backgroundItemsInitialState.back();
+        BackgroundLayer::backgroundItemsInitialState.pop_back();
+
+        return ret;
+    }
+
+    int itemId = random(0, static_cast<int>(itemFileNames.size() - 1));
+    ret.fileName = itemFileNames[itemId];
+
+    Sprite *sprite = MipmapSprite::create(ret.fileName); // needed to get size
+    ret.position = positionFunction(sprite->getContentSize());
+    ret.scale = 1 + 0.4 * rand_0_1();
+    ret.rotation = rand_0_1() * 360;
+
+    return ret;
+}
+
+void BackgroundLayer::addBackgroundItems(
+    int count, BackgroundItemInitialStateProvider backgroundItemInitialStateProvider)
 {
     for (int i = 0; i < count; i++) {
-        int itemId = random(0, static_cast<int>(itemFileNames.size() - 1));
-        insertBackgroundItem(randomPositionFunction, itemFileNames[itemId]);
+        insertBackgroundItem(backgroundItemInitialStateProvider());
     }
 }
 
-void BackgroundLayer::insertBackgroundItem(RandomPositionFunction randomPositionFunction,
-                                           const std::string &itemFileName)
+void BackgroundLayer::insertBackgroundItem(
+    const BackgroundItemInitialState &backgroundItemInitialState)
 {
-    auto sprite = MipmapSprite::create(itemFileName);
+    auto sprite = MipmapSprite::create(backgroundItemInitialState.fileName);
 
-    Vec2 initialPosition = randomPositionFunction(sprite->getContentSize());
+    Vec2 initialPosition = backgroundItemInitialState.position;
     Vec2 targetPosition = getTargetPoint(initialPosition, sprite->getContentSize());
 
     MenuHelper::positionNode(*sprite, {0, 0}, 0.05);
     sprite->setPosition(initialPosition);
-    sprite->setScale(sprite->getScale() * (1 + 0.4 * rand_0_1()));
-    sprite->setRotation(rand_0_1() * 360);
+    sprite->setScale(sprite->getScale() * backgroundItemInitialState.scale);
+    sprite->setRotation(backgroundItemInitialState.rotation);
     sprite->runAction(RepeatForever::create(RotateBy::create(2 + 2 * rand_0_1(), 360)));
 
     addChild(sprite);
@@ -100,6 +125,19 @@ Vec2 BackgroundLayer::getTargetPoint(const Vec2 &startPoint, const cocos2d::Size
     return Vec2::ZERO;
 }
 
+void BackgroundLayer::scaleUpBackgroundItems()
+{
+    for (const auto &item : items) {
+        float scale = item.sprite->getScale();
+        item.sprite->setScale(0);
+        item.sprite->setVisible(false);
+
+        item.sprite->runAction(
+            Sequence::create(CallFuncN::create([](Node *node) { node->setVisible(true); }),
+                             ScaleTo::create(0.4, scale), nullptr));
+    }
+}
+
 BackgroundLayer::BackgroundItem::BackgroundItem(cocos2d::Sprite *sprite, cocos2d::Vec2 targetPoint)
     : sprite(sprite), startTime(0.0), targetPoint(targetPoint), duration(0.0)
 {
@@ -126,24 +164,46 @@ bool BackgroundLayer::init()
     scheduleUpdate();
 
     const int stepsToFill = 5;
-    const int immediateFillSteps = 2;
+    const int immediateFillSteps = 4;
 
-    this->addBackgroundItems(
-        immediateFillSteps * desiredItemsCount / stepsToFill,
-        std::bind(&BackgroundLayer::getRandomStartPointEntireScreen, this, std::placeholders::_1));
+    RandomPositionFunction randomFunctionEntireScreen =
+        std::bind(&BackgroundLayer::getRandomStartPointEntireScreen, this, std::placeholders::_1);
+    BackgroundItemInitialStateProvider provider = std::bind(
+        &BackgroundLayer::randomizeBackgroundItemInitialState, this, randomFunctionEntireScreen);
 
-    runAction(Repeat::create(
-        Sequence::create(CallFunc::create([this]() {
-                             this->addBackgroundItems(
-                                 desiredItemsCount / stepsToFill,
-                                 std::bind(&BackgroundLayer::getRandomStartPointOnEdge, this,
-                                           std::placeholders::_1));
-                         }),
-                         DelayTime::create(1), nullptr),
-        stepsToFill - immediateFillSteps));
+    this->addBackgroundItems(immediateFillSteps * desiredItemsCount / stepsToFill, provider);
+
+    scaleUpBackgroundItems();
+
+    RandomPositionFunction randomFunctionOnEdge =
+        std::bind(&BackgroundLayer::getRandomStartPointOnEdge, this, std::placeholders::_1);
+    provider = std::bind(&BackgroundLayer::randomizeBackgroundItemInitialState, this,
+                         randomFunctionOnEdge);
+
+    runAction(Repeat::create(Sequence::create(CallFunc::create([this, provider]() {
+                                                  this->addBackgroundItems(
+                                                      desiredItemsCount / stepsToFill, provider);
+                                              }),
+                                              DelayTime::create(1), nullptr),
+                             stepsToFill - immediateFillSteps));
 
     return true;
-};
+}
+
+void BackgroundLayer::onExitTransitionDidStart()
+{
+    Layer::onExitTransitionDidStart();
+
+    for (const auto &item : items) {
+        item.sprite->runAction(ScaleTo::create(0.1, 0));
+    }
+}
+
+void BackgroundLayer::setBackgroundItemsInitialState(
+    const BackgroundItemsInitialState &backgroundItemsInitialState)
+{
+    BackgroundLayer::backgroundItemsInitialState = backgroundItemsInitialState;
+}
 
 void BackgroundLayer::update(float time)
 {
@@ -162,8 +222,12 @@ void BackgroundLayer::update(float time)
         }
     }
 
-    addBackgroundItems(toBeAddedCount, std::bind(&BackgroundLayer::getRandomStartPointOnEdge, this,
-                                                 std::placeholders::_1));
+    RandomPositionFunction randomFunctionOnEdge =
+        std::bind(&BackgroundLayer::getRandomStartPointOnEdge, this, std::placeholders::_1);
+    BackgroundItemInitialStateProvider provider = std::bind(
+        &BackgroundLayer::randomizeBackgroundItemInitialState, this, randomFunctionOnEdge);
+
+    addBackgroundItems(toBeAddedCount, provider);
 }
 
 void BackgroundLayer::setSpeed(int deltasCount)

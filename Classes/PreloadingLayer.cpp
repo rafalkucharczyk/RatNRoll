@@ -5,8 +5,26 @@
 #include "MipmapSprite.h"
 #include "Menu/MenuLabel.h"
 
+#include "BackgroundLayer.h"
+
 USING_NS_CC;
 using namespace std;
+
+namespace
+{
+
+BackgroundItemsInitialState backgroundItemsInitialState = {
+    {"", {0.34, 0.79}, 0, 0}, {"", {0.92, 0.89}, 0, 0}, {"", {0.19, 0.12}, 0, 0},
+    {"", {0.50, 0.63}, 0, 0}, {"", {0.20, 0.62}, 0, 0}, {"", {0.89, 0.53}, 0, 0},
+    {"", {0.63, 0.85}, 0, 0}, {"", {0.70, 0.20}, 0, 0}, {"", {0.10, 0.85}, 0, 0},
+    {"", {0.96, 0.25}, 0, 0}, {"", {0.36, 0.04}, 0, 0}, {"", {0.90, 0.11}, 0, 0},
+    {"", {0.03, 0.44}, 0, 0}, {"", {0.30, 0.55}, 0, 0}, {"", {0.78, 0.75}, 0, 0},
+    {"", {0.67, 0.59}, 0, 0}, {"", {0.51, 0.09}, 0, 0}, {"", {0.50, 0.95}, 0, 0},
+    {"", {0.33, 0.93}, 0, 0}, {"", {0.18, 0.96}, 0, 0}, {"", {0.93, 0.69}, 0, 0},
+    {"", {0.92, 0.32}, 0, 0}, {"", {0.48, 0.69}, 0, 0}, {"", {0.29, 0.44}, 0, 0},
+    {"", {0.13, 0.72}, 0, 0},
+};
+}
 
 PreloadingLayer::PreloadingLayer() : currentItemsCount(0) {}
 
@@ -45,6 +63,12 @@ void PreloadingLayer::preload(float t)
         scheduleOnce(std::bind(&PreloadingLayer::preload, this, placeholders::_1), 0.01,
                      "PreloadingLayer_preloading" + std::to_string(filesToPreload.size()));
     } else {
+        backgroundItemsInitialState.erase(
+            std::remove_if(
+                backgroundItemsInitialState.begin(), backgroundItemsInitialState.end(),
+                [](const BackgroundItemInitialState &item) { return item.fileName.empty(); }),
+            backgroundItemsInitialState.end());
+        BackgroundLayer::setBackgroundItemsInitialState(backgroundItemsInitialState);
         if (preloadingCompletedCallback) {
             preloadingCompletedCallback();
         }
@@ -67,31 +91,29 @@ void PreloadingLayer::addBackgroundImage()
     addChild(backgroundImage);
 }
 
-void PreloadingLayer::insertBackgroundItem(int no)
+void PreloadingLayer::insertBackgroundItem(int index)
 {
-    const cocos2d::Vec2 posPresets[] = {
-        {0.34, 0.79}, {0.92, 0.89}, {0.19, 0.12}, {0.50, 0.63}, {0.20, 0.62},
-        {0.89, 0.53}, {0.63, 0.85}, {0.70, 0.20}, {0.10, 0.85}, {0.96, 0.25},
-        {0.36, 0.04}, {0.90, 0.11}, {0.03, 0.44}, {0.30, 0.55}, {0.78, 0.75},
-        {0.67, 0.59}, {0.51, 0.09}, {0.50, 0.95}, {0.33, 0.93}, {0.18, 0.96},
-        {0.93, 0.69}, {0.92, 0.32}, {0.48, 0.69}, {0.29, 0.44}, {0.13, 0.72}};
-    const size_t presetsSize = (sizeof(posPresets) / sizeof(cocos2d::Vec2));
-
-    auto sprite = MipmapSprite::create("background/bg_item01.png");
-
-    auto itemPos = posPresets[no % presetsSize];
-    if (no / presetsSize > 0) {
-        // we run out of presets, adjust the position with a random delta
-        const cocos2d::Vec2 delta =
-            cocos2d::Vec2(0.386, 0.581) + cocos2d::Vec2(0.219, 0.327) * rand_0_1();
-        itemPos += delta * (no / presetsSize);
-        itemPos.x = itemPos.x - floor(itemPos.x);
-        itemPos.y = itemPos.y - floor(itemPos.y);
+    if (index >= backgroundItemsInitialState.size()) {
+        return;
     }
 
-    MenuHelper::positionNode(*sprite, itemPos, 0.05);
-    sprite->setScale(sprite->getScale() * (1 + 0.5 * rand_0_1()));
-    sprite->setRotation(rand_0_1() * 360);
+    backgroundItemsInitialState[index].fileName = "background/bg_item01.png";
+    auto sprite = MipmapSprite::create(backgroundItemsInitialState[index].fileName);
+
+    MenuHelper::positionNode(*sprite, backgroundItemsInitialState[index].position, 0.05);
+
+    Size visibleSize(Director::getInstance()->getVisibleSize());
+
+    backgroundItemsInitialState[index].position.x =
+        backgroundItemsInitialState[index].position.x * visibleSize.width;
+    backgroundItemsInitialState[index].position.y =
+        backgroundItemsInitialState[index].position.y * visibleSize.height;
+
+    backgroundItemsInitialState[index].scale = 1 + 0.5 * rand_0_1();
+    sprite->setScale(sprite->getScale() * backgroundItemsInitialState[index].scale);
+
+    backgroundItemsInitialState[index].rotation = rand_0_1() * 360;
+    sprite->setRotation(backgroundItemsInitialState[index].rotation);
 
     addChild(sprite);
 }
