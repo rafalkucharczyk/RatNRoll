@@ -71,8 +71,8 @@ bool PostLevelLayer::init()
         }
     }
 
-    addDigitsPanel({0.5, 0.8}, textTop, scoreTop);
-    addDigitsPanel({0.5, 0.4}, textBottom, scoreBottom);
+    addDigitsPanel(*this, {0.5, 0.8}, textTop, scoreTop);
+    addDigitsPanel(*this, {0.5, 0.4}, textBottom, scoreBottom);
 
     const PostAnimationInfo &info = getRandomAnimation(scoreTop < scoreBottom);
     addAnimation(info.name, info.position);
@@ -134,20 +134,20 @@ void PostLevelLayer::menuItemClicked(int itemIndex)
     }
 }
 
-void PostLevelLayer::addDigitsPanel(const cocos2d::Vec2 &position, const std::string &text,
+void PostLevelLayer::addDigitsPanel(Layer &layer, const Vec2 &position, const std::string &text,
                                     int score)
 {
     auto panel = DigitsPanel::createWithNumberOfDigits(6);
     MenuHelper::positionNode(*panel, position, 0.05);
-    addChild(panel, 1);
+    layer.addChild(panel, 1);
 
-    addChild(MenuLabel::create(text, position + Vec2(0, 0.0625), 0.03));
+    layer.addChild(MenuLabel::create(text, position + Vec2(0, 0.0625), 0.03));
 
     panel->animateToNumber(score);
 
     auto background = MipmapSprite::create("earth/inner03.png");
     MenuHelper::positionNode(*background, position - Vec2(0, 0.01), 0.55);
-    addChild(background);
+    layer.addChild(background);
 }
 
 void PostLevelLayer::addAnimation(const std::string &name, const cocos2d::Vec2 &position)

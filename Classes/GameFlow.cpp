@@ -19,6 +19,7 @@
 #include "AboutLayer.h"
 #include "GameCompletedLayer.h"
 #include "TestLayer.h"
+#include "GuaranteedScoreLayer.h"
 
 #include "PermanentStorage.h"
 
@@ -232,10 +233,8 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     } else {
         levelLayer->setGameCompletedCallback(
             std::bind(&GameFlow::overlayGameCompletedScene, this, levelLayer));
-        levelLayer->setGameFinishedCallback([this, levelLayer](int score) {
-            this->switchToPostLevelScene(score,
-                                         levelLayer->getFixedScoreThresholdForGameScore(score));
-        });
+        levelLayer->setGameFinishedCallback(
+            [this](int score) { this->switchToPostLevelScene(score); });
         replaceScene(scene);
     }
 }
@@ -282,13 +281,8 @@ void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
     }
 }
 
-void GameFlow::switchToPostLevelScene(int score, int completedGameScoreThreshold)
+void GameFlow::switchToPostLevelScene(int score)
 {
-    if (score > PermanentStorage::getInstance().getScoreThresholdForLevel(currentLevelNumber)) {
-        PermanentStorage::getInstance().setScoreThresholdForLevel(currentLevelNumber,
-                                                                  completedGameScoreThreshold);
-    }
-
     auto scene = createSceneObject();
     addAchievementTracker(*scene);
 
@@ -311,6 +305,8 @@ void GameFlow::switchToPostLevelScene(int score, int completedGameScoreThreshold
         getAchievementTracker().scoreShared();
     });
     scene->addChild(postLevelLayer);
+
+    overlayGameScoreThresholdScene(score, scene);
 
     currentLevelNumber = noLevelNumber;
 
@@ -416,11 +412,24 @@ void GameFlow::overlayGameCompletedScene(LevelLayer *levelLayer)
     levelLayer->pauseLevel();
     levelLayer->setTag(levelCompletedTag);
     Director::getInstance()->getRunningScene()->addChild(gameCompletionLayer);
-    gameCompletionLayer->setCompletionConifrmedCallback([this, levelLayer]() {
-        this->switchToPostLevelScene(
-            LevelLayer::gameCompletedScore,
-            levelLayer->getFixedScoreThresholdForGameScore(LevelLayer::gameCompletedScore));
-    });
+    gameCompletionLayer->setCompletionConifrmedCallback(
+        [this, levelLayer]() { this->switchToPostLevelScene(LevelLayer::gameCompletedScore); });
+}
+
+void GameFlow::overlayGameScoreThresholdScene(int gameScore, cocos2d::Scene *parentScene)
+{
+    auto gameScoreThreshold = getCurrentLevelLayer().getFixedScoreThresholdForGameScore(gameScore);
+
+    if (gameScoreThreshold.first >
+        PermanentStorage::getInstance().getScoreThresholdForLevel(currentLevelNumber)) {
+        PermanentStorage::getInstance().setScoreThresholdForLevel(currentLevelNumber,
+                                                                  gameScoreThreshold.first);
+
+        auto layer = GuaranteedScoreLayer::create(gameScore, gameScoreThreshold.first,
+                                                  gameScoreThreshold.second);
+
+        parentScene->addChild(layer, 1);
+    }
 }
 
 void GameFlow::loginToGameCenter()

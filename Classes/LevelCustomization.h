@@ -74,7 +74,12 @@ class LevelCustomization
     virtual void customPhysicsStep(b2Body *earthBody) {}
     virtual ItemProps getItemProps(ItemType itemType) const { return ItemProps(); };
 
-    virtual int getFixedScoreThresholdForGameScore(int gameScore) { return 0; }
+    // previousThreshold < gameScore < nextThreshold
+    // returns <previousThreshold, nextThreshold>
+    virtual std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore)
+    {
+        return std::make_pair(0, 0);
+    }
 
     // called by LevelLayer once, when level was loaded and started
     virtual cocos2d::FiniteTimeAction *
@@ -260,7 +265,7 @@ class LevelBase : public LevelCustomization
         return b2Vec2(x, 9);
     }
 
-    int getFixedScoreThresholdForGameScore(int gameScore);
+    std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore);
 
   private:
     ItemType getBonusItem(bool shieldAllowed)

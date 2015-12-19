@@ -689,7 +689,7 @@ void LevelLayer::addShadowRat(const std::string &name, std::function<int(int)> f
     scheduleUpdateScore();
 }
 
-int LevelLayer::getFixedScoreThresholdForGameScore(int gameScore)
+std::pair<int, int> LevelLayer::getFixedScoreThresholdForGameScore(int gameScore)
 {
     return levelCustomization->getFixedScoreThresholdForGameScore(gameScore);
 }

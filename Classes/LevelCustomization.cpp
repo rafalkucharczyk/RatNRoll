@@ -74,12 +74,13 @@ float LevelBase::getItemDropInterval(int gameScore)
     return interval;
 }
 
-int LevelBase::getFixedScoreThresholdForGameScore(int gameScore)
+std::pair<int, int> LevelBase::getFixedScoreThresholdForGameScore(int gameScore)
 {
     auto rightBound = getRightBoundThresholdForScore(gameScore);
 
-    rightBound--;
-    return rightBound->first;
+    auto leftBound = rightBound;
+    leftBound--;
+    return std::make_pair(leftBound->first, rightBound->first);
 }
 
 LevelTutorial::LevelTutorial()

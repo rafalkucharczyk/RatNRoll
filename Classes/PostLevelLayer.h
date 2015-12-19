@@ -22,6 +22,10 @@ class PostLevelLayer : public cocos2d::Layer
     void setShareOnFacebookCallback(std::function<void()> callback);
     void setShareOnTwitterCallback(std::function<void()> callback);
 
+    // this function is also called from GuaranteedScoreLayer
+    static void addDigitsPanel(cocos2d::Layer &layer, const cocos2d::Vec2 &position,
+                               const std::string &text, int score);
+
   private:
     void menuItemClicked(int itemIndex);
 
@@ -31,7 +35,6 @@ class PostLevelLayer : public cocos2d::Layer
     std::function<void()> shareOnTwitterCallback;
 
   private:
-    void addDigitsPanel(const cocos2d::Vec2 &position, const std::string &text, int score);
     void addAnimation(const std::string &name, const cocos2d::Vec2 &position);
 
     int currentScore;

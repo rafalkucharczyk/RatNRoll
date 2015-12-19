@@ -44,6 +44,7 @@
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
 		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
 		25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */; };
+		25B0D66A1C26AF5C00637426 /* GuaranteedScoreLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25B0D6681C26AF5C00637426 /* GuaranteedScoreLayer.cpp */; };
 		25BC15671C20949F007D4AEA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25BC15661C20949F007D4AEA /* Default@2x.png */; };
 		25C5F8A01B7E3033002DB80B /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C5F89E1B7E3033002DB80B /* TestLayer.cpp */; };
 		25C973F81C1162D5007171C7 /* GameCompletedLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C973F61C1162D5007171C7 /* GameCompletedLayer.cpp */; };
@@ -234,6 +235,8 @@
 		25ACD8F91BA57B5900899F09 /* halve_points.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = halve_points.plist; sourceTree = "<group>"; };
 		25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementTracker.cpp; sourceTree = "<group>"; };
 		25ACD8FD1BA9D62A00899F09 /* AchievementTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementTracker.h; sourceTree = "<group>"; };
+		25B0D6681C26AF5C00637426 /* GuaranteedScoreLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuaranteedScoreLayer.cpp; sourceTree = "<group>"; };
+		25B0D6691C26AF5C00637426 /* GuaranteedScoreLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuaranteedScoreLayer.h; sourceTree = "<group>"; };
 		25BC15661C20949F007D4AEA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "ios/Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		25C5F89E1B7E3033002DB80B /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		25C5F89F1B7E3033002DB80B /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
@@ -606,6 +609,8 @@
 				25C973F71C1162D5007171C7 /* GameCompletedLayer.h */,
 				B552BE081B24234A00D4851A /* GameFlow.cpp */,
 				B552BE091B24234A00D4851A /* GameFlow.h */,
+				25B0D6681C26AF5C00637426 /* GuaranteedScoreLayer.cpp */,
+				25B0D6691C26AF5C00637426 /* GuaranteedScoreLayer.h */,
 				25365D061BF89FC600668802 /* IAPLayer.cpp */,
 				25365D071BF89FC600668802 /* IAPLayer.h */,
 				B55887C81B41E0B900B13416 /* InitialLayer.cpp */,
@@ -999,6 +1004,7 @@
 				B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */,
 				25365D0C1BF8F76000668802 /* UnlockGraveyardLayer.cpp in Sources */,
 				2542C4561BC4568100727984 /* PermanentStorage.cpp in Sources */,
+				25B0D66A1C26AF5C00637426 /* GuaranteedScoreLayer.cpp in Sources */,
 				B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				253CC72A1BF3ED9D0042D6E7 /* MenuLabel.cpp in Sources */,

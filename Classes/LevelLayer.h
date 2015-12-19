@@ -65,7 +65,7 @@ class LevelLayer : public RUBELayer
 
     void addShadowRat(const std::string &name, std::function<int(int)> fromScore, int toScore);
 
-    int getFixedScoreThresholdForGameScore(int gameScore);
+    std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore);
 
     static const int proxyOverlayLayerTag = 1111;
 
