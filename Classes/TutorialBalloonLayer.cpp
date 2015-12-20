@@ -77,7 +77,20 @@ const int screenLayerTag = 123;
 TutorialBalloonLayer::TutorialBalloonLayer(BalloonType balloonType,
                                            std::function<void()> closeCallback)
     : currentTutorialScreens(tutorialScreens[balloonType]), closeCallback(closeCallback),
-      menuHelper({{{0.5, 0.2}, 0.1, "play", {MenuHelper::removeTransparency()}}},
+      menuHelper({{{0.5, 0.2},
+                   0.1,
+                   "play",
+                   {[this, balloonType](Node *node) {
+                       MenuHelper::removeTransparency()(node);
+
+                       if (balloonType == TutorialBalloonLayer::BalloonType::FINAL) {
+                           MenuItemSprite *menuItemSprite = dynamic_cast<MenuItemSprite *>(node);
+
+                           auto sprite = MenuItemButton::createSpriteForPath("confirm");
+
+                           menuItemSprite->setNormalImage(sprite);
+                       }
+                   }}}},
                  std::bind(&TutorialBalloonLayer::itemClicked, this, std::placeholders::_1))
 {
 }
