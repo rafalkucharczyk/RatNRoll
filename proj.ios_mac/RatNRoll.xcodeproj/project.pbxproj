@@ -45,6 +45,8 @@
 		25ACD8FA1BA57B5900899F09 /* halve_points.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25ACD8F91BA57B5900899F09 /* halve_points.plist */; };
 		25ACD8FE1BA9D62A00899F09 /* AchievementTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8FC1BA9D62A00899F09 /* AchievementTracker.cpp */; };
 		25B0D66A1C26AF5C00637426 /* GuaranteedScoreLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25B0D6681C26AF5C00637426 /* GuaranteedScoreLayer.cpp */; };
+		25B0D66D1C284CEF00637426 /* gcPlaceholderFriendPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B0D66C1C284CEF00637426 /* gcPlaceholderFriendPhoto.png */; };
+		25B0D6701C28595800637426 /* LevelShadowRatInfoLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25B0D66E1C28595800637426 /* LevelShadowRatInfoLayer.cpp */; };
 		25BC15671C20949F007D4AEA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25BC15661C20949F007D4AEA /* Default@2x.png */; };
 		25C5F8A01B7E3033002DB80B /* TestLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C5F89E1B7E3033002DB80B /* TestLayer.cpp */; };
 		25C973F81C1162D5007171C7 /* GameCompletedLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25C973F61C1162D5007171C7 /* GameCompletedLayer.cpp */; };
@@ -237,6 +239,9 @@
 		25ACD8FD1BA9D62A00899F09 /* AchievementTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AchievementTracker.h; sourceTree = "<group>"; };
 		25B0D6681C26AF5C00637426 /* GuaranteedScoreLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuaranteedScoreLayer.cpp; sourceTree = "<group>"; };
 		25B0D6691C26AF5C00637426 /* GuaranteedScoreLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuaranteedScoreLayer.h; sourceTree = "<group>"; };
+		25B0D66C1C284CEF00637426 /* gcPlaceholderFriendPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gcPlaceholderFriendPhoto.png; sourceTree = "<group>"; };
+		25B0D66E1C28595800637426 /* LevelShadowRatInfoLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelShadowRatInfoLayer.cpp; sourceTree = "<group>"; };
+		25B0D66F1C28595800637426 /* LevelShadowRatInfoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelShadowRatInfoLayer.h; sourceTree = "<group>"; };
 		25BC15661C20949F007D4AEA /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "ios/Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		25C5F89E1B7E3033002DB80B /* TestLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestLayer.cpp; sourceTree = "<group>"; };
 		25C5F89F1B7E3033002DB80B /* TestLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestLayer.h; sourceTree = "<group>"; };
@@ -579,6 +584,7 @@
 				2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */,
 				25ACD8F91BA57B5900899F09 /* halve_points.plist */,
 				259DE4F21C1DD35600AD7941 /* level_completed.plist */,
+				25B0D66C1C284CEF00637426 /* gcPlaceholderFriendPhoto.png */,
 				25476ABF1C08C3E7005DED73 /* iRate.bundle */,
 			);
 			name = Resources;
@@ -626,6 +632,8 @@
 				257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */,
 				25EC24331BEFA3740018180D /* LevelSelectionLayer.cpp */,
 				25EC24341BEFA3740018180D /* LevelSelectionLayer.h */,
+				25B0D66E1C28595800637426 /* LevelShadowRatInfoLayer.cpp */,
+				25B0D66F1C28595800637426 /* LevelShadowRatInfoLayer.h */,
 				B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */,
 				B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */,
 				259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */,
@@ -932,6 +940,7 @@
 				2542C43E1BB941D200727984 /* background in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
+				25B0D66D1C284CEF00637426 /* gcPlaceholderFriendPhoto.png in Resources */,
 				25476AC01C08C3E7005DED73 /* iRate.bundle in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 				2542C4401BB967F500727984 /* sounds in Resources */,
@@ -983,6 +992,7 @@
 				B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */,
+				25B0D6701C28595800637426 /* LevelShadowRatInfoLayer.cpp in Sources */,
 				25344ECE1BFFC7630046A022 /* UnlockMagicHallLayer.cpp in Sources */,
 				25208C541C03A3C300F870A6 /* TransitionSlideChildren.cpp in Sources */,
 				B55047A31B6B960A0020ECE4 /* SettingsLayer.cpp in Sources */,

@@ -187,6 +187,15 @@ GameCenterPlayersScores GameCenter::getFriendsBestScores(const std::string &lead
 #endif
 }
 
+cocos2d::Sprite *GameCenter::getImageForPlayer(const std::string &playerName)
+{
+#if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    return IOSCPPHelper::getImageForPlayer(playerName);
+#else
+    return nullptr;
+#endif
+}
+
 /*void Facebook::SignIn()
 {
     #if(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

@@ -20,6 +20,7 @@
 #include "GameCompletedLayer.h"
 #include "TestLayer.h"
 #include "GuaranteedScoreLayer.h"
+#include "LevelShadowRatInfoLayer.h"
 
 #include "PermanentStorage.h"
 
@@ -205,11 +206,22 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     scene->addChild(levelMenuLayer);
     levelMenuLayer->setGamePausedCallback(std::bind(&GameFlow::pauseGame, this));
 
+    auto levelShadowRatInfoLayer = LevelShadowRatInfoLayer::create();
+    scene->addChild(levelShadowRatInfoLayer);
+
     auto levelLayer =
         LevelLayer::create(levelCustomization, addAchievementTracker(*scene),
                            PermanentStorage::getInstance().getScoreThresholdForLevel(levelNumber));
 
+    levelLayer->setShadowRatActionCallback(
+        [levelShadowRatInfoLayer](const std::string &playerName, int score, int state) {
+            levelShadowRatInfoLayer->showShadowRatInfo(playerName, score, state);
+        });
+
     for (const SonarCocosHelper::GameCenterPlayerScore &score : scores) {
+        if (score.isOwnScore) {
+            continue;
+        }
         levelLayer->addShadowRat(score.playerName, score.getLowerScoreBound(), score.score);
     }
 

@@ -65,6 +65,14 @@ class LevelLayer : public RUBELayer
 
     void addShadowRat(const std::string &name, std::function<int(int)> fromScore, int toScore);
 
+    // state: 0 -> show, -1 -> hide/failed, 1 -> hide/succeeded
+    typedef std::function<void(const std::string &playerName, int score, int state)>
+        ShadowRatActionCallback;
+    void setShadowRatActionCallback(ShadowRatActionCallback callback)
+    {
+        shadowRatActionCallback = callback;
+    }
+
     std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore);
 
     static const int proxyOverlayLayerTag = 1111;
@@ -149,6 +157,7 @@ class LevelLayer : public RUBELayer
 
     std::function<void(int)> gameFinishedCallback;
     std::function<void()> gameCompletedCallback;
+    ShadowRatActionCallback shadowRatActionCallback;
 
     cocos2d::ParticleSystemQuad *cheeseFrenzyParticleNode;
     cocos2d::ParticleSystemQuad *halvePointsParticleNode;

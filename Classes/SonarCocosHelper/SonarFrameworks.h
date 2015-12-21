@@ -293,6 +293,8 @@ class GameCenter
     static void clearCurrentChallenge();
 
     static GameCenterPlayersScores getFriendsBestScores(const std::string &leaderboardID);
+
+    static cocos2d::Sprite *getImageForPlayer(const std::string &playerName);
 };
 
 class GoogleAnalytics

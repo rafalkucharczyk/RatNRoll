@@ -50,6 +50,7 @@ class IOSCPPHelper
     static SonarCocosHelper::GameCenterPlayersScores
     gameCenterGetFriendsBestScores(__String leaderboardID);
     static void gameCenterClearCurrentChallenge();
+    static cocos2d::Sprite *getImageForPlayer(__String playerName);
 #endif
 
 #if SCH_IS_REVMOB_ENABLED == true

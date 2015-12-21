@@ -136,6 +136,9 @@ namespace {
 
     std::map<std::string, SonarCocosHelper::GameCenterPlayersScores> friendsBestScores;
 
+    std::map<std::string, Sprite*> friendsPhotos;
+    Sprite *placeholderFriendPhoto = nullptr;
+
     std::string NSString2string(NSString *str)
     {
         return std::string([str UTF8String]);
@@ -158,7 +161,38 @@ namespace {
                 NSString2string(playerName), NSString2string(leaderboardId), score, true));
     }
 
-    std::map<std::string, SonarCocosHelper::GameCenterPlayersScores> bestScores;
+    cocos2d::Sprite *getCCSpriteFromUIImage(UIImage *uiImage)
+    {
+        NSData *imageData = UIImagePNGRepresentation(uiImage);
+
+        cocos2d::Image *image = new cocos2d::Image();
+
+        image->initWithImageData(static_cast<const Byte*>([imageData bytes]), imageData.length);
+        image->autorelease();
+
+        cocos2d::Texture2D *texture = new cocos2d::Texture2D();
+        texture->initWithImage(image);
+        texture->autorelease();
+
+        return cocos2d::Sprite::createWithTexture(texture);
+    }
+
+    UIImage *maskRoundedImage(UIImage *image)
+    {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        CALayer *layer = imageView.layer;
+
+        layer.masksToBounds = YES;
+        CGSize size = imageView.bounds.size;
+        layer.cornerRadius = CGFloat(MIN(size.width / 2, size.height / 2));
+
+        UIGraphicsBeginImageContext(size);
+        [layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *roundedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        return roundedImage;
+    }
 }
 
 void IOSCPPHelper::gameCenterLogin(std::function<void()> signedInCallback)
@@ -229,9 +263,26 @@ SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBest
     {
         SonarCocosHelper::GameCenterPlayersScores scores;
 
+        if (!placeholderFriendPhoto)
+        {
+            UIImage *photo = [UIImage imageNamed:@"gcPlaceholderFriendPhoto.png"];
+            placeholderFriendPhoto = getCCSpriteFromUIImage(maskRoundedImage(photo));
+            placeholderFriendPhoto->retain();
+        }
+
         for (GKScore* score in friendsScores) {
             bool isOwnScore = [[[GKLocalPlayer localPlayer] alias]
                                isEqualToString: [[score player] alias]];
+
+            [[score player] loadPhotoForSize:GKPhotoSizeSmall
+                       withCompletionHandler:^(UIImage *photo, NSError *error) {
+                if (photo != nil)
+                {
+                    Sprite *sprite = getCCSpriteFromUIImage(maskRoundedImage(photo));
+                    sprite->retain();
+                    friendsPhotos[NSString2string([[score player] alias])] = sprite;
+                }
+            }];
 
             scores.push_back(
                 SonarCocosHelper::GameCenterPlayerScore(NSString2string([[score player] alias]),
@@ -250,6 +301,22 @@ SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBest
 void IOSCPPHelper::gameCenterClearCurrentChallenge()
 {
     currentChallenge = nullptr;
+}
+
+cocos2d::Sprite *IOSCPPHelper::getImageForPlayer(__String playerName)
+{
+    Sprite *sprite = placeholderFriendPhoto;
+
+    if (friendsPhotos.find(playerName.getCString()) != friendsPhotos.end()) {
+        sprite = friendsPhotos[playerName.getCString()];
+    }
+
+    if (sprite) {
+        // return cloned object
+        return Sprite::createWithSpriteFrame(sprite->displayFrame());
+    }
+
+    return nullptr;
 }
 #endif
 

@@ -122,13 +122,20 @@ class ShadowRatHelper
 
   private:
     struct ShadowRatEntry {
-        ShadowRatEntry() : scoreTo(0), body(nullptr) {}
-        ShadowRatEntry(std::function<int(int)> scoreFrom, int scoreTo)
-            : scoreFrom(scoreFrom), scoreTo(scoreTo), body(nullptr)
+        ShadowRatEntry() : scoreTo(0), scoreFromNumber(-1), body(nullptr) {}
+        ShadowRatEntry(std::function<int(int)> scoreFromFunc, int scoreTo)
+            : scoreFromFunc(scoreFromFunc), scoreTo(scoreTo), scoreFromNumber(-1), body(nullptr)
         {
         }
 
-        std::function<int(int)> scoreFrom;
+        void reset()
+        {
+            body = nullptr;
+            scoreFromNumber = -1;
+        }
+
+        std::function<int(int)> scoreFromFunc;
+        int scoreFromNumber;
         int scoreTo;
         b2Body *body;
     };
@@ -165,15 +172,41 @@ class ShadowRatHelper
 
     void scoreUpdated(int newScore)
     {
-        auto inRange = [newScore, this](ShadowRatEntry &entry) -> bool {
-            return (newScore >= entry.scoreFrom(levelLayer.getGameScoreDelta())) &&
-                   (newScore <= entry.scoreTo);
+        // newScore is worse: -1, still in range: 0, better: 1
+        auto inRange = [newScore, this](ShadowRatEntry &entry) -> int {
+            int scoreFrom = entry.scoreFromFunc(levelLayer.getGameScoreDelta());
+
+            if (entry.scoreFromNumber != -1) {
+                scoreFrom = entry.scoreFromNumber;
+            }
+
+            // once there is a body visible, remember scoreFrom value obtained from function
+            // so the threshold do not depend on speed anymore
+            if (entry.body && entry.scoreFromNumber == -1) {
+                entry.scoreFromNumber = scoreFrom;
+            }
+
+            if (newScore < scoreFrom) {
+                return -1;
+            }
+
+            if (newScore > entry.scoreTo) {
+                return 1;
+            }
+
+            return 0;
         };
 
         for (auto i = shadowEntries.begin(); i != shadowEntries.end(); i++) {
-            if (!inRange(i->second) && i->second.body != nullptr) {
+            int res = inRange(i->second);
+
+            if (res != 0 && i->second.body != nullptr) {
+                if (levelLayer.shadowRatActionCallback) {
+                    levelLayer.shadowRatActionCallback(i->first, i->second.scoreTo, res);
+                }
+
                 removeShadowRat(i->second.body);
-                i->second.body = nullptr;
+                i->second.reset();
             }
         }
 
@@ -185,7 +218,11 @@ class ShadowRatHelper
         }
 
         for (auto i = shadowEntries.begin(); i != shadowEntries.end(); i++) {
-            if (inRange(i->second) && i->second.body == nullptr) {
+            if (inRange(i->second) == 0 && i->second.body == nullptr) {
+                if (levelLayer.shadowRatActionCallback) {
+                    levelLayer.shadowRatActionCallback(i->first, i->second.scoreTo, 0);
+                }
+
                 i->second.body = insertShadowRat(i->first, i->second.scoreTo);
                 assert(i->second.body);
                 return; // only one shadow rat allowed
@@ -216,7 +253,7 @@ class ShadowRatHelper
             CallFunc::create([=]() { levelLayer.removeBodyFromWorld(body); }), nullptr));
     }
 
-    void addPlayerNameLabelToNode(Node *node, const std::string &playerName, int score)
+    void addPlayerNameLabelToNode(Node *node, const std::string &playerName, int /* score */)
     {
         auto label =
             Label::createWithTTF("", "fonts/rat.ttf", 80 * MenuHelper::getContentScaleFactor());
@@ -227,10 +264,10 @@ class ShadowRatHelper
             nullptr));
 
         Size cs = node->getContentSize();
-        label->setPosition(Vec2(cs.width / 2, 1.25 * cs.height));
+        label->setPosition(Vec2(cs.width / 2, 1.15 * cs.height));
 
         label->setAlignment(TextHAlignment::CENTER);
-        label->setString(playerName + "\n" + std::to_string(score));
+        label->setString(playerName);
 
         node->addChild(label);
     }
