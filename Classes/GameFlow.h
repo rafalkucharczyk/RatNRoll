@@ -69,8 +69,13 @@ class GameFlow
     void clearCurrentChallenge();
 
   private:
-    cocos2d::Scene *createSceneObject(const std::string &bgPlaneName = "bg_plane01",
-                                      const std::list<std::string> &bgItemNames = {"bg_item01"});
+    cocos2d::Scene *createSceneObject();
+    void setBackgroundDetails(const std::string &bgPlaneName,
+                              const std::list<std::string> &bgItemNames);
+
+    std::string currentBackgroundPlaneName;
+    std::list<std::string> currentBackgroundItemNames;
+
     LevelCustomization *getLevelCustomization(int levelNumber) const;
     int getBestScore(int levelNumber, int currentScore);
     int updateBestScore(int levelNumber, int currentScore);

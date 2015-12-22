@@ -36,7 +36,12 @@ const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
 
 GameFlow *GameFlow::instance = nullptr;
 
-GameFlow::GameFlow() : currentLevelNumber(noLevelNumber) { loginToGameCenter(); }
+GameFlow::GameFlow()
+    : currentBackgroundPlaneName("bg_plane01"), currentBackgroundItemNames({"bg_item01"}),
+      currentLevelNumber(noLevelNumber)
+{
+    loginToGameCenter();
+}
 
 GameFlow &GameFlow::getInstance()
 {
@@ -197,8 +202,11 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
 
     auto levelCustomization = getLevelCustomization(levelNumber);
 
-    auto scene = createSceneObject(levelCustomization->getBgPlaneName(),
-                                   levelCustomization->getBgItemNames());
+    setBackgroundDetails(levelCustomization->getBgPlaneName(),
+                         levelCustomization->getBgItemNames());
+
+    auto scene = createSceneObject();
+
     BackgroundLayer *backgroundLayer =
         dynamic_cast<BackgroundLayer *>(scene->getChildByTag(backgroundLayerTag));
 
@@ -482,21 +490,28 @@ void GameFlow::clearCurrentChallenge()
     SonarCocosHelper::GameCenter::clearCurrentChallenge();
 }
 
-Scene *GameFlow::createSceneObject(const std::string &bgPlaneName,
-                                   const std::list<std::string> &bgItemNames)
+Scene *GameFlow::createSceneObject()
 {
     Scene *scene = Scene::create();
 
-    std::vector<std::string> itemFileNames(bgItemNames.size());
+    std::vector<std::string> itemFileNames(currentBackgroundItemNames.size());
 
-    std::transform(bgItemNames.begin(), bgItemNames.end(), itemFileNames.begin(),
+    std::transform(currentBackgroundItemNames.begin(), currentBackgroundItemNames.end(),
+                   itemFileNames.begin(),
                    [](const std::string &i) { return "background/" + i + ".png"; });
 
     auto backgroundLayer =
-        BackgroundLayer::create(itemFileNames, "background/" + bgPlaneName + ".png");
+        BackgroundLayer::create(itemFileNames, "background/" + currentBackgroundPlaneName + ".png");
     scene->addChild(backgroundLayer, 0, backgroundLayerTag);
 
     return scene;
+}
+
+void GameFlow::setBackgroundDetails(const std::string &bgPlaneName,
+                                    const std::list<std::string> &bgItemNames)
+{
+    currentBackgroundPlaneName = bgPlaneName;
+    currentBackgroundItemNames = bgItemNames;
 }
 
 LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const
