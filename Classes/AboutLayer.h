@@ -5,15 +5,13 @@
 
 #include "MenuHelper.h"
 
-class AboutLayer : public cocos2d::Layer
+class AboutLayer : public cocos2d::LayerColor
 {
   public:
     AboutLayer();
     virtual bool init();
 
     CREATE_FUNC(AboutLayer);
-
-    void menuItemClicked(int itemIndex);
 
     void setGotoMainMenuCallback(std::function<void()> callback)
     {
@@ -31,6 +29,14 @@ class AboutLayer : public cocos2d::Layer
     }
 
   private:
+    float getTotalHeightOfAboutEntries();
+    Layer *composeScrollableLayer();
+    void addScrollView(Layer *scrollableLayer);
+
+    void addBackgroundItems();
+
+    void menuItemClicked(int itemIndex);
+
     MenuHelper menuHelper;
 
     std::function<void()> gotoMainMenuCallback;

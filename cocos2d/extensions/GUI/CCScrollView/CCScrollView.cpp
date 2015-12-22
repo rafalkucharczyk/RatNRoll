@@ -676,7 +676,9 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
                        _container->convertTouchToNodeSpace(_touches[1]));
         
         _dragging  = false;
-    } 
+    }
+    _container->stopAllActions();
+
     return true;
 }
 
