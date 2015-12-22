@@ -3,12 +3,13 @@
 
 #include "cocos2d.h"
 
+#include "BasicWhiteLayer.h"
 #include "MenuHelper.h"
 #include "LevelLayer.h"
 
 class LevelLayer;
 
-class LevelBlockerLayer : public cocos2d::LayerColor
+class LevelBlockerLayer : public BasicWhiteLayer
 {
   public:
     LevelBlockerLayer(LevelLayer &levelLayer);

@@ -11,7 +11,7 @@ LevelBlockerLayer::LevelBlockerLayer(LevelLayer &levelLayer)
 
 bool LevelBlockerLayer::init()
 {
-    if (!LayerColor::initWithColor(Color4B(255, 255, 255, 232))) {
+    if (!BasicWhiteLayer::init()) {
         return false;
     }
 

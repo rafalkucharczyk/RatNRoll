@@ -2,10 +2,11 @@
 #define __GAME_COMPLETED_LAYER_H__
 
 #include "cocos2d.h"
+#include "BasicWhiteLayer.h"
 
 #include "MenuHelper.h"
 
-class GameCompletedLayer : public cocos2d::LayerColor
+class GameCompletedLayer : public BasicWhiteLayer
 {
   public:
     GameCompletedLayer(int levelNumber);

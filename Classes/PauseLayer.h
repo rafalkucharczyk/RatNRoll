@@ -3,9 +3,10 @@
 
 #include "cocos2d.h"
 
+#include "BasicWhiteLayer.h"
 #include "MenuHelper.h"
 
-class PauseLayer : public cocos2d::LayerColor
+class PauseLayer : public BasicWhiteLayer
 {
   public:
     PauseLayer();

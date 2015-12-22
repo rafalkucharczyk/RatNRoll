@@ -5,6 +5,7 @@
 
 #include <spine/spine-cocos2dx.h>
 
+#include "BasicWhiteLayer.h"
 #include "MenuHelper.h"
 #include "Menu/DigitsPanel.h"
 
@@ -15,7 +16,7 @@ struct TutorialScreen {
     float textYPosition;
 };
 
-class TutorialBalloonLayer : public cocos2d::LayerColor
+class TutorialBalloonLayer : public BasicWhiteLayer
 {
   public:
     enum class BalloonType { WELCOME, SPEEDUP, SLOWDOWN, HOVER, HALVE, FINAL, MAX_TYPE_COUNT };

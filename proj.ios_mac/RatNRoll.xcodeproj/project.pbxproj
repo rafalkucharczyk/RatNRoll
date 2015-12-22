@@ -39,6 +39,7 @@
 		25476ABE1C08BCCC005DED73 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 25476ABD1C08BCCC005DED73 /* iRate.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		25476AC01C08C3E7005DED73 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25476ABF1C08C3E7005DED73 /* iRate.bundle */; };
 		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
+		25809BA11C29D15D00D4640A /* BasicWhiteLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25809B9F1C29D15D00D4640A /* BasicWhiteLayer.cpp */; };
 		259DE4F11C15919400AD7941 /* PostTutorialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */; };
 		259DE4F31C1DD35600AD7941 /* level_completed.plist in Resources */ = {isa = PBXBuildFile; fileRef = 259DE4F21C1DD35600AD7941 /* level_completed.plist */; };
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
@@ -229,6 +230,8 @@
 		2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cheese_frenzy.plist; sourceTree = "<group>"; };
 		255340CA1B772F9900C31F87 /* GameCenterPlayerScore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameCenterPlayerScore.h; sourceTree = "<group>"; };
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
+		25809B9F1C29D15D00D4640A /* BasicWhiteLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicWhiteLayer.cpp; sourceTree = "<group>"; };
+		25809BA01C29D15D00D4640A /* BasicWhiteLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicWhiteLayer.h; sourceTree = "<group>"; };
 		259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostTutorialLayer.cpp; sourceTree = "<group>"; };
 		259DE4F01C15919400AD7941 /* PostTutorialLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTutorialLayer.h; sourceTree = "<group>"; };
 		259DE4F21C1DD35600AD7941 /* level_completed.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = level_completed.plist; sourceTree = "<group>"; };
@@ -611,6 +614,8 @@
 				25476AB41C07A5D2005DED73 /* AssetsPreloader.h */,
 				B552BDFF1B2236DC00D4851A /* BackgroundLayer.cpp */,
 				B552BE001B2236DC00D4851A /* BackgroundLayer.h */,
+				25809B9F1C29D15D00D4640A /* BasicWhiteLayer.cpp */,
+				25809BA01C29D15D00D4640A /* BasicWhiteLayer.h */,
 				25C973F61C1162D5007171C7 /* GameCompletedLayer.cpp */,
 				25C973F71C1162D5007171C7 /* GameCompletedLayer.h */,
 				B552BE081B24234A00D4851A /* GameFlow.cpp */,
@@ -1018,6 +1023,7 @@
 				B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				253CC72A1BF3ED9D0042D6E7 /* MenuLabel.cpp in Sources */,
+				25809BA11C29D15D00D4640A /* BasicWhiteLayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

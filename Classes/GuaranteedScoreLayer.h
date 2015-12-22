@@ -3,10 +3,11 @@
 
 #include <cocos2d.h>
 
+#include "BasicWhiteLayer.h"
 #include "Menu/MenuHelper.h"
 #include "Menu/DigitsPanel.h"
 
-class GuaranteedScoreLayer : public cocos2d::LayerColor
+class GuaranteedScoreLayer : public BasicWhiteLayer
 {
   public:
     GuaranteedScoreLayer(int currentScore, int currentScoreThreshold, int nextScoreThreshold);
