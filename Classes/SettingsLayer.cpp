@@ -7,7 +7,7 @@
 USING_NS_CC;
 
 SettingsLayer::SettingsLayer(const SoundSettings &soundSettings)
-    : menuHelper({{{0.5, 0.58},
+    : menuHelper({{{0.35 + 0.01, 0.65 + 0.01},
                    0.15,
                    "sound",
                    {[this](Node *node) {
@@ -20,7 +20,7 @@ SettingsLayer::SettingsLayer(const SoundSettings &soundSettings)
 
                        menuItemSprite->setNormalImage(sprite);
                    }}},
-                  {{0.5, 0.75},
+                  {{0.65 + 0.01, 0.65 - 0.01},
                    0.15,
                    "music01",
                    {[this](Node *node) {
@@ -33,6 +33,7 @@ SettingsLayer::SettingsLayer(const SoundSettings &soundSettings)
 
                        menuItemSprite->setNormalImage(sprite);
                    }}},
+                  {{0.65 - 0.01, 0.45 - 0.01}, 0.14, "about"},
                   {{0.5, 0.2}, 0.1, "back"}},
                  std::bind(&SettingsLayer::menuItemClicked, this, std::placeholders::_1)),
       soundSettings(soundSettings)
@@ -84,7 +85,11 @@ void SettingsLayer::menuItemClicked(int itemIndex)
         }
     }
 
-    if (itemIndex == 2 && gotoMainMenuCallback) {
+    if (itemIndex == 2 && gotoAboutPageCallback) {
+        gotoAboutPageCallback();
+    }
+
+    if (itemIndex == 3 && gotoMainMenuCallback) {
         gotoMainMenuCallback();
     }
 }

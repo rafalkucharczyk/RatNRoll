@@ -143,8 +143,6 @@ void GameFlow::handleInitialSceneMenu(int itemIndex)
         switchToSettingsScene();
     } else if (itemIndex == 2) {
         SonarCocosHelper::GameCenter::showLeaderboard();
-    } else if (itemIndex == 3) {
-        switchToAboutScene();
     }
 }
 
@@ -357,9 +355,10 @@ void GameFlow::switchToSettingsScene()
     auto scene = createSceneObject();
 
     auto settingsLayer = SettingsLayer::create(getSoundSettings());
-    auto iapLayer = IAPLayer::create(iapProductId, {0.5, 0.41}, 0.15);
+    auto iapLayer = IAPLayer::create(iapProductId, {0.35 - 0.02, 0.45 + 0.02}, 0.15);
 
     settingsLayer->setGotoMainMenuCallback([this]() { switchToInitialScene(); });
+    settingsLayer->setGotoAboutPageCallback([this]() { switchToAboutScene(); });
 
     iapLayer->setPurchaseCompletedCallback([]() { SonarCocosHelper::iAds::hideiAdBanner(); });
     settingsLayer->setSoundSettingsChangedCallback([this](const SoundSettings &soundSettings) {
@@ -382,7 +381,7 @@ void GameFlow::switchToAboutScene()
 
     aboutLayer->setGotoMainMenuCallback([this]() {
         getAchievementTracker().creditsExited();
-        switchToInitialScene();
+        switchToSettingsScene();
     });
 
     aboutLayer->setResetGameStateCallback([]() {

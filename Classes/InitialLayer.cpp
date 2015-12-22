@@ -6,10 +6,8 @@ USING_NS_CC;
 
 InitialLayer::InitialLayer()
     : menuHelper({{{0.5, 0.625}, 0.35, "play"},
-                  {{0.3, 0.275}, 0.1, "settings"},
-                  {{0.5, 0.275}, 0.1, "gamecenter"},
-                  {{0.7, 0.275}, 0.1, "about"}},
-
+                  {{0.35, 0.25}, 0.125, "settings"},
+                  {{0.65, 0.25}, 0.125, "gamecenter"}},
                  std::bind(&InitialLayer::itemClicked, this, std::placeholders::_1))
 {
 }

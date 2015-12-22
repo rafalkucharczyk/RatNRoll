@@ -8,6 +8,8 @@
 USING_NS_CC;
 using namespace std;
 
+// #define ABOUT_LAYER_SPECIAL_BUTTONS
+
 namespace
 {
 

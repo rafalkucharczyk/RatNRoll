@@ -22,6 +22,11 @@ class SettingsLayer : public cocos2d::Layer
         gotoMainMenuCallback = callback;
     }
 
+    void setGotoAboutPageCallback(std::function<void()> callback)
+    {
+        gotoAboutPageCallback = callback;
+    }
+
     void setSoundSettingsChangedCallback(std::function<void(const SoundSettings &)> callback)
     {
         soundSettingsChangedCallback = callback;
@@ -29,6 +34,7 @@ class SettingsLayer : public cocos2d::Layer
 
   private:
     std::function<void()> gotoMainMenuCallback;
+    std::function<void()> gotoAboutPageCallback;
     std::function<void(const SoundSettings &)> soundSettingsChangedCallback;
 
     MenuHelper menuHelper;
