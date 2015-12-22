@@ -40,6 +40,7 @@
 		25476AC01C08C3E7005DED73 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25476ABF1C08C3E7005DED73 /* iRate.bundle */; };
 		2548ADC21B8D907C00E3305D /* cheese_frenzy.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2548ADC11B8D907C00E3305D /* cheese_frenzy.plist */; };
 		25809BA11C29D15D00D4640A /* BasicWhiteLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25809B9F1C29D15D00D4640A /* BasicWhiteLayer.cpp */; };
+		25809BA41C29E1B300D4640A /* TransitionScaleChildren.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25809BA21C29E1B300D4640A /* TransitionScaleChildren.cpp */; };
 		259DE4F11C15919400AD7941 /* PostTutorialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */; };
 		259DE4F31C1DD35600AD7941 /* level_completed.plist in Resources */ = {isa = PBXBuildFile; fileRef = 259DE4F21C1DD35600AD7941 /* level_completed.plist */; };
 		25ACD8F81BA3519D00899F09 /* DigitsPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 25ACD8F61BA3519D00899F09 /* DigitsPanel.cpp */; };
@@ -232,6 +233,8 @@
 		257187D01B79C6DE00821451 /* LevelCustomization_itemsSequence.hxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCustomization_itemsSequence.hxx; sourceTree = "<group>"; };
 		25809B9F1C29D15D00D4640A /* BasicWhiteLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BasicWhiteLayer.cpp; sourceTree = "<group>"; };
 		25809BA01C29D15D00D4640A /* BasicWhiteLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicWhiteLayer.h; sourceTree = "<group>"; };
+		25809BA21C29E1B300D4640A /* TransitionScaleChildren.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TransitionScaleChildren.cpp; path = Menu/TransitionScaleChildren.cpp; sourceTree = "<group>"; };
+		25809BA31C29E1B300D4640A /* TransitionScaleChildren.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionScaleChildren.h; path = Menu/TransitionScaleChildren.h; sourceTree = "<group>"; };
 		259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PostTutorialLayer.cpp; sourceTree = "<group>"; };
 		259DE4F01C15919400AD7941 /* PostTutorialLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTutorialLayer.h; sourceTree = "<group>"; };
 		259DE4F21C1DD35600AD7941 /* level_completed.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = level_completed.plist; sourceTree = "<group>"; };
@@ -784,6 +787,8 @@
 				B57B5BE31B570BE500C98B37 /* MenuItemButton.h */,
 				25208C521C03A3C300F870A6 /* TransitionSlideChildren.cpp */,
 				25208C531C03A3C300F870A6 /* TransitionSlideChildren.h */,
+				25809BA21C29E1B300D4640A /* TransitionScaleChildren.cpp */,
+				25809BA31C29E1B300D4640A /* TransitionScaleChildren.h */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -995,6 +1000,7 @@
 				25F8B1551BD0409F00B84B96 /* AboutLayer.cpp in Sources */,
 				25D9C1841BFE462E0027336B /* FacebookLikeNode.cpp in Sources */,
 				B535EF521B1330ED004D647D /* Box2DDebugDraw.cpp in Sources */,
+				25809BA41C29E1B300D4640A /* TransitionScaleChildren.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				B55091C71B652572005A4E8B /* TutorialBalloonLayer.cpp in Sources */,
 				25B0D6701C28595800637426 /* LevelShadowRatInfoLayer.cpp in Sources */,

@@ -125,19 +125,6 @@ Vec2 BackgroundLayer::getTargetPoint(const Vec2 &startPoint, const cocos2d::Size
     return Vec2::ZERO;
 }
 
-void BackgroundLayer::scaleUpBackgroundItems()
-{
-    for (const auto &item : items) {
-        float scale = item.sprite->getScale();
-        item.sprite->setScale(0);
-        item.sprite->setVisible(false);
-
-        item.sprite->runAction(
-            Sequence::create(CallFuncN::create([](Node *node) { node->setVisible(true); }),
-                             ScaleTo::create(0.4, scale), nullptr));
-    }
-}
-
 BackgroundLayer::BackgroundItem::BackgroundItem(cocos2d::Sprite *sprite, cocos2d::Vec2 targetPoint)
     : sprite(sprite), startTime(0.0), targetPoint(targetPoint), duration(0.0)
 {
@@ -173,8 +160,6 @@ bool BackgroundLayer::init()
 
     this->addBackgroundItems(immediateFillSteps * desiredItemsCount / stepsToFill, provider);
 
-    scaleUpBackgroundItems();
-
     RandomPositionFunction randomFunctionOnEdge =
         std::bind(&BackgroundLayer::getRandomStartPointOnEdge, this, std::placeholders::_1);
     provider = std::bind(&BackgroundLayer::randomizeBackgroundItemInitialState, this,
@@ -188,15 +173,6 @@ bool BackgroundLayer::init()
                              stepsToFill - immediateFillSteps));
 
     return true;
-}
-
-void BackgroundLayer::onExitTransitionDidStart()
-{
-    Layer::onExitTransitionDidStart();
-
-    for (const auto &item : items) {
-        item.sprite->runAction(ScaleTo::create(0.1, 0));
-    }
 }
 
 void BackgroundLayer::setBackgroundItemsInitialState(

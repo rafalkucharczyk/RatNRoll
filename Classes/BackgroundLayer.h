@@ -22,7 +22,6 @@ class BackgroundLayer : public cocos2d::Layer
                     const std::string &backgroundFileName);
 
     virtual bool init();
-    void onExitTransitionDidStart();
 
     static void
     setBackgroundItemsInitialState(const BackgroundItemsInitialState &backgroundItemsInitialState);
@@ -62,8 +61,6 @@ class BackgroundLayer : public cocos2d::Layer
     cocos2d::Vec2 getRandomStartPointOnEdge(const cocos2d::Size &spriteSize);
     cocos2d::Vec2 getRandomStartPointEntireScreen(const cocos2d::Size &spriteSize);
     cocos2d::Vec2 getTargetPoint(const cocos2d::Vec2 &startPoint, const cocos2d::Size &spriteSize);
-
-    void scaleUpBackgroundItems();
 
   private:
     const float minItemsSpeed;

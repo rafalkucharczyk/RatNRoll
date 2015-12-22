@@ -28,7 +28,7 @@
 
 #include "AchievementTracker.h"
 
-#include "TransitionSlideChildren.h"
+#include "TransitionScaleChildren.h"
 
 USING_NS_CC;
 
@@ -118,7 +118,7 @@ void GameFlow::setSoundSettings(const SoundSettings &settings)
 
 void GameFlow::replaceScene(cocos2d::Scene *scene)
 {
-    Director::getInstance()->replaceScene(TransitionSlideChildren::create(0.33, scene));
+    Director::getInstance()->replaceScene(TransitionScaleChildren::create(0.15, scene));
 }
 
 void GameFlow::switchToInitialScene()
