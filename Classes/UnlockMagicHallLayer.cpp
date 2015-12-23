@@ -29,7 +29,7 @@ bool UnlockMagicHallLayer::init()
                                "FOR A FEW SECONDS",
                                {0.5, 0.45}, 0.03));
 
-    addChild(MenuLabel::create("THE PURCHASE ALSO\n"
+    addChild(MenuLabel::create("THE PURCHASE\n"
                                "REMOVES ALL ADS",
                                {0.5, 0.32}, 0.02));
 

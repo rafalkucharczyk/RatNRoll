@@ -22,7 +22,7 @@ std::map<TutorialBalloonLayer::BalloonType, std::list<TutorialScreen>> tutorialS
        "YOURSELF ON TOP OF IT.\n"
        "THE MORE YOU ROLL,\n"
        "THE MORE YOU SCORE!\n\n"
-       "OH... AND REMEMBER TO\n"
+       "OH! AND REMEMBER TO\n"
        "ALWAYS ROLL CLOCKWISE,\n"
        "YOU GET NOTHING OTHERWISE",
        0.4}}},
@@ -45,7 +45,7 @@ std::map<TutorialBalloonLayer::BalloonType, std::list<TutorialScreen>> tutorialS
     {TutorialBalloonLayer::BalloonType::HOVER,
      {{"tutorial04.x",
        {0.25, 0.68},
-       "A GOOSE MAKES YOU FLY FOR\n"
+       "A BIRD MAKES YOU FLY FOR\n"
        "A LITTLE WHILE,\n"
        "SO YOU CAN ROLL THE WORLD\n"
        "AS FAST AS YOU CAN!\n\n"

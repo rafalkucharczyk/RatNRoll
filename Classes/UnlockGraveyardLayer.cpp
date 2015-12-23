@@ -31,7 +31,7 @@ bool UnlockGraveyardLayer::init(bool unlockingEnabled)
         menuHelper.runActionFor(0, 1);
     }
 
-    addChild(MenuLabel::create("SCORE 10.000 POINTS\n"
+    addChild(MenuLabel::create("SCORE 10000 POINTS\n"
                                "TO UNLOCK THIS LEVEL",
                                {0.5, 0.9}, 0.03));
 
@@ -44,13 +44,11 @@ bool UnlockGraveyardLayer::init(bool unlockingEnabled)
     helmetSprite->runAction(
         RepeatForever::create(Sequence::create(scaleAction, scaleAction->reverse(), nullptr)));
 
-    addChild(MenuLabel::create("HELMET\n"
+    addChild(MenuLabel::create("HELMET\n\n"
                                "PROTECTS YOU AGAINST SKULLS",
                                {0.5, 0.47}, 0.03));
 
-    addChild(MenuLabel::create("HAVING FUN WITH RAT'N'ROLL?\n"
-                               "LIKE US!",
-                               {0.5, 0.37}, 0.02));
+    addChild(MenuLabel::create("HAVING FUN? LIKE US!", {0.5, 0.35}, 0.02));
 
     facebookLikeNode = FacebookLikeNode::create("1775466602680654", {0.5, 0.31}, 0);
     addChild(facebookLikeNode);
