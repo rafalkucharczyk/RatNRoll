@@ -85,7 +85,7 @@ std::pair<int, int> LevelBase::getFixedScoreThresholdForGameScore(int gameScore)
 
 LevelTutorial::LevelTutorial()
     : canDropNewItem(true), currentItemIndex(0), cogwheelHelper(new CogwheelHelper()),
-      tracker(nullptr)
+      tracker(nullptr), showOverlayAction(nullptr)
 {
     for (int i = static_cast<int>(TutorialBalloonLayer::BalloonType::SPEEDUP);
          i < static_cast<int>(TutorialBalloonLayer::BalloonType::MAX_TYPE_COUNT); i++) {
@@ -97,6 +97,13 @@ LevelTutorial::LevelTutorial()
         } else {
             break;
         }
+    }
+}
+
+LevelTutorial::~LevelTutorial()
+{
+    if (showOverlayAction) {
+        showOverlayAction->release();
     }
 }
 
@@ -148,7 +155,11 @@ LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonTyp
     shownBalloons.insert(std::make_pair(balloonType, 1));
     notifyTutorialCompletedAchievement();
 
-    return Sequence::create(
+    if (showOverlayAction != nullptr) {
+        showOverlayAction->release();
+    }
+
+    showOverlayAction = Sequence::create(
         CallFunc::create([levelLayerProxy]() { levelLayerProxy->pause(); }),
         CallFunc::create([=]() {
             levelLayerProxy->addOverlayingLayer(TutorialBalloonLayer::create(balloonType, [=]() {
@@ -161,6 +172,9 @@ LevelTutorial::spawnTutorialBalloon(TutorialBalloonLayer::BalloonType balloonTyp
             }));
         }),
         nullptr);
+
+    showOverlayAction->retain();
+    return showOverlayAction;
 }
 
 void LevelTutorial::notifyTutorialCompletedAchievement()

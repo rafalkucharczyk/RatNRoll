@@ -310,6 +310,7 @@ Keychain API expects as a validly constructed container class.
         noErr) {
         // First we need the attributes from the Keychain.
         updateItem = [NSMutableDictionary dictionaryWithDictionary:attributes];
+        [attributes release];
         // Second we need to add the appropriate search key/values.
         [updateItem setObject:[genericPasswordQuery objectForKey:(id)kSecClass]
                        forKey:(id)kSecClass];

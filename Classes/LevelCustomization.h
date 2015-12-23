@@ -123,6 +123,7 @@ class LevelTutorial : public LevelCustomization
 {
   public:
     LevelTutorial();
+    ~LevelTutorial();
 
     std::string getRubeJsonFileName() const override { return "level_01.json"; };
 
@@ -207,6 +208,8 @@ class LevelTutorial : public LevelCustomization
     std::shared_ptr<CogwheelHelper> cogwheelHelper;
 
     AchievementTracker *tracker;
+
+    cocos2d::FiniteTimeAction *showOverlayAction;
 };
 
 class LevelBase : public LevelCustomization

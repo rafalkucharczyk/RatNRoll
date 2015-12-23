@@ -83,6 +83,8 @@ static InAppPurchaseWrapper *wrapper = nil;
     } else if (!product) {
         [self sendNotification:InAppPurchase::error withMessage:"Product not valid."];
     }
+
+    [request release];
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error
@@ -233,6 +235,7 @@ static InAppPurchaseWrapper *wrapper = nil;
         [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
         [numberFormatter setLocale:product.priceLocale];
         price = [numberFormatter stringFromNumber:product.price];
+        [numberFormatter release];
     }
 
     return price;

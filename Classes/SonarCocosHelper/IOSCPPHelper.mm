@@ -136,8 +136,8 @@ namespace {
 
     std::map<std::string, SonarCocosHelper::GameCenterPlayersScores> friendsBestScores;
 
-    std::map<std::string, Sprite*> friendsPhotos;
-    Sprite *placeholderFriendPhoto = nullptr;
+    std::map<std::string, std::shared_ptr<Sprite> > friendsPhotos;
+    std::shared_ptr<Sprite> placeholderFriendPhoto = nullptr;
 
     std::string NSString2string(NSString *str)
     {
@@ -190,6 +190,8 @@ namespace {
         [layer renderInContext:UIGraphicsGetCurrentContext()];
         UIImage *roundedImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
+
+        [imageView release];
 
         return roundedImage;
     }
@@ -266,8 +268,10 @@ SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBest
         if (!placeholderFriendPhoto)
         {
             UIImage *photo = [UIImage imageNamed:@"gcPlaceholderFriendPhoto.png"];
-            placeholderFriendPhoto = getCCSpriteFromUIImage(maskRoundedImage(photo));
-            placeholderFriendPhoto->retain();
+            Sprite *sprite = getCCSpriteFromUIImage(maskRoundedImage(photo));
+            sprite->retain();
+
+            placeholderFriendPhoto = std::shared_ptr<Sprite>(sprite, std::mem_fun(&Sprite::release));
         }
 
         for (GKScore* score in friendsScores) {
@@ -280,7 +284,8 @@ SonarCocosHelper::GameCenterPlayersScores IOSCPPHelper::gameCenterGetFriendsBest
                 {
                     Sprite *sprite = getCCSpriteFromUIImage(maskRoundedImage(photo));
                     sprite->retain();
-                    friendsPhotos[NSString2string([[score player] alias])] = sprite;
+                    friendsPhotos[NSString2string([[score player] alias])] =
+                        std::shared_ptr<Sprite>(sprite, std::mem_fun(&Sprite::release));;
                 }
             }];
 
@@ -305,10 +310,10 @@ void IOSCPPHelper::gameCenterClearCurrentChallenge()
 
 cocos2d::Sprite *IOSCPPHelper::getImageForPlayer(__String playerName)
 {
-    Sprite *sprite = placeholderFriendPhoto;
+    Sprite *sprite = placeholderFriendPhoto.get();
 
     if (friendsPhotos.find(playerName.getCString()) != friendsPhotos.end()) {
-        sprite = friendsPhotos[playerName.getCString()];
+        sprite = friendsPhotos[playerName.getCString()].get();
     }
 
     if (sprite) {

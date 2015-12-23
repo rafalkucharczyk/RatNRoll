@@ -743,7 +743,6 @@ void LevelLayer::runCustomActionOnStart()
         levelCustomization->levelStartedCallback(levelLayerProxy, achievementTracker);
 
     if (customAction) {
-        customAction->retain();
         scheduleOnce([this, customAction](float t) { runAction(customAction); }, 0.2,
                      "customStartAction");
     } else {
