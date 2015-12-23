@@ -33,7 +33,7 @@ vector<AboutEntry> aboutEntries = {
 }
 
 AboutLayer::AboutLayer()
-    : menuHelper({{{0.5, 0.1}, 0.1, "back", {MenuHelper::removeTransparency()}},
+    : menuHelper({{{0.5, 0.15}, 0.1, "back", {MenuHelper::removeTransparency()}},
 #ifdef ABOUT_LAYER_SPECIAL_BUTTONS
                   {{0.9, 0.2}, 0.1, "play"},
                   {{0.9, 0.3}, 0.1, "settings"}
@@ -73,7 +73,7 @@ float AboutLayer::getTotalHeightOfAboutEntries()
 
 Layer *AboutLayer::composeScrollableLayer()
 {
-    const float trailingVerticalHeight = 0.2;
+    const float trailingVerticalHeight = 0.25;
 
     float totalHeight = getTotalHeightOfAboutEntries();
 
