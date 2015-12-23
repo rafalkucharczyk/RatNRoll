@@ -181,4 +181,4 @@ class LevelLayer : public RUBELayer
     static constexpr int gameCompletedScore = 999999;
 };
 
-#endif // __LEVEL_SCENE_H__
+#endif // __LEVEL_LAYER_H__
