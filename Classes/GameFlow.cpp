@@ -118,7 +118,7 @@ void GameFlow::setSoundSettings(const SoundSettings &settings)
 
 void GameFlow::replaceScene(cocos2d::Scene *scene)
 {
-    Director::getInstance()->replaceScene(TransitionScaleChildren::create(0.15, scene));
+    Director::getInstance()->replaceScene(TransitionScaleChildren::create(0.175, scene));
 }
 
 void GameFlow::switchToInitialScene()

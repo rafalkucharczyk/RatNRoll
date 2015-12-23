@@ -744,7 +744,7 @@ void LevelLayer::runCustomActionOnStart()
 
     if (customAction) {
         customAction->retain();
-        scheduleOnce([this, customAction](float t) { runAction(customAction); }, 0.05,
+        scheduleOnce([this, customAction](float t) { runAction(customAction); }, 0.2,
                      "customStartAction");
     } else {
         scheduleOnce([this](float t) { startDroppingItems(); }, 0.5, "customStartAction");
@@ -1101,13 +1101,6 @@ void LevelLayer::initScoreLabel(int score)
 
     float f = getAnySpriteOnBody(earthBody)->getScale();
     scoreLabel->setScale(0.35 * f);
-
-    auto scaleAction = ScaleBy::create(0.15, 1.25);
-    auto reversedScaleAction = scaleAction->reverse();
-    reversedScaleAction->setDuration(2);
-    // bounce effect
-    scoreLabel->runAction(Sequence::create(DelayTime::create(0.25), scaleAction,
-                                           EaseElasticOut::create(reversedScaleAction), nullptr));
 
     b2Vec2 pos = earthBody->GetWorldCenter();
     scoreLabel->setPosition(pos.x, pos.y);
