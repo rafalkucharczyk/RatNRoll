@@ -199,6 +199,8 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     srand(1); // random, but always the same...
 
     auto levelCustomization = getLevelCustomization(levelNumber);
+    std::string bgPlaneName = currentBackgroundPlaneName;
+    std::list<std::string> bgItemNames = currentBackgroundItemNames;
 
     setBackgroundDetails(levelCustomization->getBgPlaneName(),
                          levelCustomization->getBgItemNames());
@@ -234,8 +236,10 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     currentLevelNumber = levelNumber;
     scene->addChild(levelLayer);
 
-    blockLevel(*scene, *levelLayer, levelNumber,
-               scores.size() ? scores.front() : SonarCocosHelper::GameCenterPlayerScore());
+    if (blockLevel(*scene, *levelLayer, levelNumber,
+                   scores.size() ? scores.front() : SonarCocosHelper::GameCenterPlayerScore())) {
+        setBackgroundDetails(bgPlaneName, bgItemNames);
+    }
 
     levelLayer->setBackgroundSpeedFunction(
         std::bind(&BackgroundLayer::setSpeed, backgroundLayer, std::placeholders::_1));
@@ -257,7 +261,7 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     }
 }
 
-void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
+bool GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
                           const SonarCocosHelper::GameCenterPlayerScore &score)
 {
     Layer *actionLayer = nullptr;
@@ -296,7 +300,11 @@ void GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
         levelBlockerLayer->addChild(actionLayer);
 
         scene.addChild(levelBlockerLayer);
+
+        return true;
     }
+
+    return false;
 }
 
 void GameFlow::switchToPostLevelScene(int score)
