@@ -655,6 +655,11 @@ void LevelLayer::onExit()
 {
     RUBELayer::onExit();
     removeOutstandingItems();
+
+    for (auto i = itemsBodies.begin(); i != itemsBodies.end(); i++) {
+        DropItemUserData *itemData = static_cast<DropItemUserData *>((*i)->GetUserData());
+        delete itemData;
+    }
 }
 
 void LevelLayer::pauseLevel()
