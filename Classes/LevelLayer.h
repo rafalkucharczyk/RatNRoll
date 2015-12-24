@@ -77,6 +77,8 @@ class LevelLayer : public RUBELayer
 
     static const int proxyOverlayLayerTag = 1111;
 
+    void playBackgroundMusic(float crossFadeDuration = 1.0) const;
+
   private:
     void runCustomActionOnStart();
     void startDroppingItems();

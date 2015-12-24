@@ -736,6 +736,12 @@ std::pair<int, int> LevelLayer::getFixedScoreThresholdForGameScore(int gameScore
     return levelCustomization->getFixedScoreThresholdForGameScore(gameScore);
 }
 
+void LevelLayer::playBackgroundMusic(float crossFadeDuration) const
+{
+    SoundHelper::getInstance().playBackgroundMusicCrossfade(
+        levelCustomization->getBackgroundMusicAsset(), crossFadeDuration);
+}
+
 void LevelLayer::runCustomActionOnStart()
 {
     std::shared_ptr<LevelLayerProxyImpl> levelLayerProxy(new LevelLayerProxyImpl(*this, nullptr));
@@ -962,6 +968,11 @@ void LevelLayer::speedUpItemEaten()
     if (std::isgreaterequal(ratSpeed, levelCustomization->getRatSpeedMax())) {
         achievementTracker.maxSpeedReached();
     }
+
+    if (std::isgreaterequal(ratSpeed, levelCustomization->getRatSpeedMax() -
+                                          levelCustomization->getRatSpeedStep())) {
+        SoundHelper::getInstance().playBackgroundMusic("fast_rocknroll");
+    }
 }
 
 void LevelLayer::slowDownItemEaten()
@@ -974,6 +985,11 @@ void LevelLayer::slowDownItemEaten()
 
     if (!isHovering) {
         animationHelper->playRunningAnimation(ratSpeed);
+    }
+
+    if (std::isless(ratSpeed,
+                    levelCustomization->getRatSpeedMax() - levelCustomization->getRatSpeedStep())) {
+        playBackgroundMusic(0.25);
     }
 }
 
@@ -1030,6 +1046,8 @@ void LevelLayer::breakItemEaten()
     if (!isHovering) {
         animationHelper->playRunningAnimation(ratSpeed);
     }
+
+    playBackgroundMusic(0.25);
 }
 
 void LevelLayer::frenzyItemEaten()

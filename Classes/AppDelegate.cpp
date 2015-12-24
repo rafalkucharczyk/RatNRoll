@@ -58,7 +58,8 @@ bool AppDelegate::applicationDidFinishLaunching()
             [] { GameFlow::getInstance().resumeGame(); });
     }
 
-    SoundHelper::getInstance().init(GameFlow::getInstance().getSoundSettings());
+    SoundHelper::getInstance().configure(GameFlow::getInstance().getSoundSettings());
+    SoundHelper::getInstance().playBackgroundMusic("cheese_factory");
 
     auto scene = GameFlow::getInstance().createPreloadingScene();
 

@@ -3,10 +3,12 @@
 #include <string>
 #include <map>
 
-#include "SimpleAudioEngine.h"
-#include "cocos/base/ccRandom.h"
+#include <audio/include/AudioEngine.h>
+#include <cocos/base/ccRandom.h>
 
-#include "cocos2d.h"
+#include <thread>
+
+using namespace cocos2d::experimental;
 
 const float SoundSettings::effectsVolume;
 const float SoundSettings::musicVolume;
@@ -24,6 +26,8 @@ std::map<LevelCustomization::ItemType, SfxItem> itemType2SfxItem = {
     {LevelCustomization::FRENZY, {"frenzy", 3}},   {LevelCustomization::SHIELD, {"helmet", 3}},
     {LevelCustomization::HOVER, {"hover", 3}},
 };
+
+std::string getAssetFileName(const std::string &asset) { return "sounds/" + asset + ".mp3"; }
 }
 
 SoundHelper *SoundHelper::instance = nullptr;
@@ -37,35 +41,44 @@ SoundHelper &SoundHelper::getInstance()
     return *instance;
 }
 
-SoundHelper::SoundHelper()
-    : effectsEnabled(true), nextEffectTime(std::chrono::system_clock::from_time_t(0))
+SoundHelper::SoundHelper() : currentBackgroundMusicEffectId(AudioEngine::INVALID_AUDIO_ID) {}
+
+void SoundHelper::configure(const SoundSettings &soundSettings)
 {
-}
+    const int steps = 10;
 
-void SoundHelper::init(const SoundSettings &soundSettings)
-{
-    using namespace CocosDenshion;
+    const float durationInSeconds = 0.5;
 
-    SimpleAudioEngine *audioEngine = SimpleAudioEngine::getInstance();
+    const float delay = durationInSeconds / steps;
+    const float delta = currentSettings.musicVolume / steps;
 
-    if (soundSettings.effectsEnabled) {
-        audioEngine->resumeAllEffects();
-        audioEngine->preloadEffect("sounds/burger01.wav");
-        audioEngine->setEffectsVolume(soundSettings.effectsVolume);
-    } else {
-        audioEngine->stopAllEffects();
-    }
-    effectsEnabled = soundSettings.effectsEnabled;
+    if (soundSettings.musicEnabled != currentSettings.musicEnabled) {
+        if (!soundSettings.musicEnabled) {
+            std::thread t([=]() {
+                for (int i = 1; i <= steps; i++) {
+                    AudioEngine::setVolume(currentBackgroundMusicEffectId,
+                                           currentSettings.musicVolume - i * delta);
+                    usleep(delay * 1E6);
+                }
+                AudioEngine::pause(currentBackgroundMusicEffectId);
+            });
 
-    if (soundSettings.musicEnabled) {
-        audioEngine->resumeBackgroundMusic();
-        if (!audioEngine->isBackgroundMusicPlaying()) {
-            audioEngine->playBackgroundMusic("sounds/background01.mp3", true);
+            t.detach();
+        } else {
+            std::thread t([=]() {
+                AudioEngine::resume(currentBackgroundMusicEffectId);
+
+                for (int i = 1; i <= steps; i++) {
+                    AudioEngine::setVolume(currentBackgroundMusicEffectId, i * delta);
+                    usleep(delay * 1E6);
+                }
+            });
+
+            t.detach();
         }
-        audioEngine->setBackgroundMusicVolume(soundSettings.musicVolume);
-    } else {
-        audioEngine->stopBackgroundMusic();
     }
+
+    currentSettings = soundSettings;
 }
 
 void SoundHelper::playEffectForItem(LevelCustomization::ItemType itemType)
@@ -83,27 +96,66 @@ void SoundHelper::playBestScoreBeatenEffect() { playOneEffect("rec_beaten", 7); 
 
 void SoundHelper::playBestScoreNotBeatenEffect() { playOneEffect("rec_failed", 7); }
 
-void SoundHelper::playOneEffect(const std::string namePrefix, int maxCount)
+void SoundHelper::playBackgroundMusic(const std::string &musicFile)
 {
-    if (!effectsEnabled) {
+    if (musicFile == currentBackgroundMusicAsset) {
         return;
     }
 
-    using namespace std::chrono;
+    AudioEngine::stop(currentBackgroundMusicEffectId);
+    currentBackgroundMusicAsset = musicFile;
+    currentBackgroundMusicEffectId = AudioEngine::play2d(getAssetFileName(musicFile), true, 0);
 
-    if (system_clock::now() < nextEffectTime) {
-        return; // previous effect still in progress, skip this one
+    if (!currentSettings.musicEnabled) {
+        AudioEngine::pause(currentBackgroundMusicEffectId);
+    } else {
+        AudioEngine::setVolume(currentBackgroundMusicEffectId, currentSettings.musicVolume);
+    }
+}
+
+void SoundHelper::playBackgroundMusicCrossfade(const std::string &musicFile,
+                                               float durationInSeconds)
+{
+    if (!currentSettings.musicEnabled) {
+        playBackgroundMusic(musicFile);
+        return;
+    }
+
+    if (musicFile == currentBackgroundMusicAsset) {
+        return;
+    }
+
+    std::thread t([this, musicFile, durationInSeconds]() {
+        const int steps = 10;
+
+        float delay = durationInSeconds / steps;
+        float delta = currentSettings.musicVolume / steps;
+
+        int newBackgroundMusicId = AudioEngine::play2d(getAssetFileName(musicFile), true, 0);
+
+        for (int i = 1; i <= steps; i++) {
+            AudioEngine::setVolume(currentBackgroundMusicEffectId,
+                                   currentSettings.musicVolume - i * delta);
+            AudioEngine::setVolume(newBackgroundMusicId, i * delta);
+            usleep(delay * 1E6);
+        }
+        AudioEngine::stop(currentBackgroundMusicEffectId);
+
+        currentBackgroundMusicEffectId = newBackgroundMusicId;
+        currentBackgroundMusicAsset = musicFile;
+    });
+
+    t.detach();
+}
+
+void SoundHelper::playOneEffect(const std::string namePrefix, int maxCount)
+{
+    if (!currentSettings.effectsEnabled) {
+        return;
     }
 
     int soundId = cocos2d::random(1, maxCount);
     std::string wavFileName = "sounds/" + namePrefix + "0" + std::to_string(soundId) + ".wav";
 
-    float effectDuration =
-        CocosDenshion::SimpleAudioEngine::getInstance()->getEffectDuration(wavFileName.c_str());
-
-    effectDuration *= 1.5; // increase the duration to have longer periods between sounds
-
-    nextEffectTime = system_clock::now() + duration_cast<seconds>(duration<float>(effectDuration));
-
-    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(wavFileName.c_str());
+    AudioEngine::play2d(wavFileName, false, currentSettings.effectsVolume);
 }

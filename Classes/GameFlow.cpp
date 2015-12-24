@@ -236,8 +236,11 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     currentLevelNumber = levelNumber;
     scene->addChild(levelLayer);
 
-    if (blockLevel(*scene, *levelLayer, levelNumber,
-                   scores.size() ? scores.front() : SonarCocosHelper::GameCenterPlayerScore())) {
+    bool levelBlocked =
+        blockLevel(*scene, *levelLayer, levelNumber,
+                   scores.size() ? scores.front() : SonarCocosHelper::GameCenterPlayerScore());
+
+    if (levelBlocked) {
         setBackgroundDetails(bgPlaneName, bgItemNames);
     }
 
@@ -253,11 +256,19 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
         Director::getInstance()->replaceScene(scene);
         levelLayer->setGameFinishedCallback(std::bind(&GameFlow::switchToPostTutorialScene, this));
     } else {
-        levelLayer->setGameCompletedCallback(
-            std::bind(&GameFlow::overlayGameCompletedScene, this, levelLayer));
-        levelLayer->setGameFinishedCallback(
-            [this](int score) { this->switchToPostLevelScene(score); });
+        levelLayer->setGameCompletedCallback([this, levelLayer]() {
+            this->overlayGameCompletedScene(levelLayer);
+            levelLayer->playBackgroundMusic();
+        });
+        levelLayer->setGameFinishedCallback([this, levelLayer](int score) {
+            this->switchToPostLevelScene(score);
+            levelLayer->playBackgroundMusic();
+        });
         replaceScene(scene);
+    }
+
+    if (!levelBlocked) {
+        levelLayer->playBackgroundMusic();
     }
 }
 
@@ -274,9 +285,10 @@ bool GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
         auto layer = Layer::create();
 
         auto unlockGraveyardLayer = UnlockGraveyardLayer::create(getBestScore(1, 0) >= 10000);
-        unlockGraveyardLayer->setLikingCompletedCallback([levelBlockerLayer]() {
+        unlockGraveyardLayer->setLikingCompletedCallback([levelBlockerLayer, &levelLayer]() {
             levelBlockerLayer->unblock();
             PermanentStorage::getInstance().setLikingState(true);
+            levelLayer.playBackgroundMusic();
         });
         layer->addChild(unlockGraveyardLayer);
         layer->setCascadeOpacityEnabled(true);
@@ -286,9 +298,10 @@ bool GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
 
     if (levelNumber == 3 && !iapPurchaseCompleted()) {
         auto iapLayer = IAPLayer::create(iapProductId, {0.5, 0.78}, 0.15);
-        iapLayer->setPurchaseCompletedCallback([levelBlockerLayer]() {
+        iapLayer->setPurchaseCompletedCallback([levelBlockerLayer, &levelLayer]() {
             levelBlockerLayer->unblock();
             SonarCocosHelper::iAds::hideiAdBanner();
+            levelLayer.playBackgroundMusic();
         });
         auto unlockMagicHallLayer = UnlockMagicHallLayer::create();
         iapLayer->addChild(unlockMagicHallLayer);
@@ -370,7 +383,7 @@ void GameFlow::switchToSettingsScene()
 
     iapLayer->setPurchaseCompletedCallback([]() { SonarCocosHelper::iAds::hideiAdBanner(); });
     settingsLayer->setSoundSettingsChangedCallback([this](const SoundSettings &soundSettings) {
-        SoundHelper::getInstance().init(soundSettings);
+        SoundHelper::getInstance().configure(soundSettings);
         setSoundSettings(soundSettings);
     });
     scene->addChild(iapLayer);

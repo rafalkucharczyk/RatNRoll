@@ -5,8 +5,6 @@
 
 #include "MenuHelper.h"
 
-#include <chrono>
-
 struct SoundSettings {
   public:
     SoundSettings() : effectsEnabled(true), musicEnabled(true) {}
@@ -16,7 +14,7 @@ struct SoundSettings {
     bool musicEnabled;
 
     constexpr static float effectsVolume = 0.5;
-    constexpr static float musicVolume = 0.1;
+    constexpr static float musicVolume = 0.25;
 };
 
 class SoundHelper
@@ -24,19 +22,23 @@ class SoundHelper
   public:
     static SoundHelper &getInstance();
 
-    void init(const SoundSettings &soundSettings);
+    void configure(const SoundSettings &soundSettings);
 
     void playEffectForItem(LevelCustomization::ItemType itemType);
 
     void playBestScoreBeatenEffect();
     void playBestScoreNotBeatenEffect();
 
+    void playBackgroundMusic(const std::string &musicFile);
+    void playBackgroundMusicCrossfade(const std::string &musicFile, float durationInSeconds);
+
   private:
     void playOneEffect(const std::string namePrefix, int maxCount);
 
-    bool effectsEnabled;
+    SoundSettings currentSettings;
 
-    std::chrono::time_point<std::chrono::system_clock> nextEffectTime;
+    int currentBackgroundMusicEffectId;
+    std::string currentBackgroundMusicAsset;
 
   private:
     SoundHelper();

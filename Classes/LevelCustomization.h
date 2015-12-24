@@ -99,6 +99,8 @@ class LevelCustomization
         return nullptr;
     };
 
+    virtual std::string getBackgroundMusicAsset() const = 0;
+
   protected:
     bool isItemPositive(ItemType itemType)
     {
@@ -169,6 +171,8 @@ class LevelTutorial : public LevelCustomization
     {
         return spawnTutorialBalloon(itemTypeToBalloonType(itemType), levelLayerProxy);
     }
+
+    std::string getBackgroundMusicAsset() const { return "cheese_factory"; }
 
   private:
     cocos2d::FiniteTimeAction *
@@ -319,6 +323,8 @@ class Level01 : public LevelBase
     std::string getBgPlaneName() const { return "bg_plane01"; }
     std::list<std::string> getBgItemNames() const { return {"bg_item01"}; }
 
+    std::string getBackgroundMusicAsset() const { return "cheese_factory"; }
+
     void additionalAfterLoadProcessing(b2dJson *json);
     void customPhysicsStep(b2Body *earthBody);
 
@@ -333,6 +339,9 @@ class Level02 : public LevelBase
     std::string getRubeJsonFileName() const override { return "level_02.json"; }
     std::string getBgPlaneName() const { return "bg_plane02"; }
     std::list<std::string> getBgItemNames() const { return {"bg_item02"}; }
+
+    std::string getBackgroundMusicAsset() const { return "graveyard"; }
+
     ItemProps getItemProps(LevelCustomization::ItemType itemType) const override;
 };
 
@@ -346,6 +355,9 @@ class Level03 : public LevelBase
     {
         return {"bg_item03", "bg_item03_1", "bg_item03_2", "bg_item03_3"};
     }
+
+    std::string getBackgroundMusicAsset() const { return "magic_hall"; }
+
     ItemProps getItemProps(LevelCustomization::ItemType itemType) const override;
 };
 
