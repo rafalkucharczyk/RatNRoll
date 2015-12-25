@@ -92,9 +92,6 @@ class GameFlow
     AchievementTracker &getAchievementTracker() const;
 
   private:
-    std::string getSocialShareMessage(int score);
-
-  private:
     static const std::string iapProductId;
 
   private:

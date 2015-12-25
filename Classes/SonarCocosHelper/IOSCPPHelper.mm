@@ -112,19 +112,23 @@ void IOSCPPHelper::showChartboostVideoAd( )
 #endif
 
 #if SCH_IS_SOCIAL_ENABLED == true
-void IOSCPPHelper::shareViaFacebook( __String message, __String thumbnailPath )
+void IOSCPPHelper::shareLinkViaFacebook(__String linkUrl, __String imageUrl,
+                                        __String title, __String description)
 {
-    [[IOSHelper instance] shareViaFacebook:[NSString stringWithCString:message.getCString( ) encoding:NSUTF8StringEncoding]: [NSString stringWithCString:thumbnailPath.getCString( ) encoding:NSUTF8StringEncoding]];
+    [[IOSHelper instance] shareLinkViaFacebook:string2NSString(linkUrl)
+                                  withImageUrl:string2NSString(imageUrl)
+                                      andTitle:string2NSString(title)
+                                andDescription:string2NSString(description)];
 }
 
 void IOSCPPHelper::shareViaTwitter( __String message, __String thumbnailPath )
 {
-    [[IOSHelper instance] shareViaTwitter:[NSString stringWithCString:message.getCString( ) encoding:NSUTF8StringEncoding]: [NSString stringWithCString:thumbnailPath.getCString( ) encoding:NSUTF8StringEncoding]];
+    [[IOSHelper instance] shareViaTwitter:string2NSString(message) andImage:string2NSString(thumbnailPath)];
 }
 
 void IOSCPPHelper::shareWithString( __String message, __String thumbnailPath )
 {
-    [[IOSHelper instance] shareWithString:[NSString stringWithCString:message.getCString( ) encoding:NSUTF8StringEncoding]: [NSString stringWithCString:thumbnailPath.getCString( ) encoding:NSUTF8StringEncoding]];
+    [[IOSHelper instance] shareWithString:string2NSString(message) andImage:string2NSString(thumbnailPath)];
 }
 #endif
 

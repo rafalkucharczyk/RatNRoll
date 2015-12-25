@@ -215,7 +215,7 @@ void Facebook::Share(const char *name, const char *link, const char *description
                                          caption, imagePath);
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #if SCH_IS_SOCIAL_ENABLED == true
-    IOSCPPHelper::shareViaFacebook(description, imagePath);
+    IOSCPPHelper::shareLinkViaFacebook(link, imagePath, caption, description);
 #endif
 #endif
 }

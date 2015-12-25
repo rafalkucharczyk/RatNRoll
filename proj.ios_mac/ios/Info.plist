@@ -55,6 +55,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb546032068883901</string>
+				<string>ratnroll</string>
 			</array>
 		</dict>
 	</array>

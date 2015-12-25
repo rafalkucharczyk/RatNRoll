@@ -27,6 +27,7 @@
 
 #if SCH_IS_SOCIAL_ENABLED == true || SCH_IS_GAME_CENTER_ENABLED == true
     #import <Social/Social.h>
+    #import <FBSDKShareKit/FBSDKShareKit.h>
 #endif
 
 @interface IOSHelper ( )
@@ -351,22 +352,25 @@ SCHEmptyProtocol
 #endif
 
 #if SCH_IS_SOCIAL_ENABLED == true
-// share to facebook (requires the message to be sent and the image path, both of which can be empty strings)
--( void )shareViaFacebook: ( NSString * ) message: ( NSString * ) imagePath
+-( void )shareLinkViaFacebook:(NSString*)linkUrl withImageUrl:(NSString*)imageUrl
+                     andTitle:(NSString*)title andDescription:(NSString*)description
 {
-    SLComposeViewController *slVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-    [slVC addImage:[UIImage imageNamed:imagePath]];
-    [slVC setInitialText:message];
-    slVC.completionHandler = ^( SLComposeViewControllerResult result )
-    {
-        [localViewController dismissViewControllerAnimated:YES completion:NULL];
-    };
-    
-    [localViewController presentViewController:slVC animated:YES completion:NULL];
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:linkUrl];
+    content.imageURL = [NSURL URLWithString:imageUrl];
+    content.contentTitle = title;
+    content.contentDescription = description;
+
+    FBSDKShareDialog* dialog = [[FBSDKShareDialog alloc] init];
+    dialog.mode = FBSDKShareDialogModeFeedBrowser;
+    dialog.shareContent = content;
+    dialog.fromViewController = localViewController;
+
+    [dialog show];
 }
 
 // share to twitter (requires the message to be sent and the image path, both of which can be empty strings)
--( void )shareViaTwitter: ( NSString * ) message: ( NSString * ) imagePath
+-( void )shareViaTwitter:(NSString*)message andImage:(NSString*)imagePath
 {
     SLComposeViewController *slVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
     [slVC addImage:[UIImage imageNamed:imagePath]];
@@ -379,7 +383,7 @@ SCHEmptyProtocol
     [localViewController presentViewController:slVC animated:YES completion:NULL];
 }
 
--( void )shareWithString:( NSString *) message: ( NSString * ) imagePath
+-( void )shareWithString:(NSString*)message andImage:(NSString*)imagePath
 {
     //UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfFile:imagePath]];
     UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[message, imagePath] applicationActivities:nil];

@@ -203,9 +203,12 @@ typedef void (*GameCenterChallengeCallback)(GKScoreChallenge *);
 #endif
 
 #if SCH_IS_SOCIAL_ENABLED == true
-- (void)shareViaFacebook:(NSString *)message:(NSString *)imagePath;
-- (void)shareViaTwitter:(NSString *)message:(NSString *)imagePath;
-- (void)shareWithString:(NSString *)message:(NSString *)imagePath;
+- (void)shareLinkViaFacebook:(NSString *)linkUrl
+                withImageUrl:(NSString *)imageUrl
+                    andTitle:(NSString *)title
+              andDescription:(NSString *)description;
+- (void)shareViaTwitter:(NSString *)message andImage:(NSString *)imagePath;
+- (void)shareWithString:(NSString *)message andImage:(NSString *)imagePath;
 #endif
 
 #if SCH_IS_GAME_CENTER_ENABLED == true

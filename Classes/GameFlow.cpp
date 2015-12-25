@@ -32,6 +32,38 @@
 
 USING_NS_CC;
 
+class SocialSharingHelper
+{
+  public:
+    static void shareOnFacebook()
+    {
+        SonarCocosHelper::Facebook::Share(
+            nullptr, "https://fb.me/561512307335877",
+            "Meet not-so-adorable rat running in the rhythm of rock’n’roll!", "Rat'n'roll for iOS",
+            imageLink.c_str());
+    };
+
+    static void shareOnTwitter(int score)
+    {
+        SonarCocosHelper::Twitter::Tweet(getSocialShareMessage(score).c_str(), nullptr, "");
+    };
+
+    static std::string getSocialShareMessage(int score)
+    {
+        std::ostringstream os;
+        os << "Played RatNRoll for iOS and scored " << score << " points!" << std::endl
+           << "https://itunes.apple.com/us/app/ratnroll/id1000398088";
+
+        return os.str();
+    }
+
+  private:
+    static const std::string imageLink;
+};
+
+// http://rafalkucharczyk.github.io/RatNRoll/sharing_image.png
+const std::string SocialSharingHelper::imageLink = "http://bit.ly/1Pou3dT";
+
 const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
 
 GameFlow *GameFlow::instance = nullptr;
@@ -335,12 +367,11 @@ void GameFlow::switchToPostLevelScene(int score)
     postLevelLayer->setGotoMainMenuCallback(
         std::bind(&GameFlow::switchToLevelSelectionScene, this));
     postLevelLayer->setShareOnFacebookCallback([this, score]() {
-        SonarCocosHelper::Facebook::Share(nullptr, nullptr, getSocialShareMessage(score).c_str(),
-                                          nullptr, "");
+        SocialSharingHelper::shareOnFacebook();
         getAchievementTracker().scoreShared();
     });
     postLevelLayer->setShareOnTwitterCallback([this, score]() {
-        SonarCocosHelper::Twitter::Tweet(getSocialShareMessage(score).c_str(), nullptr, "");
+        SocialSharingHelper::shareOnTwitter(score);
         getAchievementTracker().scoreShared();
     });
     scene->addChild(postLevelLayer);
@@ -628,12 +659,4 @@ AchievementTracker &GameFlow::getAchievementTracker() const
     assert(node);
 
     return static_cast<AchievementTracker &>(*node);
-}
-
-std::string GameFlow::getSocialShareMessage(int score)
-{
-    std::ostringstream os;
-    os << "Playing RatNRoll for iOS and just scored " << score << " points!";
-
-    return os.str();
 }

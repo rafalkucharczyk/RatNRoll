@@ -31,7 +31,8 @@ class IOSCPPHelper
     static void Setup();
 
 #if SCH_IS_SOCIAL_ENABLED == true
-    static void shareViaFacebook(__String message, __String thumbnailPath);
+    static void shareLinkViaFacebook(__String linkUrl, __String imageUrl, __String title,
+                                     __String description);
     static void shareViaTwitter(__String message, __String thumbnailPath);
     static void shareWithString(__String message, __String thumbnailPath);
 #endif
