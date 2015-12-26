@@ -44,20 +44,29 @@ bool GuaranteedScoreLayer::init()
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener,
                                                                                           this);
 
-    auto menuLabel =
+    auto menuLabelTop =
         MenuLabel::create("YOU SCORED MORE THAN\n" + std::to_string(currentScoreThreshold) +
                               " POINTS!\n\n"
                               "FROM NOW ON,\n"
                               "THIS WILL BE YOUR\n"
-                              "INITIAL SCORE IN THIS LEVEL.\n\n"
-                              "NEXT THRESHOLD IS\n" +
-                              std::to_string(nextScoreThreshold) + " POINTS",
+                              "INITIAL SCORE IN THIS LEVEL.",
                           {0.5, 0.55}, 0.03);
-    menuLabel->setCascadeOpacityEnabled(true);
-    menuLabel->setOpacity(0);
+    menuLabelTop->setCascadeOpacityEnabled(true);
+    menuLabelTop->setOpacity(0);
 
-    addChild(menuLabel);
-    menuLabel->runAction(FadeIn::create(1.0));
+    addChild(menuLabelTop);
+    menuLabelTop->runAction(FadeIn::create(1.0));
+
+    if (nextScoreThreshold != 0) {
+        auto menuLabelBottom = MenuLabel::create(
+            "NEXT THRESHOLD IS\n" + std::to_string(nextScoreThreshold) + " POINTS.", {0.5, 0.4},
+            0.03);
+        menuLabelBottom->setCascadeOpacityEnabled(true);
+        menuLabelBottom->setOpacity(0);
+
+        addChild(menuLabelBottom);
+        menuLabelBottom->runAction(FadeIn::create(1.0));
+    }
 
     PostLevelLayer::addDigitsPanel(*this, {0.5, 0.8}, "YOUR SCORE", currentScore);
 

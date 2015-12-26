@@ -180,7 +180,6 @@ class LevelLayer : public RUBELayer
   public:
     static const std::string name;
     static constexpr float hoverDuration = 2.0;
-    static constexpr int gameCompletedScore = 999999;
 };
 
 #endif // __LEVEL_LAYER_H__

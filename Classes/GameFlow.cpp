@@ -376,7 +376,9 @@ void GameFlow::switchToPostLevelScene(int score)
     });
     scene->addChild(postLevelLayer);
 
-    overlayGameScoreThresholdScene(score, scene);
+    if (score < LevelCustomization::gameCompletedScore) {
+        overlayGameScoreThresholdScene(score, scene);
+    }
 
     currentLevelNumber = noLevelNumber;
 
@@ -483,8 +485,9 @@ void GameFlow::overlayGameCompletedScene(LevelLayer *levelLayer)
     levelLayer->pauseLevel();
     levelLayer->setTag(levelCompletedTag);
     Director::getInstance()->getRunningScene()->addChild(gameCompletionLayer);
-    gameCompletionLayer->setCompletionConifrmedCallback(
-        [this, levelLayer]() { this->switchToPostLevelScene(LevelLayer::gameCompletedScore); });
+    gameCompletionLayer->setCompletionConifrmedCallback([this, levelLayer]() {
+        this->switchToPostLevelScene(LevelCustomization::gameCompletedScore);
+    });
 }
 
 void GameFlow::overlayGameScoreThresholdScene(int gameScore, cocos2d::Scene *parentScene)

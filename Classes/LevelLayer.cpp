@@ -10,8 +10,6 @@
 
 USING_NS_CC;
 
-const int LevelLayer::gameCompletedScore;
-
 class DropItemUserData
 {
   public:
@@ -1139,12 +1137,12 @@ void LevelLayer::initScoreLabel(int score)
 
 void LevelLayer::updateScore(float t)
 {
-    gameScore = std::min(gameScore, gameCompletedScore);
+    gameScore = std::min(gameScore, LevelCustomization::gameCompletedScore);
 
     scoreLabel->animateToNumber(gameScore);
     shadowRatHelper->scoreUpdated(gameScore);
 
-    if (gameScore == gameCompletedScore && gameCompletedCallback) {
+    if (gameScore == LevelCustomization::gameCompletedScore && gameCompletedCallback) {
         gameCompletedCallback();
     }
 }

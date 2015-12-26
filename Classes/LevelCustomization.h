@@ -101,6 +101,8 @@ class LevelCustomization
 
     virtual std::string getBackgroundMusicAsset() const = 0;
 
+    static const int gameCompletedScore;
+
   protected:
     bool isItemPositive(ItemType itemType)
     {

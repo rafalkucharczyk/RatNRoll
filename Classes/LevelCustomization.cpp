@@ -6,6 +6,8 @@
 #include <Box2D/Dynamics/b2Body.h>
 #include <b2dJson.h>
 
+const int LevelCustomization::gameCompletedScore = 999999;
+
 namespace
 {
 
@@ -15,8 +17,13 @@ struct ScoreThresholdInfo {
 };
 
 std::map<int, ScoreThresholdInfo> scoreThresholdInfos = {
-    {0, {2.8, 0.5}},      {10000, {2.4, 0.6}},  {50000, {2.0, 0.6}},   {100000, {1.6, 0.7}},
-    {250000, {1.2, 0.5}}, {500000, {0.7, 0.0}}, {1000000, {0.7, 0.0}},
+    {0, {2.8, 0.5}},
+    {10000, {2.4, 0.6}},
+    {50000, {2.0, 0.6}},
+    {100000, {1.6, 0.7}},
+    {250000, {1.2, 0.4}},
+    {500000, {0.8, 0.0}},
+    {LevelCustomization::gameCompletedScore, {0.8, 0.0}},
 };
 
 std::map<int, ScoreThresholdInfo>::iterator getRightBoundThresholdForScore(int score)
@@ -78,9 +85,14 @@ std::pair<int, int> LevelBase::getFixedScoreThresholdForGameScore(int gameScore)
 {
     auto rightBound = getRightBoundThresholdForScore(gameScore);
 
+    int rightBoundValue = rightBound->first;
+    if (rightBound == std::prev(scoreThresholdInfos.end())) {
+        rightBoundValue = 0;
+    }
+
     auto leftBound = rightBound;
     leftBound--;
-    return std::make_pair(leftBound->first, rightBound->first);
+    return std::make_pair(leftBound->first, rightBoundValue);
 }
 
 LevelTutorial::LevelTutorial()
