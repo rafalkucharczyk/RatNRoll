@@ -15,11 +15,17 @@ struct BackgroundItemInitialState {
 
 typedef std::vector<BackgroundItemInitialState> BackgroundItemsInitialState;
 
+struct BackgroundConfig {
+    BackgroundConfig(const std::vector<std::string> &items, const std::string &background);
+
+    std::vector<std::string> itemFileNames;
+    std::string backgroundFileName;
+};
+
 class BackgroundLayer : public cocos2d::Layer
 {
   public:
-    BackgroundLayer(const std::vector<std::string> &itemFileNames,
-                    const std::string &backgroundFileName);
+    BackgroundLayer(const BackgroundConfig &backgroundConfig);
 
     virtual bool init();
 
@@ -31,8 +37,7 @@ class BackgroundLayer : public cocos2d::Layer
     // e.g: +1 increase current speed by delta, -2 decrease current speed by two deltas
     void setSpeed(int deltasCount);
 
-    static BackgroundLayer *create(const std::vector<std::string> &itemFileNames,
-                                   const std::string &backgroundFileName);
+    static BackgroundLayer *create(const BackgroundConfig &backgroundConfig);
 
   private:
     struct BackgroundItem {
@@ -78,8 +83,7 @@ class BackgroundLayer : public cocos2d::Layer
 
     int desiredItemsCount;
 
-    std::vector<std::string> itemFileNames;
-    std::string backgroundFileName;
+    const BackgroundConfig backgroundConfig;
 
     std::vector<BackgroundItem> items;
 };

@@ -2,7 +2,6 @@
 
 #include "SonarFrameworks.h"
 
-#include "BackgroundLayer.h"
 #include "PreloadingLayer.h"
 #include "InitialLayer.h"
 #include "LevelMenuLayer.h"
@@ -69,8 +68,7 @@ const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
 GameFlow *GameFlow::instance = nullptr;
 
 GameFlow::GameFlow()
-    : currentBackgroundPlaneName("bg_plane01"), currentBackgroundItemNames({"bg_item01"}),
-      currentLevelNumber(noLevelNumber)
+    : currentBackgroundConfig({"bg_item01"}, "bg_plane01"), currentLevelNumber(noLevelNumber)
 {
     loginToGameCenter();
 }
@@ -231,11 +229,9 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     srand(1); // random, but always the same...
 
     auto levelCustomization = getLevelCustomization(levelNumber);
-    std::string bgPlaneName = currentBackgroundPlaneName;
-    std::list<std::string> bgItemNames = currentBackgroundItemNames;
+    BackgroundConfig tempBackgroundConfig = currentBackgroundConfig;
 
-    setBackgroundDetails(levelCustomization->getBgPlaneName(),
-                         levelCustomization->getBgItemNames());
+    setCurrentBackgroundConfig(levelCustomization->getBackgroundConfig());
 
     auto scene = createSceneObject();
 
@@ -273,7 +269,7 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
                    scores.size() ? scores.front() : SonarCocosHelper::GameCenterPlayerScore());
 
     if (levelBlocked) {
-        setBackgroundDetails(bgPlaneName, bgItemNames);
+        setCurrentBackgroundConfig(tempBackgroundConfig);
     }
 
     levelLayer->setBackgroundSpeedFunction(
@@ -317,10 +313,11 @@ bool GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
         auto layer = Layer::create();
 
         auto unlockGraveyardLayer = UnlockGraveyardLayer::create(getBestScore(1, 0) >= 10000);
-        unlockGraveyardLayer->setLikingCompletedCallback([levelBlockerLayer, &levelLayer]() {
+        unlockGraveyardLayer->setLikingCompletedCallback([levelBlockerLayer, &levelLayer, this]() {
             levelBlockerLayer->unblock();
             PermanentStorage::getInstance().setLikingState(true);
             levelLayer.playBackgroundMusic();
+            setCurrentBackgroundConfig(levelLayer.getBackgroundConfig());
         });
         layer->addChild(unlockGraveyardLayer);
         layer->setCascadeOpacityEnabled(true);
@@ -330,10 +327,11 @@ bool GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
 
     if (levelNumber == 3 && !iapPurchaseCompleted()) {
         auto iapLayer = IAPLayer::create(iapProductId, {0.5, 0.78}, 0.15);
-        iapLayer->setPurchaseCompletedCallback([levelBlockerLayer, &levelLayer]() {
+        iapLayer->setPurchaseCompletedCallback([levelBlockerLayer, &levelLayer, this]() {
             levelBlockerLayer->unblock();
             SonarCocosHelper::iAds::hideiAdBanner();
             levelLayer.playBackgroundMusic();
+            setCurrentBackgroundConfig(levelLayer.getBackgroundConfig());
         });
         auto unlockMagicHallLayer = UnlockMagicHallLayer::create();
         iapLayer->addChild(unlockMagicHallLayer);
@@ -548,24 +546,15 @@ Scene *GameFlow::createSceneObject()
 {
     Scene *scene = Scene::create();
 
-    std::vector<std::string> itemFileNames(currentBackgroundItemNames.size());
-
-    std::transform(currentBackgroundItemNames.begin(), currentBackgroundItemNames.end(),
-                   itemFileNames.begin(),
-                   [](const std::string &i) { return "background/" + i + ".png"; });
-
-    auto backgroundLayer =
-        BackgroundLayer::create(itemFileNames, "background/" + currentBackgroundPlaneName + ".png");
+    auto backgroundLayer = BackgroundLayer::create(currentBackgroundConfig);
     scene->addChild(backgroundLayer, 0, backgroundLayerTag);
 
     return scene;
 }
 
-void GameFlow::setBackgroundDetails(const std::string &bgPlaneName,
-                                    const std::list<std::string> &bgItemNames)
+void GameFlow::setCurrentBackgroundConfig(const BackgroundConfig &backgroundConfig)
 {
-    currentBackgroundPlaneName = bgPlaneName;
-    currentBackgroundItemNames = bgItemNames;
+    currentBackgroundConfig = backgroundConfig;
 }
 
 LevelCustomization *GameFlow::getLevelCustomization(int levelNumber) const

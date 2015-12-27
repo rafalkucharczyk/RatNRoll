@@ -734,6 +734,11 @@ std::pair<int, int> LevelLayer::getFixedScoreThresholdForGameScore(int gameScore
     return levelCustomization->getFixedScoreThresholdForGameScore(gameScore);
 }
 
+BackgroundConfig LevelLayer::getBackgroundConfig() const
+{
+    return levelCustomization->getBackgroundConfig();
+}
+
 void LevelLayer::playBackgroundMusic(float crossFadeDuration) const
 {
     SoundHelper::getInstance().playBackgroundMusicCrossfade(

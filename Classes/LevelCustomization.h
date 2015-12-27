@@ -9,6 +9,7 @@
 
 #include <cocos2d.h>
 #include "TutorialBalloonLayer.h"
+#include "BackgroundLayer.h"
 
 // #define TEST_SEQUENCE
 
@@ -52,10 +53,9 @@ class LevelCustomization
   public:
     virtual std::string getRubeJsonFileName() const = 0;
 
-    // Background plane for level searched in Resources/background (e.g bg_plane01)
-    virtual std::string getBgPlaneName() const = 0;
-    // List of background items for level searched in Resources/background (e.g bg_item01)
-    virtual std::list<std::string> getBgItemNames() const = 0;
+    // Background plane for level searched in Resources/background (e.g bg_plane01) and
+    // list of background items for level searched in Resources/background (e.g bg_item01)
+    virtual BackgroundConfig getBackgroundConfig() const = 0;
 
     virtual float getItemDropInterval(int gameScore) = 0; // in seconds
 
@@ -131,8 +131,10 @@ class LevelTutorial : public LevelCustomization
 
     std::string getRubeJsonFileName() const override { return "level_01.json"; };
 
-    std::string getBgPlaneName() const { return "bg_plane01"; }
-    std::list<std::string> getBgItemNames() const { return {"bg_item01"}; }
+    BackgroundConfig getBackgroundConfig() const
+    {
+        return BackgroundConfig({"bg_item01"}, "bg_plane01");
+    }
 
     float getItemDropInterval(int gameScore) override { return 2.5; };
 
@@ -322,8 +324,10 @@ class Level01 : public LevelBase
   public:
     Level01(bool frenzyEnabled, bool shieldEnabled);
     std::string getRubeJsonFileName() const override { return "level_01.json"; }
-    std::string getBgPlaneName() const { return "bg_plane01"; }
-    std::list<std::string> getBgItemNames() const { return {"bg_item01"}; }
+    BackgroundConfig getBackgroundConfig() const
+    {
+        return BackgroundConfig({"bg_item01"}, "bg_plane01");
+    }
 
     std::string getBackgroundMusicAsset() const { return "cheese_factory"; }
 
@@ -339,8 +343,10 @@ class Level02 : public LevelBase
   public:
     Level02(bool frenzyEnabled, bool shieldEnabled) : LevelBase(frenzyEnabled, shieldEnabled) {}
     std::string getRubeJsonFileName() const override { return "level_02.json"; }
-    std::string getBgPlaneName() const { return "bg_plane02"; }
-    std::list<std::string> getBgItemNames() const { return {"bg_item02"}; }
+    BackgroundConfig getBackgroundConfig() const
+    {
+        return BackgroundConfig({"bg_item02"}, "bg_plane02");
+    }
 
     std::string getBackgroundMusicAsset() const { return "graveyard"; }
 
@@ -352,10 +358,10 @@ class Level03 : public LevelBase
   public:
     Level03(bool frenzyEnabled, bool shieldEnabled) : LevelBase(frenzyEnabled, shieldEnabled) {}
     std::string getRubeJsonFileName() const override { return "level_03.json"; }
-    std::string getBgPlaneName() const { return "bg_plane03"; }
-    std::list<std::string> getBgItemNames() const
+    BackgroundConfig getBackgroundConfig() const
     {
-        return {"bg_item03", "bg_item03_1", "bg_item03_2", "bg_item03_3"};
+        return BackgroundConfig({"bg_item03", "bg_item03_1", "bg_item03_2", "bg_item03_3"},
+                                "bg_plane03");
     }
 
     std::string getBackgroundMusicAsset() const { return "magic_hall"; }

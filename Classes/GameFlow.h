@@ -6,6 +6,8 @@
 #include "SonarCocosHelper/GameCenterPlayerScore.h"
 #include "SoundHelper.h"
 
+#include "BackgroundLayer.h"
+
 class LevelCustomization;
 class LevelLayer;
 class AchievementTracker;
@@ -71,11 +73,9 @@ class GameFlow
 
   private:
     cocos2d::Scene *createSceneObject();
-    void setBackgroundDetails(const std::string &bgPlaneName,
-                              const std::list<std::string> &bgItemNames);
+    void setCurrentBackgroundConfig(const BackgroundConfig &backgroundConfig);
 
-    std::string currentBackgroundPlaneName;
-    std::list<std::string> currentBackgroundItemNames;
+    BackgroundConfig currentBackgroundConfig;
 
     LevelCustomization *getLevelCustomization(int levelNumber) const;
     int getBestScore(int levelNumber, int currentScore);

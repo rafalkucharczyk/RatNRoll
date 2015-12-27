@@ -74,6 +74,7 @@ class LevelLayer : public RUBELayer
     }
 
     std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore);
+    BackgroundConfig getBackgroundConfig() const;
 
     static const int proxyOverlayLayerTag = 1111;
 

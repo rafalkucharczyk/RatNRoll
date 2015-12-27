@@ -8,14 +8,24 @@
 USING_NS_CC;
 using namespace std;
 
+BackgroundConfig::BackgroundConfig(const std::vector<std::string> &items,
+                                   const std::string &background)
+{
+    itemFileNames.resize(items.size());
+
+    std::transform(items.begin(), items.end(), itemFileNames.begin(),
+                   [](const std::string &i) { return "background/" + i + ".png"; });
+
+    backgroundFileName = "background/" + background + ".png";
+}
+
 BackgroundItemsInitialState BackgroundLayer::backgroundItemsInitialState = {};
 
-BackgroundLayer::BackgroundLayer(const std::vector<std::string> &itemFileNames,
-                                 const std::string &backgroundFileName)
+BackgroundLayer::BackgroundLayer(const BackgroundConfig &backgroundConfig)
     : minItemsSpeed(0.05), maxItemsSpeed(0.5), deltaItemsSpeed(0.05), totalTime(0),
       itemsSpeed(minItemsSpeed), itemsDirection(1, -2),
       visibleSize(Director::getInstance()->getVisibleSize()), desiredItemsCount(20),
-      itemFileNames(itemFileNames), backgroundFileName(backgroundFileName)
+      backgroundConfig(backgroundConfig)
 {
 }
 
@@ -31,8 +41,8 @@ BackgroundLayer::randomizeBackgroundItemInitialState(RandomPositionFunction posi
         return ret;
     }
 
-    int itemId = random(0, static_cast<int>(itemFileNames.size() - 1));
-    ret.fileName = itemFileNames[itemId];
+    int itemId = random(0, static_cast<int>(backgroundConfig.itemFileNames.size() - 1));
+    ret.fileName = backgroundConfig.itemFileNames[itemId];
 
     Sprite *sprite = MipmapSprite::create(ret.fileName); // needed to get size
     ret.position = positionFunction(sprite->getContentSize());
@@ -142,7 +152,7 @@ bool BackgroundLayer::init()
         return false;
     }
 
-    auto sprite = Sprite::create(backgroundFileName);
+    auto sprite = Sprite::create(backgroundConfig.backgroundFileName);
     sprite->setPosition(visibleSize / 2);
     sprite->setScale(visibleSize.x / sprite->getContentSize().width,
                      visibleSize.y / sprite->getContentSize().height);
@@ -223,10 +233,9 @@ void BackgroundLayer::setSpeed(int deltasCount)
     }
 }
 
-BackgroundLayer *BackgroundLayer::create(const std::vector<std::string> &itemFileNames,
-                                         const std::string &backgroundFileName)
+BackgroundLayer *BackgroundLayer::create(const BackgroundConfig &backgroundConfig)
 {
-    BackgroundLayer *ret = new (std::nothrow) BackgroundLayer(itemFileNames, backgroundFileName);
+    BackgroundLayer *ret = new (std::nothrow) BackgroundLayer(backgroundConfig);
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
