@@ -112,6 +112,14 @@ void GameCenter::signIn(std::function<void()> signedInCallback)
 #endif
 }
 
+bool GameCenter::isSignedIn()
+{
+#if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    return IOSCPPHelper::gameCenterIsLoggedIn();
+#endif
+    return false;
+}
+
 void GameCenter::showLeaderboard()
 {
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS

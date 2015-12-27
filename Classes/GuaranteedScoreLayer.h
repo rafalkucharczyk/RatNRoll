@@ -21,8 +21,6 @@ class GuaranteedScoreLayer : public BasicWhiteLayer
 
     void selfCleanUp();
 
-    std::function<void()> closeCallback;
-
     MenuHelper menuHelper;
 
     int currentScore;

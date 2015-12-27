@@ -208,6 +208,11 @@ void IOSCPPHelper::gameCenterLogin(std::function<void()> signedInCallback)
     }];
 }
 
+bool IOSCPPHelper::gameCenterIsLoggedIn()
+{
+    return [[IOSHelper instance] gameCenterEnabled];
+}
+
 void IOSCPPHelper::gameCenterShowLeaderboard( )
 {
     [[IOSHelper instance] gameCenterShowLeaderboard];

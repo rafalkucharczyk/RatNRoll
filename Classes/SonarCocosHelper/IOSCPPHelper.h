@@ -39,6 +39,7 @@ class IOSCPPHelper
 
 #if SCH_IS_GAME_CENTER_ENABLED == true
     static void gameCenterLogin(std::function<void()> signedInCallback);
+    static bool gameCenterIsLoggedIn();
     static void gameCenterShowLeaderboard();
     static void gameCenterShowAchievements();
     static void gameCenterHideUi();

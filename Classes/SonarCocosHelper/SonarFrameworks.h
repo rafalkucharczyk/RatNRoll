@@ -255,6 +255,10 @@ class GameCenter
      */
     static void signIn(std::function<void()> signedInCallback);
     /**
+     * Returns true if user is signed in
+     */
+    static bool isSignedIn();
+    /**
      * Show leaderboard
      */
     static void showLeaderboard();

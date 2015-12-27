@@ -494,23 +494,16 @@ SCHEmptyProtocol
 
 -( void )gameCenterShowLeaderboard
 {
-    if ( _gameCenterEnabled )
-    {
-        // Init the following view controller object.
-        self.gameCenterViewController = [[GKGameCenterViewController alloc] init];
+    if ( !self.gameCenterEnabled )
+    { return; }
+
+    self.gameCenterViewController = [[GKGameCenterViewController alloc] init];
+
+    self.gameCenterViewController.gameCenterDelegate = self;
+    self.gameCenterViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
         
-        // Set self as its delegate.
-        self.gameCenterViewController.gameCenterDelegate = self;
-        self.gameCenterViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
-        //gcViewController.leaderboardIdentifier = _leaderboardIdentifier;
-        
-        [localViewController presentViewController:self.gameCenterViewController
-                                          animated:YES completion:nil];
-    }
-    else
-    {
-        [self gameCenterLoginWithCompletionHandler:^{}];
-    }
+    [localViewController presentViewController:self.gameCenterViewController
+                                      animated:YES completion:nil];
 }
 
 -( void )gameCenterViewControllerDidFinish:( GKGameCenterViewController * )gameCenterViewController
@@ -518,10 +511,12 @@ SCHEmptyProtocol
 
 -( void )gameCenterShowAchievements
 {
+    if ( !self.gameCenterEnabled )
+    { return; }
+
     self.gameCenterViewController = [[GKGameCenterViewController alloc] init];
     
     self.gameCenterViewController.gameCenterDelegate = self;
-    
     self.gameCenterViewController.viewState = GKGameCenterViewControllerStateAchievements;
     
     [localViewController presentViewController:self.gameCenterViewController

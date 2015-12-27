@@ -13,21 +13,27 @@ class InitialLayer : public cocos2d::Layer
 
     CREATE_FUNC(InitialLayer);
 
-    void setMenuItemClickedCallback(std::function<void(int)> callback)
-    {
-        menuItemClickedCallback = callback;
-    }
+    void setSettingsCallback(std::function<void()> callback) { settingsCallback = callback; }
 
-    void itemClicked(int itemIndex)
+    void setPlayCallback(std::function<void()> callback) { playCallback = callback; }
+
+    void setGameCenterCallbacks(std::function<bool()> isSignedInCallback,
+                                std::function<void(bool signedIn)> actionCallback)
     {
-        if (menuItemClickedCallback) {
-            menuItemClickedCallback(itemIndex);
-        }
+        gameCenterIsSignedInCallback = isSignedInCallback;
+        gameCenterActionCallback = actionCallback;
     }
 
   private:
+    void itemClicked(int itemIndex);
+
     MenuHelper menuHelper;
-    std::function<void(int)> menuItemClickedCallback;
+
+    std::function<void()> settingsCallback;
+    std::function<void()> playCallback;
+
+    std::function<bool()> gameCenterIsSignedInCallback;
+    std::function<void(bool signedIn)> gameCenterActionCallback;
 };
 
 #endif // __INITIAL_LAYER_H__

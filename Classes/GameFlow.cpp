@@ -160,22 +160,22 @@ void GameFlow::switchToInitialScene()
     auto scene = createSceneObject();
 
     auto initialLayer = InitialLayer::create();
-    initialLayer->setMenuItemClickedCallback(
-        std::bind(&GameFlow::handleInitialSceneMenu, this, std::placeholders::_1));
+
+    initialLayer->setPlayCallback(std::bind(&GameFlow::switchToLevelSelectionScene, this));
+    initialLayer->setSettingsCallback(std::bind(&GameFlow::switchToSettingsScene, this));
+    initialLayer->setGameCenterCallbacks(
+        []() { return SonarCocosHelper::GameCenter::isSignedIn(); },
+        [this](bool signedIn) {
+            if (signedIn) {
+                SonarCocosHelper::GameCenter::showLeaderboard();
+            } else {
+                this->loginToGameCenter();
+            }
+        });
+
     scene->addChild(initialLayer);
 
     replaceScene(scene);
-}
-
-void GameFlow::handleInitialSceneMenu(int itemIndex)
-{
-    if (itemIndex == 0) {
-        switchToLevelSelectionScene();
-    } else if (itemIndex == 1) {
-        switchToSettingsScene();
-    } else if (itemIndex == 2) {
-        SonarCocosHelper::GameCenter::showLeaderboard();
-    }
 }
 
 void GameFlow::switchToLevelSelectionScene()
