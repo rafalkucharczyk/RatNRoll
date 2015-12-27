@@ -45,7 +45,7 @@ bool GuaranteedScoreLayer::init()
                                                                                           this);
 
     auto menuLabelTop =
-        MenuLabel::create("YOU SCORED MORE THAN\n" + std::to_string(currentScoreThreshold) +
+        MenuLabel::create("YOU'VE SCORED MORE THAN\n" + std::to_string(currentScoreThreshold) +
                               " POINTS!\n\n"
                               "FROM NOW ON,\n"
                               "THIS WILL BE YOUR\n"

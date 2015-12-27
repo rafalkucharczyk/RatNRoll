@@ -6,8 +6,6 @@
 #include <Box2D/Dynamics/b2Body.h>
 #include <b2dJson.h>
 
-const int LevelCustomization::gameCompletedScore = 999999;
-
 namespace
 {
 
@@ -15,6 +13,21 @@ struct ScoreThresholdInfo {
     float dropItemInterval;
     float dropItemIntervalRandomness;
 };
+
+#if 0
+const int maxGameScore = 599;
+
+std::map<int, ScoreThresholdInfo> scoreThresholdInfos = {
+    {0, {2.8, 0.5}},
+    {100, {2.4, 0.6}},
+    {200, {2.0, 0.6}},
+    {300, {1.6, 0.7}},
+    {400, {1.2, 0.4}},
+    {500, {0.8, 0.0}},
+    {LevelCustomization::gameCompletedScore, {0.8, 0.0}},
+};
+#else
+const int maxGameScore = 999999;
 
 std::map<int, ScoreThresholdInfo> scoreThresholdInfos = {
     {0, {2.8, 0.5}},
@@ -25,6 +38,7 @@ std::map<int, ScoreThresholdInfo> scoreThresholdInfos = {
     {500000, {0.8, 0.0}},
     {LevelCustomization::gameCompletedScore, {0.8, 0.0}},
 };
+#endif
 
 std::map<int, ScoreThresholdInfo>::iterator getRightBoundThresholdForScore(int score)
 {
@@ -60,6 +74,8 @@ class CogwheelHelper
   private:
     b2Body *cogwheelBody1, *cogwheelBody2;
 };
+
+const int LevelCustomization::gameCompletedScore = maxGameScore;
 
 float LevelBase::getItemDropInterval(int gameScore)
 {
