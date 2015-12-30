@@ -24,9 +24,9 @@ struct AboutEntry {
 };
 
 vector<AboutEntry> aboutEntries = {
-    {"menu/about/development.png", "DEVELOPMENT", {"Rafal Kucharczyk", "Lukasz Kucharczyk"}},
+    {"menu/about/development.png", "DEVELOPMENT", {"Rafal Kucharczyk"}},
     {"menu/about/art.png", "ART & ANIMATION", {"Lukasz Kucharczyk", "Marta Kucharczyk"}},
-    {"menu/about/music.png", "MUSIC & SFX", {"Lukasz Kucharczyk", "Foo Bar"}},
+    {"menu/about/music.png", "MUSIC & SFX", {"Lukasz Kucharczyk", "Marcin Mukoid"}},
     {"menu/about/thanks.png", "SPECIAL THANKS", {"Adam Gryko"}},
     {"menu/about/cocos2dx_box2d.png", "POWERED BY", {"Cocos2dx", "BOX2D"}},
 };
