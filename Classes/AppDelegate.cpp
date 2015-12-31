@@ -7,6 +7,8 @@
 
 #include "SonarFrameworks.h"
 
+#include <audio/include/AudioEngine.h>
+
 USING_NS_CC;
 
 AppDelegate::AppDelegate() {}
@@ -72,6 +74,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 // call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground()
 {
+    experimental::AudioEngine::pauseAll();
+
     Director::getInstance()->stopAnimation();
 
     if (!GameFlow::getInstance().iapPurchaseCompleted()) {
@@ -83,6 +87,8 @@ void AppDelegate::applicationDidEnterBackground()
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
+    experimental::AudioEngine::resumeAll();
+
     Director::getInstance()->startAnimation();
 
     if (!GameFlow::getInstance().iapPurchaseCompleted()) {

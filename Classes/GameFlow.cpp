@@ -107,7 +107,10 @@ void GameFlow::pauseGame()
     Director::getInstance()->pause();
     auto pauseLayer = PauseLayer::create();
     pauseLayer->setGameResumedCallback(std::bind(&GameFlow::resumeGame, this));
-    pauseLayer->setGameQuitCallback(std::bind(&GameFlow::switchToLevelSelectionScene, this));
+    pauseLayer->setGameQuitCallback([this]() {
+        this->getCurrentLevelLayer().playBackgroundMusic();
+        this->switchToLevelSelectionScene();
+    });
 
     Scene *runningScene = Director::getInstance()->getRunningScene();
 

@@ -14,7 +14,7 @@ struct SoundSettings {
     bool musicEnabled;
 
     constexpr static float effectsVolume = 0.5;
-    constexpr static float musicVolume = 0.25;
+    constexpr static float musicVolume = 0.2;
 };
 
 class SoundHelper
@@ -29,10 +29,12 @@ class SoundHelper
     void playBestScoreBeatenEffect();
     void playBestScoreNotBeatenEffect();
 
-    void playBackgroundMusic(const std::string &musicFile);
-    void playBackgroundMusicCrossfade(const std::string &musicFile, float durationInSeconds);
+    void playBackgroundMusic(const std::string &musicFile, bool restart = false);
+    void playBackgroundMusicCrossfade(const std::string &musicFile, float durationInSeconds,
+                                      bool restart = false);
 
   private:
+    bool shouldPlayBackgroudMusic(const std::string &musicFile, bool restart);
     void playOneEffect(const std::string namePrefix, int maxCount);
 
     SoundSettings currentSettings;

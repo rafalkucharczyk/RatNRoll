@@ -45,40 +45,20 @@ SoundHelper::SoundHelper() : currentBackgroundMusicEffectId(AudioEngine::INVALID
 
 void SoundHelper::configure(const SoundSettings &soundSettings)
 {
-    const int steps = 10;
+    bool musicSettingsUpdated = currentSettings.musicEnabled != soundSettings.musicEnabled;
+    currentSettings = soundSettings;
 
-    const float durationInSeconds = 0.5;
-
-    const float delay = durationInSeconds / steps;
-    const float delta = currentSettings.musicVolume / steps;
-
-    if (soundSettings.musicEnabled != currentSettings.musicEnabled) {
-        if (!soundSettings.musicEnabled) {
-            std::thread t([=]() {
-                for (int i = 1; i <= steps; i++) {
-                    AudioEngine::setVolume(currentBackgroundMusicEffectId,
-                                           currentSettings.musicVolume - i * delta);
-                    usleep(delay * 1E6);
-                }
-                AudioEngine::pause(currentBackgroundMusicEffectId);
-            });
-
-            t.detach();
-        } else {
-            std::thread t([=]() {
-                AudioEngine::resume(currentBackgroundMusicEffectId);
-
-                for (int i = 1; i <= steps; i++) {
-                    AudioEngine::setVolume(currentBackgroundMusicEffectId, i * delta);
-                    usleep(delay * 1E6);
-                }
-            });
-
-            t.detach();
-        }
+    if (!musicSettingsUpdated) {
+        return;
     }
 
-    currentSettings = soundSettings;
+    if (currentSettings.musicEnabled) {
+        playBackgroundMusic(currentBackgroundMusicAsset, true);
+    }
+
+    if (!currentSettings.musicEnabled) {
+        AudioEngine::stop(currentBackgroundMusicEffectId);
+    }
 }
 
 void SoundHelper::playEffectForItem(LevelCustomization::ItemType itemType)
@@ -96,32 +76,21 @@ void SoundHelper::playBestScoreBeatenEffect() { playOneEffect("rec_beaten", 7); 
 
 void SoundHelper::playBestScoreNotBeatenEffect() { playOneEffect("rec_failed", 7); }
 
-void SoundHelper::playBackgroundMusic(const std::string &musicFile)
+void SoundHelper::playBackgroundMusic(const std::string &musicFile, bool restart)
 {
-    if (musicFile == currentBackgroundMusicAsset) {
+    if (!shouldPlayBackgroudMusic(musicFile, restart)) {
         return;
     }
 
     AudioEngine::stop(currentBackgroundMusicEffectId);
-    currentBackgroundMusicAsset = musicFile;
-    currentBackgroundMusicEffectId = AudioEngine::play2d(getAssetFileName(musicFile), true, 0);
-
-    if (!currentSettings.musicEnabled) {
-        AudioEngine::pause(currentBackgroundMusicEffectId);
-    } else {
-        AudioEngine::setVolume(currentBackgroundMusicEffectId, currentSettings.musicVolume);
-    }
+    currentBackgroundMusicEffectId =
+        AudioEngine::play2d(getAssetFileName(musicFile), true, currentSettings.musicVolume);
 }
 
 void SoundHelper::playBackgroundMusicCrossfade(const std::string &musicFile,
-                                               float durationInSeconds)
+                                               float durationInSeconds, bool restart)
 {
-    if (!currentSettings.musicEnabled) {
-        playBackgroundMusic(musicFile);
-        return;
-    }
-
-    if (musicFile == currentBackgroundMusicAsset) {
+    if (!shouldPlayBackgroudMusic(musicFile, restart)) {
         return;
     }
 
@@ -146,6 +115,26 @@ void SoundHelper::playBackgroundMusicCrossfade(const std::string &musicFile,
     });
 
     t.detach();
+}
+
+bool SoundHelper::shouldPlayBackgroudMusic(const std::string &musicFile, bool restart)
+{
+    if (musicFile.empty()) {
+        return false;
+    }
+
+    if (musicFile == currentBackgroundMusicAsset && !restart) {
+        return false;
+    }
+
+    // remember what to play if music is disabled
+    currentBackgroundMusicAsset = musicFile;
+
+    if (!currentSettings.musicEnabled) {
+        return false;
+    }
+
+    return true;
 }
 
 void SoundHelper::playOneEffect(const std::string namePrefix, int maxCount)
