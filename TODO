@@ -108,28 +108,70 @@ bug - hide game center overlay when playing achievement challenge
 gameplay - scene when user reaches max score + achievement
 bug - in app purchase button does not respond nicely (nothing happens) when network is not available
 
-unordered:
-ios - add verification of iap
-move all strings to separate file, use strings ids to prepare for localization
+13
 level selection - move cheese factory icon a little bit when tutorial is completed
-improved sounds / music
-gameplay - add more info when shadow rat is dropped/removed
-
-bug - sharing via facebook does not work anymore
-bug - game center button does respond nicely (nothing happens) when network is not available
+loading screen - insert cheese into background to visualize loading progress
+loading screen - use splash as a background
+gameplay - different physics in levels (fix bouncing of items in magic hall level)
+bug - portrait up down orientation is blocked on iPad
+bug - view is messed up (goes to landscape) when device is rotated when viewing iAd
+gameplay - finetune drop item interval based on score threshold
 bug - share the same background scene when navigating through screens (so items do not jump from
       position to position)
-bug - MipmapSprite are not transitioned with TransitionSlideChild
-bug - periodic glitch when playing in offline mode
-bug - sporadic crash on accessing keychain after IAP
-bug - view is messed up (goes to landscape) when device is rotated when viewing iAd
-bug - make sure item is eaten when rat touches it (currently item is eaten only when touches
-        rat's belly)
+gameplay - introduce thresholds for scores, start level from threshold, 10k, 50k, 100k, 250k, 500k
+           remember scores for different level separately
+gameplay - add more info when shadow rat is dropped/removed
+gameplay - do not hide shadow rat once shown and rat simply slows down (esp. visible with cheese frenzy)
+about screen
+use background of recently played level for all menus
+bug - MipmapSprite are not transitioned with TransitionSlideChild (fix: now using TransitionScaleChild)
+improved sounds / music
+bug - sharing via facebook does not work anymore
+bug - game center button does respond nicely (nothing happens) when network is not available
+bug - blocked level, unblock, quite -> background is not set correctly
+      (rework a little bit, introduce BackgroundConfig to wrap bgPlane and bgItems)
+improve game completed screen, better texts, change particles
+more analytics
+*  speed, score at failure
+*  restart button clicked?
+*  level2, level3 unlocked? (screens)
+*  game completed screen?
+*  thresholds completed?
+
+unordered:
+
+BEFORE PUBLIC BETA:
+- finish landing page
+  screenshots
+  privacy policy
+  contact
+  beta testers wanted
+
+- submit facebook app to review
+- change GA tracking ID
+- upload build to TF
+
+AFTER PUBLIC BETA:
+- update tracking ID for GA (release)
+- change IAP purchase ID to production one, add screenshot in itunes
+- fill all required info, submit for a review
+
+AFTER REVIEW:
+- promotion, pick blogs, write emails, send promo codes
 
 
 FUTURE
 gameplay - new item, thunderstorm, speed up to max speed for a while
 gameplay - new item, mirror
 
-integrate replaykit
-randomly choose animation for the highest speed and record gameplay then
+gameplay - randomly choose animation for the highest speed and record gameplay then (integrate
+           ReplayKit)
+
+bug - periodic glitch when playing in offline mode (probably caused by GA)
+bug - sporadic crash on accessing keychain after IAP
+bug - make sure item is eaten when rat touches it (currently item is eaten only when touches
+        rat's belly)
+
+improvement - share status of the game (esp. thresholds, anything else?) to icloud
+improvement - ios - add verification of iap
+improvement - move all strings to separate file, use strings ids to prepare for localization
