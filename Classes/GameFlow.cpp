@@ -367,9 +367,10 @@ void GameFlow::switchToPostLevelScene(int score)
                                currentChallenge ? currentChallenge->score : 0,
                                currentChallenge ? currentChallenge->playerName : "");
 
-    postLevelLayer->setRestartLevelCallback([this]() {
-        this->switchToLevelScene(currentLevelNumber);
-        SonarCocosHelper::GoogleAnalytics::sendEvent("", "GameRestarted", "", currentLevelNumber);
+    int _currentLevelNumber = this->currentLevelNumber;
+    postLevelLayer->setRestartLevelCallback([this, _currentLevelNumber]() {
+        this->switchToLevelScene(_currentLevelNumber);
+        SonarCocosHelper::GoogleAnalytics::sendEvent("", "GameRestarted", "", _currentLevelNumber);
     });
     postLevelLayer->setGotoMainMenuCallback(
         std::bind(&GameFlow::switchToLevelSelectionScene, this));
