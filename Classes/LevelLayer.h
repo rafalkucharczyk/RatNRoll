@@ -80,6 +80,8 @@ class LevelLayer : public RUBELayer
 
     void playBackgroundMusic(float crossFadeDuration = 1.0) const;
 
+    int getRatSpeedLevel() const;
+
   private:
     void runCustomActionOnStart();
     void startDroppingItems();

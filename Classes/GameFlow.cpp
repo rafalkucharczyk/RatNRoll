@@ -292,6 +292,10 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
             levelLayer->playBackgroundMusic();
         });
         levelLayer->setGameFinishedCallback([this, levelLayer](int score) {
+            std::string action = "GameFinished" + std::to_string(currentLevelNumber);
+            SonarCocosHelper::GoogleAnalytics::sendEvent("", action, "score", score);
+            SonarCocosHelper::GoogleAnalytics::sendEvent("", action, "speed",
+                                                         levelLayer->getRatSpeedLevel());
             this->switchToPostLevelScene(score);
             levelLayer->playBackgroundMusic();
         });
@@ -363,8 +367,10 @@ void GameFlow::switchToPostLevelScene(int score)
                                currentChallenge ? currentChallenge->score : 0,
                                currentChallenge ? currentChallenge->playerName : "");
 
-    postLevelLayer->setRestartLevelCallback(
-        std::bind(&GameFlow::switchToLevelScene, this, currentLevelNumber));
+    postLevelLayer->setRestartLevelCallback([this]() {
+        this->switchToLevelScene(currentLevelNumber);
+        SonarCocosHelper::GoogleAnalytics::sendEvent("", "GameRestarted", "", currentLevelNumber);
+    });
     postLevelLayer->setGotoMainMenuCallback(
         std::bind(&GameFlow::switchToLevelSelectionScene, this));
     postLevelLayer->setShareOnFacebookCallback([this, score]() {
@@ -489,6 +495,8 @@ void GameFlow::overlayGameCompletedScene(LevelLayer *levelLayer)
     gameCompletionLayer->setCompletionConifrmedCallback([this, levelLayer]() {
         this->switchToPostLevelScene(LevelCustomization::gameCompletedScore);
     });
+
+    SonarCocosHelper::GoogleAnalytics::sendEvent("", "GameCompleted", "", currentLevelNumber);
 }
 
 void GameFlow::overlayGameScoreThresholdScene(int gameScore, cocos2d::Scene *parentScene)
@@ -504,6 +512,10 @@ void GameFlow::overlayGameScoreThresholdScene(int gameScore, cocos2d::Scene *par
                                                   gameScoreThreshold.second);
 
         parentScene->addChild(layer, 1);
+
+        SonarCocosHelper::GoogleAnalytics::sendEvent("", "ThresholdCompleted" +
+                                                             std::to_string(currentLevelNumber),
+                                                     "", gameScoreThreshold.first);
     }
 }
 

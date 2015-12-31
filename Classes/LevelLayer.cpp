@@ -745,6 +745,13 @@ void LevelLayer::playBackgroundMusic(float crossFadeDuration) const
         levelCustomization->getBackgroundMusicAsset(), crossFadeDuration);
 }
 
+int LevelLayer::getRatSpeedLevel() const
+{
+    float speed = 0.5 + ((ratSpeed - levelCustomization->getRatSpeedMin()) /
+                         levelCustomization->getRatSpeedStep());
+    return static_cast<int>(speed);
+}
+
 void LevelLayer::runCustomActionOnStart()
 {
     std::shared_ptr<LevelLayerProxyImpl> levelLayerProxy(new LevelLayerProxyImpl(*this, nullptr));

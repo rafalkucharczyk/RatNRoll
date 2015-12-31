@@ -404,7 +404,10 @@ void IOSCPPHelper::setGADispatchInterval( int dispatchInterval )
 
 void IOSCPPHelper::sendGAEvent( __String category, __String action, __String label, long value )
 {
-    [[IOSHelper instance] sendGAEvent:[NSString stringWithCString:category.getCString( ) encoding:NSUTF8StringEncoding]: [NSString stringWithCString:action.getCString( ) encoding:NSUTF8StringEncoding]: [NSString stringWithCString:label.getCString( ) encoding:NSUTF8StringEncoding]: [NSNumber numberWithLong:(value)]];
+    [[IOSHelper instance] sendGAEvent:string2NSString(category):
+                                      string2NSString(action):
+                                      string2NSString(label):
+                                      [NSNumber numberWithLong:(value)]];
 }
 #endif
 
