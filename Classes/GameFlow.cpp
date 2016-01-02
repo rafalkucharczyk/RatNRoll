@@ -63,7 +63,7 @@ class SocialSharingHelper
 // http://rafalkucharczyk.github.io/RatNRoll/sharing_image.png
 const std::string SocialSharingHelper::imageLink = "http://bit.ly/1Pou3dT";
 
-const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
+const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds";
 
 GameFlow *GameFlow::instance = nullptr;
 
