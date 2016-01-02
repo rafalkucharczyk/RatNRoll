@@ -21,6 +21,19 @@ h6 {
     font-weight: 700;
 }
 
+#privacy_policy h4 {
+    padding-top: 30px;
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+#privacy_policy li {
+    padding-bottom: 30px;
+}
+
+#privacy_policy li > div {
+    padding-bottom: 5px;
+}
+
 img.screenshot {
     padding-bottom: 50px;
 }
@@ -165,7 +178,7 @@ img.screenshot {
 }
 
 footer {
-    padding: 50px 0;
+    padding: 25px 0;
     background-color: #f8f8f8;
 }
 
