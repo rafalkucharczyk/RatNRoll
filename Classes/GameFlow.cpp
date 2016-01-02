@@ -1,5 +1,6 @@
 #include "GameFlow.h"
 
+#include "ToString.h"
 #include "SonarFrameworks.h"
 
 #include "PreloadingLayer.h"
@@ -534,7 +535,8 @@ void GameFlow::loginToGameCenter()
 
 void GameFlow::startChallenge(SonarCocosHelper::GameCenterPlayerScore score)
 {
-    int levelNumber = std::stoi(score.leaderboardId.substr(score.leaderboardId.size() - 1, 1));
+    int levelNumber = std::atoi(score.leaderboardId.substr(score.leaderboardId.size() - 1, 1).c_str());
+    /* note: std::stoi is not supported on Android */
 
     Director::getInstance()->resume();
 

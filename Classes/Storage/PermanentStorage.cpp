@@ -1,4 +1,6 @@
+#include <cocos2d.h>
 #include "PermanentStorage.h"
+#include "ToString.h"
 
 #include <cocos/base/CCUserDefault.h>
 #include "KeychainItem.h"
@@ -223,6 +225,7 @@ int PermanentStorage::getScoreThresholdForLevel(int levelNumber) const
 
 void PermanentStorage::saveToKeychain(const std::string &keychainItemKey, bool value)
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     KeychainItem keychainItem;
 
     CustomDataMap keychainMap = readJsonData(keychainItem.getData());
@@ -230,13 +233,22 @@ void PermanentStorage::saveToKeychain(const std::string &keychainItemKey, bool v
     keychainMap[keychainItemKey] = static_cast<int>(value);
 
     keychainItem.setData(saveJsonData(keychainMap));
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    CCLOG("%s: not implemented for android!", __func__);
+#endif
+
 }
 
 bool PermanentStorage::readFromKeychain(const std::string &keychainItemKey) const
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     KeychainItem keychainItem;
 
     CustomDataMap keychainMap = readJsonData(keychainItem.getData());
 
     return (keychainMap.find(keychainItemKey) != keychainMap.end()) && keychainMap[keychainItemKey];
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    CCLOG("%s: not implemented for android!", __func__);
+    return false;
+#endif
 }

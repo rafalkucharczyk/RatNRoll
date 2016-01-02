@@ -209,6 +209,12 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 
 }
 
+Sprite *Application::getSplashScreen()
+{
+    CCLOG("%s: not implemented for Android!", __func__);
+    return Sprite::create();
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID

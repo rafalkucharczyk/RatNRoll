@@ -31,6 +31,7 @@ THE SOFTWARE.
 
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
+#include "2d/CCSprite.h"
 
 NS_CC_BEGIN
 
@@ -98,6 +99,7 @@ public:
 	*/
 	virtual void applicationScreenSizeChanged(int newWidth, int newHeight);
 
+    virtual Sprite *getSplashScreen();
 protected:
     static Application * sm_pSharedApplication;
 };

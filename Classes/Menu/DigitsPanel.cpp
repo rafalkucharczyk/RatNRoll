@@ -1,3 +1,4 @@
+#include "ToString.h"
 #include "DigitsPanel.h"
 
 USING_NS_CC;

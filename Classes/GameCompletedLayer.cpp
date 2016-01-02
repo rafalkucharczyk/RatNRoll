@@ -1,4 +1,5 @@
 #include "GameCompletedLayer.h"
+#include "ToString.h"
 
 #include <spine/spine-cocos2dx.h>
 #include "Menu/MenuLabel.h"

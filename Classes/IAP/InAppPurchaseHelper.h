@@ -1,6 +1,8 @@
 #ifndef __INAPPPURCHASEHELPER_H__
 #define __INAPPPURCHASEHELPER_H__
 
+#include <functional>
+
 #include "InAppPurchase.h"
 #include "IAPPresenter.h"
 

@@ -1,3 +1,4 @@
+#include <cocos2d.h>
 #include "InAppPurchaseHelper.h"
 #include "PermanentStorage.h"
 

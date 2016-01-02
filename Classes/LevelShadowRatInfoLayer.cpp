@@ -1,4 +1,5 @@
 #include "LevelShadowRatInfoLayer.h"
+#include "ToString.h"
 
 #include "Menu/MenuHelper.h"
 #include "Menu/MenuLabel.h"

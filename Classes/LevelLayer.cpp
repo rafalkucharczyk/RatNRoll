@@ -1,8 +1,10 @@
 #include "LevelLayer.h"
+#include "ToString.h"
 
 #include <iomanip>
 
 #include <limits>
+#include <cmath>
 #include <b2dJson.h>
 
 #include "SoundHelper.h"
@@ -777,8 +779,9 @@ void LevelLayer::stopDroppingItems() { unschedule(schedule_selector(LevelLayer::
 void LevelLayer::scheduleRatEyesAnimations()
 {
     schedule([this](float t) {
+        int min = AnimationHelper::EYES_FIRST, max = AnimationHelper::EYES_MAX;
         animationHelper->playEyesAnimation(
-            random(AnimationHelper::EYES_FIRST, AnimationHelper::EYES_MAX));
+            static_cast<AnimationHelper::Eyes>(random(min, max)));
     }, 5.0, "ratEyes");
 }
 
@@ -1224,7 +1227,8 @@ int LevelLayer::getGameScoreDelta() const
 
     int gameScoreDelta =
         1 +
-        std::lround(speedRatio * 2 + (ratSpeed == levelCustomization->getRatSpeedMax() ? 1 : 0));
+        std::floor(speedRatio * 2 + (ratSpeed == levelCustomization->getRatSpeedMax() ? 1 : 0) + 0.5);
+    /* note: lround is not supported on Android */
 
     gameScoreDelta *= frenzyGameScoreMultiplier;
 

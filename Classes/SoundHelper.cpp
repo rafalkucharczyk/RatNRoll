@@ -1,7 +1,9 @@
 #include "SoundHelper.h"
+#include "ToString.h"
 
 #include <string>
 #include <map>
+#include <unistd.h>
 
 #include <audio/include/AudioEngine.h>
 #include <cocos/base/ccRandom.h>
@@ -10,8 +12,8 @@
 
 using namespace cocos2d::experimental;
 
-const float SoundSettings::effectsVolume;
-const float SoundSettings::musicVolume;
+constexpr float SoundSettings::effectsVolume;
+constexpr float SoundSettings::musicVolume;
 
 struct SfxItem {
     std::string namePrefix;

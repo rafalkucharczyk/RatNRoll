@@ -14,6 +14,7 @@
 //
 
 #include "SonarFrameworks.h"
+#undef CC_TARGET_PLATFORM
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <jni.h>
@@ -191,7 +192,7 @@ GameCenterPlayersScores GameCenter::getFriendsBestScores(const std::string &lead
 #if SCH_IS_GAME_CENTER_ENABLED == true && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
     return IOSCPPHelper::gameCenterGetFriendsBestScores(leaderboardID);
 #else
-    return {}
+    return {};
 #endif
 }
 
