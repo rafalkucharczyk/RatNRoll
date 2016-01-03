@@ -65,7 +65,11 @@ class SocialSharingHelper
 // http://rafalkucharczyk.github.io/RatNRoll/sharing_image.png
 const std::string SocialSharingHelper::imageLink = "http://bit.ly/1Pou3dT";
 
+#if defined(COCOS2D_DEBUG)
+const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
+#else
 const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds";
+#endif
 
 GameFlow *GameFlow::instance = nullptr;
 
