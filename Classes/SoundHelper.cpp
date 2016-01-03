@@ -74,10 +74,6 @@ void SoundHelper::playEffectForItem(LevelCustomization::ItemType itemType)
     playOneEffect(sfxItem->second.namePrefix, sfxItem->second.count);
 }
 
-void SoundHelper::playBestScoreBeatenEffect() { playOneEffect("rec_beaten", 7); }
-
-void SoundHelper::playBestScoreNotBeatenEffect() { playOneEffect("rec_failed", 7); }
-
 void SoundHelper::playBackgroundMusic(const std::string &musicFile, bool restart)
 {
     if (!shouldPlayBackgroudMusic(musicFile, restart)) {

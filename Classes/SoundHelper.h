@@ -26,9 +26,6 @@ class SoundHelper
 
     void playEffectForItem(LevelCustomization::ItemType itemType);
 
-    void playBestScoreBeatenEffect();
-    void playBestScoreNotBeatenEffect();
-
     void playBackgroundMusic(const std::string &musicFile, bool restart = false);
     void playBackgroundMusicCrossfade(const std::string &musicFile, float durationInSeconds,
                                       bool restart = false);
