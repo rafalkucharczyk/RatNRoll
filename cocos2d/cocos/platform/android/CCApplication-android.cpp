@@ -212,7 +212,7 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 Sprite *Application::getSplashScreen()
 {
     CCLOG("%s: not implemented for Android!", __func__);
-    return Sprite::create();
+    return Sprite::create("background/bg_plane01.png");
 }
 
 NS_CC_END
