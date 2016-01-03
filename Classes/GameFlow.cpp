@@ -31,6 +31,8 @@
 
 USING_NS_CC;
 
+static const std::string GACategpryName = "GameFlow";
+
 class SocialSharingHelper
 {
   public:
@@ -293,8 +295,8 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
         });
         levelLayer->setGameFinishedCallback([this, levelLayer](int score) {
             std::string action = "GameFinished" + std::to_string(currentLevelNumber);
-            SonarCocosHelper::GoogleAnalytics::sendEvent("", action, "score", score);
-            SonarCocosHelper::GoogleAnalytics::sendEvent("", action, "speed",
+            SonarCocosHelper::GoogleAnalytics::sendEvent(GACategpryName, action, "score", score);
+            SonarCocosHelper::GoogleAnalytics::sendEvent(GACategpryName, action, "speed",
                                                          levelLayer->getRatSpeedLevel());
             this->switchToPostLevelScene(score);
             levelLayer->playBackgroundMusic();
@@ -370,7 +372,8 @@ void GameFlow::switchToPostLevelScene(int score)
     int _currentLevelNumber = this->currentLevelNumber;
     postLevelLayer->setRestartLevelCallback([this, _currentLevelNumber]() {
         this->switchToLevelScene(_currentLevelNumber);
-        SonarCocosHelper::GoogleAnalytics::sendEvent("", "GameRestarted", "", _currentLevelNumber);
+        SonarCocosHelper::GoogleAnalytics::sendEvent(GACategpryName, "GameRestarted", "levelNumber",
+                                                     _currentLevelNumber);
     });
     postLevelLayer->setGotoMainMenuCallback(
         std::bind(&GameFlow::switchToLevelSelectionScene, this));
@@ -497,7 +500,8 @@ void GameFlow::overlayGameCompletedScene(LevelLayer *levelLayer)
         this->switchToPostLevelScene(LevelCustomization::gameCompletedScore);
     });
 
-    SonarCocosHelper::GoogleAnalytics::sendEvent("", "GameCompleted", "", currentLevelNumber);
+    SonarCocosHelper::GoogleAnalytics::sendEvent(GACategpryName, "GameCompleted", "levelNumber",
+                                                 currentLevelNumber);
 }
 
 void GameFlow::overlayGameScoreThresholdScene(int gameScore, cocos2d::Scene *parentScene)
@@ -514,9 +518,9 @@ void GameFlow::overlayGameScoreThresholdScene(int gameScore, cocos2d::Scene *par
 
         parentScene->addChild(layer, 1);
 
-        SonarCocosHelper::GoogleAnalytics::sendEvent("", "ThresholdCompleted" +
-                                                             std::to_string(currentLevelNumber),
-                                                     "", gameScoreThreshold.first);
+        SonarCocosHelper::GoogleAnalytics::sendEvent(
+            GACategpryName, "ThresholdCompleted" + std::to_string(currentLevelNumber), "score",
+            gameScoreThreshold.first);
     }
 }
 
