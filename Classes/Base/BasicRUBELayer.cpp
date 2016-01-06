@@ -333,4 +333,4 @@ b2Fixture *BasicRUBELayer::getTouchedFixture(Touch *touch)
     return callback.m_fixture;
 }
 
-bool BasicRUBELayer::allowPinchZoom() { return true; }
+bool BasicRUBELayer::allowPinchZoom() { return false; }
