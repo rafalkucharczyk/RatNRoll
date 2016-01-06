@@ -141,7 +141,7 @@ bool GameFlow::likingCompleted() const { return PermanentStorage::getInstance().
 
 bool GameFlow::iapPurchaseCompleted() const
 {
-    return true; // InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
+    return InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
 }
 
 SoundSettings GameFlow::getSoundSettings() const
