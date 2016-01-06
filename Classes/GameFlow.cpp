@@ -30,6 +30,8 @@
 
 #include "TransitionScaleChildren.h"
 
+// #define PREDEFINED_SCORE 128932
+
 USING_NS_CC;
 
 static const std::string GACategpryName = "GameFlow";
@@ -139,7 +141,7 @@ bool GameFlow::likingCompleted() const { return PermanentStorage::getInstance().
 
 bool GameFlow::iapPurchaseCompleted() const
 {
-    return InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
+    return true; // InAppPurchaseHelper::isPurchased(GameFlow::iapProductId);
 }
 
 SoundSettings GameFlow::getSoundSettings() const
@@ -251,9 +253,15 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     auto levelShadowRatInfoLayer = LevelShadowRatInfoLayer::create();
     scene->addChild(levelShadowRatInfoLayer);
 
-    auto levelLayer =
-        LevelLayer::create(levelCustomization, addAchievementTracker(*scene),
-                           PermanentStorage::getInstance().getScoreThresholdForLevel(levelNumber));
+    auto levelLayer = LevelLayer::create(levelCustomization, addAchievementTracker(*scene),
+#ifdef PREDEFINED_SCORE
+                                         PREDEFINED_SCORE
+#else
+                                         PermanentStorage::getInstance().getScoreThresholdForLevel(
+                                             levelNumber)
+#endif
+
+                                         );
 
     levelLayer->setShadowRatActionCallback(
         [levelShadowRatInfoLayer](const std::string &playerName, int score, int state) {
@@ -626,8 +634,9 @@ int GameFlow::updateBestScore(int levelNumber, int currentScore)
     int bestScore = getBestScore(levelNumber, currentScore);
 
     PermanentStorage::getInstance().setBestScore(levelNumber, bestScore);
+#ifndef PREDEFINED_SCORE
     SonarCocosHelper::GameCenter::submitScore(bestScore, getLeaderboardName(levelNumber));
-
+#endif
     return bestScore;
 }
 
