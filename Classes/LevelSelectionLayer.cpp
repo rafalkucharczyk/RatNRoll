@@ -13,24 +13,24 @@ void runSwingAction(Node *node)
 };
 
 LevelSelectionLayer::LevelSelectionLayer(bool swingTutorialButton, bool swingCheeseFactoryButton)
-    : menuHelper({{{0.3 + 0.01, 0.7 + 0.01},
-                   0.2,
+    : menuHelper({{{0.85, 0.92},
+                   0.1,
                    "tutorial",
                    {[swingTutorialButton](Node *node) {
                        if (swingTutorialButton) {
                            runSwingAction(node);
                        }
                    }}},
-                  {{0.7 + 0.01, 0.7 - 0.01},
-                   0.2,
+                  {{0.33, 0.74},
+                   0.23,
                    "cheese_factory",
                    {[swingCheeseFactoryButton](Node *node) {
                        if (swingCheeseFactoryButton) {
                            runSwingAction(node);
                        }
                    }}},
-                  {{0.3 - 0.02, 0.4 + 0.02}, 0.2, "graveyard"},
-                  {{0.7 - 0.01, 0.4 - 0.01}, 0.2, "magic_hall"},
+                  {{0.69, 0.56}, 0.23, "graveyard"},
+                  {{0.29, 0.4}, 0.23, "magic_hall"},
                   {{0.5, 0.2}, 0.1, "back"}},
                  std::bind(&LevelSelectionLayer::itemClicked, this, std::placeholders::_1))
 {
