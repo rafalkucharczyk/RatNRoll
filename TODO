@@ -138,23 +138,25 @@ more analytics
 *  game completed screen?
 *  thresholds completed?
 
+14
+bug - crash when restarting level
+
+15
+use release GA tracking ID
+use production IAP ID
+
+16
+remove not needed wav files
+bug - add category to GA::sendEvent
+
+17
+improve layout of level selection layer
+add restore purchase button in settings menu
+
 unordered:
 
-BEFORE PUBLIC BETA:
-- finish landing page
-  screenshots
-  privacy policy
-  contact
-  beta testers wanted
-
-- submit facebook app to review
-- change GA tracking ID
-- upload build to TF
-
-AFTER PUBLIC BETA:
-- update tracking ID for GA (release)
-- change IAP purchase ID to production one, add screenshot in itunes
-- fill all required info, submit for a review
+BEFORE REVIEW:
+- record movie for iPhone6+ and iPad
 
 AFTER REVIEW:
 - promotion, pick blogs, write emails, send promo codes
