@@ -35,6 +35,21 @@ ButtonConfig::Action MenuHelper::removeTransparency()
     return [](Node *node) { node->getChildren().front()->getChildren().front()->setOpacity(255); };
 }
 
+ButtonConfig::Action MenuHelper::replaceImage(std::function<bool()> selector,
+                                              const std::string &firstImage,
+                                              const std::string &secondImage)
+{
+    return [selector, firstImage, secondImage](Node *node) {
+        MenuItemSprite *menuItemSprite = dynamic_cast<MenuItemSprite *>(node);
+
+        std::string img = selector() ? firstImage : secondImage;
+
+        auto sprite = MenuItemButton::createSpriteForPath(img);
+
+        menuItemSprite->setNormalImage(sprite);
+    };
+}
+
 void MenuHelper::positionNode(cocos2d::Node &node, const cocos2d::Vec2 &position, float size)
 {
     Vec2 visibleSize = Director::getInstance()->getVisibleSize();

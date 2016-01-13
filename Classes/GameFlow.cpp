@@ -429,7 +429,7 @@ void GameFlow::switchToSettingsScene()
     auto scene = createSceneObject();
 
     auto settingsLayer = SettingsLayer::create(getSoundSettings());
-    auto iapLayer = IAPLayer::create(iapProductId, {0.35 - 0.02, 0.45 + 0.02}, 0.15);
+    auto iapLayer = IAPLayer::create(iapProductId, {0.35 - 0.02, 0.45 + 0.02}, 0.15, true);
 
     settingsLayer->setGotoMainMenuCallback([this]() { switchToInitialScene(); });
     settingsLayer->setGotoAboutPageCallback([this]() { switchToAboutScene(); });

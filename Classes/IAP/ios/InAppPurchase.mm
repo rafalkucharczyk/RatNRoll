@@ -267,6 +267,9 @@ string InAppPurchase::getLocalizedProductDescription()
 {
     CFStringRef cfDesc =
         (CFStringRef)[[InAppPurchaseWrapper sharedInstance] getLocalizedProductDescription];
+    if (cfDesc == nil) {
+        return "";
+    }
     return string([(NSString *)cfDesc UTF8String]);
 }
 
@@ -274,6 +277,10 @@ string InAppPurchase::getLocalizedProductTitle()
 {
     CFStringRef cfTitle =
         (CFStringRef)[[InAppPurchaseWrapper sharedInstance] getLocalizedProductTitle];
+    if (cfTitle == nil) {
+        return "";
+    }
+
     return string([(NSString *)cfTitle UTF8String]);
 }
 
@@ -281,6 +288,10 @@ string InAppPurchase::getProductPriceInLocalCurrency()
 {
     CFStringRef cfPrice =
         (CFStringRef)[[InAppPurchaseWrapper sharedInstance] getProductPriceInLocalCurrency];
+    if (cfPrice == nil) {
+        return "";
+    }
+
     return string([(NSString *)cfPrice UTF8String]);
 }
 
