@@ -28,6 +28,15 @@ void InAppPurchaseHelper::purchaseProduct()
     }
 }
 
+void InAppPurchaseHelper::restoreProduct()
+{
+    if (isPurchaseAvailable) {
+        inAppPurchaseEngine.restoreProduct();
+    } else {
+        deferredAction = [this]() { inAppPurchaseEngine.restoreProduct(); };
+    }
+}
+
 bool InAppPurchaseHelper::isPurchased(const std::string &productId)
 {
     return PermanentStorage::getInstance().getPurchaseState(productId);

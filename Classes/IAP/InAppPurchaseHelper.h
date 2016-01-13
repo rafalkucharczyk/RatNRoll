@@ -11,6 +11,7 @@ class InAppPurchaseHelper : public InAppPurchaseListener
 
     void init();
     void purchaseProduct();
+    void restoreProduct();
 
     static bool isPurchased(const std::string &productId);
 

@@ -34,6 +34,9 @@ class MenuHelper
   public:
     // some default actions
     static ButtonConfig::Action removeTransparency();
+    static ButtonConfig::Action replaceImage(std::function<bool()> selector,
+                                             const std::string &firstImage,
+                                             const std::string &secondImage);
 
   public:
     static void positionNode(cocos2d::Node &node, const cocos2d::Vec2 &position, float size);

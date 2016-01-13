@@ -3,12 +3,13 @@
 USING_NS_CC;
 
 IAPLayer::IAPLayer(const std::string &productId, const cocos2d::Vec2 &buttonPosition,
-                   float buttonSize)
+                   float buttonSize, bool restoreProduct)
     : menuHelper(
           {{buttonPosition,
             buttonSize,
             "basket",
-            {[](Node *node) {},
+            {MenuHelper::replaceImage([restoreProduct]() { return restoreProduct; },
+                                      "restore_purchase", "basket"),
              [](Node *node) { // purchaseInProgress
                  if (node->getActionByTag(inProgressActionTag) == nullptr) {
                      auto action = RepeatForever::create(RotateBy::create(2, 360));
@@ -43,7 +44,7 @@ IAPLayer::IAPLayer(const std::string &productId, const cocos2d::Vec2 &buttonPosi
                      nullptr));
              }}}},
           std::bind(&IAPLayer::menuItemClicked, this, std::placeholders::_1)),
-      productId(productId)
+      productId(productId), restoreProduct(restoreProduct)
 {
 }
 
@@ -65,9 +66,9 @@ bool IAPLayer::init()
 }
 
 IAPLayer *IAPLayer::create(const std::string &productId, const cocos2d::Vec2 &buttonPosition,
-                           float buttonSize)
+                           float buttonSize, bool restore)
 {
-    IAPLayer *ret = new (std::nothrow) IAPLayer(productId, buttonPosition, buttonSize);
+    IAPLayer *ret = new (std::nothrow) IAPLayer(productId, buttonPosition, buttonSize, restore);
     if (ret && ret->init()) {
         ret->autorelease();
     } else {
@@ -82,7 +83,12 @@ void IAPLayer::menuItemClicked(int itemIndex)
 {
     if (itemIndex == 0) {
         menuHelper.runActionFor(0, 1);
-        iapHelper->purchaseProduct();
+
+        if (restoreProduct) {
+            iapHelper->restoreProduct();
+        } else {
+            iapHelper->purchaseProduct();
+        }
     }
 }
 

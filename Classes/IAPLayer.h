@@ -10,11 +10,12 @@
 class IAPLayer : public cocos2d::Layer, public IAPPresenter
 {
   public:
-    IAPLayer(const std::string &productId, const cocos2d::Vec2 &buttonPosition, float buttonSize);
+    IAPLayer(const std::string &productId, const cocos2d::Vec2 &buttonPosition, float buttonSize,
+             bool restoreProduct);
     virtual bool init();
 
     static IAPLayer *create(const std::string &productId, const cocos2d::Vec2 &buttonPosition,
-                            float buttonSize);
+                            float buttonSize, bool restoreProduct = false);
 
     void menuItemClicked(int itemIndex);
 
@@ -36,6 +37,7 @@ class IAPLayer : public cocos2d::Layer, public IAPPresenter
     MenuHelper menuHelper;
 
     std::string productId;
+    bool restoreProduct;
 
     std::shared_ptr<InAppPurchaseHelper> iapHelper;
 

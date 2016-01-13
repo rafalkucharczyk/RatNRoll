@@ -7,35 +7,20 @@
 USING_NS_CC;
 
 SettingsLayer::SettingsLayer(const SoundSettings &soundSettings)
-    : menuHelper({{{0.35 + 0.01, 0.65 + 0.01},
-                   0.15,
-                   "sound",
-                   {[this](Node *node) {
-                       MenuItemSprite *menuItemSprite = dynamic_cast<MenuItemSprite *>(node);
-
-                       std::string img =
-                           this->soundSettings.effectsEnabled ? "sound" : "sound_disabled";
-
-                       auto sprite = MenuItemButton::createSpriteForPath(img);
-
-                       menuItemSprite->setNormalImage(sprite);
-                   }}},
-                  {{0.65 + 0.01, 0.65 - 0.01},
-                   0.15,
-                   "music01",
-                   {[this](Node *node) {
-                       MenuItemSprite *menuItemSprite = dynamic_cast<MenuItemSprite *>(node);
-
-                       std::string img =
-                           this->soundSettings.musicEnabled ? "music01" : "music01_disabled";
-
-                       auto sprite = MenuItemButton::createSpriteForPath(img);
-
-                       menuItemSprite->setNormalImage(sprite);
-                   }}},
-                  {{0.65 - 0.01, 0.45 - 0.01}, 0.14, "about"},
-                  {{0.5, 0.2}, 0.1, "back"}},
-                 std::bind(&SettingsLayer::menuItemClicked, this, std::placeholders::_1)),
+    : menuHelper(
+          {{{0.35 + 0.01, 0.65 + 0.01},
+            0.15,
+            "sound",
+            {MenuHelper::replaceImage([this]() { return this->soundSettings.effectsEnabled; },
+                                      "sound", "sound_disabled")}},
+           {{0.65 + 0.01, 0.65 - 0.01},
+            0.15,
+            "music01",
+            {MenuHelper::replaceImage([this]() { return this->soundSettings.musicEnabled; },
+                                      "music01", "music01_disabled")}},
+           {{0.65 - 0.01, 0.45 - 0.01}, 0.14, "about"},
+           {{0.5, 0.2}, 0.1, "back"}},
+          std::bind(&SettingsLayer::menuItemClicked, this, std::placeholders::_1)),
       soundSettings(soundSettings)
 {
 }

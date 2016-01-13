@@ -67,11 +67,7 @@ class SocialSharingHelper
 // http://rafalkucharczyk.github.io/RatNRoll/sharing_image.png
 const std::string SocialSharingHelper::imageLink = "http://bit.ly/1Pou3dT";
 
-#if defined(COCOS2D_DEBUG)
-const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds11";
-#else
 const std::string GameFlow::iapProductId = "com.nowhere.ratnroll.bonusworlds";
-#endif
 
 GameFlow *GameFlow::instance = nullptr;
 
@@ -432,7 +428,7 @@ void GameFlow::switchToSettingsScene()
     auto scene = createSceneObject();
 
     auto settingsLayer = SettingsLayer::create(getSoundSettings());
-    auto iapLayer = IAPLayer::create(iapProductId, {0.35 - 0.02, 0.45 + 0.02}, 0.15);
+    auto iapLayer = IAPLayer::create(iapProductId, {0.35 - 0.02, 0.45 + 0.02}, 0.15, true);
 
     settingsLayer->setGotoMainMenuCallback([this]() { switchToInitialScene(); });
     settingsLayer->setGotoAboutPageCallback([this]() { switchToAboutScene(); });
