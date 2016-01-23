@@ -13,8 +13,8 @@ void runSwingAction(Node *node)
 };
 
 LevelSelectionLayer::LevelSelectionLayer(bool swingTutorialButton, bool swingCheeseFactoryButton)
-    : menuHelper({{{0.85, 0.92},
-                   0.1,
+    : menuHelper({{{0.845, 0.915},
+                   0.125,
                    "tutorial",
                    {[swingTutorialButton](Node *node) {
                        if (swingTutorialButton) {
