@@ -216,9 +216,9 @@ void BackgroundLayer::update(float time)
     addBackgroundItems(toBeAddedCount, provider);
 }
 
-void BackgroundLayer::setSpeed(int deltasCount)
+void BackgroundLayer::setSpeed(int speed)
 {
-    float v = itemsSpeed + deltasCount * deltaItemsSpeed;
+    float v = speed * deltaItemsSpeed;
     v = std::max(minItemsSpeed, v);
     v = std::min(maxItemsSpeed, v);
 

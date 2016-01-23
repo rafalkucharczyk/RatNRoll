@@ -489,13 +489,13 @@ class AnimationHelper
 const std::string LevelLayer::name = "LevelLayer";
 
 LevelLayer::LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker,
-                       int initialGameScore)
+                       int initialGameScore, const std::function<void(int)> &bgSpeedFunction)
     : levelCustomization(customization), ratBody(nullptr), earthBody(nullptr), cageBody(nullptr),
 
-      ratSpeed(levelCustomization->getRatSpeedInitial()), isHovering(false),
-      proRunnerInProgress(false), gameScore(initialGameScore),
-      previousRevoluteJointAngle(std::numeric_limits<float>::min()), scoreLabel(nullptr),
-      totalTime(0.0), paused(false), nextItemDropTime(0.0),
+      ratSpeed(levelCustomization->getRatSpeedInitial(initialGameScore)), isHovering(false),
+      proRunnerInProgress(false), backgroundSpeedFunction(bgSpeedFunction),
+      gameScore(initialGameScore), previousRevoluteJointAngle(std::numeric_limits<float>::min()),
+      scoreLabel(nullptr), totalTime(0.0), paused(false), nextItemDropTime(0.0),
       contactListener(new LevelContactListener(this)), cheeseFrenzyParticleNode(nullptr),
       halvePointsParticleNode(nullptr), frenzyGameScoreMultiplier(1), skullShieldCount(0),
       animationHelper(new AnimationHelper(*customization)), achievementTracker(achievementTracker)
@@ -513,9 +513,10 @@ bool LevelLayer::init()
     m_world->SetContactListener(contactListener.get());
 
     scheduleRatEyesAnimations();
-    animationHelper->playRunningAnimation(ratSpeed);
 
     initScoreLabel(gameScore);
+
+    adaptGameSpeed();
 
     runCustomActionOnStart();
 
@@ -543,10 +544,11 @@ void LevelLayer::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transfor
 }
 
 LevelLayer *LevelLayer::create(LevelCustomization *customization,
-                               AchievementTracker &achievementTracker, int initialGameScore)
+                               AchievementTracker &achievementTracker, int initialGameScore,
+                               const std::function<void(int)> &bgSpeedFunction)
 {
-    LevelLayer *ret =
-        new (std::nothrow) LevelLayer(customization, achievementTracker, initialGameScore);
+    LevelLayer *ret = new (std::nothrow)
+        LevelLayer(customization, achievementTracker, initialGameScore, bgSpeedFunction);
     if (ret && ret->init()) {
         ret->autorelease();
         return ret;
@@ -970,13 +972,10 @@ void LevelLayer::speedUpItemEaten()
 {
     ratSpeed = b2Min(ratSpeed + levelCustomization->getRatSpeedStep(),
                      levelCustomization->getRatSpeedMax());
-    backgroundSpeedFunction(1);
+
+    adaptGameSpeed();
 
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::DAZED);
-
-    if (!isHovering) {
-        animationHelper->playRunningAnimation(ratSpeed);
-    }
 
     if (std::isgreaterequal(ratSpeed, levelCustomization->getRatSpeedMax())) {
         achievementTracker.maxSpeedReached();
@@ -992,13 +991,10 @@ void LevelLayer::slowDownItemEaten()
 {
     ratSpeed = b2Max(ratSpeed - levelCustomization->getRatSpeedStep(),
                      levelCustomization->getRatSpeedMin());
-    backgroundSpeedFunction(-1);
+
+    adaptGameSpeed();
 
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::SLEEPY);
-
-    if (!isHovering) {
-        animationHelper->playRunningAnimation(ratSpeed);
-    }
 
     if (std::isless(ratSpeed,
                     levelCustomization->getRatSpeedMax() - levelCustomization->getRatSpeedStep())) {
@@ -1052,13 +1048,9 @@ void LevelLayer::breakItemEaten()
 {
     ratSpeed = levelCustomization->getRatSpeedMin();
 
-    backgroundSpeedFunction(-10);
+    adaptGameSpeed();
 
     animationHelper->playEyesAnimation(AnimationHelper::Eyes::IRRITATED);
-
-    if (!isHovering) {
-        animationHelper->playRunningAnimation(ratSpeed);
-    }
 
     playBackgroundMusic(0.25);
 }
@@ -1078,6 +1070,15 @@ void LevelLayer::frenzyItemEaten()
 }
 
 void LevelLayer::shieldItemEaten() { updateRatShield(1); }
+
+void LevelLayer::adaptGameSpeed()
+{
+    backgroundSpeedFunction(getRatSpeedLevel());
+
+    if (!isHovering) {
+        animationHelper->playRunningAnimation(ratSpeed);
+    }
+}
 
 void LevelLayer::handleGameOver()
 {
