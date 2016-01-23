@@ -14,7 +14,7 @@ std::vector<std::string> levelCompletedTexts = {"AWESOME!\n\nCHEESE FACTORY\n\nL
 };
 
 GameCompletedLayer::GameCompletedLayer(int levelNumber)
-    : menuHelper({{{0.5, 0.2}, 0.1, "back"}},
+    : menuHelper({{{0.5, 0.2}, 0.1, "confirm"}},
                  std::bind(&GameCompletedLayer::itemClicked, this, std::placeholders::_1)),
       levelNumber(levelNumber)
 {
