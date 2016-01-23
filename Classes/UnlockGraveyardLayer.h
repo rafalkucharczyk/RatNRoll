@@ -10,21 +10,11 @@ class UnlockGraveyardLayer : public cocos2d::Layer
 {
   public:
     UnlockGraveyardLayer();
-    virtual bool init(bool unlockingEnabled);
+    virtual bool init();
 
-    static UnlockGraveyardLayer *create(bool unlockingEnabled);
-
-    void setLikingCompletedCallback(std::function<void()> callback)
-    {
-        likingCompletedCallback = callback;
-    }
+    CREATE_FUNC(UnlockGraveyardLayer);
 
   private:
-    std::function<void()> likingCompletedCallback;
-
-    void itemClicked(int itemIndex);
-
-    MenuHelper menuHelper;
     FacebookLikeNode *facebookLikeNode;
 };
 
