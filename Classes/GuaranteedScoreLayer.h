@@ -6,6 +6,7 @@
 #include "BasicWhiteLayer.h"
 #include "Menu/MenuHelper.h"
 #include "Menu/DigitsPanel.h"
+#include "Facebook/FacebookLikeNode.h"
 
 class GuaranteedScoreLayer : public BasicWhiteLayer
 {
@@ -19,13 +20,16 @@ class GuaranteedScoreLayer : public BasicWhiteLayer
   private:
     void itemClicked(int itemIndex);
 
-    void selfCleanUp();
+    void addAnimationNode();
+    void addFacebookNode();
 
     MenuHelper menuHelper;
 
     int currentScore;
     int currentScoreThreshold;
     int nextScoreThreshold;
+
+    FacebookLikeNode *facebookLikeNode;
 };
 
 #endif /* __GUARANTEEDSCORE_LAYER_H__ */
