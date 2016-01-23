@@ -330,17 +330,16 @@ bool GameFlow::blockLevel(Scene &scene, LevelLayer &levelLayer, int levelNumber,
     if (levelNumber == 2 && !likingCompleted()) {
         auto layer = Layer::create();
 
-        auto unlockGraveyardLayer = UnlockGraveyardLayer::create(getBestScore(1, 0) >= 10000);
-        unlockGraveyardLayer->setLikingCompletedCallback([levelBlockerLayer, &levelLayer, this]() {
-            levelBlockerLayer->unblock();
-            PermanentStorage::getInstance().setLikingState(true);
-            levelLayer.playBackgroundMusic();
-            setCurrentBackgroundConfig(levelLayer.getBackgroundConfig());
-        });
-        layer->addChild(unlockGraveyardLayer);
-        layer->setCascadeOpacityEnabled(true);
+        if (getBestScore(1, 0) < 10000) {
+            auto unlockGraveyardLayer = UnlockGraveyardLayer::create();
 
-        actionLayer = layer;
+            layer->addChild(unlockGraveyardLayer);
+            layer->setCascadeOpacityEnabled(true);
+
+            actionLayer = layer;
+        } else {
+            PermanentStorage::getInstance().setLikingState(true);
+        }
     }
 
     if (levelNumber == 3 && !iapPurchaseCompleted()) {
