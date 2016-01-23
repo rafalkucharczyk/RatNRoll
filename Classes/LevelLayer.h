@@ -20,7 +20,7 @@ class LevelLayer : public RUBELayer
 {
   public:
     LevelLayer(LevelCustomization *customization, AchievementTracker &achievementTracker,
-               int initialGameScore);
+               int initialGameScore, const std::function<void(int)> &bgSpeedFunction);
 
     virtual bool init();
 
@@ -28,7 +28,8 @@ class LevelLayer : public RUBELayer
                       uint32_t transformUpdated);
 
     static LevelLayer *create(LevelCustomization *customization,
-                              AchievementTracker &AchievementTracker, int initialGameScore);
+                              AchievementTracker &AchievementTracker, int initialGameScore,
+                              const std::function<void(int)> &bgSpeedFunction);
 
     virtual std::list<std::string> getFilenames();
     virtual cocos2d::Point initialWorldOffset();
@@ -56,11 +57,6 @@ class LevelLayer : public RUBELayer
     void setGameCompletedCallback(std::function<void()> callback)
     {
         gameCompletedCallback = callback;
-    }
-
-    void setBackgroundSpeedFunction(std::function<void(int)> function)
-    {
-        backgroundSpeedFunction = function;
     }
 
     void addShadowRat(const std::string &name, std::function<int(int)> fromScore, int toScore);
@@ -107,6 +103,8 @@ class LevelLayer : public RUBELayer
     void breakItemEaten();
     void frenzyItemEaten();
     void shieldItemEaten();
+
+    void adaptGameSpeed();
 
     void handleGameOver();
 

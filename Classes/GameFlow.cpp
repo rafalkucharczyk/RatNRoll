@@ -252,15 +252,17 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     auto levelShadowRatInfoLayer = LevelShadowRatInfoLayer::create();
     scene->addChild(levelShadowRatInfoLayer);
 
-    auto levelLayer = LevelLayer::create(levelCustomization, addAchievementTracker(*scene),
+    auto levelLayer = LevelLayer::create(
+        levelCustomization, addAchievementTracker(*scene),
 #ifdef PREDEFINED_SCORE
-                                         PREDEFINED_SCORE
+        PREDEFINED_SCORE
 #else
-                                         PermanentStorage::getInstance().getScoreThresholdForLevel(
-                                             levelNumber)
+        PermanentStorage::getInstance().getScoreThresholdForLevel(levelNumber)
 #endif
+        ,
+        std::bind(&BackgroundLayer::setSpeed, backgroundLayer, std::placeholders::_1)
 
-                                         );
+            );
 
     levelLayer->setShadowRatActionCallback(
         [levelShadowRatInfoLayer](const std::string &playerName, int score, int state) {
@@ -284,9 +286,6 @@ void GameFlow::switchToLevelSceneWithScores(int levelNumber,
     if (levelBlocked) {
         setCurrentBackgroundConfig(tempBackgroundConfig);
     }
-
-    levelLayer->setBackgroundSpeedFunction(
-        std::bind(&BackgroundLayer::setSpeed, backgroundLayer, std::placeholders::_1));
 
     SonarCocosHelper::GoogleAnalytics::setScreenName("Level" + std::to_string(levelNumber));
 

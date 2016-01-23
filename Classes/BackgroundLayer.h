@@ -34,8 +34,8 @@ class BackgroundLayer : public cocos2d::Layer
 
     virtual void update(float time);
 
-    // e.g: +1 increase current speed by delta, -2 decrease current speed by two deltas
-    void setSpeed(int deltasCount);
+    // 0 - lowest speed, 10 - highest speed
+    void setSpeed(int speed);
 
     static BackgroundLayer *create(const BackgroundConfig &backgroundConfig);
 

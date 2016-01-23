@@ -18,20 +18,18 @@ struct ScoreThresholdInfo {
 const int maxGameScore = 599;
 
 std::map<int, ScoreThresholdInfo> scoreThresholdInfos = {
-    {0, {2.8, 0.5}},
-    {100, {2.4, 0.6}},
-    {200, {2.0, 0.6}},
-    {300, {1.6, 0.7}},
-    {400, {1.2, 0.4}},
-    {500, {0.8, 0.0}},
-    {LevelCustomization::gameCompletedScore, {0.8, 0.0}},
+    {0, {2.8, 0.5}},   {50, {2.6, 0.6}},  {100, {2.4, 0.6}},
+    {150, {2.2, 0.6}}, {200, {2.0, 0.6}}, {300, {1.6, 0.7}},
+    {400, {1.2, 0.4}}, {500, {0.8, 0.0}}, {LevelCustomization::gameCompletedScore, {0.8, 0.0}},
 };
 #else
 const int maxGameScore = 999999;
 
 std::map<int, ScoreThresholdInfo> scoreThresholdInfos = {
     {0, {2.8, 0.5}},
+    {2500, {2.6, 0.5}},
     {10000, {2.4, 0.6}},
+    {25000, {2.2, 0.6}},
     {50000, {2.0, 0.6}},
     {100000, {1.6, 0.7}},
     {250000, {1.2, 0.4}},
@@ -97,7 +95,20 @@ float LevelBase::getItemDropInterval(int gameScore)
     return interval;
 }
 
-std::pair<int, int> LevelBase::getFixedScoreThresholdForGameScore(int gameScore)
+float LevelBase::getRatSpeedInitial(int gameScore) const
+{
+    std::pair<int, int> y = getFixedScoreThresholdForGameScore(gameScore);
+
+    auto rightBound = std::find_if(
+        scoreThresholdInfos.begin(), scoreThresholdInfos.end(),
+        [y](const std::map<int, ScoreThresholdInfo>::value_type &x) { return y.first < x.first; });
+
+    int delta = std::distance(scoreThresholdInfos.begin(), rightBound) - 1;
+
+    return getRatSpeedMin() + delta * getRatSpeedStep();
+}
+
+std::pair<int, int> LevelBase::getFixedScoreThresholdForGameScore(int gameScore) const
 {
     auto rightBound = getRightBoundThresholdForScore(gameScore);
 

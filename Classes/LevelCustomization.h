@@ -62,7 +62,7 @@ class LevelCustomization
     virtual float getRatSpeedMin() const = 0;
     virtual float getRatSpeedMax() const = 0;
     float getRatSpeedStep() const { return (getRatSpeedMax() - getRatSpeedMin()) / 10.; }
-    virtual float getRatSpeedInitial() const { return getRatSpeedMin(); }
+    virtual float getRatSpeedInitial(int gameScore) const { return getRatSpeedMin(); }
 
     // return ITEM_TYPE_MAX to skip dropping item
     virtual ItemType getDropItemType(float currentRatSpeed, bool shieldAllowed) = 0;
@@ -76,7 +76,7 @@ class LevelCustomization
 
     // previousThreshold < gameScore < nextThreshold
     // returns <previousThreshold, nextThreshold>
-    virtual std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore)
+    virtual std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore) const
     {
         return std::make_pair(0, 0);
     }
@@ -140,7 +140,10 @@ class LevelTutorial : public LevelCustomization
 
     float getRatSpeedMin() const override { return 0.2; }
     float getRatSpeedMax() const override { return 3.2; }
-    float getRatSpeedInitial() const override { return getRatSpeedMin() + getRatSpeedStep(); }
+    float getRatSpeedInitial(int gameScore) const override
+    {
+        return getRatSpeedMin() + getRatSpeedStep();
+    }
 
     ItemType getDropItemType(float currentRatSpeed, bool shieldAllowed) override
     {
@@ -232,6 +235,7 @@ class LevelBase : public LevelCustomization
     float getItemDropInterval(int gameScore) override;
     float getRatSpeedMin() const override { return 0.2; }
     float getRatSpeedMax() const override { return 4.2; }
+    float getRatSpeedInitial(int gameScore) const override;
 
     ItemType getDropItemType(float currentRatSpeed, bool shieldAllowed) override
     {
@@ -276,7 +280,7 @@ class LevelBase : public LevelCustomization
         return b2Vec2(x, 9);
     }
 
-    std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore);
+    std::pair<int, int> getFixedScoreThresholdForGameScore(int gameScore) const;
 
   private:
     ItemType getBonusItem(bool shieldAllowed)
