@@ -12,63 +12,54 @@ std::map<TutorialBalloonLayer::BalloonType, std::list<TutorialScreen>> tutorialS
      {{"tutorial00.x",
        {0.5, 0.7},
        "HELLO!\n\n"
-       "WELCOME TO RAT'N'ROLL\n\n"
-       "LET ME SHOW YOU\n"
-       "HOW TO PLAY...",
+       "RULES OF THE GAME\n"
+       "ARE SIMPLE...",
        0.5},
       {"tutorial01.x",
        {0.4, 0.75},
-       "ROLL THE WORLD AND KEEP\n"
-       "YOURSELF ON TOP OF IT.\n"
-       "THE MORE YOU ROLL,\n"
-       "THE MORE YOU SCORE!\n\n"
-       "OH! AND REMEMBER TO\n"
-       "ALWAYS ROLL CLOCKWISE,\n"
-       "YOU GET NOTHING OTHERWISE",
+       "ROLL THE GLOBE AND\n"
+       "BALANCE YOURSELF\n"
+       "ON TOP OF IT.\n\n"
+       "YOU SCORE POINTS WHEN\n"
+       "ROLLING CLOCKWISE!",
        0.4}}},
     {TutorialBalloonLayer::BalloonType::SPEEDUP,
      {{"tutorial02.x",
        {0.65, 0.7},
+       "YOU SCORE MORE POINTS\n"
+       "WHEN RUNNING FASTER.\n\n"
        "CATCH THE BOTTLES TO\n"
-       "SPEED YOU UP!\n\n"
-       "YOU GET MORE POINTS\n"
-       "WHEN RUNNING FASTER.\n"
-       "AND MORE FUN!",
+       "SPEED YOU UP!",
        0.45}}},
     {TutorialBalloonLayer::BalloonType::SLOWDOWN,
      {{"tutorial03.x",
        {0.25, 0.7},
        "AVOID ANY HAMBURGERS,\n"
-       "THEY SLOW YOU DOWN!\n\n"
-       "YOU GET LESS POINTS THEN...",
+       "THEY SLOW YOU DOWN!",
        0.45}}},
     {TutorialBalloonLayer::BalloonType::HOVER,
      {{"tutorial04.x",
        {0.25, 0.68},
        "A BIRD MAKES YOU FLY FOR\n"
-       "A LITTLE WHILE,\n"
-       "SO YOU CAN ROLL THE WORLD\n"
-       "AS FAST AS YOU CAN!\n\n"
-       "BUT BE CAREFUL WHEN\n"
-       "LANDING, THOUGH",
+       "FOR A WHILE,\n"
+       "SO YOU CAN ROLL\n"
+       "THE GLOBE AS FAST\n"
+       "AS YOU CAN",
        0.45}}},
     {TutorialBalloonLayer::BalloonType::HALVE,
      {{"tutorial05.x",
        {0.3, 0.7},
        "ALWAYS STAY CLEAR\n"
-       "OF THE SKULLS. THEY DO NOT\n"
-       "KILL YOU, BUT THEY\n"
-       "TAKE HALF OF YOUR POINTS!\n\n"
-       "IT HURTS EVEN MORE...",
+       "OF THE SKULLS.\n"
+       "THEY TAKE HALF\n"
+       "OF YOUR POINTS!",
        0.45}}},
     {TutorialBalloonLayer::BalloonType::FINAL,
      {{"post_happy_01.x",
        {0.5, 0.7},
-       "CONGRATULATIONS!\n"
-       "YOU'VE COMPLETED THE TUTORIAL\n\n"
-       "NOW YOU'RE READY\n"
-       "TO PLUNGE INTO\n"
-       "THE FIRST LEVEL",
+       "CONGRATULATIONS!\n\n"
+       "YOU'VE COMPLETED\n"
+       "THE TUTORIAL",
        0.45}}}};
 
 const int screenLayerTag = 123;
