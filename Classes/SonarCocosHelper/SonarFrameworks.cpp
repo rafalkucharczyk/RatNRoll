@@ -14,7 +14,6 @@
 //
 
 #include "SonarFrameworks.h"
-#undef CC_TARGET_PLATFORM
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <jni.h>

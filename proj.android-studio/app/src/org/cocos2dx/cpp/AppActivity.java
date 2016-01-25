@@ -23,7 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.cpp;
 
-import org.cocos2dx.lib.Cocos2dxActivity;
+import sonar.systems.framework.SonarFrameworkActivity;
 
-public class AppActivity extends Cocos2dxActivity {
+public class AppActivity extends SonarFrameworkActivity
+{
+
 }
