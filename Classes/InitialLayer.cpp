@@ -43,12 +43,8 @@ void InitialLayer::itemClicked(int itemIndex)
                 CCLOG("%s: signedIn : %d", __func__, signedIn);
 
                 if (!signedIn) {
-                    CCLOG("%s: not signed in, running action!");
                     menuHelper.runActionFor(itemIndex, 1);
-                } else {
-                    CCLOG("%s: signed in, not running action!");
                 }
-
 
                 gameCenterActionCallback(signedIn, itemIndex);
             }

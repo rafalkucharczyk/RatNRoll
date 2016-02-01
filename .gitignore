@@ -24,3 +24,8 @@ proj.android/local.properties
 cocos2d/cocos/platform/android/java/bin/
 cocos2d/cocos/platform/android/java/gen/
 cocos2d/cocos/platform/android/java/local.properties
+bin/
+build_log
+cocos2d/cocos/platform/android/libcocos2dx/build/
+img/
+linux-build/
