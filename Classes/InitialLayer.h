@@ -18,7 +18,7 @@ class InitialLayer : public cocos2d::Layer
     void setPlayCallback(std::function<void()> callback) { playCallback = callback; }
 
     void setGameCenterCallbacks(std::function<bool()> isSignedInCallback,
-                                std::function<void(bool signedIn)> actionCallback)
+                                std::function<void(bool signedIn, int itemId)> actionCallback)
     {
         gameCenterIsSignedInCallback = isSignedInCallback;
         gameCenterActionCallback = actionCallback;
@@ -33,7 +33,7 @@ class InitialLayer : public cocos2d::Layer
     std::function<void()> playCallback;
 
     std::function<bool()> gameCenterIsSignedInCallback;
-    std::function<void(bool signedIn)> gameCenterActionCallback;
+    std::function<void(bool signedIn, int itemId)> gameCenterActionCallback;
 };
 
 #endif // __INITIAL_LAYER_H__

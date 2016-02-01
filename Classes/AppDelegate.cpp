@@ -6,6 +6,7 @@
 #include "TransitionSlideChildren.h"
 
 #include "SonarFrameworks.h"
+#include "OsWrapper.h"
 
 #include <audio/include/AudioEngine.h>
 
@@ -54,15 +55,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     SonarCocosHelper::IOS::Setup();
     if (!GameFlow::getInstance().iapPurchaseCompleted()) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        SonarCocosHelper::iAds::showiAdBannerWithCallbacks(
+        OsWrapper::showAdBannerWithCallbacks(
             SonarCocosHelper::eBottom,
             [](bool /* stillActive */) { GameFlow::getInstance().pauseGame(); },
             [] { GameFlow::getInstance().resumeGame(); });
-
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        SonarCocosHelper::AdMob::showBannerAd(SonarCocosHelper::eBottom);
-#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) */
     }
 
     SoundHelper::getInstance().configure(GameFlow::getInstance().getSoundSettings());

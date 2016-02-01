@@ -1,30 +1,12 @@
 #include "InitialLayer.h"
 
 #include "AssetsPreloader.h"
+#include "OsWrapper.h"
 
 USING_NS_CC;
 
 InitialLayer::InitialLayer()
-    : menuHelper(
-          {{{0.5, 0.625}, 0.35, "play"},
-           {{0.35, 0.25}, 0.125, "settings"},
-           {{0.65, 0.25},
-            0.125,
-            "gamecenter",
-            {[](Node *node) {},
-
-             [](Node *node) {
-
-                 FiniteTimeAction *moveLeft =
-                     MoveBy::create(0.04, Vec2(-0.05 * node->getContentSize().width, 0));
-                 FiniteTimeAction *moveRight =
-                     MoveBy::create(0.04, Vec2(0.05 * node->getContentSize().width, 0));
-                 node->runAction(Sequence::create(
-                     Repeat::create(Sequence::create(moveLeft, moveLeft->reverse(), moveRight,
-                                                     moveRight->reverse(), nullptr),
-                                    3),
-                     nullptr));
-             }}}},
+    : menuHelper(OsWrapper::getInitMenuLayout(),
           std::bind(&InitialLayer::itemClicked, this, std::placeholders::_1))
 {
 }
@@ -42,17 +24,36 @@ bool InitialLayer::init()
 
 void InitialLayer::itemClicked(int itemIndex)
 {
-    if (itemIndex == 0 && playCallback) {
-        playCallback();
-    } else if (itemIndex == 1 && settingsCallback) {
-        settingsCallback();
-    } else if (itemIndex == 2 && gameCenterIsSignedInCallback && gameCenterActionCallback) {
-        bool signedIn = gameCenterIsSignedInCallback();
+    CCLOG("%s: itemIndex: %d", __func__, itemIndex);
+    switch (itemIndex) {
+        case 0:
+            if (playCallback) {
+                playCallback();
+            }
+            break;
+        case 1:
+            if (settingsCallback) {
+                settingsCallback();
+            }
+            break;
+        case 2:
+        case 3:
+            if (gameCenterIsSignedInCallback && gameCenterActionCallback) {
+                bool signedIn = gameCenterIsSignedInCallback();
+                CCLOG("%s: signedIn : %d", __func__, signedIn);
 
-        if (!signedIn) {
-            menuHelper.runActionFor(2, 1);
-        }
+                if (!signedIn) {
+                    CCLOG("%s: not signed in, running action!");
+                    menuHelper.runActionFor(itemIndex, 1);
+                } else {
+                    CCLOG("%s: signed in, not running action!");
+                }
 
-        gameCenterActionCallback(signedIn);
+
+                gameCenterActionCallback(signedIn, itemIndex);
+            }
+            break;
+        default:
+            break;
     }
 }

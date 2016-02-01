@@ -2,6 +2,7 @@
 
 #include "ToString.h"
 #include "SonarFrameworks.h"
+#include "OsWrapper.h"
 
 #include "PreloadingLayer.h"
 #include "InitialLayer.h"
@@ -170,10 +171,10 @@ void GameFlow::switchToInitialScene()
     initialLayer->setPlayCallback(std::bind(&GameFlow::switchToLevelSelectionScene, this));
     initialLayer->setSettingsCallback(std::bind(&GameFlow::switchToSettingsScene, this));
     initialLayer->setGameCenterCallbacks(
-        []() { return SonarCocosHelper::GameCenter::isSignedIn(); },
-        [this](bool signedIn) {
+        []() { return OsWrapper::isSignedIn(); },
+        [this](bool signedIn, int itemId) {
             if (signedIn) {
-                SonarCocosHelper::GameCenter::showLeaderboard();
+                OsWrapper::showLeaderboards(itemId);
             } else {
                 this->loginToGameCenter();
             }
@@ -225,7 +226,7 @@ void GameFlow::switchToLevelScene(int levelNumber)
         scores.push_back(*currentChallenge);
     } else {
         scores =
-            SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(levelNumber));
+            OsWrapper::getFriendsBestScores(getLeaderboardName(levelNumber));
     }
 
     switchToLevelSceneWithScores(levelNumber, scores);
@@ -535,12 +536,12 @@ void GameFlow::overlayGameScoreThresholdScene(int gameScore, cocos2d::Scene *par
 
 void GameFlow::loginToGameCenter()
 {
-    SonarCocosHelper::GameCenter::registerChallengeCallback(
+    OsWrapper::registerChallengeCallback(
         std::bind(&GameFlow::startChallenge, this, std::placeholders::_1));
 
-    SonarCocosHelper::GameCenter::signIn([this]() {
+    OsWrapper::signIn([this]() {
         for (int levelNumber = 1; levelNumber <= 3; levelNumber++) {
-            SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(levelNumber));
+            OsWrapper::getFriendsBestScores(getLeaderboardName(levelNumber));
         }
     });
 }
@@ -620,7 +621,7 @@ int GameFlow::getBestScore(int levelNumber, int currentScore)
 
     // remote
     SonarCocosHelper::GameCenterPlayersScores gameCenterScores =
-        SonarCocosHelper::GameCenter::getFriendsBestScores(getLeaderboardName(levelNumber));
+        OsWrapper::getFriendsBestScores(getLeaderboardName(levelNumber));
     auto i = std::find_if(
         gameCenterScores.begin(), gameCenterScores.end(),
         [](SonarCocosHelper::GameCenterPlayerScore score) { return score.isOwnScore; });
