@@ -236,7 +236,6 @@ void PermanentStorage::saveToKeychain(const std::string &keychainItemKey, bool v
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     CCLOG("%s: not implemented for android!", __func__);
 #endif
-
 }
 
 bool PermanentStorage::readFromKeychain(const std::string &keychainItemKey) const

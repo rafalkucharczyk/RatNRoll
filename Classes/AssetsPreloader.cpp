@@ -3,7 +3,6 @@
 #include <cocos2d.h>
 #include <spine/spine-cocos2dx.h>
 
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <android/asset_manager.h>
 #else
@@ -26,7 +25,8 @@ vector<string> listDirectory(string const &path, string const &pattern)
     while (stripped_path.size() > 0 && stripped_path[0] == '/')
         stripped_path = stripped_path.substr(1);
 
-    AAssetDir *dir = AAssetManager_openDir(FileUtilsAndroid::getAssetManager(), stripped_path.c_str());
+    AAssetDir *dir =
+        AAssetManager_openDir(FileUtilsAndroid::getAssetManager(), stripped_path.c_str());
     if (!dir)
         return ret;
 
@@ -45,12 +45,9 @@ vector<string> listDirectory(string const &path, string const &pattern)
     return ret;
 }
 
-string getResourceDir()
-{
-    return "";
-}
+string getResourceDir() { return ""; }
 
-#else /* CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID */
+#else  /* CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID */
 
 vector<string> listDirectory(string const &path, string const &pattern)
 {
@@ -78,10 +75,7 @@ vector<string> listDirectory(string const &path, string const &pattern)
     return ret;
 }
 
-string getResourceDir()
-{
-    return FileUtils::getInstance()->fullPathForFilename("level_base.json");
-}
+string getResourceDir() { return FileUtils::getInstance()->fullPathForFilename("level_base.json"); }
 #endif /* CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID */
 
 string getFileExtension(const string &s)
@@ -129,7 +123,7 @@ vector<string> AssetsPreloader::list()
 
     for (string assetsSubdir : {"earth", "items"}) {
         for (auto pngFilename :
-            listDirectory(resourcesDir + std::string("/") + assetsSubdir, ".png")) {
+             listDirectory(resourcesDir + std::string("/") + assetsSubdir, ".png")) {
             result.push_back(assetsSubdir + "/" + pngFilename);
         }
     }

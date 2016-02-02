@@ -50,9 +50,9 @@ void OsWrapper::showAdBannerWithCallbacks(int position, std::function<void(bool)
 std::vector<ButtonConfig> OsWrapper::getInitMenuLayout()
 {
     return std::vector<ButtonConfig>({
-            {{0.5, 0.625}, 0.35, "play"},
-            {{0.35, 0.25}, 0.125, "settings"},
-            {{0.65, 0.25}, 0.125, "gamecenter", menuItemsActions},
+        {{0.5, 0.625}, 0.35, "play"},
+        {{0.35, 0.25}, 0.125, "settings"},
+        {{0.65, 0.25}, 0.125, "gamecenter", menuItemsActions},
     });
 }
 

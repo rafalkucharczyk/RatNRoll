@@ -7,7 +7,7 @@ USING_NS_CC;
 
 InitialLayer::InitialLayer()
     : menuHelper(OsWrapper::getInitMenuLayout(),
-          std::bind(&InitialLayer::itemClicked, this, std::placeholders::_1))
+                 std::bind(&InitialLayer::itemClicked, this, std::placeholders::_1))
 {
 }
 
@@ -26,30 +26,30 @@ void InitialLayer::itemClicked(int itemIndex)
 {
     CCLOG("%s: itemIndex: %d", __func__, itemIndex);
     switch (itemIndex) {
-        case 0:
-            if (playCallback) {
-                playCallback();
-            }
-            break;
-        case 1:
-            if (settingsCallback) {
-                settingsCallback();
-            }
-            break;
-        case 2:
-        case 3:
-            if (gameCenterIsSignedInCallback && gameCenterActionCallback) {
-                bool signedIn = gameCenterIsSignedInCallback();
-                CCLOG("%s: signedIn : %d", __func__, signedIn);
+    case 0:
+        if (playCallback) {
+            playCallback();
+        }
+        break;
+    case 1:
+        if (settingsCallback) {
+            settingsCallback();
+        }
+        break;
+    case 2:
+    case 3:
+        if (gameCenterIsSignedInCallback && gameCenterActionCallback) {
+            bool signedIn = gameCenterIsSignedInCallback();
+            CCLOG("%s: signedIn : %d", __func__, signedIn);
 
-                if (!signedIn) {
-                    menuHelper.runActionFor(itemIndex, 1);
-                }
-
-                gameCenterActionCallback(signedIn, itemIndex);
+            if (!signedIn) {
+                menuHelper.runActionFor(itemIndex, 1);
             }
-            break;
-        default:
-            break;
+
+            gameCenterActionCallback(signedIn, itemIndex);
+        }
+        break;
+    default:
+        break;
     }
 }

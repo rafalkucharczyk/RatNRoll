@@ -170,15 +170,14 @@ void GameFlow::switchToInitialScene()
 
     initialLayer->setPlayCallback(std::bind(&GameFlow::switchToLevelSelectionScene, this));
     initialLayer->setSettingsCallback(std::bind(&GameFlow::switchToSettingsScene, this));
-    initialLayer->setGameCenterCallbacks(
-        []() { return OsWrapper::isSignedIn(); },
-        [this](bool signedIn, int itemId) {
-            if (signedIn) {
-                OsWrapper::showLeaderboards(itemId);
-            } else {
-                this->loginToGameCenter();
-            }
-        });
+    initialLayer->setGameCenterCallbacks([]() { return OsWrapper::isSignedIn(); },
+                                         [this](bool signedIn, int itemId) {
+                                             if (signedIn) {
+                                                 OsWrapper::showLeaderboards(itemId);
+                                             } else {
+                                                 this->loginToGameCenter();
+                                             }
+                                         });
 
     scene->addChild(initialLayer);
 
@@ -225,8 +224,7 @@ void GameFlow::switchToLevelScene(int levelNumber)
     if (currentChallenge) {
         scores.push_back(*currentChallenge);
     } else {
-        scores =
-            OsWrapper::getFriendsBestScores(getLeaderboardName(levelNumber));
+        scores = OsWrapper::getFriendsBestScores(getLeaderboardName(levelNumber));
     }
 
     switchToLevelSceneWithScores(levelNumber, scores);
@@ -546,7 +544,8 @@ void GameFlow::loginToGameCenter()
 
 void GameFlow::startChallenge(SonarCocosHelper::GameCenterPlayerScore score)
 {
-    int levelNumber = std::atoi(score.leaderboardId.substr(score.leaderboardId.size() - 1, 1).c_str());
+    int levelNumber =
+        std::atoi(score.leaderboardId.substr(score.leaderboardId.size() - 1, 1).c_str());
     /* note: std::stoi is not supported on Android */
 
     Director::getInstance()->resume();

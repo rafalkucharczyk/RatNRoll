@@ -782,8 +782,7 @@ void LevelLayer::scheduleRatEyesAnimations()
 {
     schedule([this](float t) {
         int min = AnimationHelper::EYES_FIRST, max = AnimationHelper::EYES_MAX;
-        animationHelper->playEyesAnimation(
-            static_cast<AnimationHelper::Eyes>(random(min, max)));
+        animationHelper->playEyesAnimation(static_cast<AnimationHelper::Eyes>(random(min, max)));
     }, 5.0, "ratEyes");
 }
 
@@ -1227,8 +1226,8 @@ int LevelLayer::getGameScoreDelta() const
         (levelCustomization->getRatSpeedMax() - levelCustomization->getRatSpeedMin());
 
     int gameScoreDelta =
-        1 +
-        std::floor(speedRatio * 2 + (ratSpeed == levelCustomization->getRatSpeedMax() ? 1 : 0) + 0.5);
+        1 + std::floor(speedRatio * 2 + (ratSpeed == levelCustomization->getRatSpeedMax() ? 1 : 0) +
+                       0.5);
     /* note: lround is not supported on Android */
 
     gameScoreDelta *= frenzyGameScoreMultiplier;

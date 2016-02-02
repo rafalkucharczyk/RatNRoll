@@ -3,29 +3,18 @@
 #include <cocos2d.h>
 #include "InAppPurchase.h"
 
-InAppPurchase::InAppPurchase(){
-    CCLOG("%s: not implemented for android!", __func__);
-}
+InAppPurchase::InAppPurchase() { CCLOG("%s: not implemented for android!", __func__); }
 
-InAppPurchase::~InAppPurchase()
-{
-    CCLOG("%s: not implemented for android!", __func__);
-}
+InAppPurchase::~InAppPurchase() { CCLOG("%s: not implemented for android!", __func__); }
 
 void InAppPurchase::requestProduct(std::string productID)
 {
     CCLOG("%s: not implemented for android!", __func__);
 }
 
-void InAppPurchase::purchaseProduct()
-{
-    CCLOG("%s: not implemented for android!", __func__);
-}
+void InAppPurchase::purchaseProduct() { CCLOG("%s: not implemented for android!", __func__); }
 
-void InAppPurchase::restoreProduct()
-{
-    CCLOG("%s: not implemented for android!", __func__);
-}
+void InAppPurchase::restoreProduct() { CCLOG("%s: not implemented for android!", __func__); }
 
 std::string InAppPurchase::getLocalizedProductDescription()
 {
@@ -46,7 +35,7 @@ std::string InAppPurchase::getProductPriceInLocalCurrency()
 }
 
 void InAppPurchase::sendNotification(int notification, std::string message,
-                          std::string secondaryMessage)
+                                     std::string secondaryMessage)
 {
     CCLOG("%s: not implemented for android!", __func__);
 }
