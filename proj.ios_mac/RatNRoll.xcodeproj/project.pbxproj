@@ -123,6 +123,7 @@
 		B55887CA1B41E0B900B13416 /* InitialLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B55887C81B41E0B900B13416 /* InitialLayer.cpp */; };
 		B57B5BE21B570BC400C98B37 /* MenuHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57B5BE01B570BC400C98B37 /* MenuHelper.cpp */; };
 		B57B5BE51B570BED00C98B37 /* MenuItemButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B57B5BE41B570BED00C98B37 /* MenuItemButton.cpp */; };
+		B58B91791C60889A00C3A312 /* OsWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B58B91771C60889A00C3A312 /* OsWrapper.cpp */; };
 		B5927EC71B5440DA00D59F09 /* IOSCPPHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B5927EBE1B5440DA00D59F09 /* IOSCPPHelper.mm */; };
 		B5927EC81B5440DA00D59F09 /* IOSHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5927EC01B5440DA00D59F09 /* IOSHelper.m */; };
 		B5927EC91B5440DA00D59F09 /* IOSResults.mm in Sources */ = {isa = PBXBuildFile; fileRef = B5927EC21B5440DA00D59F09 /* IOSResults.mm */; };
@@ -350,6 +351,8 @@
 		B57B5BE11B570BC400C98B37 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuHelper.h; path = Menu/MenuHelper.h; sourceTree = "<group>"; };
 		B57B5BE31B570BE500C98B37 /* MenuItemButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuItemButton.h; path = Menu/MenuItemButton.h; sourceTree = "<group>"; };
 		B57B5BE41B570BED00C98B37 /* MenuItemButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuItemButton.cpp; path = Menu/MenuItemButton.cpp; sourceTree = "<group>"; };
+		B58B91771C60889A00C3A312 /* OsWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OsWrapper.cpp; sourceTree = "<group>"; };
+		B58B91781C60889A00C3A312 /* OsWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OsWrapper.h; sourceTree = "<group>"; };
 		B5927EBD1B5440DA00D59F09 /* IOSCPPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSCPPHelper.h; sourceTree = "<group>"; };
 		B5927EBE1B5440DA00D59F09 /* IOSCPPHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IOSCPPHelper.mm; sourceTree = "<group>"; };
 		B5927EBF1B5440DA00D59F09 /* IOSHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSHelper.h; sourceTree = "<group>"; };
@@ -638,6 +641,8 @@
 				25EC24341BEFA3740018180D /* LevelSelectionLayer.h */,
 				25B0D66E1C28595800637426 /* LevelShadowRatInfoLayer.cpp */,
 				25B0D66F1C28595800637426 /* LevelShadowRatInfoLayer.h */,
+				B58B91771C60889A00C3A312 /* OsWrapper.cpp */,
+				B58B91781C60889A00C3A312 /* OsWrapper.h */,
 				B54C0DED1B5D9D48002B36B6 /* PauseLayer.cpp */,
 				B54C0DEF1B5D9D51002B36B6 /* PauseLayer.h */,
 				259DE4EF1C15919400AD7941 /* PostTutorialLayer.cpp */,
@@ -971,6 +976,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5927ECA1B5440DA00D59F09 /* SonarFrameworks.cpp in Sources */,
+				B58B91791C60889A00C3A312 /* OsWrapper.cpp in Sources */,
 				25EC24351BEFA3740018180D /* LevelSelectionLayer.cpp in Sources */,
 				B552BDFC1B1CE54E00D4851A /* LevelLayer.cpp in Sources */,
 				25C973F81C1162D5007171C7 /* GameCompletedLayer.cpp in Sources */,

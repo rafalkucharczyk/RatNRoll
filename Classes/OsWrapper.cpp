@@ -53,7 +53,7 @@ std::vector<ButtonConfig> OsWrapper::getInitMenuLayout()
             {{0.5, 0.625}, 0.35, "play"},
             {{0.35, 0.25}, 0.125, "settings"},
             {{0.65, 0.25}, 0.125, "gamecenter", menuItemsActions},
-    };
+    });
 }
 
 #elif(CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
