@@ -99,7 +99,7 @@ std::vector<ButtonConfig> OsWrapper::getInitMenuLayout()
         {{0.5, 0.625}, 0.35, "play"},
         {{0.25, 0.25}, 0.125, "settings"},
         {{0.5, 0.25}, 0.125, "leaderboards", menuItemsActions},
-        {{0.75, 0.25}, 0.125, "achieve_ments", menuItemsActions},
+        {{0.75, 0.25}, 0.125, "achievements", menuItemsActions},
     });
 }
 
